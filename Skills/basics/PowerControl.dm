@@ -196,10 +196,10 @@ mob/proc/MangPowerUp()
         if(ShinActive() || MangActive()) // First we check if they are using one of the right buffs
             if(GetMangMastery() >= GetMangLevel()+1) // Then we check if they have enough mastery to go higher
                 src.AddMangLevel() // Then we add! Yay!
-        if(GetMangLevel())
-            startMangBuff()
         if(ShinActive())
             endShinBuff()
+        if(GetMangLevel())
+            startMangBuff()
 
 
 // Handles Mang Power Down related code

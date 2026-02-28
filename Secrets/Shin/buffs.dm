@@ -7,6 +7,7 @@
     ActiveMessage="radiates a soft, warding glow of Light."
     OffMessage="suppresses the glow of the Light, letting their emotions flow on."
     TextColor=rgb(203, 198, 47)
+    CantHaveTheseBuffs = list("Mang Resonance")
     //Base mults
     EndMult = 1.2 
     DefMult = 1.2
