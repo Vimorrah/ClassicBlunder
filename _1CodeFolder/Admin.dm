@@ -1165,10 +1165,10 @@ mob/Admin3/verb
 				if(!locate(/transformation/celestial/Master_of_Arms) in M.race.transformations)
 					M.race.transformations += new/transformation/celestial/Master_of_Arms
 			if(M.isRace(SAIYAN) && blah == 4)
-				var/godor4 = input("SSJ God or SSJ4?") in list("SSJ God", "SSJ4")
-				if(godor4 == "SSJ4")
+				var/godor4 = input("SSJ God or SSJ4?") in list("Daima SSJ4", "GT SSJ4")
+				if(godor4 == "GT SSJ4")
 					for(var/transformation/saiyan/ssj in M.race.transformations)
-						if(istype(ssj, /transformation/saiyan/super_saiyan_god) || istype(ssj, /transformation/saiyan/super_saiyan_blue)|| istype(ssj, /transformation/saiyan/super_saiyan_blue_evolved))
+						if(istype(ssj, /transformation/saiyan/super_saiyan_god) || istype(ssj, /transformation/saiyan/super_saiyan_blue)|| istype(ssj, /transformation/saiyan/super_saiyan_blue_evolved)|| istype(ssj, /transformation/saiyan/super_saiyan_4_daima))
 							M.race.transformations -= ssj
 							del ssj
 					M.AddSkill(new/obj/Skills/False_Moon)
@@ -1177,7 +1177,6 @@ mob/Admin3/verb
 						if(istype(ssj, /transformation/saiyan/super_saiyan_4)||istype(ssj, /transformation/saiyan/super_full_power_saiyan_4_limit_breaker))
 							M.race.transformations -= ssj
 							del ssj
-					M.AddSkill(new/obj/Skills/Utility/GodTransformationToggle)
 			if(M.isRace(HALFSAIYAN) && blah == 4)
 				var/godor4 = input("SSJ Rage or SSJ4?") in list("SSJ Rage/Beast", "SSJ4")
 				if(godor4 == "SSJ4")
