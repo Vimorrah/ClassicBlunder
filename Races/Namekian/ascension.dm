@@ -7,12 +7,13 @@ ascension
 			onAscension(mob/owner)
 				if(!applied)
 					switch(owner.Class)
-						if("Heretic")
-							//power = 0.75
-							strength = 0.5
+						if("Demon")
+							strength = 0.35
+							force = 0.35
+							endurance = 0.25
 							speed = 0.25
-							anger = 0.15 // 1.4
-							passives = list("HellRisen" = 0.25, "Wrathful Tenacity" = 0.2, "AngerAdaptiveForce" = 0.25)
+							anger = 0.15
+							passives = list("AngerAdaptiveForce" = 0.25, "SpiritFlow" = 0.25, "SpiritSword" = 0.25, "TechniqueMastery" = 0.5)
 						if("Dragon")  /// after the merge, unmerged Dragon and Warrior will also receive some scaling power. Levi added it in for Gaja's in his push
 							///power = 0.75
 							passives = list("SpiritFlow" = 0.25, "QuickCast"=0.5)
@@ -34,14 +35,15 @@ ascension
 			unlock_potential	=	ASCENSION_TWO_POTENTIAL
 			onAscension(mob/owner)
 				switch(owner.Class)
-					if("Heretic")
-						//power = 1
-						offense = 0.25
-						strength = 0.25
+					if("Demon")
+						strength = 0.4
+						force = 0.4
 						endurance = 0.25
-						anger = 0.1 // 1.5
+						speed = 0.25
+						offense = 0.25
+						anger = 0.15
+						passives = list("AngerAdaptiveForce" = 0.25, "SpiritFlow" = 0.5, "SpiritSword" = 0.25)
 						skills = list(/obj/Skills/Buffs/SpecialBuffs/Daimou_Form)
-						passives = list("HellRisen" = 0.25, "Wrathful Tenacity" = 0.1, "DemonicDurability" = 0.5)
 					if("Dragon")
 						//power = 1
 						passives =list("SpiritHand" = 0.5, "SpiritFlow" = 0.25, "QuickCast"=0.5, "ManaPU" = 1)
@@ -63,9 +65,11 @@ ascension
 			onAscension(mob/owner)
 				switch(owner.Class) // super namek era
 					if("Demon")
-						// power = 1.5
-						speed = 0.25
-						anger = 0.1 // 1.6
+						strength = 0.75
+						force = 0.75
+						offense = 0.5
+						anger = 0.15
+						passives = list("DemonicDurability" = 1, "MovementMastery" = 2)
 					if("Dragon")
 						//power = 1.5
 						force= 0.25
@@ -86,8 +90,10 @@ ascension
 				switch(owner.Class)
 					if("Demon")
 						//power = 2
-						intimidation = 20
-						passives = list("SlayerMod" = 1.5, "MovementMastery" = 4)
+						strength = 1.25
+						force = 1.25
+						anger = 0.15
+						passives = list("DemonicDurability" = 1, "MovementMastery" = 4, "Extend" = 1, "Gum Gum" = 1)
 					if("Warrior")
 						//power = 3
 						passives = list("Duelist" = 2.5, "Extend" = 1, "Gum Gum" = 1, "TechniqueMastery" = 1, "Tenacity" = 0.5)
@@ -104,14 +110,14 @@ ascension
 		five
 			unlock_potential = ASCENSION_FIVE_POTENTIAL
 			onAscension(mob/owner)
-				if(!owner.transUnlocked == 1)
-					owner.transUnlocked = 1
+				if(!owner.transUnlocked == 2&&owner.class!="Demon")
+					owner.transUnlocked = 2
 				switch(owner.Class) ///orange namek should be unlocked here
 					if("Demon")
-						//power = 3
-						speed = 0.5
-						anger = 0.2 // 2
-						intimidation = 50
+						strength = 1.5
+						force = 1.5
+						anger = 0.3
+						passives = list("DemonicDurability" = 1, "MovementMastery" = 4)
 					if("Warrior")
 						//power = 4
 						strength = 1
@@ -126,14 +132,12 @@ ascension
 		six
 			unlock_potential = ASCENSION_SIX_POTENTIAL
 			onAscension(mob/owner)
-				if(!owner.transUnlocked == 1)
-					owner.transUnlocked = 1
-				switch(owner.Class) ///orange namek should be unlocked here
+				switch(owner.Class)
 					if("Demon")
-						//power = 3
-						speed = 0.5
-						anger = 0.2 // 2
-						intimidation = 50
+						strength = 1.5
+						force = 1.5
+						anger = 0.3
+						passives = list("DemonicDurability" = 2, "MovementMastery" = 5)
 					if("Warrior")
 						//power = 4
 						strength = 1
