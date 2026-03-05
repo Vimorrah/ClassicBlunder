@@ -1729,7 +1729,7 @@ mob/Admin3/verb
 			return
 		global.MoonSetMessage=NewSetMsg
 		Log("Admin", "[ExtractInfo(usr)] made the moon setting message: ([global.MoonSetMessage])")
-	Makyo_Toggle(var/Z as num)
+/*	Makyo_Toggle(var/Z as num)
 		set category="Admin"
 		CallStar(Z)
 		Log("Admin", "[ExtractInfo(src)] forced the Makyo Star to shine for z-plane ([Z]).")
@@ -1744,7 +1744,7 @@ mob/Admin3/verb
 		if(!NewSetMsg&&NewSetMsg==null)
 			return
 		global.MakyoSetMessage=NewSetMsg
-		Log("Admin", "[ExtractInfo(usr)] made the Star departure message: ([global.MakyoSetMessage])")
+		Log("Admin", "[ExtractInfo(usr)] made the Star departure message: ([global.MakyoSetMessage])") */
 
 
 	AdminLogz()
