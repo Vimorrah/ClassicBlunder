@@ -412,7 +412,7 @@ proc/
 				KeybladePassives=list("PULock" = 1, "ManaGeneration" = 5+Boost, "HolyMod" = 1+(2*Boost), "QuickCast" = 1)
 				return KeybladePassives
 			if("Way To Dawn")
-				KeybladePassives=list("PULock" = 1, "AbyssMod" = 3+Boost,"HolyMod"=3+Boost)
+				KeybladePassives=list("PULock" = 1, "AbyssMod" = 3+Boost,"HolyMod"=3+Boost,"Controlled Darkness" = 1)
 				return KeybladePassives
 			if("Bond of Flame")
 				KeybladePassives=list("PULock" = 1, "Scorching" = 10+(Boost*2), "MeltyBlood" = 1)
@@ -421,7 +421,7 @@ proc/
 				KeybladePassives=list("PULock" = 1, "TechniqueMastery" = Boost, "BuffMastery" = Boost)
 				return KeybladePassives
 			if("Two Become One")
-				KeybladePassives=list("PULock" = 1)
+				KeybladePassives=list("PULock" = 1, "Two Become One" = 1, "BlurringStrikes" = 4, "ManaGeneration" = 2+(Boost/2))
 				return KeybladePassives
 //medium
 			if("Oblivion")
