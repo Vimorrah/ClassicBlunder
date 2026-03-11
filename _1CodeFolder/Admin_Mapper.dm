@@ -165,6 +165,16 @@ mob
 				Edit+="<td>[Value(A.vars[C])]</td></tr>"
 			usr << "</html>"
 			usr<<browse(Edit,"window=[A];size=450x600")
+		verb/Mapper_Fade(atom/A in world)
+			set name="Mapper Fade Visibility"
+			set category="Mapper"
+			if(istype(A, /mob)||istype(A, /area))
+				src << "Nah."
+				return
+			var/opacityGoal=input("Final Opacity (0 to 255)","[src]") as num
+			var/timeGoal=input("Fade Time (in ticks)","[src]") as num
+			animate(A, alpha = opacityGoal, time = timeGoal)
+
 		verb/XYZ_Teleport()
 			set category="Mapper"
 			var/x=input("x","[src]") as num
