@@ -3682,6 +3682,48 @@ obj/Items/Gear
 			src.desc="A replacement limb.  A [Choice] gear has been integrated within it."
 			del Choice
 			src.Using=0
+	Dark_Factor_Fragment
+		TechType="CyberEngineering"
+		SubType="Blasphemy"
+		desc="A fragment of darkness that allows someone to assume demonic powers... or become one themselves."
+		Cost=500000
+		Health=1000000000000
+		InfiniteUses=1
+		//Techniques=list("/obj/Skills/Buffs/ActiveBuffs/Gear/False_Devil_Trigger")
+		verb/Imbue_Fragment()
+			set category = "Demonic"
+			if(usr.isRace(DEMON))
+				usr<<"You are already a Demon!"
+				return
+			usr<<"to be completed"
+		verb/Become_Demon()
+			set category = "Demonic"
+			if(usr.isRace(DEMON))
+				usr<<"You are already a Demon!"
+				return
+			if(usr.isRace(SAIYAN))
+				usr.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/Autonomous/HellbornFury/Stage_One)
+				usr.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/Autonomous/HellbornFury/Stage_Two)
+				usr.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/Autonomous/HellbornFury/Stage_Three)
+				usr.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/Autonomous/HellbornFury/Stage_Four)
+				usr.passive_handler.Increase("HellPower", 0.1)
+				usr.passive_handler.Increase("Persistence", 2)
+				usr.passive_handler.Increase("MaimMastery", 1)
+				usr.AddSkill(new/obj/Skills/False_Moon)
+				usr.oozaru_type="Demonic"
+				for(var/transformation/saiyan/ssj in usr.race.transformations)
+					usr.race.transformations -=ssj
+					del ssj
+				usr.race.transformations += new /transformation/saiyan/hellspawn_super_saiyan()
+				usr.race.transformations += new /transformation/saiyan/hellspawn_super_saiyan_2()
+				usr.race.transformations += new /transformation/saiyan/hellspawn_super_saiyan_3()
+				del src
+				return
+			usr.passive_handler = null
+			usr.AscensionsAcquired=1
+			usr.setRace(DEMON,FALSE,TRUE)
+			usr.stat_redo()
+			del src
 	Mobile_Suit
 		var/Drive = "None"
 		var/Augment = "None"
