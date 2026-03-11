@@ -134,6 +134,7 @@
 #define FILE_DIR "Icons/Objects/Beds"
 #define FILE_DIR "Icons/Objects/Domestic"
 #define FILE_DIR "Icons/Objects/Jungle"
+#define FILE_DIR "Icons/Objects/Monochrome"
 #define FILE_DIR "Icons/Objects/Seats"
 #define FILE_DIR "Icons/Objects/Store"
 #define FILE_DIR "Icons/Objects/Tables"
