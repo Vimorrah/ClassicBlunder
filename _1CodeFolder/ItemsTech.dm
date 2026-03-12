@@ -3717,13 +3717,13 @@ obj/Items/Gear
 				usr.race.transformations += new /transformation/saiyan/hellspawn_super_saiyan()
 				usr.race.transformations += new /transformation/saiyan/hellspawn_super_saiyan_2()
 				usr.race.transformations += new /transformation/saiyan/hellspawn_super_full_power_saiyan_2_limit_breaker()
-				del src
-				return
+			//	del src
+			//	return
 			usr.passive_handler = null
 			usr.AscensionsAcquired=1
 			usr.setRace(DEMON,FALSE,TRUE)
 			usr.stat_redo()
-			del src
+		//	del src
 	Mobile_Suit
 		var/Drive = "None"
 		var/Augment = "None"
