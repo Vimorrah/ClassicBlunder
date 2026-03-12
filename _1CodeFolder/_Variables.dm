@@ -463,6 +463,8 @@ mob/var
 	CombatCPU=0
 	EnergyAssimilators=0
 	EnhancedSmell=0
+	BioAndroid=0
+	SampleCollected=0
 	Profile=null
 	GimmickDesc=""
 	GimmickTimer
