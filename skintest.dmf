@@ -378,6 +378,125 @@ window "LOOCChatTab"
 		visited-color = #00cccc
 		style = ".system {color:#ff0000;}"
 
+window "MagicTree"
+	elem "MagicTree"
+		type = MAIN
+		pos = 281,0
+		size = 600x664
+		anchor1 = -1,-1
+		anchor2 = -1,-1
+		background-color = none
+		is-visible = false
+		saved-params = "pos;size;is-minimized;is-maximized"
+		title = "Magic Tree"
+		statusbar = false
+		can-minimize = false
+		can-resize = false
+		outer-size = 608x695
+		outer-pos = 281,0
+		inner-size = 600x664
+		inner-pos = 4,27
+		screen-size = 1858x1080
+	elem "SpaceTree"
+		type = BUTTON
+		pos = 552,616
+		size = 32x32
+		anchor1 = -1,-1
+		anchor2 = -1,-1
+		text-color = #ffff00
+		background-color = #cc99ff
+		saved-params = "is-checked"
+		text = ""
+		command = ".ShowSpaceTree"
+	elem "DarkTree"
+		type = BUTTON
+		pos = 504,616
+		size = 32x32
+		anchor1 = -1,-1
+		anchor2 = -1,-1
+		text-color = #ffff00
+		background-color = #cc99ff
+		saved-params = "is-checked"
+		text = ""
+		command = ".ShowDarkTree"
+	elem "TimeTree"
+		type = BUTTON
+		pos = 456,616
+		size = 32x32
+		anchor1 = -1,-1
+		anchor2 = -1,-1
+		text-color = #ffff00
+		background-color = #cc99ff
+		saved-params = "is-checked"
+		text = ""
+		command = ".ShowTimeTree"
+	elem "LightTree"
+		type = BUTTON
+		pos = 408,616
+		size = 32x32
+		anchor1 = -1,-1
+		anchor2 = -1,-1
+		text-color = #ffff00
+		background-color = #cc99ff
+		saved-params = "is-checked"
+		text = ""
+		command = ".ShowLightTree"
+	elem "AccessNode"
+		type = BUTTON
+		pos = 284,616
+		size = 32x32
+		anchor1 = -1,-1
+		anchor2 = -1,-1
+		text-color = #ffff00
+		background-color = #cc99ff
+		saved-params = "is-checked"
+		text = ""
+		command = ""
+	elem "EarthTree"
+		type = BUTTON
+		pos = 160,616
+		size = 32x32
+		anchor1 = -1,-1
+		anchor2 = -1,-1
+		text-color = #ffff00
+		background-color = #cc99ff
+		saved-params = "is-checked"
+		text = ""
+		command = ".ShowEarthTree"
+	elem "AirTree"
+		type = BUTTON
+		pos = 112,616
+		size = 32x32
+		anchor1 = -1,-1
+		anchor2 = -1,-1
+		text-color = #ffff00
+		background-color = #cc99ff
+		saved-params = "is-checked"
+		text = ""
+		command = ".ShowAirTree"
+	elem "FireTree"
+		type = BUTTON
+		pos = 64,616
+		size = 32x32
+		anchor1 = -1,-1
+		anchor2 = -1,-1
+		text-color = #ffff00
+		background-color = #cc99ff
+		saved-params = "is-checked"
+		text = ""
+		command = ".ShowFireTree"
+	elem "WaterTree"
+		type = BUTTON
+		pos = 16,616
+		size = 32x32
+		anchor1 = -1,-1
+		anchor2 = -1,-1
+		text-color = #ffff00
+		background-color = #cc99ff
+		saved-params = "is-checked"
+		text = ""
+		command = ".ShowWaterTree"
+
 window "OOCChatTab"
 	elem "OOCChatTab"
 		type = MAIN
@@ -1575,7 +1694,7 @@ window "knowtree"
 window "mainwindow"
 	elem "mainwindow"
 		type = MAIN
-		pos = 291,0
+		pos = 281,0
 		size = 960x750
 		anchor1 = -1,-1
 		anchor2 = -1,-1
@@ -2387,11 +2506,6 @@ window "Finalize_Screen"
 		can-minimize = false
 		can-resize = false
 		image-mode = tile
-		outer-size = 1024x315
-		outer-pos = 1176,408
-		inner-size = 1008x276
-		inner-pos = 8,31
-		screen-size = 2560x1400
 	elem "button51"
 		type = BUTTON
 		pos = 322,212

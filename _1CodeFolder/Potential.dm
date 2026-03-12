@@ -150,7 +150,7 @@ mob
 					if(d.evolution_charges < 1)
 						d.last_evo_gain = world.realtime
 						d.evolution_charges++
-
+			//todo: actually unlock transformation if above potential
 			if(Potential>=15)
 				if(SagaLevel < 2 && Saga)
 					saga_up_self()
