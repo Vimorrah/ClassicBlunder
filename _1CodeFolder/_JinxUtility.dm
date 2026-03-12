@@ -1177,7 +1177,9 @@ mob
 			RecovCut=clamp(RecovCut+Val, 0, 1);
 		// forgive the sin below, im not replacing basestat() in all the codebase
 		getEnhanced(statName)
-			var/enhance = vars["Enhanced[statName]"] * 0.2
+			var/enhance = vars["Enhanced[statName]"] * 0.3
+			if(isRace(ANDROID)||passive_handler.Get("Enhanced Cybernetic Mainframe"))
+				enhance = vars["Enhanced[statName]"] * 0.6
 			if(Target && ismob(Target))
 				if(Target.passive_handler["Rusting"])
 					enhance *= (Poison * (glob.RUSTING_RATE * passive_handler["Rusting"])) / 100
