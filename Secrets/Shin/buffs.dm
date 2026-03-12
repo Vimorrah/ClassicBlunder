@@ -45,7 +45,7 @@
     TextColor=rgb(203, 198, 167)
     TimerLimit = 30
     Cooldown = 30
-    IconLock = 'Icons/Buffs/SecretBuffs/Mang/MangRing1.dmi'
+    icon = 'Icons/Buffs/SecretBuffs/Mang/MangRing1.dmi'
    // IconApart = 1
 
      /* All of Mang's passives and stats are scattered across passive procs. This is so that they can scale based off of how many Mang you have
@@ -80,11 +80,26 @@ mob/proc/GetMangMastery() //This proc gets your max amount of mang
 mob/proc/AddMangLevel() // This increases your active mang level
     var/SecretInformation/Shin/ShinSecret = secretDatum
     ShinSecret.Mang++
-    OMsg(src, "<b>[GetMangLevel() >= 5 ? "<font color='red'>Ain't that a motherfu--</font color>" : "<font color='[rgb(241, 236, 129)]>[src] manifests [GetMangLevel()] Mang Rings!</font color>"]</b>");
+    AddMangLevelMessage()
+    MangIconErase()
+    MangIconDraw()
+
+mob/proc/AddMangLevelMessage() // I heard you like procs so I put a proc in your proc - Xoxo
+    var/fColor;
+    var/msg;
+    if(GetMangLevel() >= 5)
+        msg = "Ain't that a motherfu--";
+        fColor = rgb(255, 0, 0);
+    else
+        msg = "[src] manifests [GetMangLevel()] Mang Ring\s!";
+        fColor = rgb(241, 236, 129);
+    OMsg(src, "<b><font color='[fColor]'>[msg]</font color></b>");
 
 mob/proc/ReduceMangLevel() // This decreases your active mang level
     var/SecretInformation/Shin/ShinSecret = secretDatum
     ShinSecret.Mang--
+    if (!GetMangLevel())
+        MangIconErase()
     OMsg(src, "<b><font color='[rgb(241, 236, 129)]'>[src] manifests [GetMangLevel()] Mang Rings!</font color></b>")
 
 mob/proc/ShinActive() // This checks if Shin is on
@@ -117,21 +132,35 @@ mob/proc/MangManaCost() // Checks if you have the mana before spending it.
     if(ManaAmount < MangLevelCost)
         return 0
 
-
-mob/proc/MangOnCD()
+mob/proc/MangOnCD() // Checks if your mang is on CD
     for(var/obj/Skills/Buffs/SlotlessBuffs/Mang_Resonance/mr in contents)
         if(mr.Using)
             return 1
     return 0
 
-mob/proc/ShinSecretLevel() // This is currently not in use
-        var/secretLevel = src.secretDatum.currentTier
-        return secretLevel
+mob/proc/ShinSecretLevel() // This is currently not in use (I think)
+    var/secretLevel = src.secretDatum.currentTier
+    return secretLevel
 
+mob/proc/MangIconDraw() // used to draw our mang icon, necessary so we can draw the correct state
+    var/obj/Skills/Buffs/SlotlessBuffs/Mang_Resonance/Mang = MangCall()
+    if (!Mang) return
+    src.overlays += Mang.icon
+    Mang.icon_state = "Mang[GetMangLevel()]"
+
+mob/proc/MangIconErase() // used to erase our mang icon, necessary so we can not have overlapping states
+    var/obj/Skills/Buffs/SlotlessBuffs/Mang_Resonance/Mang = MangCall()
+    if (Mang)
+        src.overlays -= Mang.icon
+
+mob/proc/MangCall() // This allows us to pass 'Mang_Resonance' to other procs :D
+    for(var/obj/Skills/Buffs/SlotlessBuffs/Mang_Resonance/mr in contents)
+        if (!MangActive()) return
+        return mr
 //Can you tell I'm losing it yet?
 
 
-//Thank you for these Yan <3
+//Thank you for these Xoxo <3
 mob/proc/usingShinBuff() // Checks if we're using shin
   return CheckSlotless("Shin Radiance") ? 1 : 0;
 

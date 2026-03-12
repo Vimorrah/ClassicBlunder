@@ -224,6 +224,8 @@
     Mang_Strike
         Cooldown=40;
         ActiveMessage="concentrates their Mang...";
+        KBAdd = 25
+        KBMult = 5
         adjust(mob/p)
             DamageMult=clamp(p.GetMangLevel() * 2, 3, 10);
             HitMessage="strikes with the power of [p.GetMangLevel()] Mang Ring\s!!";
