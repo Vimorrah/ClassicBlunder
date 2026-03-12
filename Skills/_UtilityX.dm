@@ -2785,6 +2785,12 @@ obj/Skills/Utility
 				ModChoices.Add("Enhanced Aggression")
 				ModChoices.Add("Enhanced Reflexes")
 				ModChoices.Add("Enhanced Speed")
+				ModChoices.Add("3x Enhanced Strength")
+				ModChoices.Add("3x Enhanced Force")
+				ModChoices.Add("3x Enhanced Endurance")
+				ModChoices.Add("3x Enhanced Aggression")
+				ModChoices.Add("3x Enhanced Reflexes")
+				ModChoices.Add("3x Enhanced Speed")
 
 			if("Neuron Manipulation" in usr.knowledgeTracker.learnedKnowledge || (usr.isRace(ANDROID)))
 				ModChoices.Add("Internal Comms Suite")//talky in your heady
@@ -2811,6 +2817,8 @@ obj/Skills/Utility
 				ModChoices.Add("Ray Gear")
 				ModChoices.Add("Overdrive")
 				ModChoices.Add("Infinity Drive")
+			if("Bio-Mechanical Augmentations" in usr.knowledgeTracker.learnedKnowledge || (usr.isRace(ANDROID)))
+				ModChoices.Add("Biological Cybernetics")
 
 			var/list/Who=list("Cancel")
 			if(usr.isRace(ANDROID))
@@ -2846,7 +2854,13 @@ obj/Skills/Utility
 				ModChoices.Remove("Enhanced Aggression")
 				ModChoices.Remove("Enhanced Reflexes")
 				ModChoices.Remove("Enhanced Speed")
-
+			if(M.EnhanceChips+3>=M.EnhanceChipsMax)
+				ModChoices.Remove("3x Enhanced Strength")
+				ModChoices.Remove("3x Enhanced Force")
+				ModChoices.Remove("3x Enhanced Endurance")
+				ModChoices.Remove("3x Enhanced Aggression")
+				ModChoices.Remove("3x Enhanced Reflexes")
+				ModChoices.Remove("3x Enhanced Speed")
 			if(M.NanoBoost)
 				ModChoices.Remove("Nano Boost")
 			if(M.BladeMode)
@@ -2886,6 +2900,10 @@ obj/Skills/Utility
 			if(M.isRace(ANDROID))
 				if(M.Maimed||M.HealthCut)
 					ModChoices.Add("Repair")
+				if("Bio-Mechanical Augmentations" in usr.knowledgeTracker.learnedKnowledge || (usr.isRace(ANDROID)))
+					ModChoices.Add("Biological Cybernetics")
+			if(M.BioAndroid)
+				ModChoices.Remove("Biological Cybernetics")
 
 			ModChoice=input(usr, "What modification would you like to install?", "Cybernetic Augmentation") in ModChoices
 			if(ModChoice=="Cancel")
@@ -2912,6 +2930,25 @@ obj/Skills/Utility
 				if("Enhanced Speed")
 					Cost=glob.progress.EconomyCost*2.5
 					ModDesc="Enhanced Speed increases Speed."
+
+				if("3x Enhanced Strength")
+					Cost=glob.progress.EconomyCost*7.5
+					ModDesc="Enhanced Strength increases Strength. Installs three at a time."
+				if("3x Enhanced Force")
+					Cost=glob.progress.EconomyCost*7.5
+					ModDesc="Enhanced Force increases Force. Installs three at a time."
+				if("3x Enhanced Endurance")
+					Cost=glob.progress.EconomyCost*7.5
+					ModDesc="Enhanced Endurance increases Endurance. Installs three at a time."
+				if("3x Enhanced Aggression")
+					Cost=glob.progress.EconomyCost*7.5
+					ModDesc="Enhanced Aggression increases Offense. Installs three at a time."
+				if("3x Enhanced Reflexes")
+					Cost=glob.progress.EconomyCost*7.5
+					ModDesc="Enhanced Reflexes increases Defense. Installs three at a time."
+				if("3x Enhanced Speed")
+					Cost=glob.progress.EconomyCost*7.5
+					ModDesc="Enhanced Speed increases Speed. Installs three at a time."
 
 				if("Internal Comms Suite")
 					Cost=glob.progress.EconomyCost*2
@@ -2974,6 +3011,9 @@ obj/Skills/Utility
 					Cost=glob.progress.EconomyCost*300
 					ModDesc="Overdrive allows the augmented to overclock every cybernetically enhanced aspect in exchange for battery life."
 
+				if("Biological Cybernetics")
+					Cost=glob.progress.EconomyCost*1000
+					ModDesc="Converts an Android or someone with an enhanced cybernetic mainframe into a Biological Android."
 				if("Repair")
 					Cost=glob.progress.EconomyCost/2*(M.Maimed+(M.HealthCut*5))
 					ModDesc="Attempts to repair a damaged android."
@@ -3037,6 +3077,31 @@ obj/Skills/Utility
 					if(M.EnhanceChips<M.EnhanceChipsMax)
 						M.EnhanceChips++
 						M.EnhancedReflexes++
+
+				if("3x Enhanced Strength")
+					if(M.EnhanceChips+3<M.EnhanceChipsMax)
+						M.EnhanceChips+=3
+						M.EnhancedStrength+=3
+				if("3x Enhanced Endurance")
+					if(M.EnhanceChips+3<M.EnhanceChipsMax)
+						M.EnhanceChips+=3
+						M.EnhancedEndurance+=3
+				if("3x Enhanced Force")
+					if(M.EnhanceChips+3<M.EnhanceChipsMax)
+						M.EnhanceChips+=3
+						M.EnhancedForce+=3
+				if("3x Enhanced Speed")
+					if(M.EnhanceChips+3<M.EnhanceChipsMax)
+						M.EnhanceChips+=3
+						M.EnhancedSpeed+=3
+				if("3x Enhanced Aggression")
+					if(M.EnhanceChips+3<M.EnhanceChipsMax)
+						M.EnhanceChips+=3
+						M.EnhancedAggression+=3
+				if("3x Enhanced Reflexes")
+					if(M.EnhanceChips+3<M.EnhanceChipsMax)
+						M.EnhanceChips+=3
+						M.EnhancedReflexes+=3
 
 				if("Nano Boost")
 					if(M.NanoBoost)
@@ -3174,6 +3239,14 @@ obj/Skills/Utility
 					M.FusionPowered=1
 					M.ManaPU=1
 
+				if("Biological Cybernetics")
+					if((M.BioAndroid||M.Saga)
+						OMsg(usr, "[usr] tried to install a [ModChoice] into [M]...but they already have Biological Cybernetics.")
+						src.Using=0
+						return
+					M.BioAndroid=1
+				//	M.AddSkill(new/obj/Skills/Utility/BioAbsorb) //will be split up into two verbs: an actual absorb, and Collect Sample
+				//	M.AddSkill(new/obj/Skills/Utility/BioAugmentation)
 				if("Repair")
 					M.Maimed=0
 					M.HealthCut=0
