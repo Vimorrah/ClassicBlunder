@@ -1,7 +1,7 @@
 race
 	nobody
 		name = "Nobodies"
-		desc = "Empty shells left behind when someone with a strong heart passes on. They lack hearts and emotions, but possess undeniable strength. (INCOMPLETE)"
+		desc = "Empty shells left behind when someone with a strong heart passes on. They lack hearts and emotions, but possess undeniable strength."
 		visual = 'Makaioshins.png'
 		locked = FALSE
 		strength = 1

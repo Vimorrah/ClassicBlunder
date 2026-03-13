@@ -9,14 +9,14 @@ transformation
 			form_glow_icon = 'Ripple Radiance.dmi'
 			form_glow_x = -32
 			form_glow_y = -32
-			unlock_potential = 40
+			unlock_potential = 30
 			speed = 1.0
 			endurance = 1.0
 			offense = 1.0
 			defense = 1.0
 			strength = 1.0
 			force = 1.0
-			passives = list("Instinct" = 1, "Flow" = 1, "Flicker" = 1, "Pursuer" = 2,  "BuffMastery" = 3, "PureDamage" = 1, "PureReduction" = 1)
+			passives = list("Instinct" = 1, "Flow" = 1, "Flicker" = 1, "Pursuer" = 2,  "BuffMastery" = 3, "PureDamage" = 1, "PureReduction" = 1, "SaiyanPower" = 1, "SaiyanPowerVoid" = 1)
 			angerPoint = 75
 
 			adjust_transformation_visuals(mob/user)
@@ -45,7 +45,7 @@ transformation
 					defense = 1.0 + (mdivS)
 					strength = 1.0 + (mdivS)
 					force = 1.0 + (mdivS)
-					passives = list("Instinct" = 1+(mdivP*12), "Flow" = 1+(mdivP*10), "Flicker" = 1+(mdivP*10), "Pursuer" = 2+(mdivP*10), "BuffMastery" = 3+(mdivP*12), "PureDamage" = 1+(mdivP*12), "PureReduction" = 1+(mdivP*12))
+					passives = list("Instinct" = 1+(mdivP*12), "Flow" = 1+(mdivP*10), "Flicker" = 1+(mdivP*10), "Pursuer" = 2+(mdivP*10), "BuffMastery" = 3+(mdivP*12), "PureDamage" = 1+(mdivP*12), "PureReduction" = 1+(mdivP*12), "SaiyanPower" = 1, "SaiyanPowerVoid" = 1+(0.06*mastery))
 
 			transform_animation(mob/user)
 				if(first_time && mastery<25)
@@ -92,12 +92,12 @@ transformation
 
 		spectral_tension // temp
 			passives = list("Instinct" = 1, "Flow" = 1, "Flicker" = 1, "Pursuer" = 2,  "BuffMastery" = 3, "PureDamage" = 1, "PureReduction" = 1)
-			speed = 1.0
-			endurance = 1.0
-			offense = 1.0
-			defense = 1.0
-			strength = 1.0
-			force = 1.0
+			speed = 1.2
+			endurance = 1.2
+			offense = 1.2
+			defense = 1.2
+			strength = 1.2
+			force = 1.2
 			pot_trans = 2
 			transformation_message = "usrName manifests the true nature of their body!"
 			adjust_transformation_visuals(mob/user)
@@ -112,12 +112,12 @@ transformation
 				var/mdivS = mastery/200
 				var/mdivP = mastery/100
 				if(mastery >= 25 && asc > 2)
-					speed = 1.0 + (mdivS)
-					endurance = 1.0 + (mdivS)
-					offense = 1.0 + (mdivS)
-					defense = 1.0 + (mdivS)
-					strength = 1.0 + (mdivS)
-					force = 1.0 + (mdivS)
+					speed = 1.2 + (mdivS)
+					endurance = 1.2 + (mdivS)
+					offense = 1.2 + (mdivS)
+					defense = 1.2 + (mdivS)
+					strength = 1.2 + (mdivS)
+					force = 1.2 + (mdivS)
 					passives = list("Instinct" = 1+(mdivP*12), "Flow" = 1+(mdivP*10), "Flicker" = 1+(mdivP*10), "Pursuer" = 2+(mdivP*10), "BuffMastery" = 3+(mdivP*12), "PureDamage" = 1+(mdivP*12), "PureReduction" = 1+(mdivP*12))
 
 			transform_animation(mob/user)
