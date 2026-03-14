@@ -10,13 +10,14 @@ transformation
 			form_glow_x = -32
 			form_glow_y = -32
 			unlock_potential = 30
+			pot_trans = 20
 			speed = 1.0
 			endurance = 1.0
 			offense = 1.0
 			defense = 1.0
 			strength = 1.0
 			force = 1.0
-			passives = list("Instinct" = 1, "Flow" = 1, "Flicker" = 1, "Pursuer" = 2,  "BuffMastery" = 3, "PureDamage" = 1, "PureReduction" = 1, "SaiyanPower" = 1, "SaiyanPowerVoid" = 1)
+			passives = list("Instinct" = 1, "Flow" = 1, "Flicker" = 1, "Pursuer" = 2,  "BuffMastery" = 3, "PureDamage" = 1, "PureReduction" = 1, "SaiyanPower" = 1, "SaiyanPowerVoid" = 1, "ZenkaiPower" = 0.5)
 			angerPoint = 75
 
 			adjust_transformation_visuals(mob/user)
@@ -45,7 +46,7 @@ transformation
 					defense = 1.0 + (mdivS)
 					strength = 1.0 + (mdivS)
 					force = 1.0 + (mdivS)
-					passives = list("Instinct" = 1+(mdivP*12), "Flow" = 1+(mdivP*10), "Flicker" = 1+(mdivP*10), "Pursuer" = 2+(mdivP*10), "BuffMastery" = 3+(mdivP*12), "PureDamage" = 1+(mdivP*12), "PureReduction" = 1+(mdivP*12), "SaiyanPower" = 1, "SaiyanPowerVoid" = 1+(0.06*mastery))
+					passives = list("Instinct" = 1+(mdivP*12), "Flow" = 1+(mdivP*10), "Flicker" = 1+(mdivP*10), "Pursuer" = 2+(mdivP*10), "BuffMastery" = 3+(mdivP*12), "PureDamage" = 1+(mdivP*12), "PureReduction" = 1+(mdivP*12), "SaiyanPower" = 1, "SaiyanPowerVoid" = 1+(0.06*mastery), "ZenkaiPower" = 0.5+(0.025*mastery))
 
 			transform_animation(mob/user)
 				if(first_time && mastery<25)
