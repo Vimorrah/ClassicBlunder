@@ -140,6 +140,7 @@ obj/Skills
 	var/ThrowOnCounter
 	var/Controlling //Love potion effects TODO: Remove/discontinue for...
 	var/BuffSelf
+	var/BuffSelfDelay = 0
 	var/BuffAffected
 
 	 //we street fighter now vars

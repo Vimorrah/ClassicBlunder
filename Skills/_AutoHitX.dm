@@ -5201,7 +5201,8 @@ mob
 				spawn(Z.FollowUpDelay)
 					throwFollowUp(Z.FollowUp)
 			if(Z.BuffSelf)
-				src.buffSelf(Z.BuffSelf)
+				spawn(Z.BuffSelfDelay)
+					src.buffSelf(Z.BuffSelf)
 			var/missed = 0 //If the target is out of range at the end of a windup.
 			if(Z.WindUp)
 				src.Grab_Release()

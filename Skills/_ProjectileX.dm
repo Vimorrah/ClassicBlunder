@@ -5462,6 +5462,8 @@ obj
 					src.StormFall=Z.StormFall
 					src.Excruciating=Z.Excruciating
 					src.MaimStrike=Z.MaimStrike
+					src.BuffSelf=Z.BuffSelf
+					src.BuffSelfDelay=Z.BuffSelfDelay
 					src.MortalBlow=Z.MortalBlow
 					src.InstantDamageChance=Z.InstantDamageChance
 					src.Destructive=Z.Destructive
@@ -5579,8 +5581,9 @@ obj
 						if(FollowUpDelay != -1)
 							spawn(FollowUpDelay)
 								Owner.throwFollowUp(FollowUp)
-					if(BuffSelf)
-						Owner.buffSelf(BuffSelf)
+					if(Z.BuffSelf)
+						spawn(Z.BuffSelfDelay)
+							Owner.buffSelf(Z.BuffSelf)
 				Bump(var/atom/a)
 					a.onBumped(src)
 					Hit(a)
