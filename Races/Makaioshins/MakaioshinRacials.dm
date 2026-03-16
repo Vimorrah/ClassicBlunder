@@ -150,14 +150,6 @@
 	Mastery = 1
 	desc = "Freeze time for everyone in view with no exceptions."
 	var/tmp/list/frozen_mobs
-	verb/Chaos_Control()
-		set category = "Utility"
-		set name = "Chaos Control"
-		if(!usr || usr.Dead) return
-		if(!istype(usr.race, /race/makaioshin))
-			usr << "You must be a Makaioshin to use this!"
-			return
-		usr.SkillX("Chaos Control", src)
 
 /obj/Skills/AutoHit/Chaos_Degrade
 	Area = "Target"
@@ -168,14 +160,6 @@
 	EndDefense = 1
 	GuardBreak = 1
 	ActiveMessage = "corrodes their target's existence with chaos!"
-	verb/Chaos_Degrade()
-		set category = "Skills"
-		set name = "Chaos Degrade"
-		if(!usr || usr.Dead) return
-		if(!istype(usr.race, /race/makaioshin))
-			usr << "You must be a Makaioshin to use this!"
-			return
-		usr.Activate(src)
 
 /obj/Skills/Buffs/SlotlessBuffs/Chaos_Soldier
 	BuffName = "Chaos Soldier"
@@ -192,14 +176,6 @@
 	passives = list()
 	ActiveMessage = "unleashes the power of their duality! One soul invites the light! One soul guides the darkness! Between the souls of light and darkness, the light of chaos is created!"
 	OffMessage = "releases the power of chaos."
-	verb/Chaos_Soldier()
-		set category = "Skills"
-		set name = "Chaos Soldier"
-		if(!usr || usr.Dead) return
-		if(!istype(usr.race, /race/makaioshin))
-			usr << "You must be a Makaioshin to use this!"
-			return
-		src.Trigger(usr)
 
 /*/obj/Skills/Buffs/NuStyle/UnarmedStyle/HalfbreedAngelStyles //weaker versions for Makaioshins and Celestials
 	Selfless_State
