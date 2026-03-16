@@ -172,3 +172,23 @@
 			IconState = "[total_stacks]"
 		passives = list("PureReduction" = -glob.OVERHWELMING_BASE_PR_NERF * total_stacks, "Flow" = -glob.OVERHWELMING_BASE_FLOW * total_stacks)
 		endAdd = -glob.OVERHWELMING_BASE_END_NERF * total_stacks
+
+/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Debuff/Charmed
+	TimerLimit = 10
+	AlwaysOn = 0
+	NeedsPassword = 0
+	ActiveMessage = "has been Charmed!"
+	OffMessage = "is no longer Charmed..."
+	var/mob/charmer
+
+	Trigger(mob/User, Override = FALSE)
+		..()
+		if(src.SlotlessOn && charmer && User)
+			var/mob/target = User
+			spawn()
+				target:move_disabled = 1
+				while(src && src.SlotlessOn && charmer && charmer.loc)
+					if(get_dist(target, charmer) >= 2)
+						step_towards(target, charmer)
+					sleep(world.tick_lag * 4)
+				target:move_disabled = 0

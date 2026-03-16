@@ -64,6 +64,15 @@ mob/proc/UsingHotnCold()
         return TRUE
     return FALSE
 
+/mob/proc/applyCharmed(mob/charmer, limit = 10)
+	var/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Debuff/Charmed/s = findOrAddSkill(/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Debuff/Charmed)
+	if(!BuffOn(s))
+		s.charmer = charmer
+		s.TimerLimit = limit
+		s.Trigger(src, TRUE)
+		return TRUE
+	return FALSE
+
 /mob/proc/applySnare(limit, _icon, force = FALSE)
 	var/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Debuff/Snare/s = findOrAddSkill(/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Debuff/Snare) // try to find it
 	if(force)

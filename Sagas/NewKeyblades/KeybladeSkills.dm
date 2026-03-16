@@ -187,7 +187,7 @@ obj
 				EnergyCost=5
 				Launcher=2
 				Instinct=1
-				ActiveMessage="unleashes a flurry of strikes!
+				ActiveMessage="unleashes a flurry of strikes!"
 				FollowUp="/obj/Skills/AutoHit/Ragnarok_Blast"
 				adjust(mob/p)
 				verb/Ragnarok()
@@ -198,7 +198,7 @@ obj
 				Area="Around Target"
 				Distance=12
 				DistanceAround=5
-				AdaptRate=1=1
+				AdaptRate=1
 				Knockback=0
 				ComboMaster=1
 				HitSparkIcon='Hit Effect Pearl.dmi'

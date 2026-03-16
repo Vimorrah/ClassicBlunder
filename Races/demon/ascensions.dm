@@ -51,6 +51,9 @@ ascension
 				if(src.choiceSelected == /ascension/sub_ascension/demon/envy)
 					if(!locate(/obj/Skills/AutoHit/I_Want_To_Be_Like_You) in owner)
 						owner.AddSkill(new /obj/Skills/AutoHit/I_Want_To_Be_Like_You)
+				if(src.choiceSelected == /ascension/sub_ascension/demon/lust)
+					if(!locate(/obj/Skills/Buffs/SlotlessBuffs/Racial/Demon/Object_of_Desire) in owner)
+						owner.AddSkill(new /obj/Skills/Buffs/SlotlessBuffs/Racial/Demon/Object_of_Desire)
 		four
 			unlock_potential = ASCENSION_FOUR_POTENTIAL
 			passives = list("HellPower" = 0.25, "AbyssMod" = 2, "AngerAdaptiveForce" = 0.25, "TechniqueMastery" = 2, "FluidForm" = 0.5)

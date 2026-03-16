@@ -108,3 +108,32 @@
 		set name = "I Want to Be Like You"
 		if(!usr || usr.Dead) return
 		usr.Activate(src)
+
+/obj/Skills/Buffs/SlotlessBuffs/Racial/Demon/Object_of_Desire
+	BuffName = "Object of Desire"
+	Cooldown = 60
+	TimerLimit = 0
+
+	verb/Object_of_Desire()
+		set category = "Skills"
+		set name = "Object of Desire"
+		if(!usr || usr.Dead) return
+		if(cooldown_remaining > 0)
+			usr << "Object of Desire is still on cooldown!"
+			return
+		if(!usr.Target)
+			usr << "You need a target to use Object of Desire."
+			return
+		if(usr.Target == usr)
+			usr << "You cannot charm yourself."
+			return
+		Trigger(usr)
+
+	Trigger(mob/User, Override = FALSE)
+		if(!User || !User.Target) return
+		var/mob/target = User.Target
+		if(!target.applyCharmed(User, 10))
+			User << "[target] is already Charmed."
+			return
+		OMsg(target, "[User] ensnares [target] with an irresistible desire!")
+		Cooldown(1, 0, User)
