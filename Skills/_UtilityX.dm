@@ -2817,8 +2817,8 @@ obj/Skills/Utility
 				ModChoices.Add("Ray Gear")
 				ModChoices.Add("Overdrive")
 				ModChoices.Add("Infinity Drive")
-			if("Bio-Mechanical Augmentations" in usr.knowledgeTracker.learnedKnowledge || (usr.isRace(ANDROID)))
 				ModChoices.Add("Biological Cybernetics")
+				ModChoices.Add("Cybernetic Mainframe")
 
 			var/list/Who=list("Cancel")
 			if(usr.isRace(ANDROID))
@@ -2904,6 +2904,8 @@ obj/Skills/Utility
 					ModChoices.Add("Biological Cybernetics")
 			if(M.BioAndroid)
 				ModChoices.Remove("Biological Cybernetics")
+			if(M.CyberneticMainframe)
+				ModChoices.Remove("Cybernetic Mainframe")
 
 			ModChoice=input(usr, "What modification would you like to install?", "Cybernetic Augmentation") in ModChoices
 			if(ModChoice=="Cancel")
@@ -3010,7 +3012,9 @@ obj/Skills/Utility
 				if("Overdrive")
 					Cost=glob.progress.EconomyCost*300
 					ModDesc="Overdrive allows the augmented to overclock every cybernetically enhanced aspect in exchange for battery life."
-
+				if("Cybernetic Mainframe")
+					Cost=glob.progress.EconomyCost*500
+					ModDesc="A cybernetic mainframe allows someone to become a complete cyborg, forsaking most of their natural abilities in exchange for opening up more avenues of cybernetic customization."
 				if("Biological Cybernetics")
 					Cost=glob.progress.EconomyCost*1000
 					ModDesc="Converts an Android or someone with an enhanced cybernetic mainframe into a Biological Android."
@@ -3240,13 +3244,20 @@ obj/Skills/Utility
 					M.ManaPU=1
 
 				if("Biological Cybernetics")
-					if(M.BioAndroid||M.Saga)
+					if(M.BioAndroid||M.Saga||M.HasMilitaryFrame())
 						OMsg(usr, "[usr] tried to install a [ModChoice] into [M]...but they already have Biological Cybernetics.")
 						src.Using=0
 						return
 					M.BioAndroid=1
 				//	M.AddSkill(new/obj/Skills/Utility/BioAbsorb) //will be split up into two verbs: an actual absorb, and Collect Sample
 				//	M.AddSkill(new/obj/Skills/Utility/BioAugmentation)
+				if("Cybernetic Mainframe")
+					if(M.CyberneticMainframe||M.Saga)
+						OMsg(usr, "[usr] tried to install a [ModChoice] into [M]...but they already have a Cybernetic Mainframe.")
+						src.Using=0
+						return
+					M.CyberneticMainframe=1
+					M.AddSkill(new/obj/Skills/Utility/Cyborg_Integration)
 				if("Repair")
 					M.Maimed=0
 					M.HealthCut=0

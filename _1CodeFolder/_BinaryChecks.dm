@@ -2567,6 +2567,8 @@ mob
 				return 1
 			if(src.InfinityModule)
 				return 1
+			if(src.BioAndroid)
+				return 1
 			return 0
 		HasConversionModules()
 			var/Total=0

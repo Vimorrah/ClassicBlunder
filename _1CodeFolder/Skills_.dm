@@ -147,7 +147,7 @@ mob/proc/SkillX(var/Wut,var/obj/Skills/Z,var/bypass=0)
 						src.PotentialSkillCheck()
 						src.SignatureSelecting=0
 
-					if(src.Saga)
+					if(src.Saga||src.CyberneticMainframe)
 						src.YeetSignatures()
 						if(src.SagaAdminPermission)
 							src.saga_up_self()

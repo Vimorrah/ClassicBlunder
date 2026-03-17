@@ -465,6 +465,7 @@ mob/var
 	EnergyAssimilators=0
 	EnhancedSmell=0
 	BioAndroid=0
+	CyberneticMainframe
 	SampleCollected=0
 	Profile=null
 	GimmickDesc=""

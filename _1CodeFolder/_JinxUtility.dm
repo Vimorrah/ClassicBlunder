@@ -3193,6 +3193,9 @@ mob
 					return
 				src.saga_up_self()
 				return
+			if(src.CyberneticMainframe)
+				//
+				return
 			if(src.Potential>=glob.progress.T2_STYLES[1]&&src.passive_handler.Get("True Inheritor"))
 				if(!locate(/obj/Skills/Buffs/NuStyle/Legendary/Legacy_Of_The_Fabled_King, src))
 					src.AddSkill(new/obj/Skills/Buffs/NuStyle/Legendary/Legacy_Of_The_Fabled_King)
@@ -3232,8 +3235,9 @@ mob
 			for(var/obj/Skills/s in src.Skills)
 				if(s.SignatureTechnique)
 					if(!s.SagaSignature)
-						src << "[s] has been removed as it is not one of your saga signatures."
-						del s
+						if(!src.BuffOn(s))
+							src << "[s] has been removed as it is not one of your saga signatures."
+							del s
 
 		MovementChargeBuildUp(var/Mult=1)
 			//this ticks per second
