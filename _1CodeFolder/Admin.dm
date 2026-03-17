@@ -1486,9 +1486,9 @@ mob/Admin3/verb
 
 	SaveTurfsObjs()
 		set category="Admin"
-		spawn() find_savableObjects()
+		find_savableObjects()
 		spawn() Save_Turfs()
-		spawn() Save_Objects()
+		Save_Objects()
 		Log("Admin","<font color=blue>[ExtractInfo(usr)] has saved turfs and objects in world.")
 	Set_Base()
 		set category="Admin"

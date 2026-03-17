@@ -657,6 +657,7 @@ proc/Save_Objects()
 	var/E=1
 	var/savefile/F=new("Saves/Itemsave/File[E]")
 	var/list/Types=new
+	var/list/Icons=new
 	for(var/obj/A in global.worldObjectList)
 		if(!A)
 			world.log << "null entry"
@@ -666,14 +667,18 @@ proc/Save_Objects()
 			A.Saved_Y=A.y
 			A.Saved_Z=A.z
 			Types+=A
+			Icons+=A.icon
 			Amount+=1
 			if(Amount % 500 == 0)
 				F["Types"]<<Types
+				F["Icons"]<<Icons
 				E++
 				F=new("Saves/Itemsave/File[E]")
 				Types=new
+				Icons=new
 	if(Amount % 500 != 0)
 		F["Types"]<<Types
+		F["Icons"]<<Icons
 	hacklol
 	if(fexists("Saves/Itemsave/File[E++]"))
 		fdel("Saves/Itemsave/File[E++]")
@@ -694,13 +699,21 @@ proc/Load_Objects()
 		if(length(F["Types"]) < 1)
 			goto wowza
 		F["Types"]>>L
-		for(var/obj/A in L)
-			if(!A)
+		var/list/Icons
+		if(length(F["Icons"]) > 0)
+			F["Icons"]>>Icons
+		var/idx=0
+		for(var/A in L)
+			idx++
+			if(!A||!istype(A,/obj))
 				world.log << "[A] is null"
 				world.log << "[amount] index"
 				continue
+			var/obj/AObj=A
 			amount+=1
-			A.loc=locate(A.Saved_X,A.Saved_Y,A.Saved_Z)
+			AObj.loc=locate(AObj.Saved_X,AObj.Saved_Y,AObj.Saved_Z)
+			if(Icons && idx <= length(Icons) && Icons[idx])
+				AObj.icon=Icons[idx]
 		goto wowza
 	world<<"<small>Server: Items Loaded ([amount])."
 //	spawn()SpawnMaterial()

@@ -120,8 +120,8 @@ proc/BootWorld(var/blah)
 			Save_Custom_Turfs()
 			Save_Bodies()
 			SaveIRLNPCs()
-		//	resourceManager.SaveToSavefile()
-			spawn() Save_Objects()
+	//	resourceManager.SaveToSavefile()
+			Save_Objects()
 
 
 proc/BootFile(var/file,var/op)
