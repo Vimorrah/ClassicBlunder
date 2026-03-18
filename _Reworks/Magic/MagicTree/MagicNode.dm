@@ -99,7 +99,8 @@ globalTracker/var/
     nodeType;//aoe, autohit, buff, debuff, line, projectile; mage, crown, spell
     list/unlocksNodes=list();
     list/grantsSkills=list();
-    list/grantsPassives=list();
+    list/grantsSpellPassives=list();
+    list/grantsMagePassives=list();
     list/grantsKnowledges=list();
 
 /magic_node/
@@ -150,18 +151,79 @@ globalTracker/var/
 /mob/var/
     list/magicKnowledge=list();
     list/accessedMagicTrees=list();
-    list/acquiredMagicNodes=list();
+    list/acquiredMagicNodes=list();//nodes that have been acquired
+    list/availableMagicNodes=list();//nodes that CAN be unlocked, but haven't been
 
 globalTracker/var
     MagicNodeRPPCost=20;
     SecondElementPotential=20;
     AdvancedElementPotential=40;
 
-/mob/proc/
+/mob/verb/
     unlockMagicNode(node as text)
         set name=".unlockMagicNode"
         set hidden = 1;
-        if(!node in VALID_MAGIC_NODES) return;
+        if(!(node in VALID_MAGIC_NODES)) return;
+        unlockNodeChoice(node);
+
+/mob/proc/unlockNodeChoice(nodeName)
+    var/list/currentMagicTreeNodes = glob.vars["[magicTreeDisplayed]TreeNodes"];
+    if(!isValidNode(nodeName, currentMagicTreeNodes)) return 0;
+    var/magic_node/selectedNode = currentMagicTreeNodes[nodeName];
+    var/msg = "The node [nodeName] grants the following effects: "
+    for(var/k in selectedNode.grantsSkills)
+        msg += "\n- Access to the [k] magic skill.";
+    for(var/sp in selectedNode.grantsSpellPassives)
+        msg += "\n- Access to the [sp] bundle of magic passives.";
+    for(var/mp in selectedNode.grantsMagePassives)
+        msg += "\n- Access to the [mp] bundle of mage passives.";
+    for(var/k in selectedNode.grantsKnowledges)
+        msg += "\n- Access to the knowledge provided by [k].";
+    msg += "\nIt costs [glob.MagicNodeRPPCost] RPP to unlock this node."
+    if(canPurchaseNode(selectedNode))
+        msg += "\nDo you want to?"
+        if(alert(src, msg, "Unlock Magic Node ([nodeName])", "No", "Yes")=="Yes") unlockNode(selectedNode);
+    else alert(src, msg, "Magic Node Details [nodeName]", "OK");
+
+/mob/proc/isValidNode(nodeName, list/magicTree)
+    if(!(nodeName in magicTree))
+        src << "You are currently looking at the [magicTreeDisplayed] Magic Tree, and [nodeName] is not from that tree!"
+        return 0;
+    return 1;
+
+/mob/proc/canPurchaseNode(magic_node/mn)
+    if(!(magicTreeDisplayed in accessedMagicTrees))
+        src << "You have not unlocked the [magicTreeDisplayed] Magic Tree yet, so you cannot purchase any of its nodes."
+        return 0;
+    if(RPPSpendable < glob.MagicNodeRPPCost)
+        src << "You don't have enough RPP to buy [mn.name]! ([RPPSpendable] / [glob.MagicNodeRPPCost])";
+        return 0;
+    if(hasUnlockedMagicNode(mn))
+        src << "You've already unlocked [mn.name]!";
+        return 0;
+    if(!(mn.name in availableMagicNodes))
+        src << "You have not unlocked any of [mn.name]'s prerequisite nodes yet!"
+        return 0;
+    if(mn.nodeType == "Pinnacle" && !canUnlockPinnacle(mn))
+        src << "You have not unlocked all of the [magicTreeDisplayed] Magic Tree's nodes; you can't unlock the Pinnacle yet!"
+        return 0;
+    return 1;
+
+/mob/proc/hasUnlockedMagicNode(magic_node/mn)
+    for(var/magic_node/macquired in acquiredMagicNodes)
+        if (mn.type == macquired.type) return 1;
+    return 0;
+
+/mob/proc/canUnlockPinnacle()
+    var/list/elementTree = list();
+    elementTree |= glob.vars["[magicTreeDisplayed]TreeNodes"];
+    for(var/nodeName in elementTree)
+        var/magic_node/mn = elementTree[nodeName];
+        if(mn.nodeType == "Pinnacle") elementTree.Remove(nodeName);
+        else if(!hasUnlockedMagicNode(mn)) return 0;
+    return 1;
+
+    
 
 /mob/proc/canUnlockMagicTree(element)
     if(!(element in VALID_MAGIC_ELEMENTS))
@@ -223,8 +285,10 @@ globalTracker/var
     unlockNode(glob.vars["[element]TreeNodes"][nodeName]);
 
 /mob/proc/unlockNode(magic_node/mn)
-    acquiredMagicNodes |= mn
+    acquiredMagicNodes |= mn;
+    availableMagicNodes |= mn.unlocksNodes;
     DEBUGMSG("unlocking node [mn]");
+    updateSelectionNodes();
 
 /mob/proc/unlockMagicTree(element)
     if(element in accessedMagicTrees)
@@ -235,7 +299,6 @@ globalTracker/var
     src << "You've unlocked the ability to choose [element] magic tree nodes!";
     src << "Each node costs [glob.MagicNodeRPPCost] RPP to unlock.";
     unlockEntryNode(element);
-    updateSelectionNodes();  
 
 /mob/verb/
     Unlock_Access_Node(element as text)

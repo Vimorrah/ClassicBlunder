@@ -89,7 +89,7 @@ mob/proc/setTreeSelectNodes()
     params["size"] = "32x32";
     if(mn in acquiredMagicNodes) params["image"] = mn.unlockedNodeImage //node unlocked
     else params["image"] = mn.lockedNodeImage//node locked
-    params["command"] = mn.command ? mn.command : ".unlockMagicNode [mn.name]";
+    params["command"] = ".unlockMagicNode \"[mn.name]\"";
     params["name"] = mn.name;
     winset(src, mn.name, list2params(params));
 
