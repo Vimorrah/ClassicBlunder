@@ -706,19 +706,17 @@ obj
 
 				//Hiten Finisher
 				Flash_Strike
-					DamageMult=3
+					DamageMult=T2_DMG_MULT/2
 					Counter=1
 					Warp=10
-					SpeedStrike=2
-					SlayerMod=2
+					SpeedStrike=4
 					FollowUp="/obj/Skills/AutoHit/Shunshin_Massacre"
 					BuffSelf="/obj/Skills/Buffs/SlotlessBuffs/Autonomous/QueueBuff/Finisher/Shunshin"
 				True_Flash_Strike
-					DamageMult=2.5
+					DamageMult=T4_DMG_MULT/2
 					Counter=1
 					Warp=10
-					SpeedStrike=2
-					SlayerMod=3
+					SpeedStrike=8
 					FollowUp="/obj/Skills/AutoHit/Shunshin_Massacre"
 					BuffAffected="/obj/Skills/Buffs/SlotlessBuffs/Autonomous/QueueBuff/Godspeed_Assaulted"
 					BuffSelf="/obj/Skills/Buffs/SlotlessBuffs/Autonomous/QueueBuff/Finisher/Shunshin_Shin"

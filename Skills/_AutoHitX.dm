@@ -662,7 +662,7 @@ obj
 				NoAttackLock=1
 				Distance=10
 				Instinct=4
-				DamageMult = T2_DMG_MULT / 2 / 5;
+				DamageMult = T3_DMG_MULT / 2 / 5;
 				Rounds=5
 				DelayTime=30
 				GuardBreak=1

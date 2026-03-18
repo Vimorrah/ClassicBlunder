@@ -1,3 +1,11 @@
+#define HITEN_PASSIVES_TIER_1 list("SlayerMod"=1, "Flicker"=1, "Pursuer"=1, "GodSpeed"=1, "FavoredPrey"="Mortal")
+#define HITEN_PASSIVES_TIER_2 list("SlayerMod"=1, "GodSpeed"=1, "AttackSpeed"=2, "Pursuer"=1)
+#define HITEN_PASSIVES_TIER_3 list("SlayerMod"=1, "GodSpeed"=1, "Brutalize"=2, "TechniqueMastery"=2)
+#define HITEN_PASSIVES_TIER_4 list("SlayerMod"=1, "GodSpeed"=1, "FavoredPrey"="All", "MovementMastery"=5)
+#define HITEN_PASSIVES_TIER_5 list("SlayerMod"=1, "GodSpeed"=1, "AttackSpeed"=3, "Pursuer"=1)
+#define HITEN_PASSIVES_TIER_6 list("SlayerMod"=1, "GodSpeed"=1, "Brutalize"=2.5, "TechniqueMastery"=3)
+#define HITEN_PASSIVES_TIER_7 list("SlayerMod"=1, "GodSpeed"=2, "Deicide"=1, "EndlessNine"=1, "AsuraStrike"=1)
+
 mob/var
 	SagaLevel=0//Level for all tier s.
 	SagaEXP=0//holds rpp investment
@@ -135,6 +143,7 @@ mob/Admin3/verb
 			for(var/obj/Skills/Buffs/NuStyle/s in P)
 				if(P.BuffOn(s))
 					s.Trigger(usr, TRUE)
+			var/list/passiveGain=list();
 			switch(selection)
 				if("Hero")
 					P.Saga="Hero"
@@ -245,6 +254,7 @@ mob/Admin3/verb
 					P<<"You embark down the path of slaying men... <b>Hiten Mitsurugi Style</b>!"
 					P.Saga="Hiten Mitsurugi-Ryuu"
 					P.SagaLevel=1
+					passiveGain = HITEN_PASSIVES_TIER_1
 					if(!locate(/obj/Skills/Buffs/NuStyle/SwordStyle/Hiten_Mitsurugi_Ryuu, P))
 						var/obj/Skills/Buffs/NuStyle/s=new/obj/Skills/Buffs/NuStyle/SwordStyle/Hiten_Mitsurugi_Ryuu
 						P.AddSkill(s)
@@ -252,17 +262,12 @@ mob/Admin3/verb
 						P.AddSkill(new/obj/Skills/Queue/JawStrike)
 					if(!locate(/obj/Skills/Queue/FallingBlade,P))
 						P.AddSkill(new/obj/Skills/Queue/FallingBlade)
-					P.passive_handler.Increase("SlayerMod", 0.625)
-					P.passive_handler.Increase("Pursuer", 0.5)
-					P.passive_handler.Increase("SuperDash", 0.25)
-					P.passive_handler.Increase("Godspeed", 0.25)
-					P.passive_handler.Set("FavoredPrey", "All")
 				if("Ansatsuken")
 					P<<"You begin to learn of the assassin's fist... <b>Ansatsuken</b>!"
 					P.Saga="Ansatsuken"
 					P.SagaLevel=1
 					P.passive_handler.Increase("SlayerMod", 0.625)
-					P.passive_handler.Set("FavoredPrey", "All")
+					P.passive_handler.Set("FavoredPrey", "Mortal")
 					if(!locate(/obj/Skills/Buffs/NuStyle/UnarmedStyle/Ansatsuken_Style, P))
 						var/obj/Skills/Buffs/NuStyle/s=new/obj/Skills/Buffs/NuStyle/UnarmedStyle/Ansatsuken_Style
 						P.AddSkill(s)
@@ -456,6 +461,7 @@ mob/Admin3/verb
 						if("Darkness")
 							P.KeychainAttached="Kingdom Key D"
 							P.SyncAttached="Kingdom Key D"
+			if(passiveGain.len > 0) passive_handler.increaseList(passiveGain);
 			Log("Admin","[ExtractInfo(usr)] granted [selection] to [P].")
 
 	Keychain_Add(mob/Players/m in players)
@@ -853,6 +859,8 @@ mob
 			src.SagaAdminPermission--
 			if(src.SagaAdminPermission<0)
 				src.SagaAdminPermission=0
+			
+			var/list/passiveGain=list();
 
 			switch(src.Saga)
 				if("Hero")
@@ -1209,19 +1217,16 @@ mob
 
 
 				if("Hiten Mitsurugi-Ryuu")
-					passive_handler.Increase("SlayerMod", 0.625)
-					passive_handler.Increase("Pursuer", 0.5)
-					passive_handler.Increase("SuperDash", 0.25)
-					passive_handler.Increase("Godspeed", 0.5)
 					if(src.SagaLevel==2)
+						passiveGain=HITEN_PASSIVES_TIER_2
 						if(!locate(/obj/Skills/AutoHit/CoiledSlash, src))
 							src << "You learn how to add the momentum of your spin to perform an unavoidable slash!"
 							src.AddSkill(new/obj/Skills/AutoHit/CoiledSlash)
-						//Hiten Style now gives Godspeed 1
 						if(!locate(/obj/Skills/AutoHit/NestedSlash, src))
 							src<< "You learn how to strike countless times with incredible speed!"
 							src.AddSkill(new/obj/Skills/AutoHit/NestedSlash)
 					if(src.SagaLevel==3)
+						passiveGain=HITEN_PASSIVES_TIER_3
 						if(!locate(/obj/Skills/Projectile/Sword/Hiten_Mitsurugi/Earth_Dragon_Flash, src))
 							src.AddSkill(new/obj/Skills/Projectile/Sword/Hiten_Mitsurugi/Earth_Dragon_Flash)
 							src << "You learn to strike the ground and unleash a torrent of debris!"
@@ -1229,8 +1234,11 @@ mob
 							src.AddSkill(new/obj/Skills/Queue/Twin_Dragon_Slash)
 							src << "You can deliver a quick blow with your blade only to be followed with a crushing strike from your sheath!"
 					if(src.SagaLevel==4)
-						src << "You learn to unleash Hiten Mitsurugi techniques with even faster alacrity!"
-						passive_handler.Increase("MovementMastery", 5)
+						passiveGain=HITEN_PASSIVES_TIER_4
+						for(var/obj/Skills/Buffs/NuStyle/SwordStyle/Hiten_Mitsurugi_Ryuu/hmr in src.contents)
+							if(hmr.Finisher!="/obj/Skills/Queue/Finisher/True_Flash_Strike")
+								hmr.Finisher="/obj/Skills/Queue/Finisher/True_Flash_Strike"
+								src << "You have refined your finishing technique: True Flash Strike!"
 						var/Choice=alert(src, "Hiten Mitsurugi can follow the path of tradition, embracing the code of a hermit and honorable warrior or can truly become an ultimate tool of murder. What is the mantle you will bear?", "Hiten Path", "Tradition", "Slaughter")
 						if(Choice=="Tradition")
 							src<<"You embrace the path of tradition, sharpening your art and making it a constant presence in your life!"
@@ -1240,10 +1248,7 @@ mob
 							src.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Hitokiri_Battosai)
 							src<<"You embrace the path of a killer and assassin, revealing your true nature in moments of strife!"
 					if(src.SagaLevel==5)
-						for(var/obj/Skills/Buffs/NuStyle/SwordStyle/Hiten_Mitsurugi_Ryuu/hmr in src.contents)
-							if(hmr.Finisher!="/obj/Skills/Queue/Finisher/True_Flash_Strike")
-								hmr.Finisher="/obj/Skills/Queue/Finisher/True_Flash_Strike"
-								src << "You have refined your finishing technique: True Flash Strike!"
+						passiveGain=HITEN_PASSIVES_TIER_5
 						if(!locate(/obj/Skills/AutoHit/Sonic_Sheath, src))
 							src << "You learn to sheath your sword with such authority that it stuns those around you!"
 							src.AddSkill(new/obj/Skills/AutoHit/Sonic_Sheath)
@@ -1253,11 +1258,15 @@ mob
 							src << "You learn of nine killing blows: Kuzuryusen!"
 							src.AddSkill(new/obj/Skills/Queue/Nine_Dragons_Strike)
 					if(src.SagaLevel==6)
+						passiveGain=HITEN_PASSIVES_TIER_6
 						src<<"Your speed transcends mortal limit and you can chase down any foe..."
 						if(!locate(/obj/Skills/Queue/Heavenly_Dragon_Flash, src))
 							src << "You learn the ultimate killing technique...even if you avoid the fangs of the flying dragon, the claws will rip you apart!"
 							src.AddSkill(new/obj/Skills/Queue/Heavenly_Dragon_Flash)
-
+					if(src.SagaLevel==7)
+						passiveGain=HITEN_PASSIVES_TIER_7
+						src << "Your blade can cull even the gods."
+					if(passiveGain.len > 0) passive_handler.increaseList(passiveGain);
 				if("Ansatsuken")
 
 					if(src.SagaLevel>=1&&src.SagaLevel<4)
@@ -1891,49 +1900,48 @@ mob
 				if("Caladbolg")
 					src.AddSkill(new/obj/Skills/Projectile/Zone_Attacks/Caladbolg)
 mob/Admin3/verb
-    SagaRemoval(mob/Players/P in players)
-        set category="Admin"
-        var/Choice=input(usr, "Are you sure you want to remove [P]'s saga?", "Saga Decision") in list("Yes", "No")
-        if(Choice=="No")
-            return
-
-        var/list/obj/Skills/SagaSkills = list("/obj/Skills/Buffs/SpecialBuff/Spiral","/obj/Skills/Buffs/SpecialBuff/King_Of_Courage",\
-    "/obj/Skills/AutoHit/Pegasus_Meteor_Fist","/obj/Skills/Queue/Rising_Dragon_Fist",\
-    "/obj/Skills/Projectile/Diamond_Dust","/obj/Skills/Projectile/Nebula_Stream",\
-    "/obj/Skills/Queue/Phoenix_Demon_Illusion_Strike","/obj/Skills/AutoHit/Unicorn_Gallop",\
-    "/obj/Skills/Buffs/ActiveBuffs/Persona","/obj/Skills/Buffs/SpecialBuffs/King_of_Braves",\
-    "/obj/Skills/Buffs/SlotlessBuffs/Will_Knife","/obj/Skills/Buffs/SlotlessBuffs/Protect_Shade",\
-    "/obj/Skills/Projectile/King_of_Braves/Broken_Magnum","/obj/Skills/Buffs/SlotlessBuffs/Copy_Blade",\
-    "/obj/Skills/Buffs/SlotlessBuffs/Projection","/obj/Skills/Buffs/NuStyle/SwordStyle/Sword_Savant",\
-    "/obj/Skills/Buffs/SlotlessBuffs/Magic/Reinforce_Self","/obj/Skills/Queue/JawStrike",\
-    "/obj/Skills/Queue/FallingBlade","/obj/Skills/Buffs/NuStyle/UnarmedStyle/Ansatsuken_Style",\
-    "/obj/Skills/Projectile/Ansatsuken/Hadoken","/obj/Skills/Queue/Shoryuken","/obj/Skills/AutoHit/Tatsumaki",\
-    "/obj/Skills/Buffs/ActiveBuffs/Eight_Gates","/obj/Skills/Queue/Front_Lotus","/obj/Skills/AutoHit/Sharingan_Genjutsu",\
-    "/obj/Skills/Buffs/SpecialBuffs/Sharingan","/obj/Skills/Buffs/NuStyle/UnarmedStyle/Move_Duplication",\
-    "/obj/Skills/Buffs/SlotlessBuffs/Spirit_Sword","/obj/Skills/Buffs/SlotlessBuffs/Spirit_Bow",\
-    "/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Hero_Soul","/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Hero_Heart",\
-    "/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Prismatic_Hero","/obj/Skills/Buffs/ActiveBuffs/Keyblade")
-
-        if(P.Saga == "Cosmo")
-            P.KiControlMastery-=1
-//Later add removing it based on path, lazy rn. Can just check for them all and remove them.
-        if(P.Saga == "Hiten Mitsurugi-Ryuu")
-            P.passive_handler.Decrease("SlayerMod", 0.625)
-            P.passive_handler.Decrease("Pursuer", 0.5)
-            P.passive_handler.Decrease("SuperDash", 0.25)
-            P.passive_handler.Decrease("Godspeed", 0.25)
-            P.passive_handler.Set("FavoredPrey", null)
-        if(P.Saga == "Ansatsuken")
-            P.passive_handler.Decrease("SlayerMod", 0.625)
-            P.passive_handler.Set("FavoredPrey", null)
-        for(var/x=1, x<=SagaSkills.len,x++)
-            var/obj/Skills/s = P.FindSkill(SagaSkills[x])
-            if(s)
-                P.contents -= s
-                P << "[s] removed."
-                del s
-
-        P.ClothBronze=null
-        P.SagaLevel=0
-        P.Saga=null
-        Log("Admin","[ExtractInfo(usr)] removed Saga from [P].")
+	SagaRemoval(mob/Players/P in players)
+		set category="Admin"
+		var/Choice=input(usr, "Are you sure you want to remove [P]'s saga?", "Saga Decision") in list("Yes", "No")
+		if(Choice=="No") return
+		var/list/obj/Skills/SagaSkills = list("/obj/Skills/Buffs/SpecialBuff/Spiral","/obj/Skills/Buffs/SpecialBuff/King_Of_Courage",\
+"/obj/Skills/AutoHit/Pegasus_Meteor_Fist","/obj/Skills/Queue/Rising_Dragon_Fist",\
+"/obj/Skills/Projectile/Diamond_Dust","/obj/Skills/Projectile/Nebula_Stream",\
+"/obj/Skills/Queue/Phoenix_Demon_Illusion_Strike","/obj/Skills/AutoHit/Unicorn_Gallop",\
+"/obj/Skills/Buffs/ActiveBuffs/Persona","/obj/Skills/Buffs/SpecialBuffs/King_of_Braves",\
+"/obj/Skills/Buffs/SlotlessBuffs/Will_Knife","/obj/Skills/Buffs/SlotlessBuffs/Protect_Shade",\
+"/obj/Skills/Projectile/King_of_Braves/Broken_Magnum","/obj/Skills/Buffs/SlotlessBuffs/Copy_Blade",\
+"/obj/Skills/Buffs/SlotlessBuffs/Projection","/obj/Skills/Buffs/NuStyle/SwordStyle/Sword_Savant",\
+"/obj/Skills/Buffs/SlotlessBuffs/Magic/Reinforce_Self","/obj/Skills/Queue/JawStrike",\
+"/obj/Skills/Queue/FallingBlade","/obj/Skills/Buffs/NuStyle/UnarmedStyle/Ansatsuken_Style",\
+"/obj/Skills/Projectile/Ansatsuken/Hadoken","/obj/Skills/Queue/Shoryuken","/obj/Skills/AutoHit/Tatsumaki",\
+"/obj/Skills/Buffs/ActiveBuffs/Eight_Gates","/obj/Skills/Queue/Front_Lotus","/obj/Skills/AutoHit/Sharingan_Genjutsu",\
+"/obj/Skills/Buffs/SpecialBuffs/Sharingan","/obj/Skills/Buffs/NuStyle/UnarmedStyle/Move_Duplication",\
+"/obj/Skills/Buffs/SlotlessBuffs/Spirit_Sword","/obj/Skills/Buffs/SlotlessBuffs/Spirit_Bow",\
+"/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Hero_Soul","/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Hero_Heart",\
+"/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Prismatic_Hero","/obj/Skills/Buffs/ActiveBuffs/Keyblade");
+		if(P.Saga == "Cosmo") P.KiControlMastery-=1
+		if(P.Saga == "Hiten Mitsurugi-Ryuu")
+			P.passive_handler["SlayerMod"] = 0
+			P.passive_handler["Flicker"] = 0
+			P.passive_handler["Pursuer"] = 0
+			P.passive_handler["GodSpeed"] = 0
+			P.passive_handler["AttackSpeed"] = 0
+			P.passive_handler["Brutalize"] = 0
+			P.passive_handler["MovementMastery"] = 0
+			P.passive_handler["TechniqueMastery"] = 0
+			P.passive_handler["AsuraStrike"] = 0
+			P.passive_handler["FavoredPrey"] = null;
+		if(P.Saga == "Ansatsuken")
+			P.passive_handler.Decrease("SlayerMod", 0.625)
+			P.passive_handler.Set("FavoredPrey", null)
+		for(var/x=1, x<=SagaSkills.len,x++)
+			var/obj/Skills/s = P.FindSkill(SagaSkills[x])
+			if(s)
+				P.contents -= s
+				P << "[s] removed."
+				del s
+		P.ClothBronze=null
+		P.SagaLevel=0
+		P.Saga=null
+		Log("Admin","[ExtractInfo(usr)] removed Saga from [P].")
