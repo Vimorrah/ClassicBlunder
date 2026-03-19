@@ -41,7 +41,7 @@ world
 		GeneratePlayActionDatabase()
 		updatePassiveInfo();
 		//initRitualDatabase()
-
+		
 		generateSwapMaps()
 	Del()
 		..()
@@ -100,6 +100,7 @@ proc/BootWorld(var/blah)
 			spawn()Add_Technology()
 			spawn()Add_Enchantment()
 			spawn()InitializeSigCombos()
+			spawn()initMagicNodes()
 			globalStorage = new()
 			generateVersionDatum()
 			spawn()
