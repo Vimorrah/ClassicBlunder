@@ -120,82 +120,72 @@
 /mob/verb/
     Show_Magic_Tree()
         set category="Utility"
-        if(loadingTree) return
+        if(loadingTree || nodeing) return
+        nodeing=1;
         setMagicTreeToElement();
+        nodeing=0;
 
     Show_Water_Tree()
         set hidden=1;
         set name=".ShowWaterTree"
-        if(loadingTree) return
+        if(loadingTree || nodeing) return
+        nodeing=1;
         setMagicTreeToWater();
+        nodeing=0;
     
     Show_Fire_Tree()
         set hidden=1;
         set name=".ShowFireTree"
-        if(loadingTree) return
+        if(loadingTree || nodeing) return
+        nodeing=1;
         setMagicTreeToFire();
+        nodeing=0;
     
     Show_Air_Tree()
         set hidden=1;
         set name=".ShowAirTree";
-        if(loadingTree) return
+        if(loadingTree || nodeing) return
+        nodeing=1;
         setMagicTreeToAir();
+        nodeing=0;
     
     Show_Earth_Tree()
         set hidden=1;
         set name=".ShowEarthTree";
-        if(loadingTree) return
+        if(loadingTree || nodeing) return
+        nodeing=1;
         setMagicTreeToEarth();
+        nodeing=0;
     
     Show_Light_Tree()
         set hidden=1;
         set name=".ShowLightTree";
-        if(loadingTree) return
+        if(loadingTree || nodeing) return
+        nodeing=1;
         setMagicTreeToLight();
+        nodeing=0;
     
     Show_Time_Tree()
         set hidden=1;
         set name=".ShowTimeTree";
-        if(loadingTree) return
+        if(loadingTree || nodeing) return
+        nodeing=1;
         setMagicTreeToTime();
+        nodeing=0;
     
     Show_Dark_Tree()
         set hidden=1;
         set name=".ShowDarkTree";
-        if(loadingTree) return
+        if(loadingTree || nodeing) return
+        nodeing=1;
         setMagicTreeToDark();
+        nodeing=0;
     
     Show_Space_Tree()
         set hidden=1;
         set name=".ShowSpaceTree";
+        if(loadingTree || nodeing) return
+        nodeing=1;
         setMagicTreeToSpace();
-
-#ifdef DEBUGGING
-/mob/verb/
-    DEBUG_MAGIC_TREE()
-        set category="Debug"
-        for(var/x in glob.WaterTreeNodes)
-            src << "[x] is defined in water tree nodes.";
-        for(var/x in glob.FireTreeNodes)
-            src << "[x] is defined in fire tree nodes.";
-        for(var/x in glob.AirTreeNodes)
-            src << "[x] is defined in air tree nodes.";
-        for(var/x in glob.EarthTreeNodes)
-            src << "[x] is defined in earth tree nodes.";
-        for(var/x in glob.LightTreeNodes)
-            src << "[x] is defined in Light tree nodes.";
-        for(var/x in glob.TimeTreeNodes)
-            src << "[x] is defined in time tree nodes.";
-        for(var/x in glob.DarkTreeNodes)
-            src << "[x] is defined in dark tree nodes.";
-        for(var/x in glob.SpaceTreeNodes)
-            src << "[x] is defined in space tree nodes.";
-        
-    DEBUG_INIT_MAGIC_TREE()
-        set category="Debug"
-        initMagicNodes();
-    DEBUG_CLEAR_MAGIC_TREE()
-        set category="Debug"
-        clearMagicNodes();
-#endif
+        nodeing=0;
         

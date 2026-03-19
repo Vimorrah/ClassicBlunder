@@ -159,12 +159,18 @@ globalTracker/var
     SecondElementPotential=20;
     AdvancedElementPotential=40;
 
+/mob/var/
+    tmp/nodeing=0;
+
 /mob/verb/
     unlockMagicNode(node as text)
         set name=".unlockMagicNode"
         set hidden = 1;
+        if(nodeing) return;
         if(!(node in VALID_MAGIC_NODES)) return;
+        nodeing=1;
         unlockNodeChoice(node);
+        nodeing=0;
 
 /mob/proc/unlockNodeChoice(nodeName)
     var/list/currentMagicTreeNodes = glob.vars["[magicTreeDisplayed]TreeNodes"];
@@ -226,6 +232,9 @@ globalTracker/var
     
 
 /mob/proc/canUnlockMagicTree(element)
+    if(RPPSpendable < glob.MagicNodeRPPCost)
+        alert(src, "You don't have enough RPP to buy this tree / node!", "ERROR", "OK");
+        return;
     if(!(element in VALID_MAGIC_ELEMENTS))
         alert(src, "Uhm? Somehow, you've tried to unlock an element that doesn't exist in the valid element list...", "ERROR", "OK");
         return; //if this isn't a real element
@@ -258,6 +267,7 @@ globalTracker/var
             alert("You don't have any existing arcane knowledge to skew your perception. You can freely unlock another branch of magic!");
         if(1)
             alert("You must fully understand your first branch of arcane knowledge before diluting it with another path, and even then, it may take some time to learn new elemental principles. (Master your first Tree and then attempt to learn after potential [glob.SecondElementPotential])");
+            if(Potential < glob.SecondElementPotential) return 0;
         if(2)
             alert("You've mastered all the magic you can without dedicating yourself as a mage (Investment of a T3).  Are you sure you want to give up other avenues of power?");
         if(3)
@@ -285,9 +295,10 @@ globalTracker/var
     unlockNode(glob.vars["[element]TreeNodes"][nodeName]);
 
 /mob/proc/unlockNode(magic_node/mn)
+    SpendRPP(glob.MagicNodeRPPCost);
     acquiredMagicNodes |= mn;
     availableMagicNodes |= mn.unlocksNodes;
-    DEBUGMSG("unlocking node [mn]");
+    src << "Unlocked node [mn.name]!";
     updateSelectionNodes();
 
 /mob/proc/unlockMagicTree(element)
@@ -304,6 +315,9 @@ globalTracker/var
     Unlock_Access_Node(element as text)
         set name = ".unlockAccessNode"
         set hidden = 1;
+        if(nodeing) return;
         if(!canUnlockMagicTree(element)) return;
+        nodeing=1;
         if(unlockTreeChoice(element))
             unlockMagicTree(element);
+        nodeing=0;
