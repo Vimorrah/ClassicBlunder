@@ -679,12 +679,11 @@ proc/Save_Objects()
 	if(Amount % 500 != 0)
 		F["Types"]<<Types
 		F["Icons"]<<Icons
-	hacklol
-	if(fexists("Saves/Itemsave/File[E++]"))
-		fdel("Saves/Itemsave/File[E++]")
-		world<<"<small>Server: Objects DEBUG system check: extra objects file ([E++]) deleted!"
-		E++
-		goto hacklol
+	var/cleanup_file = E + 1
+	while(fexists("Saves/Itemsave/File[cleanup_file]"))
+		fdel("Saves/Itemsave/File[cleanup_file]")
+		world<<"<small>Server: Objects DEBUG system check: extra objects file ([cleanup_file]) deleted!"
+		cleanup_file++
 	world<<"<small>Server: Objects Saved ([Amount])."
 
 proc/Load_Objects()
