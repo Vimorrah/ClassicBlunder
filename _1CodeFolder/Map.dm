@@ -137,7 +137,7 @@ proc/Destroy(turf/A,var/DestroyDamageMulti)
 
 obj/Turfs
 	Health=100
-	Savable=0
+	Savable=1
 	Destructable=1
 	FlyOverAble=1
 	Spawn_Timer=3000
@@ -257,6 +257,7 @@ mob/var/tmp/UpgradeTime=0
 turf
 	Health=9000000000000000
 	IconsX
+		Savable=0
 		icon='NewTurfs.dmi'
 		Icon1
 			icon_state="1"
