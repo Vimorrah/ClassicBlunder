@@ -1637,13 +1637,17 @@ mob
 				if("Keyblade")
 					if(src.SagaLevel==2)
 						var/list/Options=glob.Keychains
-						for(var/o in src.Keychains)
-							Options.Remove(o)
-						var/Choice=input(usr, "You've gained the ability to change your keychain.  Which one do you choose?", "Keychain Ascension") in Options
-						if(Choice=="Cancel")
-							return
+						var/keybladedecision
+						var/Choice
+						while(keybladedecision!="Yes")
+							for(var/o in src.Keychains)
+								Options.Remove(o)
+							Choice=input(usr, "You've gained the ability to change your keychain.  Which one do you choose?", "Keychain Ascension") in Options
+							var/KBPassives=GetKeybladePassives(Choice,src.SagaLevel)
+							src<<"<b>Note, some of these passives may scale based on your SagaLevel. Most of the ones that would have scaling effects do.</b>"
+							src<<"<b>Passives:</b>[KBPassives]"
+							keybladedecision=alert(src, "Is [Choice] the keychain you want?", "Yes", "No")
 						src.Keychains.Add(Choice)
-						src << "You've obtained your first keychain! ([Choice])])"
 						src.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/Attach_Keychain)
 				/*		var/Choice2 = prompt("Your mastery of both keyblades and magical elements allows you to refine your command style.  Which style do you develop?", "Command Style", list("Firestorm", "Diamond Dust", "Thunderbolt"))
 						switch(Choice2)
