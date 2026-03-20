@@ -2113,6 +2113,11 @@ mob/proc/Grab_Effects(var/mob/P)
 				if(P.KO)
 					P.Conscious()
 
+	if(src.passive_handler["WarpPoint"] && ismob(P))
+		var/obj/Skills/Grapple/Flashback/fb = src.FindSkill(/obj/Skills/Grapple/Flashback)
+		if(fb && src.warp_strike_saved_loc)
+			fb.FlashbackTrigger(src, P)
+
 	if(src.Secret=="Eldritch" && P.KO && !P.HasMagicTaken() && !isAI(P) && src.Lethal)
 		var/confirm = src.prompt("You can feel the threads of [P]'s magic circuits. Are they your's, now?", "Take Magic", list("Yes", "No"));
 		if(confirm=="Yes")

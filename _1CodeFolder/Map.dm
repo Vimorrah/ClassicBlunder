@@ -257,6 +257,7 @@ mob/var/tmp/UpgradeTime=0
 turf
 	Health=9000000000000000
 	IconsX
+		Savable=0
 		icon='NewTurfs.dmi'
 		Icon1
 			icon_state="1"

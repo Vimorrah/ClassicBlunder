@@ -427,3 +427,55 @@ obj/Skills/Projectile
 		ProjectileSpin = 40
 		Cooldown = 30
 		EnergyCost = 5
+
+// WarpPoint timed buff - granted when Divine Warp Strike projectile hits an enemy
+// Provides the WarpPoint passive for 30 seconds. On expiry, clears the saved warp location.
+obj/Skills/Buffs/SlotlessBuffs/Autonomous/WarpPoint_Buff
+	name = "Warp Point"
+	Cooldown = 1
+	AlwaysOn = 1
+	NeedsPassword = 1
+	passives = list("WarpPoint" = 1)
+	TimerLimit = 30
+	ActiveMessage = "locks in a warp point!"
+	OffMessage = "loses their warp point."
+	HandleBuffDeactivation(mob/source)
+		if(source)
+			source.warp_strike_saved_loc = null
+		..()
+
+// Flashback - auto-triggered on a successful grab while the WarpPoint passive is active.
+// Deals minor damage to the grabbed target and teleports the user back to their saved warp location.
+obj/Skills/Grapple/Flashback
+	name = "Flashback"
+	Cooldown = 0
+	DamageMult = 4
+	StrRate = 1
+	ThrowMult = 0
+	ThrowAdd = 0
+	UnarmedOnly = 0
+	TriggerMessage = "flashes back to their warp point, leaving"
+	proc/FlashbackTrigger(mob/User, mob/Target)
+		if(!User || !Target || !User.warp_strike_saved_loc)
+			return
+		var/userPower = User.getPower(Target)
+		var/statPower = User.getStatDmg2(unarmed=1) * StrRate
+		var/endFactor = Target.getEndStat(1)
+		var/Damage = (userPower**glob.DMG_POWER_EXPONENT) * (glob.CONSTANT_DAMAGE_EXPONENT+glob.GRAPPLE_EFFECTIVNESS) ** -(endFactor**glob.DMG_END_EXPONENT / statPower**glob.DMG_STR_EXPONENT)
+		Damage *= User.GetDamageMod()
+		Damage *= DamageMult
+		var/extra = User.passive_handler.Get("Muscle Power") / glob.MUSCLE_POWER_DIVISOR
+		Damage *= (glob.GRAPPLE_MELEE_BOON + extra)
+		Damage *= glob.GRAPPLE_DAMAGE_MULT
+		User.DoDamage(Target, Damage, 1, 0)
+		OMsg(User, "[User] [TriggerMessage] [Target] behind!")
+		var/turf/dest = User.warp_strike_saved_loc
+		if(Target.grabbed == User)
+			Target.grabbed = null
+		if(User.Grab == Target)
+			User.Grab = null
+		// Flash white, teleport, then fade the glow back out - mirroring WarpUserFlashChange
+		animate(User, color=list(1,0,0, 0,1,0, 0,0,1, 1,1,1), time=2)
+		sleep(2)
+		User.loc = dest
+		User.warp_strike_restore_color()

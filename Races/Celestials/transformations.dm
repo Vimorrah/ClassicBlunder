@@ -23,7 +23,7 @@ transformation
 
 			transform(mob/user, forceTrans)
 				var/armory_count = get_divine_armory_count(user)
-				var/add_per_stat = 0.1 + (armory_count * 0.2)
+				var/add_per_stat = 0.1 + (armory_count * 0.4)
 				strengthadd = add_per_stat
 				enduranceadd = add_per_stat
 				forceadd = add_per_stat
@@ -40,6 +40,8 @@ transformation
 			transform_animation(mob/user)
 				if(!locate(/obj/Skills/Projectile/Warp_Strike_MasterOfArms, user))
 					user.AddSkill(new/obj/Skills/Projectile/Warp_Strike_MasterOfArms)
+				if(!locate(/obj/Skills/Grapple/Flashback, user))
+					user.AddSkill(new/obj/Skills/Grapple/Flashback)
 				LightningStrike2(user, Offset=0)
 				spawn(5)
 					LightningStrike2(user, Offset=1)

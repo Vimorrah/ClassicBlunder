@@ -6055,6 +6055,8 @@ obj
 								src.Owner.Comboz(a)
 							if(src.WarpUserFlashChange && src.Owner)
 								src.Owner.warp_strike_restore_color()
+							if(SkillPath == /obj/Skills/Projectile/Warp_Strike_MasterOfArms && Owner)
+								Owner.buffSelf(/obj/Skills/Buffs/SlotlessBuffs/Autonomous/WarpPoint_Buff)
 						if(istype(src.Owner, /mob/Player/AI))
 							if(istype(a, /mob/Player/AI))
 								for(var/x in src.Owner:ai_alliances)
