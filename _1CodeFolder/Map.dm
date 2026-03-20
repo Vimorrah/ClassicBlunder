@@ -137,7 +137,7 @@ proc/Destroy(turf/A,var/DestroyDamageMulti)
 
 obj/Turfs
 	Health=100
-	Savable=1
+	Savable=0
 	Destructable=1
 	FlyOverAble=1
 	Spawn_Timer=3000

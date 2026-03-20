@@ -1004,7 +1004,9 @@ mob/Admin2/verb
 
 	Edit(atom/A in world)
 		set category = "Admin"
-
+		var/list/browserOptions = list()
+		browserOptions.Add("+find");
+		winset(usr, null, list2params(browserOptions));
 		if(A.type in typesof(/obj/Items))
 			if (A?:Augmented)
 				A?:EditAll(src)
