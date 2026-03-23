@@ -1188,7 +1188,7 @@ mob
 		// forgive the sin below, im not replacing basestat() in all the codebase
 		getEnhanced(statName)
 			var/enhance = vars["Enhanced[statName]"] * 0.3
-			if(isRace(ANDROID)||passive_handler.Get("Enhanced Cybernetic Mainframe"))
+			if(isRace(ANDROID)||CyberneticMainframe)
 				enhance = vars["Enhanced[statName]"] * 0.6
 			if(Target && ismob(Target))
 				if(Target.passive_handler["Rusting"])
@@ -2273,6 +2273,14 @@ mob
 			src.AngerMax=1+((src.AngerMax-1)*num)
 		AngerDiv(var/num)
 			src.AngerMax=1+((src.AngerMax-1)/num)
+		LunarWrathAnger()
+			if(src.ManaAmount>=50)
+				if(src.passive_handler.Get("LunarWrath")&&!src.passive_handler.Get("Unrelenting Wrath"))
+					src.AngerMax=1+(src.ManaAmount/100)
+			else if(src.passive_handler.Get("Unrelenting Wrath"))
+				src.AngerMax=5
+			else
+				src.AngerMax=1
 		WeirdAngerStuff() //additive anger that won't be affected by mult
 			var/AngerTotal
 			if(src.passive_handler.Get("Red Hot Rage"))
@@ -3235,9 +3243,10 @@ mob
 			for(var/obj/Skills/s in src.Skills)
 				if(s.SignatureTechnique)
 					if(!s.SagaSignature)
-						if(!src.BuffOn(s))
-							src << "[s] has been removed as it is not one of your saga signatures."
-							del s
+						if(!s.CyberSignature&&src.CyberneticMainframe)
+							if(!src.BuffOn(s))
+								src << "[s] has been removed as it is not one of your saga signatures."
+								del s
 
 		MovementChargeBuildUp(var/Mult=1)
 			//this ticks per second

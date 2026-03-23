@@ -2686,7 +2686,7 @@ obj/Skills/Utility
 			set category="Utility"
 			if(src.Using)
 				return
-			if(usr.GetAndroidIntegrated()<2+usr.AscensionsAcquired)
+			if(usr.GetAndroidIntegrated()<3+usr.AscensionsAcquired)
 				src.Using=1
 				var/obj/Items/Gear/Choice
 				var/list/obj/Items/Gear/IG=list("Cancel")
@@ -2845,6 +2845,26 @@ obj/Skills/Utility
 				OMsg(usr, "[usr] decides not to tinker.")
 				src.Using=0
 				return
+			if(M.CyberneticMainframe)
+				switch(M.AscensionsAcquired)
+					if(0 to 1)
+						if(M.EnhanceChipsMax<10)
+							M.EnhanceChipsMax=10
+					if(2)
+						if(M.EnhanceChipsMax<16)
+							M.EnhanceChipsMax=16
+					if(3)
+						if(M.EnhanceChipsMax<22)
+							M.EnhanceChipsMax=22
+					if(4)
+						if(M.EnhanceChipsMax<26)
+							M.EnhanceChipsMax=26
+					if(5)
+						if(M.EnhanceChipsMax<30)
+							M.EnhanceChipsMax=30
+					if(6)
+						if(M.EnhanceChipsMax<34)
+							M.EnhanceChipsMax=34
 
 
 			if(M.EnhanceChips>=M.EnhanceChipsMax)
@@ -2897,7 +2917,7 @@ obj/Skills/Utility
 				ModChoices.Remove("Ray Gear")
 				ModChoices.Remove("Overdrive")
 
-			if(M.isRace(ANDROID))
+			if(M.isRace(ANDROID)||M.CyberneticMainframe)
 				if(M.Maimed||M.HealthCut)
 					ModChoices.Add("Repair")
 				if("Bio-Mechanical Augmentations" in usr.knowledgeTracker.learnedKnowledge || (usr.isRace(ANDROID)))

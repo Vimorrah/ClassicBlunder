@@ -431,7 +431,7 @@ obj/Items/Tech
 
 	Fiber_Bonding_Agent
 		TechType="RepairAndConversion"
-		SubType="Molecular Technology"
+		SubType="Modular Weaponry"
 		icon='Tech.dmi'
 		icon_state="Fiber Bond"
 		Cost=5
@@ -483,7 +483,7 @@ obj/Items/Tech
 
 	Quicksilver_Alloy
 		TechType="RepairAndConversion"
-		SubType="Light Alloys"
+		SubType="Modular Weaponry"
 		icon='Tech.dmi'
 		icon_state="Quicksilver"
 		Cost=5
@@ -613,7 +613,7 @@ obj/Items/Tech
 
 	Resistant_Coating
 		TechType="RepairAndConversion"
-		SubType="Shock Absorbers"
+		SubType="Advanced Plating"
 		icon='Tech.dmi'
 		icon_state="Resin"
 		Cost=5

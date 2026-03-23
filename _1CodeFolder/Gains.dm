@@ -520,10 +520,11 @@ mob
 				src.Revert()
 			if(src.passive_handler.Get("Utterly Powerless") && !src.passive_handler.Get("Our Future"))
 				src.Revert()
-			if(passive_handler.Get("LunarWrath")&&PowerControl>100)
+			if(passive_handler.Get("LunarWrath")&&PowerControl>100&&!passive_handler.Get("Unrelenting Wrath"))
 				var/ManaRando=rand(6,15)
 				src.ManaAmount+=0.5*(ManaRando/10)
 			if(passive_handler.Get("LunarAnger")&&ManaAmount>50)
+				src.LunarWrathAnger()
 				src.Anger()
 			if(passive_handler["TensionPowered"])
 				if(src.canHTM())
@@ -1491,7 +1492,10 @@ mob
 						A.Trigger(src,Override=1)
 					if(A.Triggers)
 						A.Triggers.checkTrigger(src, A)
-
+				if(A.LunarWrath)
+					if(src.ManaAmount>=((src.ManaMax-src.TotalCapacity)*src.GetManaCapMult()))
+						if(!A.Using&&!A.SlotlessOn)
+							A.Trigger(src,Override=1)
 
 				//Deactivations
 				if(A.SlotlessOn)
@@ -1575,6 +1579,10 @@ mob
 								continue
 					if(!src.CheckActive("Eight Gates")&&A.GatesNeeded)
 						if(A.GatesNeeded>src.GatesActive)
+							A.Trigger(src,Override=1)
+							continue
+					if(A.LunarWrath)
+						if(src.ManaAmount<=1)
 							A.Trigger(src,Override=1)
 							continue
 

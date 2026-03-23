@@ -562,6 +562,7 @@ NEW VARIABLES
 	var/InjuryThreshold=0 //min injuries
 	var/TooLittleInjury=0//just for deactivating something
 	var/NeedsInjury=0
+	var/LunarWrath=0
 // New things
 	var/ExhaustedMessage = FALSE
 	var/DesperateMessage = FALSE
@@ -2806,6 +2807,7 @@ NEW VARIABLES
 		MilitaryFrames
 			Overdrive
 				SignatureTechnique=3
+				CyberSignature=1
 				KiControl=1
 				ManaThreshold=0.001
 				passives = list("KiControl" = 1, "ManaLeak" = 1, "AllOutPU" = 1, "Overdrive" = 1)
@@ -2836,6 +2838,7 @@ NEW VARIABLES
 					src.Trigger(usr)
 			Ripper_Mode
 				SignatureTechnique=3
+				CyberSignature=1
 				ManaThreshold=0.001
 				passives = list("ManaLeak" = 1, "Steady" = 2, "Godspeed" = 1, "Pursuer" = 1, "Flicker" = 1)
 				ManaLeak=1
@@ -2874,6 +2877,7 @@ NEW VARIABLES
 
 			Armstrong_Augmentation
 				SignatureTechnique=3
+				CyberSignature=1
 				ManaThreshold=0.001
 				ManaLeak=1
 				StrMult=1.2
@@ -2904,6 +2908,7 @@ NEW VARIABLES
 
 			Ray_Gear
 				SignatureTechnique=3
+				CyberSignature=1
 				ManaThreshold=0.001
 				ManaLeak=1
 				ForMult=1.3
@@ -11265,7 +11270,7 @@ NEW VARIABLES
 							src.ActiveMessage="is overwhelmed by their inner darkness... but keeps a semblance of who they are!"
 							src.VaizardShatter = 0
 						..()
-						
+
 
 			Minds_Eye
 				TooMuchHealth = 99.8

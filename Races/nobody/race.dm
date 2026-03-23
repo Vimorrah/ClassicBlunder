@@ -15,7 +15,7 @@ race
 		intellect = 3
 		imagination = 0.05
 		classes = list("Samurai", "Sorcerer", "Berserker","Imaginary")
-		stats_per_class = list("Samurai" = list(1.75, 1, 1, 1.75, 1.5, 1.5),"Sorcerer" = list(1,2,1.75,1.5,1.5,1),"Berserker" = list(1.5,1.5,2,1,1,1),"Imaginary" = list(1.5, 1.5, 1, 1.25, 1.25, 1.25))
+		stats_per_class = list("Samurai" = list(1.75, 1, 1, 1.75, 1.5, 1.5),"Sorcerer" = list(1,1.75,2,1.5,1.5,1),"Berserker" = list(1.5,2,1.5,1,1,1),"Imaginary" = list(1.5, 1.5, 1, 1.25, 1.25, 1.25))
 		onFinalization(mob/user)
 			if(!islist(user.race.transformations))
 				user.race.transformations = list()
@@ -33,6 +33,7 @@ race
 			if(user.Class=="Berserker")
 				user.ManaAmount=0
 				user.AddSkill(new /obj/Skills/Queue/Desperation/LunarRave)
+				user.AddSkill(new /obj/Skills/Buffs/SlotlessBuffs/Autonomous/Racial/Nobody/Lunar_Wrath)
 				passives = list("LunarDurability" = 1, "LunarWrath" = 1,"RenameMana" = "WRATH","LunarAnger"=1)
 				user.NobodyOrigin()
 			if(user.Class=="Imaginary")

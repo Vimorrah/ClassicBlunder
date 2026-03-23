@@ -41,7 +41,7 @@ world
 		GeneratePlayActionDatabase()
 		updatePassiveInfo();
 		//initRitualDatabase()
-		
+
 		generateSwapMaps()
 	Del()
 		..()

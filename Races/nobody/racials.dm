@@ -1,11 +1,17 @@
 /obj/Skills/Buffs/SlotlessBuffs/Autonomous/Racial/Nobody/Lunar_Wrath
-    passives = list("Unrelenting Wrath" = 1, "GodSpeed" = 1, "Skimming" = 1)
-    TextColor=rgb(255, 0, 0)
-    Cooldown=-1
-    ActiveMessage="unleashes the anger they keep locked in a cage!"
-    OffMessage="calms their yasai rage..."
-
-    adjust(mob/p)
+	passives = list("Unrelenting Wrath" = 1, "GodSpeed" = 2, "Skimming" = 2,"ManaLeak"=1)
+	TextColor=rgb(255, 0, 0)
+	Cooldown=-1
+	LunarWrath=1
+	ManaDrain=1
+	CustomActive="<b>The light of Kingdom Hearts fills the air, as the wrath of the moon coalesces into a single point!</b>"
+	OffMessage="calms their fury..."
+	StrMult=1.5
+	ForMult=1.5
+	SpdMult=1.5
+	OffMult=1.5
+	KenWaveIcon='KenShockwavePurple.dmi'
+	adjust(mob/p)
 
 /obj/Skills/Buffs/SlotlessBuffs/Racial
 	Void_Blade

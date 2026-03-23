@@ -439,11 +439,11 @@ mob/Admin3/verb
 							choice2=input(P, "What skill do you want?", "Martial Keyblade Skill") in Choices2
 							switch(choice2)
 								if("Sonic Blade")
-									confirm=alert(P, "Quickly dash towards your opponent three times.", "Yes", "No")
+									confirm=alert(P, "Quickly dash towards your opponent three times.", "Choice","Yes", "No")
 								if("Strike Raid")
-									confirm=alert(P, "Throw your Keyblade at your opponent in the form of an autohit wave.", "Yes", "No")
+									confirm=alert(P, "Throw your Keyblade at your opponent in the form of an autohit wave.", "Choice","Yes", "No")
 								if("Magnet Burst")
-									confirm=alert(P, "A weak Area-Of-Effect move that pulls in everyone nearby and stuns.", "Yes", "No")
+									confirm=alert(P, "A weak Area-Of-Effect move that pulls in everyone nearby and stuns.", "Choice","Yes", "No")
 						switch(choice2)
 							if("Sonic Blade")
 								P.AddSkill(new/obj/Skills/AutoHit/Sonic_Blade)
@@ -1643,10 +1643,14 @@ mob
 							for(var/o in src.Keychains)
 								Options.Remove(o)
 							Choice=input(usr, "You've gained the ability to change your keychain.  Which one do you choose?", "Keychain Ascension") in Options
-							var/KBPassives=GetKeybladePassives(Choice,src.SagaLevel)
+							var/list/KBPassives=GetKeybladePassives(Choice,src.SagaLevel)
 							src<<"<b>Note, some of these passives may scale based on your SagaLevel. Most of the ones that would have scaling effects do.</b>"
-							src<<"<b>Passives:</b>[KBPassives]"
-							keybladedecision=alert(src, "Is [Choice] the keychain you want?", "Yes", "No")
+							var/description= "Passives:"
+							if(KBPassives.len>0)
+								for(var/i in KBPassives)
+									description += "[i] - [KBPassives[i]]\n"
+							src<<"<b>Passives:</b>[description]"
+							keybladedecision=alert(src, "Is [Choice] the keychain you want?", "Choice","Yes", "No")
 						src.Keychains.Add(Choice)
 						src.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/Attach_Keychain)
 				/*		var/Choice2 = prompt("Your mastery of both keyblades and magical elements allows you to refine your command style.  Which style do you develop?", "Command Style", list("Firestorm", "Diamond Dust", "Thunderbolt"))
@@ -1687,11 +1691,11 @@ mob
 								choiceshield=input(src, "What skill do you want?", "Martial Keyblade Skill") in Choices2
 								switch(choiceshield)
 									if("Sonic Blade")
-										confirmshield=alert(src, "Quickly dash towards your opponent three times.", "Yes", "No")
+										confirmshield=alert(src, "Quickly dash towards your opponent three times.", "Choice","Yes", "No")
 									if("Strike Raid")
-										confirmshield=alert(src, "Throw your Keyblade at your opponent in the form of an autohit wave.", "Yes", "No")
+										confirmshield=alert(src, "Throw your Keyblade at your opponent in the form of an autohit wave.", "Choice","Yes", "No")
 									if("Magnet Burst")
-										confirmshield=alert(src, "A weak Area-Of-Effect move that pulls in everyone nearby and stuns.", "Yes", "No")
+										confirmshield=alert(src, "A weak Area-Of-Effect move that pulls in everyone nearby and stuns.", "Choice","Yes", "No")
 							switch(choiceshield)
 								if("Sonic Blade")
 									src.AddSkill(new/obj/Skills/AutoHit/Sonic_Blade)
@@ -1710,11 +1714,11 @@ mob
 								choice2=input(src, "What tier 1 skill do you want? Selecting the same one you had prior will upgrade it, lowering its cooldown and strengthening certain aspects of it.", "Martial Keyblade Skill") in Choices2
 								switch(choice2)
 									if("Sonic Blade")
-										confirm2=alert(src, "Quickly dash towards your opponent three times. Upgrading boosts the range, damage, and number of rounds.", "Yes", "No")
+										confirm2=alert(src, "Quickly dash towards your opponent three times. Upgrading boosts the range, damage, and number of rounds.", "Choice","Yes", "No")
 									if("Strike Raid")
-										confirm2=alert(src, "Throw your Keyblade at your opponent in the form of an autohit wave. Upgrading boosts the damage and causes you to fire it off multiple times.", "Yes", "No")
+										confirm2=alert(src, "Throw your Keyblade at your opponent in the form of an autohit wave. Upgrading boosts the damage and causes you to fire it off multiple times.", "Choice","Yes", "No")
 									if("Magnet Burst")
-										confirm2=alert(src, "A weak Area-Of-Effect move that pulls in everyone nearby and stuns. Upgrading boosts the range and greatly boosts the damage.", "Yes", "No")
+										confirm2=alert(src, "A weak Area-Of-Effect move that pulls in everyone nearby and stuns. Upgrading boosts the range and greatly boosts the damage.", "Choice","Yes", "No")
 							switch(choice2)
 								if("Sonic Blade")
 									if(!locate(/obj/Skills/AutoHit/Sonic_Blade, src))
@@ -1740,11 +1744,11 @@ mob
 								choice3=input(src, "What tier 2 skill do you want?", "Martial Keyblade Skill") in Choices3
 								switch(choice3)
 									if("Ripple Drive")
-										confirm3=alert(src, "Release a powerful wave of energy with a strong knockback.", "Yes", "No")
+										confirm3=alert(src, "Release a powerful wave of energy with a strong knockback.", "Choice","Yes", "No")
 									if("Stun Impact")
 										confirm3=alert(src, "Queues up a stunning attack.", "Yes", "No")
 									if("Explosion")
-										confirm3=alert(src, "Queue up a weak hit that follows up with a powerful explosive one.", "Yes", "No")
+										confirm3=alert(src, "Queue up a weak hit that follows up with a powerful explosive one.", "Choice","Yes", "No")
 							switch(choice3)
 								if("Ripple Drive")
 									src.AddSkill(new/obj/Skills/AutoHit/Ripple_Drive)

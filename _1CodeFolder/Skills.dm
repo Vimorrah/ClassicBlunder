@@ -21,6 +21,7 @@ obj/Skills
 	var/SignatureTechnique
 	var/SignatureName //lets you label things by a string other than the object name e.g. "Advanced White Magic"
 	var/SagaSignature=0 //lets sagas keep the signature
+	var/CyberSignature=0 //lets cybernetic mainframes keep the signature
 
 	var/Cooldown
 	var/CooldownStatic=0

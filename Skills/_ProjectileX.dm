@@ -1533,6 +1533,22 @@ obj
 //T3 is further down, in Beams.
 
 //T4 gets damage mult 4 - 6.
+			GunKataShot //BIG SHOT mechanic coming sooner or later
+				Buster=0//rate that blast charges
+				DamageMult=0.5
+				BusterDamage=0//max damage when fully charged
+				BusterRadius=1//max radius from charging
+				AccMult=4
+				BusterAccuracy=10
+				BusterSize=2//purely aesthetic
+				Knockback=0
+			//	Explode=2
+				EnergyCost=0
+				Cooldown=0
+				IconLock='Blast - Small.dmi'
+				LockX=0
+				LockY=0
+				Cooldown=0.15
 			SmallLemonThing //BIG SHOT mechanic coming sooner or later
 				Buster=0//rate that blast charges
 				DamageMult=1
@@ -1550,9 +1566,6 @@ obj
 				LockY=0
 				Cooldown=0.15
 				Variation=0
-				verb/SmallLemonThing()
-					set category="Skills"
-					usr.UseProjectile(src)
 			BIG_SHOT //It pulls the strings and makes them ring
 				Buster=0//rate that blast charges
 				DamageMult=7.5
@@ -1570,9 +1583,6 @@ obj
 				LockX=0
 				LockY=0
 				Variation=0
-				verb/BIG_SHOT()
-					set category="Skills"
-					usr.UseProjectile(src)
 			Power_Buster
 				Copyable=4
 				SkillCost=TIER_4_COST
