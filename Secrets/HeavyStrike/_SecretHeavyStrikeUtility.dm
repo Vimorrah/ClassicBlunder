@@ -68,7 +68,7 @@
             return 0;
         var/usedChance = getBlackFlashChance();
         admins << "used [usedChance] for the chance to try blackflash";
-        if(prob(usedChance)) return findOrAddSkill(/obj/Skills/Queue/Secret_Heavy_Strike/Black_Flash/Black_FlashStrike);
+        if(prob(usedChance)) return findOrAddSkill(/obj/Skills/Queue/Secret_Heavy_Strike/Black_Flash/Black_Flash_Strike);
         return findOrAddSkill(/obj/Skills/Queue/Secret_Heavy_Strike/Black_Flash/Divergent_Fist);
     getHakiStrike()
         if(!secretDatum)

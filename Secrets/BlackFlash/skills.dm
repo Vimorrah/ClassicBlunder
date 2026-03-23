@@ -9,6 +9,7 @@
 		SpdMult=1.25
 		DefMult=1.25
 		OffMult=1.25
+		IconLock='CE Divergent Fist.dmi'
 		TimerLimit=90
 		passives = list("TechniqueMastery" = 5, "BuffMastery" = 10, "MovementMastery" = 10) // this is temp i just grabbed that shit from x-antibody LOL
 		DarkChange=1
@@ -41,7 +42,7 @@
 	JJKNarrate("In other words... For one minute and thirty seconds...");
 	sleep(30)
 	JJKNarrate("<b>[src] fights at one hundred and twenty percent of their potential.</b>");
-	
+
 
 /mob/proc/
 	getBlackFlashSecret()
@@ -56,5 +57,10 @@
 	getBlackFlashChance()
 		var/SecretInformation/BlackFlash/bf = getBlackFlashSecret();
 		var/force = bf.BlackFlashForcedChance;
+		if(bf.BlackFlashChance < bf.BlackFlashBaseChance)
+			bf.BlackFlashChance = bf.BlackFlashBaseChance
 		if(force) return force;
-		else return max(bf.BlackFlashChance, bf.BlackFlashBaseChance);
+		else
+			bf.BlackFlashChance += 5
+			admins << "upping BlackFlashChance to [bf.BlackFlashChance]"
+			return clamp(bf.BlackFlashChance-5, bf.BlackFlashBaseChance, 90);

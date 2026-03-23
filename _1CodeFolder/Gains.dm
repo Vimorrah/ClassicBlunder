@@ -215,6 +215,11 @@ var/game_loop/mainLoop = new(0, "newGainLoop")
 		if(Secret == "Zombie" && MeditateTime == 70)
 			zombieGetUps = 0
 			src << "Your get ups have been reset"
+		if(Secret == "Black Flash")
+			var/SecretInformation/BlackFlash/bf = getBlackFlashSecret();
+			if (bf.BlackFlashChance != bf.BlackFlashBaseChance)
+				bf.BlackFlashChance = bf.BlackFlashBaseChance
+				src << "Your Black Flash chance has been reset."
 		if(src.passive_handler.Get("Triple Helix"))
 			src.passive_handler.Set("Triple Helix", 0)
 

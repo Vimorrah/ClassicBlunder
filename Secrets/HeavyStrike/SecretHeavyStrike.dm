@@ -238,17 +238,25 @@
     Cooldown=15;
     Duration=5;
     Divergent_Fist
-        ActiveMessage="lags behind, their strike landing twice from diverging energies..."
-        DamageMult=2
+        ActiveMessage="'s own energy lags behind...!"
+        HitMessage="'s impact is doubled up from their energy lagging behind!"
+        DamageMult=3
+        HitSparkIcon='CE Hitspark.dmi'
+        HitSparkTurns=1
+        HitSparkSize=1
         AccuracyMult=1
         KBAdd=5
         KBMult=3
-    Black_FlashStrike
+    Black_Flash_Strike
         TextColor = "#DC143C";
         ActiveMessage="'s fists sparks black...!"
         HitMessage="lands a <b>BLACK FLASH!!</b>"
-        DamageMult = (2 ** 2.5)
+        DamageMult = (3 ** 2.5)
         AccuracyMult = 10
         KBAdd = 10
+        Duration=4
+        HitSparkIcon='Black Flash Alt.dmi'
+        HitSparkTurns=1
+        HitSparkSize=1
         KBMult = 10
         BuffSelf="/obj/Skills/Buffs/SlotlessBuffs/Autonomous/QueueBuff/BlackFlash_Potential"
