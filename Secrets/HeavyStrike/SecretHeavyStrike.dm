@@ -255,9 +255,15 @@
         AccuracyMult = 10
         KBAdd = 10
         Duration=4
-        HitSparkIcon='Black Flash Alt.dmi'
+        PushOut=2
+        HitSparkX=-14
+        HitSparkY=-12
+        HitSparkSize=2
+        PushOutWaves=3
+        PushOutIcon='DarkKiai.dmi'
+        HitSparkIcon='Black_Flash_Hitspark_1.dmi'
         HitSparkTurns=1
-        HitSparkSize=1
+        HitSparkSize=4
         KBMult = 10
         BuffSelf="/obj/Skills/Buffs/SlotlessBuffs/Autonomous/QueueBuff/BlackFlash_Potential"
         adjust(mob/p)
