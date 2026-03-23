@@ -235,31 +235,20 @@
 //BLACK FLASH
 /obj/Skills/Queue/Secret_Heavy_Strike/Black_Flash
 	Divergent_Fist
-		adjust(mob/p)
-			var/forceChance = p.secretDatum.secretVariable["BlackFlashForcedChance"]
-			var/chance = p.secretDatum.secretVariable["BlackFlashChance"]
-			var/usedChance = 0
-			if (forceChance > 0)
-				usedChance = forceChance
-			else
-				usedChance = chance
-			var/randNum = rand(1, 100)
-			if (randNum < usedChance)
-				p.OMessage(10, "<font color='#DC143C'>[usr]'s fists sparks black...!</font>")
-				HitMessage="<font color='#DC143C'>lands a <b>BLACK FLASH!!</b></font>"
-				KBAdd = 10
-				KBMult = 10
-				DamageMult = 2 ** 2.5
-				AccuracyMult = 10
-				Duration=10
-				Cooldown = 15
-				BuffSelf="/obj/Skills/Buffs/SlotlessBuffs/Autonomous/QueueBuff/BlackFlash_Potential"
-			else
-				p << "Failed roll, chance was [usedChance], roll was [randNum]"
-				ActiveMessage="lags behind, their strike landing twice from diverging energies..."
-				Duration=5
-				DamageMult=2
-				AccuracyMult=1
-				KBAdd=5
-				KBMult=3
-				Cooldown=15
+		ActiveMessage="lags behind, their strike landing twice from diverging energies..."
+		Duration=5
+		DamageMult=2
+		AccuracyMult=1
+		KBAdd=5
+		KBMult=3
+		Cooldown=15
+	Black_FlashStrike
+		ActiveMessage="<font color='#DC143C'>'s fists sparks black...!</font>"
+		HitMessage="<font color='#DC143C'>lands a <b>BLACK FLASH!!</b></font>"
+		KBAdd = 10
+		KBMult = 10
+		DamageMult = 2 ** 2.5
+		AccuracyMult = 10
+		Duration=5
+		Cooldown = 15
+		BuffSelf="/obj/Skills/Buffs/SlotlessBuffs/Autonomous/QueueBuff/BlackFlash_Potential"

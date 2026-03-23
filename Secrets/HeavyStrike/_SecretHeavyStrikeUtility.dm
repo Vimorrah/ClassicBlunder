@@ -48,7 +48,22 @@
             admins << "<b><font size=+1>DEBUG:</font size></b> Somehow, [src] called getBlackFlashStrike() while not having a secretDatum...That's a bug!";
             src << "Your character has called getBlackFlashStrike() while not having a defined secret datum. Admins have been notified, but you can drop a bug report in the Discord as well.";
             return 0;
-        if(secretDatum.currentTier >= 1) return findOrAddSkill(/obj/Skills/Queue/Secret_Heavy_Strike/Black_Flash/Divergent_Fist);
+        if(secretDatum.currentTier >= 1)
+            var/forceChance = secretDatum.secretVariable["BlackFlashForcedChance"]
+            var/chance = secretDatum.secretVariable["BlackFlashChance"]
+            var/baseChance = secretDatum.secretVariable["BlackFlashBaseChance"]
+            var/usedChance = 0
+            if (chance == 0)
+                chance = baseChance
+            if (forceChance > 0)
+                usedChance = forceChance
+            else
+                usedChance = chance
+            var/randNum = rand(1, 100)
+            if (randNum < usedChance)
+                return findOrAddSkill(/obj/Skills/Queue/Secret_Heavy_Strike/Black_Flash/Black_FlashStrike);
+            else
+                return findOrAddSkill(/obj/Skills/Queue/Secret_Heavy_Strike/Black_Flash/Divergent_Fist);
         return 0;
     getHakiStrike()
         if(!secretDatum)
