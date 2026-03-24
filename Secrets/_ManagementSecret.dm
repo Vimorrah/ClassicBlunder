@@ -593,14 +593,23 @@ SecretInformation
 		var/BlackFlashForcedChance = 0; // If above 0, is used to force a certain chance to BFlash
 		var/BlackFlashFirstTimeUse = 1; // Literally just to do some funny narrative yapping like in the series
 		applySecret(mob/p)
+			p << "You feel a new resonance with your own energy..."
 			switch(currentTier)
 				if(1)
-					p << "You feel a new resonance with your own energy..."
 					giveSkills(p)
 					giveVariables(p)
-				else
-					p << "You feel a new resonance with your own energy..."
-					BlackFlashBaseChance = (5*currentTier);
+					BlackFlashBaseChance = 5;
+				if(2)
+					BlackFlashBaseChance = 15;
+				if(3)
+					BlackFlashBaseChance = 25;
+				if(4)
+					BlackFlashBaseChance = 35;
+				if(5)
+					BlackFlashBaseChance = 50;
+				if(6) // are you out of your motherfucking miiiiiiiiiind
+					BlackFlashBaseChance = 60;
+
 
 mob
 	var

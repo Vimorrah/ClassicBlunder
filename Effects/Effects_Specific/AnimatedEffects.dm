@@ -535,7 +535,7 @@ proc
 		var/image/i=image(icon=Shift, layer=layer, loc=t, dir = m.dir, pixel_x = _piX, pixel_y = piY)
 		i.dir = m.dir
 		i.mouse_opacity = 0
-		animate(i, alpha=0)
+		i.alpha = 160
 		world << i
 		if(Shift=='Icons/Turfs/GalSpace.dmi')
 			i.icon_state = "[rand(1,25)]"
@@ -554,7 +554,7 @@ proc
 			i.layer=MOB_LAYER
 			i.icon_state="[rand(1,13)]"
 		flick(i.icon_state, i)
-		animate(i, alpha=255, time=0)
+		animate(i, alpha=160, time=0)
 		spawn(10)
 			animate(i, alpha=0, time=Despawn)
 			sleep(10)
