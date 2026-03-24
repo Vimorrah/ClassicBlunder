@@ -530,6 +530,37 @@ proc
 			sleep(10)
 			del i
 
+	InstantTurfShift(var/Shift, var/turf/t, var/Time=30, var/mob/m, var/layer=MOB_LAYER-0.5, var/Spawn=10, var/Despawn=10,var/state, _piX, piY)
+		if(!m) return
+		var/image/i=image(icon=Shift, layer=layer, loc=t, dir = m.dir, pixel_x = _piX, pixel_y = piY)
+		i.dir = m.dir
+		i.mouse_opacity = 0
+		animate(i, alpha=0)
+		world << i
+		if(Shift=='Icons/Turfs/GalSpace.dmi')
+			i.icon_state = "[rand(1,25)]"
+		if(Shift=='StarPixel.dmi')
+			i.icon_state="[rand(1,2500)]"
+		else if(state)
+			i.icon_state=state
+		else if(Shift=='Mandala.dmi')
+			if(i.loc==m.loc||(get_dist(m.loc,i.loc)==1&&(i.x==m.x||i.y==m.y)))
+				i.icon_state="2"
+			else if(get_dist(m.loc,i.loc)==1)
+				i.icon_state="3"
+			else
+				i.icon_state="[pick(4,1)]"
+		else if(Shift=='amaterasu.dmi')
+			i.layer=MOB_LAYER
+			i.icon_state="[rand(1,13)]"
+		flick(i.icon_state, i)
+		animate(i, alpha=255, time=0)
+		spawn(10)
+			animate(i, alpha=0, time=Despawn)
+			sleep(10)
+			del i
+
+
 	Crater(atom/A, Size=1)
 		set waitfor=0
 		if(!locate(/obj/Effects/Crater) in A.loc)

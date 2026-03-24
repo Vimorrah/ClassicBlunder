@@ -8,6 +8,9 @@
 		EndMult=1.25
 		SpdMult=1.25
 		DefMult=1.25
+		MakesArmor=0
+		TurfShift='WhiteTurfShift.dmi'
+		TurfShiftInstant=1
 		OffMult=1.25
 		IconLock='CE Divergent Fist.dmi'
 		TimerLimit=90

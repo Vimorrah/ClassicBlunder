@@ -262,6 +262,7 @@ NEW VARIABLES
 	var/IconOutline
 	var/TurfShift
 	var/TurfShiftLayer
+	var/TurfShiftInstant = 0
 	var/TrailImage
 	var/VanishImage
 //PU modifiers
@@ -12933,9 +12934,14 @@ mob
 			if(B.TurfShift)
 				if(!B.TurfShiftLayer)
 					B.TurfShiftLayer=MOB_LAYER-0.5
-				for(var/turf/t in Turf_Circle(src, 6))
-					sleep(-1)
-					TurfShift(B.TurfShift, t, 30+(B.CastingTime*30), src, B.TurfShiftLayer)
+				if(B.TurfShiftInstant == 1)
+					for(var/turf/t in Turf_Circle(src, 15))
+						sleep(-1)
+						InstantTurfShift(B.TurfShift, t, 30+(B.CastingTime*30), src, B.TurfShiftLayer)
+				else
+					for(var/turf/t in Turf_Circle(src, 6))
+						sleep(-1)
+						TurfShift(B.TurfShift, t, 30+(B.CastingTime*30), src, B.TurfShiftLayer)
 
 			if(B.TargetOverlay)
 				var/image/im=image(icon=B.TargetOverlay, pixel_x=B.TargetOverlayX, pixel_y=B.TargetOverlayY)
