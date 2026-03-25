@@ -1811,6 +1811,25 @@ NEW VARIABLES
 				adjust(usr)
 				src.Trigger(usr)
 //General
+		Zone
+			SignatureTechnique=3
+			SpdMult=1.4
+			DefMult=1.2
+			EndMult = 0.8
+			passives = list("BlurringStrikes" = 3, "Fury"=4, "Godspeed"=8, "Skimming"=1, "Adrenaline"=1, "Warping"=2);
+			ActiveMessage="has reached their limitations and shattered through all obstacles, a strange energy begins to surround them as they enter their Zone!"
+			OffMessage="releases their strange power."
+			ManaGlowSize=2;
+			ManaGlow="#3399ff"
+			IconLock='SSj2SparksCoolFaster.dmi';
+			adjust(mob/p)//doesn't actually do anythin right now
+			verb/Zone()
+				set category="Skills"
+				if(!altered) adjust(usr);
+				Trigger(usr)
+			verb/Set_Zone_Glow()
+				set category="Utility"
+				ManaGlow=input(usr, "What colour do you want to set your Zone Glow to?", "Zone Colour", "#3399ff") as color|null;
 		Adrenaline_Rush
 			SignatureTechnique=3
 			NeedsHealth=50
