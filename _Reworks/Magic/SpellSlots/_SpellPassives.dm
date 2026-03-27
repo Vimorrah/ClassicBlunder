@@ -1,4 +1,101 @@
+/mob/var/list/acquiredSpellPassives=list();
+
+/obj/Skills/Utility
+    var/tmp/enchanting=0;
+    Enchant_Spell
+        verb/Enchant_Spell()
+            set category="Utility"
+            if(!usr.canEnchant(enchanting)) return;
+            enchanting=1;
+            usr.enchantSpellMain();
+            enchanting=0;
+
+        verb/Disenchant_Spell()//insert the mcr link here
+            set category="Utility"
+            if(!usr.canEnchant(enchanting)) return;
+            enchanting=1;
+            usr.disenchantSpellMain();
+            enchanting=0;
+
+/mob/proc/canEnchant(enchantMenuOpen=0)
+    if(enchantMenuOpen) return 0;
+    if(KO) return 0;
+    return 1;
+
+/mob/proc/enchantSpellMain()
+    var/list/slots = getSpellSlots();
+    if(!slots)
+        src << "You don't have any available spells to enchant!"
+        return;
+    slots.Add("Nevermind");
+    var/list/spellPass = getAvailableSpellPassives();
+    if(!spellPass)
+        src << "You don't have any available spell passives to invest!"
+        return;
+    spellPass.Add("Nevermind");
+
+    var/obj/Skills/slot = input(src, "What spell slot do you want to enchant?", "Enchant Spell") in slots;
+    if(slot=="Nevermind") return;
+
+    var/currentPassives="";
+    for(var/spell_passive/enchantedPassive in slot.SpellPassives)
+        currentPassives += "[enchantedPassive.name]"
+        if(!isLastItemInList(enchantedPassive, slot.SpellPassives)) currentPassives += ", ";
+
+    var/spell_passive/sp = input(src, "What passive do you want to enchant into [slot]? It currently has the following passives:\n[currentPassives]", "Enchant Spell ([slot])") in spellPass;
+    if(sp=="Nevermind") return;
+
+    enchantSpellWithPassive(slot, sp);
+
+
+/mob/proc/isValidEnchantment(obj/Skills/slot, spell_passive/sp)
+    //if we want to put disqualifying mechanics, we can put them here
+    return 1;
+
+/mob/proc/enchantSpellWithPassive(obj/Skills/slot, spell_passive/sp)
+    if(!isValidEnchantment()) return 0;
+    slot.SpellPassives.Add(sp);
+    sp.enchantedIn=slot;
+    src << "You've enchanted [slot] with [sp], increasing its magickal power!";
+
+/mob/proc/getAvailableSpellPassives(element = "All")
+    var/list/r = list();
+    for(var/spell_passive/sp in acquiredSpellPassives)
+        if(sp.enchantedIn) continue
+        if(spellPassiveMatchesElement(sp, element)) r |= sp;
+    return r.len > 0 ? r : 0;
+
+/proc/spellPassiveMatchesElement(spell_passive/sp, element)
+    if(element=="All") return 1;
+    if(sp.spellElement == element) return 1;
+    return 0;
+
+/mob/proc/disenchantSpellMain()
+    var/list/slots = getSpellSlotsWithPassives();
+    if(!slots)
+        src << "You don't have any available spells to disenchant!"
+        return;
+    slots.Add("Nevermind");
+    
+    var/obj/Skills/slot = input(src, "What spell slot do you want to disenchant?", "Disenchant Spell") in slots;
+    if(slot=="Nevermind") return;
+
+    var/list/choices = list("All") + slot.SpellPassives;
+    choices.Add("Nevermind")
+    var/spell_passive/choice = input(src, "What spell passive do you want to disenchant from [slot]?", "Disenchant Spell") in choices;
+    if(choice=="Nevermind") return;
+    if(choice=="All")
+        for(var/spell_passive/sp in slot.SpellPassives)
+            disenchantSpellWithPassive(slot, sp);
+    else disenchantSpellWithPassive(slot, choice);
+
+/mob/proc/disenchantSpellWithPassive(obj/Skills/slot, spell_passive/sp)
+    slot.SpellPassives.Remove(sp);
+    sp.enchantedIn=0;
+    src << "You've dischanted [slot] with [sp], decreasing its magickal resonance...";
+
 /spell_passive
+    var/obj/Skills/enchantedIn;//what skill is it stuck in?
     var/name
     var/flavor
     var/desc
@@ -18,7 +115,6 @@
             if(p in projectileOnlyPassives) desc += "(Projectile Only)"
             if(p in buffOnlyPassives) desc += "(De/Buff Only)"
             if(p != allPassives[allPassives.len]) desc += "\n";
-        
 
     water
         spellElement="Water"

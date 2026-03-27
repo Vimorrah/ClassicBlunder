@@ -8,6 +8,14 @@
     for(var/obj/Skills/s in src)
         if(s.SpellSlot) slots |= s;
     return slots.len > 0 ? slots : 0;
+/mob/proc/getSpellSlotsWithPassives()
+    var/list/slots = list();
+    for(var/obj/Skills/s in src)
+        if(s.SpellSlot)
+            if(s.SpellPassives.len > 0)
+                slots |= s;
+    return slots.len > 0 ? slots : 0;
+    
 
 /mob/verb/find_spell_slots()
     set category="Debug"

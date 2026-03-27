@@ -298,6 +298,7 @@ globalTracker/var
     SpendRPP(glob.MagicNodeRPPCost);
     acquiredMagicNodes |= mn;
     availableMagicNodes |= mn.unlocksNodes;
+    if(mn.nodeType=="Spell Passive") findOrAddSkill(/obj/Skills/Utility/Enchant_Spell);
     src << "Unlocked node [mn.name]!";
     updateSelectionNodes();
 
