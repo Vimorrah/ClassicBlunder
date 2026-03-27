@@ -417,6 +417,10 @@ obj/Items/Tech
 					usr << "You need to get [Choice] reforged.  It is already broken."
 					src.Using=0
 					return
+				if(Choice.Glass&&Choice.HighFrequency)
+					usr << "[Choice] has to be repaired by hand."
+					src.Using=0
+					return
 				usr.Frozen=2
 				usr << "Repairing [Choice]... (This will take 15 seconds)"
 				sleep(150)
@@ -473,7 +477,11 @@ obj/Items/Tech
 				sleep(150)
 				usr.Frozen=0
 				usr << "Finished bonding [Choice]."
-				Choice.ShatterTier+=1
+				Choice.ShatterTier+=5
+				if(Choice.HighFrequency)
+					Choice.ShatterTier+=5
+					Choice.ShatterMax*=2
+					Choice.ShatterMax=round(Choice.ShatterMax)
 				Choice.Conversions="Sharp"//This will flag another shatter tier which won't be repaired by reforging
 				src.TotalStack--
 				if(src.TotalStack<=0)
@@ -542,6 +550,8 @@ obj/Items/Tech
 				usr.Frozen=0
 				usr << "Finished quicksilver bonding [Choice]."
 				Choice.ShatterMax/=2
+				if(Choice.HighFrequency)
+					Choice.ShatterMax*=2
 				Choice.ShatterMax=round(Choice.ShatterMax)
 				if(Choice.ShatterCounter>Choice.ShatterMax)
 					Choice.ShatterCounter=Choice.ShatterMax
