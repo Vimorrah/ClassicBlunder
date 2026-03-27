@@ -2446,7 +2446,10 @@ mob
 					s.onBroken()
 					if(s.Glass)
 						OMsg(src, "[src]'s glass weaponry shatters into a million pieces!")
-						del s
+						if(!s.HighFrequency)
+							del s
+						else if(!s.HighFrequency)
+							OMsg(src, "But luckily, the hilt remains!")
 					if(s.Conjured)
 						OMsg(src, "[src]'s conjured weapontry shatters into arcane mist!")
 						del s
@@ -3183,9 +3186,6 @@ mob
 					return
 				src.saga_up_self()
 				return
-			if(src.CyberneticMainframe)
-				//
-				return
 			if(src.Potential>=glob.progress.T2_STYLES[1]&&src.passive_handler.Get("True Inheritor"))
 				if(!locate(/obj/Skills/Buffs/NuStyle/Legendary/Legacy_Of_The_Fabled_King, src))
 					src.AddSkill(new/obj/Skills/Buffs/NuStyle/Legendary/Legacy_Of_The_Fabled_King)
@@ -3205,7 +3205,8 @@ mob
 				DevelopSignature(src, 2, "Style")
 			if(styles_available(2) && src.Potential>=glob.progress.T2_STYLES[2] && src.req_styles(1, 2))
 				DevelopSignature(src, 2, "Style")
-
+			if(src.CyberneticMainframe)
+				return
 			// if(styles_available(3) && src.Potential>=glob.progress.T3_STYLES[1] && src.req_styles(0, 3))
 			// 	DevelopSignature(src, 3, "Style")
 			if(src.req_pot(glob.progress.T1_SIGS[1]) && src.req_sigs(0, 1))
