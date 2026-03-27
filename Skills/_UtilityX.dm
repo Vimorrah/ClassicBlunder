@@ -958,7 +958,7 @@ obj/Skills/Utility
 			if(usr.ArmamentEnchantmentUnlocked>=4||usr.ForgingUnlocked>=5)
 				if(Type=="Sword"&&Chosen:Class!="Wooden"&&!Chosen:ExtraClass)
 					Upgrades.Add("Refine")
-			if(usr.ArmamentEnchantmentUnlocked>=1||usr.RepairAndConversionUnlocked>=3||"Combat Scanning" in usr.knowledgeTracker.learnedKnowledge))
+			if(usr.ArmamentEnchantmentUnlocked>=1||usr.RepairAndConversionUnlocked>=3||"Combat Scanning" in usr.knowledgeTracker.learnedKnowledge)
 				Upgrades.Add("Fire")
 				Upgrades.Add("Water")
 				Upgrades.Add("Earth")
