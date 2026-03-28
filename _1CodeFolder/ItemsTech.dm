@@ -417,7 +417,7 @@ obj/Items/Tech
 					usr << "You need to get [Choice] reforged.  It is already broken."
 					src.Using=0
 					return
-				if(Choice.Glass&&Choice.HighFrequency)
+				if(istype(Choice, /obj/Items/Sword)&&Choice.Glass&&Choice.HighFrequency)
 					usr << "[Choice] has to be repaired by hand."
 					src.Using=0
 					return
@@ -478,7 +478,7 @@ obj/Items/Tech
 				usr.Frozen=0
 				usr << "Finished bonding [Choice]."
 				Choice.ShatterTier+=5
-				if(Choice.HighFrequency)
+				if(istype(Choice, /obj/Items/Sword)&& Choice.HighFrequency)
 					Choice.ShatterTier+=5
 					Choice.ShatterMax*=2
 					Choice.ShatterMax=round(Choice.ShatterMax)
@@ -550,7 +550,7 @@ obj/Items/Tech
 				usr.Frozen=0
 				usr << "Finished quicksilver bonding [Choice]."
 				Choice.ShatterMax/=2
-				if(Choice.HighFrequency)
+				if(istype(Choice, /obj/Items/Sword)&&Choice.HighFrequency)
 					Choice.ShatterMax*=2
 				Choice.ShatterMax=round(Choice.ShatterMax)
 				if(Choice.ShatterCounter>Choice.ShatterMax)
