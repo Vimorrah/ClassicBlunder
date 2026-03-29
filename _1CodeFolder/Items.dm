@@ -117,6 +117,7 @@ obj/Items
 	var/Ascended=0
 	var/InnatelyAscended=0//for conjured items
 	var/Glass=0//+1 stat levels, but breaky
+	var/HighFrequency = 0
 	var/Enchanted=0
 	var/EnchantType
 
@@ -829,7 +830,6 @@ obj/Items/Sword
 	var/iconAltY=0
 	var/ClassAlt=null
 	var/noHistory = TRUE
-	var/HighFrequency = 0
 	icon_state="Inventory"
 	TechType="Forge"
 	UpdatesDescription=1
