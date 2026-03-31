@@ -1289,7 +1289,7 @@ mob
 			if(amount <= 0) return
 			if(!isInDemonDevilTrigger()) return
 
-			var/rate = 0.0001
+			var/rate = 0.01
 
 			if(passive_handler && passive_handler.Get("Sadist"))
 				var/inc = amount * rate
@@ -1306,7 +1306,7 @@ mob
 			if(amount <= 0) return
 			if(!isInDemonDevilTrigger()) return
 
-			var/rate = 0.0001
+			var/rate = 0.01
 
 			if(passive_handler && passive_handler.Get("Sadist"))
 				var/dec = amount * rate * 0.5
@@ -1479,8 +1479,6 @@ mob
 					Mod*=(1+(BM*glob.BUFF_MASTERY_LOWMULT))
 				else if(Mod>=glob.BUFF_MASTER_HIGHTHRESHOLD)
 					Mod*=(1+(BM*glob.BUFF_MASTERY_HIGHMULT))
-			// Demon Devil Trigger sins bonus
-			Mod += getDevilTriggerSinBonusMult()
 			if(src.Burn)
 				if(passive_handler.Get("BurningShot"))
 					if(src.Burn>0&&src.Burn<=25)
@@ -1541,6 +1539,7 @@ mob
 				Mod += 0.1 * src.StyleRating * src.getStyleBonusMult()
 			// Demon Devil Trigger sins bonus
 			Mod += getDevilTriggerSinBonusMult()
+			Mod += getMazokuSinBonusMult()
 			var/STM=GetStrTransMult()
 			Str*=STM
 			Str*=Mod
@@ -1689,6 +1688,7 @@ mob
 
 			// Demon Devil Trigger sins bonus (additive)
 			Mod += getDevilTriggerSinBonusMult()
+			Mod += getMazokuSinBonusMult()
 
 			var/adaptive = passive_handler.Get("AngerAdaptiveForce")
 			if(adaptive && (src.HasCalmAnger() || passive_handler.Get("EndlessAnger") || Anger))
@@ -1979,6 +1979,7 @@ mob
 				Mod += 0.1 * src.StyleRating * src.getStyleBonusMult()
 			// Demon Devil Trigger sins bonus
 			Mod += getDevilTriggerSinBonusMult()
+			Mod += getMazokuSinBonusMult()
 			var/SpTM=GetSpdTransMult()
 			Spd*=SpTM
 			Spd*=Mod
@@ -2075,6 +2076,7 @@ mob
 				Mod += 0.1 * src.StyleRating * src.getStyleBonusMult()
 			// Demon Devil Trigger sins bonus
 			Mod += getDevilTriggerSinBonusMult()
+			Mod += getMazokuSinBonusMult()
 			var/OTM=GetOffTransMult()
 			Off*=OTM
 			Off*=Mod
@@ -2175,6 +2177,7 @@ mob
 				Mod += 0.1 * src.StyleRating * src.getStyleBonusMult()
 			// Demon Devil Trigger sins bonus
 			Mod += getDevilTriggerSinBonusMult()
+			Mod += getMazokuSinBonusMult()
 			var/DTM=GetDefTransMult()
 			Def*=DTM
 			Def*=Mod

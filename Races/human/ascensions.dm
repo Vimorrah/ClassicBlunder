@@ -14,6 +14,36 @@
 
 ascension
 	human
+		var/dormantDemonPassivesAdded = 0
+
+		proc/applyDormantDemonPassives(mob/owner)
+			if(applied || dormantDemonPassivesAdded || !owner.passive_handler)
+				return
+			if(!owner.passive_handler.Get("DormantDemon"))
+				return
+			passives["HellPower"] = (isnum(passives["HellPower"]) ? passives["HellPower"] : 0) + 0.25
+			passives["HellRisen"] = (isnum(passives["HellRisen"]) ? passives["HellRisen"] : 0) + 0.25
+			passives["AbyssMod"] = (isnum(passives["AbyssMod"]) ? passives["AbyssMod"] : 0) + 1
+			dormantDemonPassivesAdded = 1
+
+		revertAscension(mob/owner)
+			..()
+			if(!dormantDemonPassivesAdded)
+				return
+			if(isnum(passives["HellPower"]))
+				passives["HellPower"] -= 0.25
+				if(passives["HellPower"] <= 0)
+					passives -= "HellPower"
+			if(isnum(passives["HellRisen"]))
+				passives["HellRisen"] -= 0.25
+				if(passives["HellRisen"] <= 0)
+					passives -= "HellRisen"
+			if(isnum(passives["AbyssMod"]))
+				passives["AbyssMod"] -= 1
+				if(passives["AbyssMod"] <= 0)
+					passives -= "AbyssMod"
+			dormantDemonPassivesAdded = 0
+
 		one
 			unlock_potential = ASCENSION_ONE_POTENTIAL
 	//		choices = list("Hero" = /ascension/sub_ascension/human/hero, "Innovative" = /ascension/sub_ascension/human/innovative)
@@ -46,6 +76,7 @@ ascension
 							defense = 0.1
 							endurance = 0.1
 							speed = 0.1
+				applyDormantDemonPassives(owner)
 				..()
 		two
 			unlock_potential = ASCENSION_TWO_POTENTIAL
@@ -77,9 +108,11 @@ ascension
 							force = 0.1
 							defense = 0.1
 							endurance = 0.1
+				applyDormantDemonPassives(owner)
 				..()
 		three
 			unlock_potential = ASCENSION_THREE_POTENTIAL
+			var/mazokuSinChosen = ""
 			passives = list("Tenacity" = 1, "DemonicDurability" = 0.5, "UnderDog"=1, "Persistence" = 1)
 			new_anger_message="grows confident!"
 			on_ascension_message = "You learn the meaning of confidence..."
@@ -116,6 +149,28 @@ ascension
 							force = 0.1
 							defense = 0.1
 							endurance = 0.1
+				applyDormantDemonPassives(owner)
+				..()
+			postAscension(mob/owner)
+				..()
+				if(!owner.passive_handler || !owner.passive_handler.Get("DormantDemon")) return
+				if(mazokuSinChosen != "") return
+				var/sinChoice = input(owner, "A dormant power stirs within you. Which path do you walk?", "Dormant Demon Awakening") in list("Apathy", "Hope")
+				mazokuSinChosen = sinChoice
+				switch(sinChoice)
+					if("Apathy")
+						owner.passive_handler.Increase("ApathyFactor", 1)
+					if("Hope")
+						owner.passive_handler.Increase("HopeFactor", 1)
+						if(!locate(/obj/Skills/Queue/Kibou_ou_Hope, owner))
+							owner.AddSkill(new /obj/Skills/Queue/Kibou_ou_Hope)
+			revertAscension(mob/owner)
+				if(mazokuSinChosen != "" && owner.passive_handler)
+					owner.passive_handler.Decrease(mazokuSinChosen + "Factor", 1)
+					if(mazokuSinChosen == "Hope")
+						var/obj/Skills/Queue/Kibou_ou_Hope/k = locate(/obj/Skills/Queue/Kibou_ou_Hope, owner)
+						if(k) owner.DeleteSkill(k)
+					mazokuSinChosen = ""
 				..()
 
 		four
@@ -148,6 +203,7 @@ ascension
 							force = 0.1
 							defense = 0.1
 							endurance = 0.1
+				applyDormantDemonPassives(owner)
 				..()
 
 		five
@@ -181,6 +237,7 @@ ascension
 							force = 0.1
 							defense = 0.1
 							endurance = 0.1
+				applyDormantDemonPassives(owner)
 				..()
 		six
 			unlock_potential = ASCENSION_SIX_POTENTIAL
@@ -211,4 +268,5 @@ ascension
 							force = 0.1
 							defense = 0.1
 							endurance = 0.1
+				applyDormantDemonPassives(owner)
 				..()

@@ -117,6 +117,7 @@ obj
 			var/RipplePower=1//used to make ripple go higher
 			var/DrainBlood=0// This is used for vampire grab + toss, makes them gain bloodpower
 			var/ForceCost = 0
+			var/WaveHit=0//Applies BYOND wave filter briefly on the hit target
 
 			var/Ooze
 

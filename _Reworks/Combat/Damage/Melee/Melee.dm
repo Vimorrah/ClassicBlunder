@@ -390,9 +390,16 @@
 		// 				QUEUE	 				//
 				var/knockDistance = 0
 				var/speedStrike = GetBlurringStrikes() //This is in the _Reworks/Passives folder
-				if(UsingFencing() || speedStrike)
-					speedStrike += UsingFencing()
-					damage *= clamp(sqrt( 1  + ( (GetSpd()) * (speedStrike/15) ) ),1,3)
+				var/fenceBonus = UsingFencing()
+				if(fenceBonus || speedStrike)
+					var/totalStrike = speedStrike + fenceBonus
+					var/bsMult = clamp(sqrt(1+(GetSpd()*(totalStrike/15))),1,3)
+					if(speedStrike > 0 && enemy && enemy.passive_handler && enemy.passive_handler.Get("ApathyFactor") && enemy.isInHighTension())
+						var/fenceMult = fenceBonus > 0 ? clamp(sqrt(1+(GetSpd()*(fenceBonus/15))),1,3) : 1
+						enemy.applyApathyBonus(damage * (bsMult - fenceMult))
+						damage *= fenceMult
+					else
+						damage *= bsMult
 				if(AttackQueue)
 					damage *= QueuedDamage(enemy)
 					if(Secret=="Heavenly Restriction" && secretDatum?:hasImprovement("Queues"))

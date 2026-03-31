@@ -1733,6 +1733,12 @@ mob
 					if(de.evolution_charges)
 						return 1;
 			return 0;
+		hasMazokuRevival()
+			if(!isRace(HUMAN)) return 0
+			if(AscensionsAcquired < 3) return 0
+			if(!passive_handler.Get("DormantDemon")) return 0
+			if(passive_handler.Get("DeathDefied")) return 0
+			return 1
 		HasHellPower()
 			if(CheckSlotless("Satsui no Hado") && SagaLevel>=6)
 				return 1

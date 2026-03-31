@@ -612,6 +612,22 @@ mob/proc/Death(mob/P,var/text,var/SuperDead=0, var/NoRemains=0, var/Zombie, extr
 		return;//no more dying
 		//not for you anyway
 
+	if(hasMazokuRevival())
+		RPModeSwitch()
+		sleep(30)
+		world<<""
+		sleep(30)
+		world<<""
+		sleep(30)
+		world<<""
+		HealAllCutTax()
+		src.FullRestore()
+		sleep(30)
+		MazokuEffects()
+		src.passive_handler.Increase("DeathDefied", 1)
+		Conscious()
+		return
+
 	if(NoRemains!=2)
 		if(src.BloodPower>=2)
 			var/obj/Items/Sword/s=P.EquippedSword()

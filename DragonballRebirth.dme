@@ -601,6 +601,8 @@
 #include "Races\human\ascensions.dm"
 #include "Races\human\buffs.dm"
 #include "Races\human\HighTension.dm"
+#include "Races\human\Mazoku.dm"
+#include "Races\human\MazokuSins.dm"
 #include "Races\human\race.dm"
 #include "Races\human\transformations.dm"
 #include "Races\majin\_MajinDefines.dm"
