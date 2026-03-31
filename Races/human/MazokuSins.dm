@@ -57,6 +57,8 @@ obj/Skills/Queue/Kibou_ou_Hope
 	Duration = 10
 	WaveHit = 1
 	UnarmedOnly = 1
+	Determinator = 1
+	Delayer = 0.25
 	ActiveMessage = "embraces a dream that exists beyond hope..."
 	HitMessage = "goes beyond their limits and seizes the future in their hands!"
 	verb/Kibou_ou_Hope()

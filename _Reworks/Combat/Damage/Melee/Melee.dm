@@ -394,7 +394,7 @@
 				if(fenceBonus || speedStrike)
 					var/totalStrike = speedStrike + fenceBonus
 					var/bsMult = clamp(sqrt(1+(GetSpd()*(totalStrike/15))),1,3)
-					if(speedStrike > 0 && enemy && enemy.passive_handler && enemy.passive_handler.Get("ApathyFactor") && enemy.isInHighTension())
+					if(speedStrike > 0 && enemy && enemy.passive_handler && enemy.passive_handler.Get("ApathyFactor") && enemy.isInHighTension() && enemy.Health >= 30)
 						var/fenceMult = fenceBonus > 0 ? clamp(sqrt(1+(GetSpd()*(fenceBonus/15))),1,3) : 1
 						enemy.applyApathyBonus(damage * (bsMult - fenceMult))
 						damage *= fenceMult

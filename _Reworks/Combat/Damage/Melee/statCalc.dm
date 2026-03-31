@@ -74,7 +74,7 @@
 		statDamage+=greenExtra
 	if(endExtra>0)
 		var/endBonus = GetEnd(endExtra)
-		if(src.Target && src.Target.passive_handler && src.Target.passive_handler.Get("ApathyFactor") && src.Target.isInHighTension())
+		if(src.Target && src.Target.passive_handler && src.Target.passive_handler.Get("ApathyFactor") && src.Target.isInHighTension() && src.Target.Health >= 30)
 			src.Target.applyApathyBonus(endBonus)
 		else
 			statDamage += endBonus
@@ -86,25 +86,25 @@
 				if(spirithand < GetSpiritHand())
 					spirithand = GetSpiritHand()
 				var/shBonus_fe = GetStr(spirithand)
-				if(src.Target && src.Target.passive_handler && src.Target.passive_handler.Get("ApathyFactor") && src.Target.isInHighTension())
+				if(src.Target && src.Target.passive_handler && src.Target.passive_handler.Get("ApathyFactor") && src.Target.isInHighTension() && src.Target.Health >= 30)
 					src.Target.applyApathyBonus(shBonus_fe)
 				else
 					statDamage += shBonus_fe
 			if((HasSpiritSword())&&sword)
 				var/ssBonus_fe = GetStr(GetSpiritSword())
-				if(src.Target && src.Target.passive_handler && src.Target.passive_handler.Get("ApathyFactor") && src.Target.isInHighTension())
+				if(src.Target && src.Target.passive_handler && src.Target.passive_handler.Get("ApathyFactor") && src.Target.isInHighTension() && src.Target.Health >= 30)
 					src.Target.applyApathyBonus(ssBonus_fe)
 				else
 					statDamage += ssBonus_fe
 		if(HasHybridStrike())
 			var/hsMult_fe = clamp(1+sqrt(GetStr(GetHybridStrike())/15),1,3)
-			if(src.Target && src.Target.passive_handler && src.Target.passive_handler.Get("ApathyFactor") && src.Target.isInHighTension())
+			if(src.Target && src.Target.passive_handler && src.Target.passive_handler.Get("ApathyFactor") && src.Target.isInHighTension() && src.Target.Health >= 30)
 				src.Target.applyApathyBonus(statDamage * (hsMult_fe - 1))
 			else
 				statDamage *= hsMult_fe
 		if(HasPhysPleroma())
 			var/ppMult_fe = clamp(1+sqrt(GetStr(GetPhysPleroma())/15),1,3)
-			if(src.Target && src.Target.passive_handler && src.Target.passive_handler.Get("ApathyFactor") && src.Target.isInHighTension())
+			if(src.Target && src.Target.passive_handler && src.Target.passive_handler.Get("ApathyFactor") && src.Target.isInHighTension() && src.Target.Health >= 30)
 				src.Target.applyApathyBonus(statDamage * (ppMult_fe - 1))
 			else
 				statDamage *= ppMult_fe
@@ -113,31 +113,31 @@
 	if(HasSpiritHand()&&unarmed)
 		if(HasPhysPleroma())
 			var/shBonus = spirithand > GetSpiritHand() ? GetStr(spirithand/4) : GetStr(GetSpiritHand()/4)
-			if(src.Target && src.Target.passive_handler && src.Target.passive_handler.Get("ApathyFactor") && src.Target.isInHighTension())
+			if(src.Target && src.Target.passive_handler && src.Target.passive_handler.Get("ApathyFactor") && src.Target.isInHighTension() && src.Target.Health >= 30)
 				src.Target.applyApathyBonus(shBonus)
 			else
 				statDamage += shBonus
 		else
 			var/shBonus = spirithand > GetSpiritHand() ? GetFor(spirithand/4) : GetFor(GetSpiritHand()/4)
-			if(src.Target && src.Target.passive_handler && src.Target.passive_handler.Get("ApathyFactor") && src.Target.isInHighTension())
+			if(src.Target && src.Target.passive_handler && src.Target.passive_handler.Get("ApathyFactor") && src.Target.isInHighTension() && src.Target.Health >= 30)
 				src.Target.applyApathyBonus(shBonus)
 			else
 				statDamage += shBonus
 	if(HasSpiritSword()&&sword)
 		var/ssBonus = HasPhysPleroma() ? GetStr(GetSpiritSword()) : GetFor(GetSpiritSword())
-		if(src.Target && src.Target.passive_handler && src.Target.passive_handler.Get("ApathyFactor") && src.Target.isInHighTension())
+		if(src.Target && src.Target.passive_handler && src.Target.passive_handler.Get("ApathyFactor") && src.Target.isInHighTension() && src.Target.Health >= 30)
 			src.Target.applyApathyBonus(ssBonus)
 		else
 			statDamage += ssBonus
 	if(HasHybridStrike())
 		var/hsMult = clamp(sqrt(1+GetFor(GetHybridStrike())/15),1,3)
-		if(src.Target && src.Target.passive_handler && src.Target.passive_handler.Get("ApathyFactor") && src.Target.isInHighTension())
+		if(src.Target && src.Target.passive_handler && src.Target.passive_handler.Get("ApathyFactor") && src.Target.isInHighTension() && src.Target.Health >= 30)
 			src.Target.applyApathyBonus(statDamage * (hsMult - 1))
 		else
 			statDamage *= hsMult
 	if(HasPhysPleroma())
 		var/ppMult = clamp(sqrt(1+GetStr(GetPhysPleroma())/15),1,3)
-		if(src.Target && src.Target.passive_handler && src.Target.passive_handler.Get("ApathyFactor") && src.Target.isInHighTension())
+		if(src.Target && src.Target.passive_handler && src.Target.passive_handler.Get("ApathyFactor") && src.Target.isInHighTension() && src.Target.Health >= 30)
 			src.Target.applyApathyBonus(statDamage * (ppMult - 1))
 		else
 			statDamage *= ppMult
