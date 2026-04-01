@@ -10964,7 +10964,6 @@ NEW VARIABLES
 
 				Heat_Of_Passion
 					// Fire Dragon Racial, mimics Berserk
-					BurnAffected = 1
 					NeedsHealth = 50
 					TooMuchHealth = 75
 					ActiveMessage = "ignites themselves in a blaze of passion!"
