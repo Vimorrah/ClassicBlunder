@@ -198,6 +198,7 @@ mob/var
 	RewardsLastGained = 0 //when was the last time you were rewarded?
 	PowerBoost=1//Now it ain't borked!?
 	PowerInvisible=1//only used for buffs now
+	Shadowbringer=0
 	PotentialUnlocked//You need a better UP after a previous one.
 	ContractPowered=0//Like UP, but with contracts.
 	SummonContract//just for summoning

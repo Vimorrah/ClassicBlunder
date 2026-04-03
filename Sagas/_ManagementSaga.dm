@@ -1569,8 +1569,8 @@ mob
 							else if(src.KeybladeType=="Staff")
 								src.AddSkill(new/obj/Skills/Buffs/SpecialBuffs/Wisdom_Form)
 								src << "You learn to imbue every action with wisdom!"
-							else if(src.KeybladeType=="Sword")
-								src.AddSkill(new/obj/Skills/Buffs/SpecialBuffs/Limit_Form)
+							/*else if(src.KeybladeType=="Sword")
+								src.AddSkill(new/obj/Skills/Buffs/SpecialBuffs/Limit_Form)*/
 						else
 							src.AddSkill(new/obj/Skills/Buffs/SpecialBuffs/Dark_Mode)
 							src << "Your reliance on darkness will empower you when pressed to your limits!"
