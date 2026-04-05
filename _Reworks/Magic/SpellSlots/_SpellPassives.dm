@@ -150,8 +150,15 @@
             passives = list("MagmicInfusion" = 1, "Scorching" = 2);//magmic infusion is a variable that belongs to all skills and it triggers magmic shield when the skill goes on CD
         ashfield
             name="Ashfield"
+            passives = list("TurfBurn"=5, "Scorching" = 2);
+            autohitOnlyPassives = list("Distance" = 3);
+            projectileOnlyPassives = list("Distance" = 10);
         nuclear
             name="Nuclear"
+            passives = list("DarknessFlame" = 1, "Toxic" = 4);
+            autohitOnlyPassives = list("EndDefense" = -0.25);
+            projectileOnlyPassives = list("Endrate" = -0.25);
+
     air
         spellElement="Air"
         galeforce

@@ -445,6 +445,7 @@
 #include "_Reworks\Magic\SpellSlots\earth\EarthSpellSlots.dm"
 #include "_Reworks\Magic\SpellSlots\fire\FireSpellSlots.dm"
 #include "_Reworks\Magic\SpellSlots\fire\FirePassives\MagmicInfusion.dm"
+#include "_Reworks\Magic\SpellSlots\fire\FirePassives\TurfBurn.dm"
 #include "_Reworks\Magic\SpellSlots\light\LightSpellSlots.dm"
 #include "_Reworks\Magic\SpellSlots\space\SpaceSpellSlots.dm"
 #include "_Reworks\Magic\SpellSlots\time\TimeSpellSlots.dm"
