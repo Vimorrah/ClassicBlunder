@@ -1451,6 +1451,20 @@ mob
 
 		GetStr(var/Mult=1)
 			var/Str=src.StrMod
+			var/EldritchMod=0
+			if(src.EldritchPacted)
+				switch(src.ReflectedPactType)
+					if("Devotion")
+						EldritchMod=0.5
+					if("Power")
+						EldritchMod=1
+					if("Knowledge")
+						EldritchMod=0
+					if("Ambition")
+						EldritchMod=0
+					if("Survival")
+						EldritchMod=0.25
+			Str+=EldritchMod
 			//mecha suits replace base stats with their level up to max value of 3, which is a cutoff line for many races
 			Str+=src.StrAscension
 			//stat ascensions gained through racial or saga improvements
@@ -1628,6 +1642,20 @@ mob
 
 		GetFor(var/Mult=1)
 			var/For=src.ForMod
+			var/EldritchMod=0
+			if(src.EldritchPacted)
+				switch(src.ReflectedPactType)
+					if("Devotion")
+						EldritchMod=0.5
+					if("Power")
+						EldritchMod=0
+					if("Knowledge")
+						EldritchMod=1
+					if("Ambition")
+						EldritchMod=0.25
+					if("Survival")
+						EldritchMod=0
+			For+=EldritchMod
 			For+=src.ForAscension
 			var/enhanced = getEnhanced("Force")
 			For+=src.EnhancedForce ? enhanced : 0
@@ -1938,6 +1966,19 @@ mob
 
 		GetSpd(Mult=1)
 			var/Spd=src.SpdMod
+			if(src.EldritchPacted)
+				switch(src.ReflectedPactType)
+					if("Devotion")
+						EldritchMod=0.5
+					if("Power")
+						EldritchMod=0.25
+					if("Knowledge")
+						EldritchMod=0.25
+					if("Ambition")
+						EldritchMod=1
+					if("Survival")
+						EldritchMod=0
+			Spd+=EldritchMod
 			Spd+=src.SpdAscension
 			var/enhanced = getEnhanced("Speed")
 			Spd+=EnhancedSpeed ? enhanced : 0
@@ -2073,6 +2114,19 @@ mob
 
 		GetOff(var/Mult=1)
 			var/Off=src.OffMod
+			if(src.EldritchPacted)
+				switch(src.ReflectedPactType)
+					if("Devotion")
+						EldritchMod=0.5
+					if("Power")
+						EldritchMod=0.5
+					if("Knowledge")
+						EldritchMod=0.5
+					if("Ambition")
+						EldritchMod=0
+					if("Survival")
+						EldritchMod=0
+			Off+=EldritchMod
 			Off+=src.OffAscension
 			var/enhanced = getEnhanced("Aggression")
 			Off+=EnhancedAggression ? enhanced : 0
@@ -2172,7 +2226,19 @@ mob
 
 		GetDef(var/Mult=1)
 			var/Def=src.DefMod
-
+			if(src.EldritchPacted)
+				switch(src.ReflectedPactType)
+					if("Devotion")
+						EldritchMod=0.5
+					if("Power")
+						EldritchMod=0
+					if("Knowledge")
+						EldritchMod=0
+					if("Ambition")
+						EldritchMod=0.5
+					if("Survival")
+						EldritchMod=0.5
+			Def+=EldritchMod
 			Def+=src.DefAscension
 			var/enhanced = getEnhanced("Reflexes")
 			Def+=EnhancedReflexes ? enhanced : 0
