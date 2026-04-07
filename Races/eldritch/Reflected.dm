@@ -1,10 +1,5 @@
 mob/var
 	EldritchPacted
-	EldritchStr
-	EldritchEnd
-	EldritchFor
-	EldritchSpd
-	EldritchOff
-	EldritchDef
+	ReflectedPactType="None"
 	ReflectedFrozen=1
 	ReflectedFrozenTimer=1
