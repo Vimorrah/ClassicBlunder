@@ -100,7 +100,7 @@
                     target:move_disabled = FALSE
 
 /mob/proc/getHellStormDamage()
-    if(Owner.GetStr(1) > Owner.GetFor(1))
+    if(src.GetStr(1) > src.GetFor(1))
         . = GetStr(1)
     else
         . = GetFor(1)

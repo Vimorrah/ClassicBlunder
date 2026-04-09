@@ -162,8 +162,8 @@ proc/Players_In_Range(atom/A,Range)
 	var/End_Y=A.y+Range
 	if(Start_X<1) Start_X=1
 	if(Start_Y<1) Start_Y=1
-	if(End_X>world.maxx) Start_X=world.maxx
-	if(End_Y>world.maxy) Start_Y=world.maxy
+	if(End_X>world.maxx) End_X=world.maxx
+	if(End_Y>world.maxy) End_Y=world.maxy
 	var/list/Mobs=new
 	for(var/mob/Players/P) if(P.z==A.z&&P.x>=Start_X&&P.x<=End_X&&P.y>=Start_Y&&P.y<=End_Y) Mobs+=P
 	return Mobs

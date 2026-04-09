@@ -88,7 +88,7 @@ var/game_loop/mainLoop = new(0, "newGainLoop")
 				if(!BarelyStandingColor)
 					OMessage(10, "<font color=#F07E1F>[src] [BarelyStandingMessage ? "[BarelyStandingMessage]" : " is barely standing!"]!", "[src]([src.key]) has 10% health left.</font>")
 				else
-					OMessage(10,"font color='[BarelyStandingColor]'>[src] [BarelyStandingMessage ? "[BarelyStandingMessage]" : " is barely standing!"]!", "[src]([src.key]) has 10% health left.</font>")
+					OMessage(10,"<font color='[BarelyStandingColor]'>[src] [BarelyStandingMessage ? "[BarelyStandingMessage]" : " is barely standing!"]!", "[src]([src.key]) has 10% health left.</font>")
 		HealthAnnounce10 = 1
 //**TESTED AND WORKS */
 /mob/proc/reduceErodeStolen()
@@ -229,7 +229,7 @@ var/game_loop/mainLoop = new(0, "newGainLoop")
 			if(Anger)
 				Calm()
 		if(MeditateTime == 15)
-			usr << "If any skills reset on Meditate, they've been reset."
+			src << "If any skills reset on Meditate, they've been reset."
 		if(CheckSpecial("Jinchuuriki") || CheckSpecial("Vaizard Mask"))
 			if(SpecialBuff.Mastery <= 1)
 				SpecialBuff.Trigger(src, Override=1)

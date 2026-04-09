@@ -25,7 +25,7 @@
     passives = list("Deflection" = 1, "ControlResist" = 1);
     endurance = 0.5;
     speed = 0.5;
-    defnse = 0.5;
+    defense = 0.5;
 
 /ascension/sub_ascension/beastkin/mil
     passives=list("Unnerve" = 1, "MeleeResist" = 1);

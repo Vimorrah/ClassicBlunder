@@ -301,7 +301,7 @@ var/global/list/DEMON_SKILL_VFX = list()
 			if("Force") flash_color = "#8f7946"
 			if("Almighty") flash_color = "#ffffff"
 		animate(target, color = flash_color)
-		animate(target, color = target:MobColor, time = 5)
+		animate(target, color = target.MobColor, time = 5)
 
 	proc/DemonApplyDebuff(mob/target, element, val)
 		switch(element)

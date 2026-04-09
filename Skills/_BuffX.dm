@@ -11780,7 +11780,7 @@ mob
 						src.SpecialBuff.Trigger(src, Override=1)
 				if(src.CheckSlotless("Great Ape"))
 					if(!B.StanceSlot&&!B.StyleSlot&&!B.Autonomous)
-						if(!B.BuffName == "Great Ape")
+						if(B.BuffName != "Great Ape")
 							src << "You can't use buffs in Great Ape Mode!"
 							return
 				if(src.CheckSlotless("Full Moon Form")&&!B.UnrestrictedBuff)

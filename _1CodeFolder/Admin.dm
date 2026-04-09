@@ -48,7 +48,7 @@ mob/verb
 	if(!whichMap) return
 	if(fexists("Maps/map_[whichMap].sav"))
 		var/overwrite = alert(usr, "A map already exists with the name [whichMap]! Do you want to override it?",, "Yes", "No")
-		if(overwrite=="Yes") return
+		if(overwrite!="Yes") return
 	var/firstX = input(usr, "X1?") as null|num
 	var/firstY = input(usr, "Y1?") as null|num
 	var/secondX = input(usr, "X2?") as null|num
@@ -104,7 +104,7 @@ mob/Admin3/verb/LoadSwapMap()
 				m.PrevX = null
 				m.PrevY = null
 				m.PrevZ = null
-				map.Del()
+			map.Del()
 			break
 
 /mob/Admin3/verb/ForceSaveSwapMap()
@@ -647,7 +647,7 @@ mob/Admin3/verb
 				if(Choice=="Cancel")
 					return
 				m.knowledgeTracker.learnedKnowledge.Remove(Choice)
-				Log("Admin", "[ExtractInfo(m)] removed [Choice] knowledge breakthrough from [ExtractInfo(m)]!")
+				Log("Admin", "[ExtractInfo(src)] removed [Choice] knowledge breakthrough from [ExtractInfo(m)]!")
 			if("View")
 				src << "[m]'s Unlocked Breakthroughs:"
 				for(var/o in m.knowledgeTracker.learnedKnowledge)
@@ -917,13 +917,13 @@ mob/Admin2/verb
 					world<<"<font color=red><b>[A] becomes the path its darkness advances upon.</b></font>"
 					sleep(30)
 					world<<"<font color=red><b>Shinka no Yami.</b></font>"
-					HealAllCutTax();
+					A.HealAllCutTax();
 					A.FullRestore();
 					sleep(30)
-					DeathEvolutionEffects()
-					Conscious();
+					A.DeathEvolutionEffects()
+					A.Conscious();
 					world<<"<font color=red><b>Death-X-Evolution...</b></font>"
-					de.Trigger(src)
+					de.Trigger(A)
 				return
 			A.Unconscious(null,"ADMIN")
 			Log("Admin","<font color=red>[ExtractInfo(usr)] admin-KOed [ExtractInfo(A)].")
@@ -1685,7 +1685,7 @@ mob/Admin3/verb
 					if("Delay")
 						glob.SwordAscDelay = changeto
 
-		Log("Admin", "[ExtractInfo(src)] set [m]'s [y] to [changeto] increase per ascension!")
+		Log("Admin", "[ExtractInfo(src)] set [m]'s [changing] to [changeto] increase per ascension!")
 
 
 	// Nox_Claim()

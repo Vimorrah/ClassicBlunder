@@ -50,7 +50,7 @@ ascension
 				owner.Class = "Shadowlord"
 		four
 			unlock_potential = ASCENSION_FOUR_POTENTIAL
-			passives = list("HellPower" = 0.25, "HolyMod" = 2, "AbyssMod" = 2, " KiControlMastery"=1, "Incomplete" = -0.25, "BlurringStrikes"=0.5, "HybridStrike"=0.5,"PureDamage"=1, "PureReduction"=1)
+			passives = list("HellPower" = 0.25, "HolyMod" = 2, "AbyssMod" = 2, "KiControlMastery"=1, "Incomplete" = -0.25, "BlurringStrikes"=0.5, "HybridStrike"=0.5,"PureDamage"=1, "PureReduction"=1)
 			anger = 0.15
 			intimidation = 250
 			strength = 0.25

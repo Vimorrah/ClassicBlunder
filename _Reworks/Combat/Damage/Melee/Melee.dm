@@ -6,13 +6,13 @@
 	return round(damageMultiplier, 0.01)
 
 /mob/proc/lightRush(mob/enemy, option)
-	if("Launch")
+	if(option == "Launch")
 		if(enemy.Launched)
 			if(passive_handler["Sajire Rush"])
 				return TRUE
 			if(Secret == "Heavenly Restriction" && secretDatum?:hasImprovement("Launchers"))
 				return TRUE
-	else if("Stun")
+	else if(option == "Stun")
 		if(enemy.Stunned)
 			if(passive_handler["Sajire Rush"])
 				return TRUE

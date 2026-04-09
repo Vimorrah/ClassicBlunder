@@ -114,8 +114,16 @@
 	if(demon_active)
 		var/mob/Player/AI/Demon/old = demon_active
 		if(old)
+			// Save HP back to party before switching
+			for(var/datum/party_demon/old_pd in demon_party)
+				if(old_pd.demon_name == old.name)
+					old_pd.current_hp = old.demon_hp
+					break
+			old.ai_owner = null // Stop AI loop immediately
 			animate(old, alpha=0, time=8)
 			spawn(8) del(old)
+		if(SagaLevel >= 4)
+			RemoveDemonRacialPassive()
 		ai_followers -= demon_active
 		demon_active = null
 		demon_active_name = ""
@@ -151,6 +159,7 @@
 			if(pd.demon_name == demon_active_name)
 				pd.current_hp = d.demon_hp
 				break
+		d.ai_owner = null // Stop AI loop immediately
 		animate(d, alpha=0, time=8)
 		spawn(8)
 			ai_followers -= d

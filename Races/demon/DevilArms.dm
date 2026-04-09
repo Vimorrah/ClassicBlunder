@@ -40,7 +40,7 @@
             vars["[selection][thing]"] = input(usr, "Change to what?") as icon | null
             vars["[selection]X"] = input(usr, "What is the pixel X?") as num
             vars["[selection]Y"] = input(usr, "What is the pixel y?") as num
-        else if("Name")
+        else if(thing == "Name")
             vars["[selection][thing]"] = input(usr, "Change to what?") as text
         else
             vars["[thing]"] = input(usr, "Change to what?") as message

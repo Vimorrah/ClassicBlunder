@@ -32,7 +32,7 @@
     throwSkill(s)
 
 /mob/proc/cycleStackingBuffs(var/obj/Skills/S)
-    if(istype(AttackQueue, /obj/Skills/Buffs/SlotlessBuffs/Autonomous/QueueBuff/Finisher/Samsara) || istype(AttackQueue?:type, /obj/Skills/Queue/Finisher/Cycle_of_Samsara))
+    if(istype(AttackQueue, /obj/Skills/Buffs/SlotlessBuffs/Autonomous/QueueBuff/Finisher/Samsara) || istype(AttackQueue, /obj/Skills/Queue/Finisher/Cycle_of_Samsara))
         AttackQueue.Mastery++
         for(var/obj/Skills/Buffs/SlotlessBuffs/Autonomous/QueueBuff/Finisher/Samsara/s in SlotlessBuffs)
             s.Timer = 0

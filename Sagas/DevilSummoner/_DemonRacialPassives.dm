@@ -10,6 +10,8 @@
 /mob/var/image/demon_tyrant_underlay = null
 /mob/var/demon_racial_vile_active = FALSE
 /mob/var/demon_racial_jaki_def_penalty = 0
+/mob/var/demon_fallen_loop_gen = 0
+/mob/var/demon_tyrant_loop_gen = 0
 
 /mob/proc/ApplyDemonRacialPassive(race)
 	if(demon_racial_passive_race != "")
@@ -161,8 +163,9 @@
 
 /mob/proc/DemonFallenPassiveLoop()
 	set waitfor = FALSE
+	var/my_gen = ++demon_fallen_loop_gen
 	demon_fallen_last_boost = 0
-	while(src && client && demon_racial_fallen_active)
+	while(src && client && demon_racial_fallen_active && my_gen == demon_fallen_loop_gen)
 		var/hp_ratio = clamp(Health / max(1, 100 - (100 * HealthCut) - TotalInjury), 0, 1)
 		var/bonus = (1 - hp_ratio) * 0.5
 		if(abs(bonus - demon_fallen_last_boost) > 0.01)
@@ -170,7 +173,8 @@
 			PowerBoost *= (1 + bonus)
 			demon_fallen_last_boost = bonus
 		sleep(10)
-	if(demon_fallen_last_boost > 0)
+	// Only cleanup if we are still the active loop
+	if(my_gen == demon_fallen_loop_gen && demon_fallen_last_boost > 0)
 		PowerBoost /= max(0.01, 1 + demon_fallen_last_boost)
 		demon_fallen_last_boost = 0
 
@@ -195,15 +199,15 @@
 
 /mob/proc/DemonTyrantAuraLoop()
 	set waitfor = FALSE
+	var/my_gen = ++demon_tyrant_loop_gen
 	if(!demon_tyrant_debuffed) demon_tyrant_debuffed = list()
 	var/debuff_str = 0.10
 
-	while(src && client && demon_racial_tyrant_active)
+	while(src && client && demon_racial_tyrant_active && my_gen == demon_tyrant_loop_gen)
 		var/list/in_range = list()
 
 		for(var/mob/M in oview(3, src))
 			if(!M.client) continue
-			if(M == src) continue
 			if(party && party.members && (M in party.members)) continue
 			if(istype(M, /mob/Player/AI/Demon))
 				var/mob/Player/AI/Demon/d = M
@@ -235,7 +239,8 @@
 
 		sleep(5)
 
-	if(demon_tyrant_debuffed)
+	// Only cleanup if we are still the active loop
+	if(my_gen == demon_tyrant_loop_gen && demon_tyrant_debuffed)
 		for(var/mob/M in demon_tyrant_debuffed)
 			M.StrMod /= (1 - debuff_str)
 			M.EndMod /= (1 - debuff_str)

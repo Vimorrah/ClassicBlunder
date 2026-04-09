@@ -138,8 +138,8 @@
 				TimerLimit = 4800
 				IconTransform = 'SDTBlue.dmi'
 				TopOverlayLock='SDTRedWings.dmi'
-				TopOverlayLock=-10
-				TopOverlayLock=-10
+				TopOverlayX=-10
+				TopOverlayY=-10
 				Enlarge=3
 
 

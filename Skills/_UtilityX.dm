@@ -2601,7 +2601,7 @@ obj/Skills/Utility
 
 		verb/Scan()
 			set src in usr
-			if(!src.suffix=="*Equipped*")
+			if(src.suffix != "*Equipped*")
 				usr << "You have to equip the scouter to use it!"
 				return
 			usr << "<b>Current Coordinates: ([usr.x], [usr.y], [usr.z])</b>"

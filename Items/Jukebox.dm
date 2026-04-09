@@ -64,7 +64,7 @@ obj/Items/Tech/Jukebox/proc/Initialize()
 
 obj/Items/Tech/Jukebox/verb/Upload_Track()
 	set src in view(1)
-	if(!usr.ckey in permissions)
+	if(!(usr.ckey in permissions))
 		usr << "Hands off!"
 		return
 	var/new_track = input("New Track") as file | null
@@ -94,20 +94,23 @@ obj/Items/Tech/Jukebox/verb/Check_Track()
 
 obj/Items/Tech/Jukebox/verb/BREAK_IT_DOWN()
 	set src in view(1)
-	if(permissions.len && !usr.ckey in permissions)
+	if(permissions.len && !(usr.ckey in permissions))
 		usr << "Hands off!"
+		return
 	Action("on")
 
 obj/Items/Tech/Jukebox/verb/SHUT_IT_DOWN()
 	set src in view(1)
-	if(permissions.len && !usr.ckey in permissions)
+	if(permissions.len && !(usr.ckey in permissions))
 		usr << "Hands off!"
+		return
 	Action("off")
 
 obj/Items/Tech/Jukebox/verb/Set_Track()
 	set src in view(1)
-	if(permissions.len && !usr.ckey in permissions)
+	if(permissions.len && !(usr.ckey in permissions))
 		usr << "Hands off!"
+		return
 	if(!songs.len)
 		Initialize()
 	Action("select")

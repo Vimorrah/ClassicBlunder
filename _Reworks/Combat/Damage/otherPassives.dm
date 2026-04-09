@@ -16,7 +16,7 @@
         var/acu = passive_handler["Acupuncture"]
         defender.HardenAccumulate(acu);
     if(passive_handler["SoulTug"] && (defender.CyberCancel||defender.Mechanized))
-        AddConfusing(passive_handler["SoulTug"]*glob.SOULTUGMULT)
+        defender.AddConfusing(passive_handler["SoulTug"]*glob.SOULTUGMULT)
     if(HasDisorienting())
         if(prob(GetDisorienting()*25))
             defender.AddConfusing(clamp(val, 1,10) * 1.25)

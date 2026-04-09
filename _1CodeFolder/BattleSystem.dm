@@ -136,7 +136,7 @@ mob/proc/Unconscious(mob/P,var/text)
 		CalamityOdds=0
 	if(src.Potential<=60)
 		CalamityOdds=0
-	if(src.oozaru_type=="Demonic" && src.TotalInjury>=40&&prob(HellspawnOdds)&&src.transUnlocked<1&&!src.HellspawnBerserk&&!src.HellspawnBerserking||src.ForcedHellspawn&&!src.HellspawnBerserk&&!src.HellspawnBerserking)
+	if((src.oozaru_type=="Demonic" && src.TotalInjury>=40&&prob(HellspawnOdds)&&src.transUnlocked<1&&!src.HellspawnBerserk&&!src.HellspawnBerserking)||(src.ForcedHellspawn&&!src.HellspawnBerserk&&!src.HellspawnBerserking))
 		src.RPModeSwitch()
 		src.Energy=src.EnergyMax
 		src.HellspawnTimer=360
@@ -155,7 +155,7 @@ mob/proc/Unconscious(mob/P,var/text)
 		src.HellspawnBerserk=1
 		src.Health=30
 		return
-	if(src.oozaru_type=="Demonic" && prob(CalamityOdds)&&src.transUnlocked==1&&!src.TheCalamity&&!src.CalamityCaused&&src.race.transformations[1].mastery==100||src.ForcedCalamity&&!src.CalamityCaused)
+	if((src.oozaru_type=="Demonic" && prob(CalamityOdds)&&src.transUnlocked==1&&!src.TheCalamity&&!src.CalamityCaused&&src.race.transformations[1].mastery==100)||(src.ForcedCalamity&&!src.CalamityCaused))
 		src.Revert()
 		world<<"<font color=red><b>The hearts of all those in creation beat as one. Their breath is stolen away from them. </b></font>"
 		src.RPModeSwitch()
@@ -1654,7 +1654,7 @@ proc/Accuracy_Formula(mob/Offender,mob/Defender,AccMult=1,BaseChance=glob.WorldD
 
 			if(glob.OLD_ACCURACY)
 				Offense=(Offender.Power*(Offender.GetOff(glob.ACC_OFF)+Offender.GetSpd(glob.ACC_OFF_SPD)))*(1+((Offender.GetMaouKi()) + !Offender.HasNullTarget()&&!Offender.HasMaouKi() ? Offender.GetGodKi() : 0))
-				Defense=(Defender.Power*(Defender.GetDef(glob.ACC_DEF)+Defender.GetSpd(glob.ACC_DEF_SPD)))*(1+((Defender.GetMaouKi()) + !Defender.HasNullTarget()&&!Offender.HasMaouKi() ? Defender.GetGodKi() : 0))
+				Defense=(Defender.Power*(Defender.GetDef(glob.ACC_DEF)+Defender.GetSpd(glob.ACC_DEF_SPD)))*(1+((Defender.GetMaouKi()) + !Defender.HasNullTarget()&&!Defender.HasMaouKi() ? Defender.GetGodKi() : 0))
 				mod = clamp(((Offense*AccMult)/max(Defense,0.01)), 0.5, 2)
 
 			var/roll = randValue((100-BaseChance) * mod, 100)
@@ -1790,7 +1790,7 @@ proc/Deflection_Formula(var/mob/Offender,var/mob/Defender,var/AccMult=1,var/Base
 		var/Defense= DefenseModifier * (Defender.GetDef(glob.ACC_DEF)+Defender.GetSpd(glob.ACC_DEF_SPD))
 		var/TotalAccuracy = BaseChance * ((Offense*AccMult) / Defense) * 100
 
-		TotalAccuracy = clamp(glob.LOWEST_ACC, TotalAccuracy, 100)
+		TotalAccuracy = clamp(TotalAccuracy, glob.LOWEST_ACC, 100)
 		if(Defender.passive_handler.Get("TotalDeflection"))
 			return MISS
 

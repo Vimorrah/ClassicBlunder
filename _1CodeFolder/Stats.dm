@@ -225,7 +225,7 @@ mob/Players/Stat()
 			if(!src.DefTax&&!src.DefCut)
 				stat("Defense","[src.BaseDef()]")
 			else
-				stat("Defense","[src.BaseDef()]) (Tax: [round((src.DefTax+src.DefCut)*100)]%)")
+				stat("Defense","[src.BaseDef()] (Tax: [round((src.DefTax+src.DefCut)*100)]%)")
 			if(!src.RecovTax&&!src.RecovCut)
 				stat("Recovery","[round(src.BaseRecov(), 0.05)]")
 			else

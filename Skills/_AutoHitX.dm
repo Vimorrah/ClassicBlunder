@@ -6693,7 +6693,7 @@ obj
 					m.applySentenced(60)
 				if(src.Owner.UsingAnsatsuken())
 					src.Owner.HealMana(src.Owner.SagaLevel)
-				if(src.Owner.SagaLevel>1&src.Owner.Saga=="Path of a Hero: Rebirth")
+				if(src.Owner.SagaLevel>1&&src.Owner.Saga=="Path of a Hero: Rebirth")
 					if(src.Owner.passive_handler["Determination"])
 						src.Owner.HealMana(src.Owner.SagaLevel/4)
 					else

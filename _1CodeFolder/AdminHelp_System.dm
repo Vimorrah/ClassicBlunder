@@ -24,8 +24,9 @@ mob/verb/SkinPM2()
 			if(Q.Admin)
 				if(Q!=src&&Q!=target)
 					Q<<"<font color=#00FF99><b>(Admin PM)</b></font> <a href=?src=\ref[src];action=MasterControl;do=PM2;>[src.key]</a href> to <a href=?src=\ref[mobIntendedKey];action=MasterControl;do=PM2;>[mobIntendedKey]</a href> :[UserInput]"
-		Log("AdminPM","(Admin PM from [src.key] to [target.key]): [UserInput]")
-		src<<"<font color=#00FF99><b>(Admin PM)</b></font>- To  <a href=?src=\ref[target];action=MasterControl;do=PM2;>[target.key]</a href> :[UserInput]"
+		if(target)
+			Log("AdminPM","(Admin PM from [src.key] to [target.key]): [UserInput]")
+			src<<"<font color=#00FF99><b>(Admin PM)</b></font>- To  <a href=?src=\ref[target];action=MasterControl;do=PM2;>[target.key]</a href> :[UserInput]"
 
 
 
@@ -168,7 +169,6 @@ mob/verb/RefreshListAhelp()
 	winset(usr,"Help_OutPutMessages","cells=0x0")
 	for(var/obj/Admin_Help_Object/O in AdminHelps)
 		winset(src, "Help_OutPutMessages", "current-cell=[++items]")
-		++items
 		usr << output(O, "Help_OutPutMessages")
 	winset(src, "Help_OutPutMessages", "cells=[items]")
 
