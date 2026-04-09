@@ -399,6 +399,7 @@ mob/var
 	PureRPMode=0
 	CutsceneWatch=0
 	ForceHeavyStrike=0
+	SpawnArea = "None" //different from Spawn for Reasons
 
 	CyberizeMod = 0
 	tmp/IconClicked=0
