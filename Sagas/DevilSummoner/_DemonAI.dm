@@ -16,7 +16,7 @@
 	New()
 		..()
 
-	proc/DemonInit(datum/demon_data/dd, mob/owner)
+	proc/DemonInit(datum/demon_data/dd, mob/owner, datum/party_demon/pd)
 		demon_data = dd
 		ai_owner   = owner
 		demon_owner_key = owner.ckey
@@ -41,6 +41,12 @@
 
 		demon_melee_rate = max(8, 30 - round(dd.demon_spd * 0.7))
 
+		// Populate active skills from party demon
+		if(pd && pd.demon_skills && pd.demon_skills.len)
+			active_skills = pd.demon_skills.Copy()
+		else if(dd.demon_skills && dd.demon_skills.len)
+			active_skills = dd.demon_skills.Copy()
+
 		aiGain()
 		spawn() DemonLoop()
 
@@ -62,22 +68,31 @@
 
 		var/mob/target = ai_owner.Target
 
-		if(!(next_skill_tick - world.time > 0))
-			if(DemonUseSkill(target))
-				next_skill_tick = world.time + demon_skill_rate
-			else
-				next_skill_tick = world.time + 50
+		if(target == ai_owner)
+			FollowOwner()
+			return
 
 		if(!target)
 			FollowOwner()
 			return
 
+		if(src.loc == target.loc)
+			step_away(src, target, 2)
+			return
+
 		if(!(next_melee_tick - world.time > 0))
-			if(get_dist(src, target) > 1)
+			var/d = get_dist(src, target)
+			if(d > 1)
+				var/old_loc = src.loc
 				step_to(src, target, 1)
-			else
+				// If step_to put us on target tile, undo
+				if(src.loc == target.loc)
+					src.loc = old_loc
+			else if(d == 1)
 				DemonMeleeAttack(target)
 				next_melee_tick = world.time + demon_melee_rate
+				if(src.loc == target.loc)
+					step_away(src, target, 2)
 
 	proc/FollowOwner()
 		if(!ai_owner) return
@@ -93,6 +108,7 @@
 
 	proc/DemonMeleeAttack(mob/target)
 		if(!target || !target.client) return
+		if(target == ai_owner) return
 		if(ai_owner && "[ai_owner.ckey]" in target.ai_alliances) return
 		if(ai_owner && ai_owner.party && ai_owner.party.members && (target in ai_owner.party.members)) return
 		var/dmg = max(1, round(StrMod * 0.1 * next_attack_multiplier))
@@ -107,6 +123,7 @@
 		if(ai_owner)
 			if(ai_owner.SagaLevel >= 4)
 				ai_owner.RemoveDemonRacialPassive()
+			ai_owner.ClearDemonSkillHUD()
 			ai_owner.ai_followers -= src
 			ai_owner.demon_active = null
 			ai_owner.demon_active_name = ""

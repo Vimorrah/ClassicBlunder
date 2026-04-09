@@ -1024,6 +1024,9 @@ mob
 				if("Weapon Soul")
 					tierUpSaga("Weapon Soul")
 
+				if("Devil Summoner")
+					tierUpSaga("Devil Summoner")
+
 				if("Unlimited Blade Works")
 					switch(src.SagaLevel)
 						if(2)

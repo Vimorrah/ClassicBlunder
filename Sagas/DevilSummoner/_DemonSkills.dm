@@ -119,9 +119,12 @@ var/global/list/DEMON_SKILL_VFX = list()
 
 /mob/Player/AI/Demon
 
+	var/list/active_skills = list()  
+	var/current_skill = ""           // tracks skill being used (for VFX lookup)
+
 	proc/DemonSpawnVFX(mob/on_target)
-		if(!demon_data || !on_target) return
-		var/datum/demon_skill_vfx/vfx = DEMON_SKILL_VFX[demon_data.demon_skill]
+		if(!on_target) return
+		var/datum/demon_skill_vfx/vfx = DEMON_SKILL_VFX[current_skill]
 		if(!vfx || !vfx.icon_file) return
 		var/obj/E = new(on_target.loc)
 		E.icon = vfx.icon_file
@@ -136,154 +139,210 @@ var/global/list/DEMON_SKILL_VFX = list()
 		spawn(vfx.effect_life)
 			if(E) del(E)
 
+	proc/DemonGetPartyDemon()
+		if(!ai_owner || !ai_owner.demon_party) return null
+		for(var/datum/party_demon/pd in ai_owner.demon_party)
+			if(pd.demon_name == name) return pd
+		return null
+
+
 	proc/DemonUseSkill(mob/target)
-		if(!demon_data) return FALSE
-		var/skill = demon_data.demon_skill
-		if(!skill || skill == "None") return FALSE
-		var/used = FALSE
-		switch(skill)
+		if(!active_skills || !active_skills.len) return FALSE
+		var/list/shuffled = active_skills.Copy()
+		for(var/i = shuffled.len, i > 1, i--)
+			var/j = rand(1, i)
+			shuffled.Swap(i, j)
+		for(var/skill in shuffled)
+			if(!skill || skill == "None") continue
+			if(DemonSkillOnCooldown(skill)) continue
+			if(DemonTrySkill(target, skill))
+				DemonSetCooldown(skill)
+				DemonAnnounce(skill)
+				if(ai_owner) ai_owner.UpdateDemonSkillHUD()
+				return TRUE
+		return FALSE
+
+	proc/DemonUseSkillManual(skill_name)
+		if(!skill_name || skill_name == "None") return FALSE
+		if(DemonSkillOnCooldown(skill_name))
+			if(ai_owner) ai_owner << "<font color='#ff6666'>[skill_name] is on cooldown.</font>"
+			return FALSE
+		var/mob/target = null
+		if(ai_owner) target = ai_owner.Target
+		if(DemonTrySkill(target, skill_name))
+			DemonSetCooldown(skill_name)
+			DemonAnnounce(skill_name)
+			if(ai_owner) ai_owner.UpdateDemonSkillHUD()
+			return TRUE
+		return FALSE
+
+	proc/DemonSkillOnCooldown(skill_name)
+		var/datum/party_demon/pd = DemonGetPartyDemon()
+		if(!pd || !pd.skill_cooldowns) return FALSE
+		if(!(skill_name in pd.skill_cooldowns)) return FALSE
+		return world.time < pd.skill_cooldowns[skill_name]
+
+	proc/DemonSetCooldown(skill_name)
+		var/datum/party_demon/pd = DemonGetPartyDemon()
+		if(!pd) return
+		if(!pd.skill_cooldowns) pd.skill_cooldowns = list()
+		pd.skill_cooldowns[skill_name] = world.time + DemonGetSkillCooldown(skill_name)
+
+	proc/DemonGetSkillCooldown(skill_name)
+		// Base 60 seconds (600 ticks), reduced by demon speed stat (max 50% reduction)
+		var/base_cd = 600
+		var/spd = 0
+		if(demon_data) spd = demon_data.demon_spd
+		var/reduction = min(0.5, spd / 60)
+		return round(base_cd * (1 - reduction))
+
+	proc/DemonTrySkill(mob/target, skill_name)
+		current_skill = skill_name
+		switch(skill_name)
 			if("Agi")
-				used = DemonSingleDamage(target, ForMod * 0.3, "Fire", 3)
+				return DemonSingleDamage(target, ForMod * 0.3, "Fire", 3)
 			if("Agidyne")
-				used = DemonSingleDamage(target, ForMod * 0.6, "Fire", 6)
+				return DemonSingleDamage(target, ForMod * 0.6, "Fire", 6)
 			if("Inferno")
-				used = DemonSingleDamage(target, ForMod * 0.9, "Fire", 8)
+				return DemonSingleDamage(target, ForMod * 0.9, "Fire", 8)
 			if("Maragi")
-				used = DemonAoeDamage(target, 5, ForMod * 0.15, "Fire", 2)
+				return DemonAoeDamage(target, 5, ForMod * 0.15, "Fire", 2)
 			if("Maragidyne")
-				used = DemonAoeDamage(target, 5, ForMod * 0.35, "Fire", 5)
+				return DemonAoeDamage(target, 5, ForMod * 0.35, "Fire", 5)
 			if("Fire Dance")
-				used = DemonDanceSkill(target, ForMod * 0.12, "Fire", 2, 3, 6)
+				return DemonDanceSkill(target, ForMod * 0.12, "Fire", 2, 3, 6)
 			if("Bufu")
-				used = DemonSingleDamage(target, ForMod * 0.3, "Ice", 3)
+				return DemonSingleDamage(target, ForMod * 0.3, "Ice", 3)
 			if("Bufudyne")
-				used = DemonSingleDamage(target, ForMod * 0.6, "Ice", 6)
+				return DemonSingleDamage(target, ForMod * 0.6, "Ice", 6)
 			if("Mabufu")
-				used = DemonAoeDamage(target, 5, ForMod * 0.15, "Ice", 2)
+				return DemonAoeDamage(target, 5, ForMod * 0.15, "Ice", 2)
 			if("Mabufudyne")
-				used = DemonAoeDamage(target, 5, ForMod * 0.35, "Ice", 5)
+				return DemonAoeDamage(target, 5, ForMod * 0.35, "Ice", 5)
 			if("Ice Dance")
-				used = DemonDanceSkill(target, ForMod * 0.12, "Ice", 2, 3, 6)
+				return DemonDanceSkill(target, ForMod * 0.12, "Ice", 2, 3, 6)
 			if("Zio")
-				used = DemonSingleDamage(target, ForMod * 0.3, "Elec", 3)
+				return DemonSingleDamage(target, ForMod * 0.3, "Elec", 3)
 			if("Ziodyne")
-				used = DemonSingleDamage(target, ForMod * 0.6, "Elec", 6)
+				return DemonSingleDamage(target, ForMod * 0.6, "Elec", 6)
 			if("Mazio")
-				used = DemonAoeDamage(target, 5, ForMod * 0.15, "Elec", 2)
+				return DemonAoeDamage(target, 5, ForMod * 0.15, "Elec", 2)
 			if("Maziodyne")
-				used = DemonAoeDamage(target, 5, ForMod * 0.35, "Elec", 5)
+				return DemonAoeDamage(target, 5, ForMod * 0.35, "Elec", 5)
 			if("Elec Dance")
-				used = DemonDanceSkill(target, ForMod * 0.12, "Elec", 2, 3, 6)
+				return DemonDanceSkill(target, ForMod * 0.12, "Elec", 2, 3, 6)
 			if("Zan")
-				used = DemonSingleDamage(target, ForMod * 0.3, "Force", 3)
+				return DemonSingleDamage(target, ForMod * 0.3, "Force", 3)
 			if("Zandyne")
-				used = DemonSingleDamage(target, ForMod * 0.6, "Force", 6)
+				return DemonSingleDamage(target, ForMod * 0.6, "Force", 6)
 			if("Mazan")
-				used = DemonAoeDamage(target, 5, ForMod * 0.15, "Force", 2)
+				return DemonAoeDamage(target, 5, ForMod * 0.15, "Force", 2)
 			if("Mazandyne")
-				used = DemonAoeDamage(target, 5, ForMod * 0.35, "Force", 5)
+				return DemonAoeDamage(target, 5, ForMod * 0.35, "Force", 5)
 			if("Force Dance")
-				used = DemonDanceSkill(target, ForMod * 0.12, "Force", 2, 3, 6)
+				return DemonDanceSkill(target, ForMod * 0.12, "Force", 2, 3, 6)
 			if("Holy Strike")
-				used = DemonSingleDamage(target, ForMod * 0.55, "Almighty", 2)
+				return DemonSingleDamage(target, ForMod * 0.55, "Almighty", 2)
 			if("Megido")
-				used = DemonAoeDamage(target, 5, ForMod * 0.25, "Almighty", 1)
+				return DemonAoeDamage(target, 5, ForMod * 0.25, "Almighty", 1)
 			if("Megidolaon")
-				used = DemonAoeDamage(target, 5, ForMod * 0.45, "Almighty", 2)
+				return DemonAoeDamage(target, 5, ForMod * 0.45, "Almighty", 2)
 			if("Judgement")
-				used = DemonAoeDamage(target, 6, ForMod * 0.6, "Almighty", 3)
+				return DemonAoeDamage(target, 6, ForMod * 0.6, "Almighty", 3)
 			if("Holy Dance")
-				used = DemonDanceSkill(target, ForMod * 0.1, "Almighty", 1, 3, 6)
+				return DemonDanceSkill(target, ForMod * 0.1, "Almighty", 1, 3, 6)
 			if("Power Hit")
-				used = DemonPhysDamage(target, StrMod * 0.25)
+				return DemonPhysDamage(target, StrMod * 0.25)
 			if("Mighty Hit")
-				used = DemonPhysDamage(target, StrMod * 0.45)
+				return DemonPhysDamage(target, StrMod * 0.45)
 			if("Brutal Hit")
-				used = DemonPhysDamage(target, StrMod * 0.65)
+				return DemonPhysDamage(target, StrMod * 0.65)
 			if("Anger Hit")
 				if(DemonValidTarget(target))
 					var/hp_ratio = max(0.1, demon_hp / 100)
-					used = DemonPhysDamage(target, StrMod * 0.3 * (2 - hp_ratio))
+					return DemonPhysDamage(target, StrMod * 0.3 * (2 - hp_ratio))
+				return FALSE
 			if("Piercing Hit")
-				used = DemonPhysDamage(target, StrMod * 0.55)
+				return DemonPhysDamage(target, StrMod * 0.55)
 			if("Fatal Strike")
 				if(DemonValidTarget(target))
 					var/dmg = StrMod * 0.4
 					if(prob(25))
 						dmg *= 2
 						if(ai_owner) ai_owner << "<font color='#ff4444'>[name] lands a critical blow!</font>"
-					used = DemonPhysDamage(target, dmg)
+					return DemonPhysDamage(target, dmg)
+				return FALSE
 			if("Assassinate")
 				if(DemonValidTarget(target))
 					var/dmg = StrMod * 0.4
 					if(prob(15))
 						dmg *= 10
 						if(ai_owner) ai_owner << "<font color='#ff0000'>[name] strikes a lethal blow!</font>"
-					used = DemonPhysDamage(target, dmg)
+					return DemonPhysDamage(target, dmg)
+				return FALSE
 			if("Desperation")
-				used = DemonDesperation(target)
+				return DemonDesperation(target)
 			if("Multi-Strike")
-				used = DemonPhysMultiHit(target, StrMod * 0.1, 2, 5)
+				return DemonPhysMultiHit(target, StrMod * 0.1, 2, 5)
 			if("Deathbound")
-				used = DemonPhysAoe(target, 5, StrMod * 0.2)
+				return DemonPhysAoe(target, 5, StrMod * 0.2)
 			if("Mow Down")
-				used = DemonPhysAoe(target, 5, StrMod * 0.15)
+				return DemonPhysAoe(target, 5, StrMod * 0.15)
 			if("Hassohappa")
-				used = DemonPhysAoeMultiHit(target, 5, StrMod * 0.15, 1, 3)
+				return DemonPhysAoeMultiHit(target, 5, StrMod * 0.15, 1, 3)
 			if("Drain")
-				used = DemonDrain(target, ForMod * 0.3, FALSE)
+				return DemonDrain(target, ForMod * 0.3, FALSE)
 			if("Life Drain")
-				used = DemonDrain(target, ForMod * 0.45, TRUE)
+				return DemonDrain(target, ForMod * 0.45, TRUE)
 			if("Dia")
-				used = DemonHealRandom(30)
+				return DemonHealRandom(30)
 			if("Diarama")
-				used = DemonHealRandom(60)
+				return DemonHealRandom(60)
 			if("Diarahan")
-				used = DemonHealRandom(100)
+				return DemonHealRandom(100)
 			if("Media")
-				used = DemonHealAll(25)
+				return DemonHealAll(25)
 			if("Mediarahan")
-				used = DemonHealAll(100)
+				return DemonHealAll(100)
 			if("Prayer")
-				used = DemonPrayer()
+				return DemonPrayer()
 			if("Recarm")
-				used = DemonRevive(50)
+				return DemonRevive(50)
 			if("Samarecarm")
-				used = DemonRevive(100)
+				return DemonRevive(100)
 			if("Recarmloss")
-				used = DemonRecarmloss()
+				return DemonRecarmloss()
 			if("Amrita")
-				used = DemonAmrita(FALSE)
+				return DemonAmrita(FALSE)
 			if("Nigayomogi")
-				used = DemonAmrita(TRUE)
+				return DemonAmrita(TRUE)
 			if("Shield All")
-				used = DemonShieldAll()
+				return DemonShieldAll()
 			if("Power Charge")
-				used = DemonPowerCharge()
+				return DemonPowerCharge()
 			if("Berserk")
-				used = DemonBerserk(target)
+				return DemonBerserk(target)
 			if("Death Call")
-				used = DemonStrBuff(1.3)
+				return DemonStrBuff(1.3)
 			if("Might Call")
-				used = DemonStrBuff(1.2)
+				return DemonStrBuff(1.2)
 			if("Taunt")
-				used = DemonTaunt()
+				return DemonTaunt()
 			if("Makarakarn")
-				used = DemonReflect()
+				return DemonReflect()
 			if("Tetrakarn")
-				used = DemonReflect()
+				return DemonReflect()
 			if("Extra Cancel")
-				used = DemonExtraCancel()
+				return DemonExtraCancel()
 			if("Marin Karin")
-				used = DemonMarinKarin(target)
+				return DemonMarinKarin(target)
 			if("Gigajama")
-				used = DemonGigajama(target)
-		if(used)
-			DemonAnnounce(skill)
-		return used
+				return DemonGigajama(target)
+		return FALSE
 
 	proc/DemonValidTarget(mob/target)
 		if(!target) return FALSE
+		if(ai_owner && target == ai_owner) return FALSE
 		if(get_dist(src, target) > 15) return FALSE
 		if(ai_owner && "[ai_owner.ckey]" in target.ai_alliances) return FALSE
 		if(ai_owner && ai_owner.party && ai_owner.party.members && (target in ai_owner.party.members)) return FALSE

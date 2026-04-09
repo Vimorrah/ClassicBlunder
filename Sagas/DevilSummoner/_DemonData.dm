@@ -10,7 +10,7 @@
 	_dd0.demon_spd = 4
 	_dd0.demon_off = 4
 	_dd0.demon_def = 4
-	_dd0.demon_skill = "Bufu"
+	_dd0.demon_skills = list("Bufu")
 	_dd0.demon_unique = FALSE
 	DEMON_DB["Heqet"] = _dd0
 
@@ -25,7 +25,7 @@
 	_dd1.demon_spd = 9
 	_dd1.demon_off = 4
 	_dd1.demon_def = 4
-	_dd1.demon_skill = "Fire Dance"
+	_dd1.demon_skills = list("Fire Dance")
 	_dd1.demon_unique = TRUE
 	DEMON_DB["Apis"] = _dd1
 
@@ -40,7 +40,7 @@
 	_dd2.demon_spd = 10
 	_dd2.demon_off = 7
 	_dd2.demon_def = 6
-	_dd2.demon_skill = "Mazio"
+	_dd2.demon_skills = list("Mazio")
 	_dd2.demon_unique = FALSE
 	DEMON_DB["Shiisaa"] = _dd2
 
@@ -55,7 +55,7 @@
 	_dd3.demon_spd = 14
 	_dd3.demon_off = 7
 	_dd3.demon_def = 6
-	_dd3.demon_skill = "Diarahan"
+	_dd3.demon_skills = list("Diarahan")
 	_dd3.demon_unique = TRUE
 	DEMON_DB["Kamapua'a"] = _dd3
 
@@ -70,7 +70,7 @@
 	_dd4.demon_spd = 15
 	_dd4.demon_off = 6
 	_dd4.demon_def = 6
-	_dd4.demon_skill = "Diarama"
+	_dd4.demon_skills = list("Diarama")
 	_dd4.demon_unique = FALSE
 	DEMON_DB["Bai Ze"] = _dd4
 
@@ -85,7 +85,7 @@
 	_dd5.demon_spd = 13
 	_dd5.demon_off = 10
 	_dd5.demon_def = 9
-	_dd5.demon_skill = "Multi-Strike"
+	_dd5.demon_skills = list("Multi-Strike")
 	_dd5.demon_unique = TRUE
 	DEMON_DB["Pabilsag"] = _dd5
 
@@ -100,7 +100,7 @@
 	_dd6.demon_spd = 21
 	_dd6.demon_off = 12
 	_dd6.demon_def = 8
-	_dd6.demon_skill = "Multi-Strike"
+	_dd6.demon_skills = list("Multi-Strike")
 	_dd6.demon_unique = FALSE
 	DEMON_DB["Baihu"] = _dd6
 
@@ -115,7 +115,7 @@
 	_dd7.demon_spd = 10
 	_dd7.demon_off = 10
 	_dd7.demon_def = 15
-	_dd7.demon_skill = "Diarahan"
+	_dd7.demon_skills = list("Diarahan")
 	_dd7.demon_unique = FALSE
 	DEMON_DB["Airavata"] = _dd7
 
@@ -130,7 +130,7 @@
 	_dd8.demon_spd = 23
 	_dd8.demon_off = 10
 	_dd8.demon_def = 9
-	_dd8.demon_skill = "Mazandyne"
+	_dd8.demon_skills = list("Mazandyne")
 	_dd8.demon_unique = TRUE
 	DEMON_DB["Ukano Mitama"] = _dd8
 
@@ -145,7 +145,7 @@
 	_dd9.demon_spd = 19
 	_dd9.demon_off = 12
 	_dd9.demon_def = 10
-	_dd9.demon_skill = "None"
+	_dd9.demon_skills = list("None")
 	_dd9.demon_unique = FALSE
 	DEMON_DB["Barong"] = _dd9
 
@@ -160,7 +160,7 @@
 	_dd10.demon_spd = 15
 	_dd10.demon_off = 15
 	_dd10.demon_def = 9
-	_dd10.demon_skill = "Samarecarm"
+	_dd10.demon_skills = list("Samarecarm")
 	_dd10.demon_unique = TRUE
 	DEMON_DB["Anubis"] = _dd10
 
@@ -175,7 +175,7 @@
 	_dd11.demon_spd = 9
 	_dd11.demon_off = 3
 	_dd11.demon_def = 2
-	_dd11.demon_skill = "Extra Cancel"
+	_dd11.demon_skills = list("Extra Cancel")
 	_dd11.demon_unique = FALSE
 	DEMON_DB["Itsumade"] = _dd11
 
@@ -190,7 +190,7 @@
 	_dd12.demon_spd = 10
 	_dd12.demon_off = 5
 	_dd12.demon_def = 4
-	_dd12.demon_skill = "Bufu"
+	_dd12.demon_skills = list("Bufu")
 	_dd12.demon_unique = FALSE
 	DEMON_DB["Moh Shuvuu"] = _dd12
 
@@ -205,7 +205,7 @@
 	_dd13.demon_spd = 15
 	_dd13.demon_off = 5
 	_dd13.demon_def = 5
-	_dd13.demon_skill = "Diarama"
+	_dd13.demon_skills = list("Diarama")
 	_dd13.demon_unique = FALSE
 	DEMON_DB["Hamsa"] = _dd13
 
@@ -220,7 +220,7 @@
 	_dd14.demon_spd = 15
 	_dd14.demon_off = 5
 	_dd14.demon_def = 5
-	_dd14.demon_skill = "Force Dance"
+	_dd14.demon_skills = list("Force Dance")
 	_dd14.demon_unique = FALSE
 	DEMON_DB["Suparna"] = _dd14
 
@@ -235,7 +235,7 @@
 	_dd15.demon_spd = 18
 	_dd15.demon_off = 8
 	_dd15.demon_def = 5
-	_dd15.demon_skill = "Drain"
+	_dd15.demon_skills = list("Drain")
 	_dd15.demon_unique = FALSE
 	DEMON_DB["Vidofnir"] = _dd15
 
@@ -250,7 +250,7 @@
 	_dd16.demon_spd = 14
 	_dd16.demon_off = 9
 	_dd16.demon_def = 9
-	_dd16.demon_skill = "Mazandyne"
+	_dd16.demon_skills = list("Mazandyne")
 	_dd16.demon_unique = FALSE
 	DEMON_DB["Badb Catha"] = _dd16
 
@@ -265,7 +265,7 @@
 	_dd17.demon_spd = 22
 	_dd17.demon_off = 10
 	_dd17.demon_def = 8
-	_dd17.demon_skill = "Makarakarn"
+	_dd17.demon_skills = list("Makarakarn")
 	_dd17.demon_unique = FALSE
 	DEMON_DB["Anzu"] = _dd17
 
@@ -280,7 +280,7 @@
 	_dd18.demon_spd = 27
 	_dd18.demon_off = 8
 	_dd18.demon_def = 8
-	_dd18.demon_skill = "Agidyne"
+	_dd18.demon_skills = list("Agidyne")
 	_dd18.demon_unique = FALSE
 	DEMON_DB["Feng Huang"] = _dd18
 
@@ -295,7 +295,7 @@
 	_dd19.demon_spd = 27
 	_dd19.demon_off = 13
 	_dd19.demon_def = 9
-	_dd19.demon_skill = "Megidolaon"
+	_dd19.demon_skills = list("Megidolaon")
 	_dd19.demon_unique = FALSE
 	DEMON_DB["Garuda"] = _dd19
 
@@ -310,7 +310,7 @@
 	_dd20.demon_spd = 30
 	_dd20.demon_off = 14
 	_dd20.demon_def = 10
-	_dd20.demon_skill = "Mediarahan"
+	_dd20.demon_skills = list("Mediarahan")
 	_dd20.demon_unique = FALSE
 	DEMON_DB["Da Peng"] = _dd20
 
@@ -325,7 +325,7 @@
 	_dd21.demon_spd = 4
 	_dd21.demon_off = 2
 	_dd21.demon_def = 2
-	_dd21.demon_skill = "Agi"
+	_dd21.demon_skills = list("Agi")
 	_dd21.demon_unique = FALSE
 	DEMON_DB["Kabuso"] = _dd21
 
@@ -340,7 +340,7 @@
 	_dd22.demon_spd = 9
 	_dd22.demon_off = 4
 	_dd22.demon_def = 3
-	_dd22.demon_skill = "Anger Hit"
+	_dd22.demon_skills = list("Anger Hit")
 	_dd22.demon_unique = FALSE
 	DEMON_DB["Hairy Jack"] = _dd22
 
@@ -355,7 +355,7 @@
 	_dd23.demon_spd = 12
 	_dd23.demon_off = 5
 	_dd23.demon_def = 5
-	_dd23.demon_skill = "Media"
+	_dd23.demon_skills = list("Media")
 	_dd23.demon_unique = FALSE
 	DEMON_DB["Nekomata"] = _dd23
 
@@ -370,7 +370,7 @@
 	_dd24.demon_spd = 10
 	_dd24.demon_off = 7
 	_dd24.demon_def = 6
-	_dd24.demon_skill = "Berserk"
+	_dd24.demon_skills = list("Berserk")
 	_dd24.demon_unique = FALSE
 	DEMON_DB["Orthrus"] = _dd24
 
@@ -385,7 +385,7 @@
 	_dd25.demon_spd = 15
 	_dd25.demon_off = 5
 	_dd25.demon_def = 6
-	_dd25.demon_skill = "Mabufu"
+	_dd25.demon_skills = list("Mabufu")
 	_dd25.demon_unique = FALSE
 	DEMON_DB["Cait Sith"] = _dd25
 
@@ -400,7 +400,7 @@
 	_dd26.demon_spd = 12
 	_dd26.demon_off = 10
 	_dd26.demon_def = 8
-	_dd26.demon_skill = "Berserk"
+	_dd26.demon_skills = list("Berserk")
 	_dd26.demon_unique = FALSE
 	DEMON_DB["Nue"] = _dd26
 
@@ -415,7 +415,7 @@
 	_dd27.demon_spd = 19
 	_dd27.demon_off = 11
 	_dd27.demon_def = 5
-	_dd27.demon_skill = "Agidyne"
+	_dd27.demon_skills = list("Agidyne")
 	_dd27.demon_unique = FALSE
 	DEMON_DB["Myrmecolion"] = _dd27
 
@@ -430,7 +430,7 @@
 	_dd28.demon_spd = 21
 	_dd28.demon_off = 13
 	_dd28.demon_def = 9
-	_dd28.demon_skill = "Agidyne"
+	_dd28.demon_skills = list("Agidyne")
 	_dd28.demon_unique = FALSE
 	DEMON_DB["Cerberus"] = _dd28
 
@@ -445,7 +445,7 @@
 	_dd29.demon_spd = 25
 	_dd29.demon_off = 11
 	_dd29.demon_def = 6
-	_dd29.demon_skill = "Piercing Hit"
+	_dd29.demon_skills = list("Piercing Hit")
 	_dd29.demon_unique = FALSE
 	DEMON_DB["Fenrir"] = _dd29
 
@@ -460,7 +460,7 @@
 	_dd30.demon_spd = 7
 	_dd30.demon_off = 6
 	_dd30.demon_def = 5
-	_dd30.demon_skill = "None"
+	_dd30.demon_skills = list("None")
 	_dd30.demon_unique = FALSE
 	DEMON_DB["Mahakala"] = _dd30
 
@@ -475,7 +475,7 @@
 	_dd31.demon_spd = 3
 	_dd31.demon_off = 11
 	_dd31.demon_def = 8
-	_dd31.demon_skill = "Mazio"
+	_dd31.demon_skills = list("Mazio")
 	_dd31.demon_unique = TRUE
 	DEMON_DB["Thor"] = _dd31
 
@@ -490,7 +490,7 @@
 	_dd32.demon_spd = 6
 	_dd32.demon_off = 9
 	_dd32.demon_def = 6
-	_dd32.demon_skill = "Bufudyne"
+	_dd32.demon_skills = list("Bufudyne")
 	_dd32.demon_unique = TRUE
 	DEMON_DB["Arahabaki"] = _dd32
 
@@ -505,7 +505,7 @@
 	_dd33.demon_spd = 9
 	_dd33.demon_off = 7
 	_dd33.demon_def = 6
-	_dd33.demon_skill = "Ziodyne"
+	_dd33.demon_skills = list("Ziodyne")
 	_dd33.demon_unique = TRUE
 	DEMON_DB["Odin"] = _dd33
 
@@ -520,7 +520,7 @@
 	_dd34.demon_spd = 10
 	_dd34.demon_off = 10
 	_dd34.demon_def = 6
-	_dd34.demon_skill = "Agidyne"
+	_dd34.demon_skills = list("Agidyne")
 	_dd34.demon_unique = TRUE
 	DEMON_DB["Yama"] = _dd34
 
@@ -535,7 +535,7 @@
 	_dd35.demon_spd = 11
 	_dd35.demon_off = 10
 	_dd35.demon_def = 5
-	_dd35.demon_skill = "Zandyne"
+	_dd35.demon_skills = list("Zandyne")
 	_dd35.demon_unique = TRUE
 	DEMON_DB["Inti"] = _dd35
 
@@ -550,7 +550,7 @@
 	_dd36.demon_spd = 9
 	_dd36.demon_off = 8
 	_dd36.demon_def = 8
-	_dd36.demon_skill = "Megido"
+	_dd36.demon_skills = list("Megido")
 	_dd36.demon_unique = TRUE
 	DEMON_DB["Mithra"] = _dd36
 
@@ -565,7 +565,7 @@
 	_dd37.demon_spd = 12
 	_dd37.demon_off = 11
 	_dd37.demon_def = 9
-	_dd37.demon_skill = "Makarakarn"
+	_dd37.demon_skills = list("Makarakarn")
 	_dd37.demon_unique = TRUE
 	DEMON_DB["Osiris"] = _dd37
 
@@ -580,7 +580,7 @@
 	_dd38.demon_spd = 14
 	_dd38.demon_off = 11
 	_dd38.demon_def = 8
-	_dd38.demon_skill = "Deathbound"
+	_dd38.demon_skills = list("Deathbound")
 	_dd38.demon_unique = TRUE
 	DEMON_DB["Lugh"] = _dd38
 
@@ -595,7 +595,7 @@
 	_dd39.demon_spd = 14
 	_dd39.demon_off = 12
 	_dd39.demon_def = 7
-	_dd39.demon_skill = "Megidolaon"
+	_dd39.demon_skills = list("Megidolaon")
 	_dd39.demon_unique = TRUE
 	DEMON_DB["Alilat"] = _dd39
 
@@ -610,7 +610,7 @@
 	_dd40.demon_spd = 15
 	_dd40.demon_off = 12
 	_dd40.demon_def = 7
-	_dd40.demon_skill = "None"
+	_dd40.demon_skills = list("None")
 	_dd40.demon_unique = TRUE
 	DEMON_DB["Baal"] = _dd40
 
@@ -625,7 +625,7 @@
 	_dd41.demon_spd = 15
 	_dd41.demon_off = 10
 	_dd41.demon_def = 12
-	_dd41.demon_skill = "Samarecarm"
+	_dd41.demon_skills = list("Samarecarm")
 	_dd41.demon_unique = TRUE
 	DEMON_DB["Lord Nan Dou"] = _dd41
 
@@ -640,7 +640,7 @@
 	_dd42.demon_spd = 20
 	_dd42.demon_off = 14
 	_dd42.demon_def = 12
-	_dd42.demon_skill = "Inferno"
+	_dd42.demon_skills = list("Inferno")
 	_dd42.demon_unique = TRUE
 	DEMON_DB["Asura"] = _dd42
 
@@ -655,7 +655,7 @@
 	_dd43.demon_spd = 7
 	_dd43.demon_off = 4
 	_dd43.demon_def = 4
-	_dd43.demon_skill = "Dia"
+	_dd43.demon_skills = list("Dia")
 	_dd43.demon_unique = FALSE
 	DEMON_DB["Angel"] = _dd43
 
@@ -670,7 +670,7 @@
 	_dd44.demon_spd = 5
 	_dd44.demon_off = 8
 	_dd44.demon_def = 7
-	_dd44.demon_skill = "Extra Cancel"
+	_dd44.demon_skills = list("Extra Cancel")
 	_dd44.demon_unique = FALSE
 	DEMON_DB["Power"] = _dd44
 
@@ -685,7 +685,7 @@
 	_dd45.demon_spd = 11
 	_dd45.demon_off = 6
 	_dd45.demon_def = 5
-	_dd45.demon_skill = "Mabufu"
+	_dd45.demon_skills = list("Mabufu")
 	_dd45.demon_unique = FALSE
 	DEMON_DB["Lailah"] = _dd45
 
@@ -700,7 +700,7 @@
 	_dd46.demon_spd = 12
 	_dd46.demon_off = 10
 	_dd46.demon_def = 9
-	_dd46.demon_skill = "Drain"
+	_dd46.demon_skills = list("Drain")
 	_dd46.demon_unique = FALSE
 	DEMON_DB["Aniel"] = _dd46
 
@@ -715,7 +715,7 @@
 	_dd47.demon_spd = 11
 	_dd47.demon_off = 11
 	_dd47.demon_def = 9
-	_dd47.demon_skill = "Judgement"
+	_dd47.demon_skills = list("Judgement")
 	_dd47.demon_unique = FALSE
 	DEMON_DB["Kazfiel"] = _dd47
 
@@ -730,7 +730,7 @@
 	_dd48.demon_spd = 16
 	_dd48.demon_off = 11
 	_dd48.demon_def = 8
-	_dd48.demon_skill = "Samarecarm"
+	_dd48.demon_skills = list("Samarecarm")
 	_dd48.demon_unique = TRUE
 	DEMON_DB["Remiel"] = _dd48
 
@@ -745,7 +745,7 @@
 	_dd49.demon_spd = 18
 	_dd49.demon_off = 12
 	_dd49.demon_def = 11
-	_dd49.demon_skill = "None"
+	_dd49.demon_skills = list("None")
 	_dd49.demon_unique = TRUE
 	DEMON_DB["Metatron"] = _dd49
 
@@ -760,7 +760,7 @@
 	_dd50.demon_spd = 8
 	_dd50.demon_off = 4
 	_dd50.demon_def = 3
-	_dd50.demon_skill = "Elec Dance"
+	_dd50.demon_skills = list("Elec Dance")
 	_dd50.demon_unique = FALSE
 	DEMON_DB["Toubyou"] = _dd50
 
@@ -775,7 +775,7 @@
 	_dd51.demon_spd = 10
 	_dd51.demon_off = 5
 	_dd51.demon_def = 4
-	_dd51.demon_skill = "Diarama"
+	_dd51.demon_skills = list("Diarama")
 	_dd51.demon_unique = FALSE
 	DEMON_DB["Bai Suzhen"] = _dd51
 
@@ -790,7 +790,7 @@
 	_dd52.demon_spd = 8
 	_dd52.demon_off = 7
 	_dd52.demon_def = 5
-	_dd52.demon_skill = "Fire Dance"
+	_dd52.demon_skills = list("Fire Dance")
 	_dd52.demon_unique = FALSE
 	DEMON_DB["Basilisk"] = _dd52
 
@@ -805,7 +805,7 @@
 	_dd53.demon_spd = 17
 	_dd53.demon_off = 5
 	_dd53.demon_def = 6
-	_dd53.demon_skill = "Life Drain"
+	_dd53.demon_skills = list("Life Drain")
 	_dd53.demon_unique = FALSE
 	DEMON_DB["Asp"] = _dd53
 
@@ -820,7 +820,7 @@
 	_dd54.demon_spd = 17
 	_dd54.demon_off = 7
 	_dd54.demon_def = 6
-	_dd54.demon_skill = "Holy Dance"
+	_dd54.demon_skills = list("Holy Dance")
 	_dd54.demon_unique = FALSE
 	DEMON_DB["Ym"] = _dd54
 
@@ -835,7 +835,7 @@
 	_dd55.demon_spd = 17
 	_dd55.demon_off = 7
 	_dd55.demon_def = 6
-	_dd55.demon_skill = "Agidyne"
+	_dd55.demon_skills = list("Agidyne")
 	_dd55.demon_unique = FALSE
 	DEMON_DB["Python"] = _dd55
 
@@ -850,7 +850,7 @@
 	_dd56.demon_spd = 18
 	_dd56.demon_off = 9
 	_dd56.demon_def = 8
-	_dd56.demon_skill = "Bufudyne"
+	_dd56.demon_skills = list("Bufudyne")
 	_dd56.demon_unique = FALSE
 	DEMON_DB["Culebre"] = _dd56
 
@@ -865,7 +865,7 @@
 	_dd57.demon_spd = 13
 	_dd57.demon_off = 15
 	_dd57.demon_def = 11
-	_dd57.demon_skill = "Maziodyne"
+	_dd57.demon_skills = list("Maziodyne")
 	_dd57.demon_unique = FALSE
 	DEMON_DB["Vritra"] = _dd57
 
@@ -880,7 +880,7 @@
 	_dd58.demon_spd = 17
 	_dd58.demon_off = 15
 	_dd58.demon_def = 12
-	_dd58.demon_skill = "None"
+	_dd58.demon_skills = list("None")
 	_dd58.demon_unique = TRUE
 	DEMON_DB["Vasuki"] = _dd58
 
@@ -895,7 +895,7 @@
 	_dd59.demon_spd = 4
 	_dd59.demon_off = 3
 	_dd59.demon_def = 4
-	_dd59.demon_skill = "Amrita"
+	_dd59.demon_skills = list("Amrita")
 	_dd59.demon_unique = FALSE
 	DEMON_DB["Erthys"] = _dd59
 
@@ -910,7 +910,7 @@
 	_dd60.demon_spd = 9
 	_dd60.demon_off = 3
 	_dd60.demon_def = 3
-	_dd60.demon_skill = "Zio"
+	_dd60.demon_skills = list("Zio")
 	_dd60.demon_unique = FALSE
 	DEMON_DB["Aeros"] = _dd60
 
@@ -925,7 +925,7 @@
 	_dd61.demon_spd = 8
 	_dd61.demon_off = 4
 	_dd61.demon_def = 4
-	_dd61.demon_skill = "Ice Dance"
+	_dd61.demon_skills = list("Ice Dance")
 	_dd61.demon_unique = FALSE
 	DEMON_DB["Aquans"] = _dd61
 
@@ -940,7 +940,7 @@
 	_dd62.demon_spd = 8
 	_dd62.demon_off = 5
 	_dd62.demon_def = 4
-	_dd62.demon_skill = "Maragi"
+	_dd62.demon_skills = list("Maragi")
 	_dd62.demon_unique = FALSE
 	DEMON_DB["Flaemis"] = _dd62
 
@@ -955,7 +955,7 @@
 	_dd63.demon_spd = 4
 	_dd63.demon_off = 2
 	_dd63.demon_def = 2
-	_dd63.demon_skill = "Bufu"
+	_dd63.demon_skills = list("Bufu")
 	_dd63.demon_unique = FALSE
 	DEMON_DB["Pixie"] = _dd63
 
@@ -970,7 +970,7 @@
 	_dd64.demon_spd = 4
 	_dd64.demon_off = 4
 	_dd64.demon_def = 4
-	_dd64.demon_skill = "Dia"
+	_dd64.demon_skills = list("Dia")
 	_dd64.demon_unique = FALSE
 	DEMON_DB["Knocker"] = _dd64
 
@@ -985,7 +985,7 @@
 	_dd65.demon_spd = 10
 	_dd65.demon_off = 3
 	_dd65.demon_def = 3
-	_dd65.demon_skill = "Force Dance"
+	_dd65.demon_skills = list("Force Dance")
 	_dd65.demon_unique = FALSE
 	DEMON_DB["Kijimuna"] = _dd65
 
@@ -1000,7 +1000,7 @@
 	_dd66.demon_spd = 6
 	_dd66.demon_off = 5
 	_dd66.demon_def = 5
-	_dd66.demon_skill = "Diarama"
+	_dd66.demon_skills = list("Diarama")
 	_dd66.demon_unique = FALSE
 	DEMON_DB["Jack Frost"] = _dd66
 
@@ -1015,7 +1015,7 @@
 	_dd67.demon_spd = 9
 	_dd67.demon_off = 5
 	_dd67.demon_def = 6
-	_dd67.demon_skill = "Agidyne"
+	_dd67.demon_skills = list("Agidyne")
 	_dd67.demon_unique = FALSE
 	DEMON_DB["Pyro Jack"] = _dd67
 
@@ -1030,7 +1030,7 @@
 	_dd68.demon_spd = 15
 	_dd68.demon_off = 5
 	_dd68.demon_def = 5
-	_dd68.demon_skill = "Diarahan"
+	_dd68.demon_skills = list("Diarahan")
 	_dd68.demon_unique = FALSE
 	DEMON_DB["Lorelei"] = _dd68
 
@@ -1045,7 +1045,7 @@
 	_dd69.demon_spd = 12
 	_dd69.demon_off = 6
 	_dd69.demon_def = 7
-	_dd69.demon_skill = "Bufudyne"
+	_dd69.demon_skills = list("Bufudyne")
 	_dd69.demon_unique = FALSE
 	DEMON_DB["Silky"] = _dd69
 
@@ -1060,7 +1060,7 @@
 	_dd70.demon_spd = 16
 	_dd70.demon_off = 6
 	_dd70.demon_def = 8
-	_dd70.demon_skill = "Drain"
+	_dd70.demon_skills = list("Drain")
 	_dd70.demon_unique = FALSE
 	DEMON_DB["Vivian"] = _dd70
 
@@ -1075,7 +1075,7 @@
 	_dd71.demon_spd = 14
 	_dd71.demon_off = 8
 	_dd71.demon_def = 9
-	_dd71.demon_skill = "Recarmloss"
+	_dd71.demon_skills = list("Recarmloss")
 	_dd71.demon_unique = TRUE
 	DEMON_DB["Titania"] = _dd71
 
@@ -1090,7 +1090,7 @@
 	_dd72.demon_spd = 13
 	_dd72.demon_off = 12
 	_dd72.demon_def = 9
-	_dd72.demon_skill = "Samarecarm"
+	_dd72.demon_skills = list("Samarecarm")
 	_dd72.demon_unique = TRUE
 	DEMON_DB["Oberon"] = _dd72
 
@@ -1105,7 +1105,7 @@
 	_dd73.demon_spd = 7
 	_dd73.demon_off = 3
 	_dd73.demon_def = 3
-	_dd73.demon_skill = "Anger Hit"
+	_dd73.demon_skills = list("Anger Hit")
 	_dd73.demon_unique = FALSE
 	DEMON_DB["Gagyson"] = _dd73
 
@@ -1120,7 +1120,7 @@
 	_dd74.demon_spd = 8
 	_dd74.demon_off = 6
 	_dd74.demon_def = 3
-	_dd74.demon_skill = "Force Dance"
+	_dd74.demon_skills = list("Force Dance")
 	_dd74.demon_unique = FALSE
 	DEMON_DB["Abraxas"] = _dd74
 
@@ -1135,7 +1135,7 @@
 	_dd75.demon_spd = 8
 	_dd75.demon_off = 7
 	_dd75.demon_def = 6
-	_dd75.demon_skill = "Maragi"
+	_dd75.demon_skills = list("Maragi")
 	_dd75.demon_unique = FALSE
 	DEMON_DB["Flauros"] = _dd75
 
@@ -1150,7 +1150,7 @@
 	_dd76.demon_spd = 15
 	_dd76.demon_off = 6
 	_dd76.demon_def = 5
-	_dd76.demon_skill = "Mighty Hit"
+	_dd76.demon_skills = list("Mighty Hit")
 	_dd76.demon_unique = FALSE
 	DEMON_DB["Barbatos"] = _dd76
 
@@ -1165,7 +1165,7 @@
 	_dd77.demon_spd = 8
 	_dd77.demon_off = 7
 	_dd77.demon_def = 9
-	_dd77.demon_skill = "Shield All"
+	_dd77.demon_skills = list("Shield All")
 	_dd77.demon_unique = TRUE
 	DEMON_DB["Botis"] = _dd77
 
@@ -1180,7 +1180,7 @@
 	_dd78.demon_spd = 15
 	_dd78.demon_off = 7
 	_dd78.demon_def = 5
-	_dd78.demon_skill = "Agidyne"
+	_dd78.demon_skills = list("Agidyne")
 	_dd78.demon_unique = FALSE
 	DEMON_DB["Nisroc"] = _dd78
 
@@ -1195,7 +1195,7 @@
 	_dd79.demon_spd = 10
 	_dd79.demon_off = 8
 	_dd79.demon_def = 8
-	_dd79.demon_skill = "Agidyne"
+	_dd79.demon_skills = list("Agidyne")
 	_dd79.demon_unique = TRUE
 	DEMON_DB["Bifrons"] = _dd79
 
@@ -1210,7 +1210,7 @@
 	_dd80.demon_spd = 17
 	_dd80.demon_off = 7
 	_dd80.demon_def = 7
-	_dd80.demon_skill = "Makarakarn"
+	_dd80.demon_skills = list("Makarakarn")
 	_dd80.demon_unique = FALSE
 	DEMON_DB["Orobas"] = _dd80
 
@@ -1225,7 +1225,7 @@
 	_dd81.demon_spd = 20
 	_dd81.demon_off = 9
 	_dd81.demon_def = 6
-	_dd81.demon_skill = "Maragidyne"
+	_dd81.demon_skills = list("Maragidyne")
 	_dd81.demon_unique = FALSE
 	DEMON_DB["Decarabia"] = _dd81
 
@@ -1240,7 +1240,7 @@
 	_dd82.demon_spd = 17
 	_dd82.demon_off = 12
 	_dd82.demon_def = 8
-	_dd82.demon_skill = "Death Call"
+	_dd82.demon_skills = list("Death Call")
 	_dd82.demon_unique = FALSE
 	DEMON_DB["Murmur"] = _dd82
 
@@ -1255,7 +1255,7 @@
 	_dd83.demon_spd = 21
 	_dd83.demon_off = 13
 	_dd83.demon_def = 8
-	_dd83.demon_skill = "Gigajama"
+	_dd83.demon_skills = list("Gigajama")
 	_dd83.demon_unique = FALSE
 	DEMON_DB["Agares"] = _dd83
 
@@ -1270,7 +1270,7 @@
 	_dd84.demon_spd = 28
 	_dd84.demon_off = 10
 	_dd84.demon_def = 13
-	_dd84.demon_skill = "None"
+	_dd84.demon_skills = list("None")
 	_dd84.demon_unique = FALSE
 	DEMON_DB["Nebiros"] = _dd84
 
@@ -1285,7 +1285,7 @@
 	_dd85.demon_spd = 28
 	_dd85.demon_off = 16
 	_dd85.demon_def = 14
-	_dd85.demon_skill = "None"
+	_dd85.demon_skills = list("None")
 	_dd85.demon_unique = TRUE
 	DEMON_DB["Satan"] = _dd85
 
@@ -1300,7 +1300,7 @@
 	_dd86.demon_spd = 6
 	_dd86.demon_off = 3
 	_dd86.demon_def = 3
-	_dd86.demon_skill = "Dia"
+	_dd86.demon_skills = list("Dia")
 	_dd86.demon_unique = FALSE
 	DEMON_DB["Kikimora"] = _dd86
 
@@ -1315,7 +1315,7 @@
 	_dd87.demon_spd = 7
 	_dd87.demon_off = 4
 	_dd87.demon_def = 4
-	_dd87.demon_skill = "Elec Dance"
+	_dd87.demon_skills = list("Elec Dance")
 	_dd87.demon_unique = FALSE
 	DEMON_DB["Lilim"] = _dd87
 
@@ -1330,7 +1330,7 @@
 	_dd88.demon_spd = 10
 	_dd88.demon_off = 4
 	_dd88.demon_def = 4
-	_dd88.demon_skill = "Bufudyne"
+	_dd88.demon_skills = list("Bufudyne")
 	_dd88.demon_unique = FALSE
 	DEMON_DB["Leanan Sidhe"] = _dd88
 
@@ -1345,7 +1345,7 @@
 	_dd89.demon_spd = 14
 	_dd89.demon_off = 5
 	_dd89.demon_def = 5
-	_dd89.demon_skill = "Drain"
+	_dd89.demon_skills = list("Drain")
 	_dd89.demon_unique = FALSE
 	DEMON_DB["Yuki Jyorou"] = _dd89
 
@@ -1360,7 +1360,7 @@
 	_dd90.demon_spd = 14
 	_dd90.demon_off = 4
 	_dd90.demon_def = 5
-	_dd90.demon_skill = "Ziodyne"
+	_dd90.demon_skills = list("Ziodyne")
 	_dd90.demon_unique = TRUE
 	DEMON_DB["Peri"] = _dd90
 
@@ -1375,7 +1375,7 @@
 	_dd91.demon_spd = 9
 	_dd91.demon_off = 7
 	_dd91.demon_def = 8
-	_dd91.demon_skill = "Death Call"
+	_dd91.demon_skills = list("Death Call")
 	_dd91.demon_unique = FALSE
 	DEMON_DB["Ixtab"] = _dd91
 
@@ -1390,7 +1390,7 @@
 	_dd92.demon_spd = 9
 	_dd92.demon_off = 11
 	_dd92.demon_def = 7
-	_dd92.demon_skill = "Maziodyne"
+	_dd92.demon_skills = list("Maziodyne")
 	_dd92.demon_unique = TRUE
 	DEMON_DB["Hariti"] = _dd92
 
@@ -1405,7 +1405,7 @@
 	_dd93.demon_spd = 12
 	_dd93.demon_off = 11
 	_dd93.demon_def = 7
-	_dd93.demon_skill = "Tetrakarn"
+	_dd93.demon_skills = list("Tetrakarn")
 	_dd93.demon_unique = TRUE
 	DEMON_DB["Dzelarhons"] = _dd93
 
@@ -1420,7 +1420,7 @@
 	_dd94.demon_spd = 18
 	_dd94.demon_off = 12
 	_dd94.demon_def = 9
-	_dd94.demon_skill = "Assassinate"
+	_dd94.demon_skills = list("Assassinate")
 	_dd94.demon_unique = FALSE
 	DEMON_DB["Rangda"] = _dd94
 
@@ -1435,7 +1435,7 @@
 	_dd95.demon_spd = 12
 	_dd95.demon_off = 9
 	_dd95.demon_def = 11
-	_dd95.demon_skill = "Recarmloss"
+	_dd95.demon_skills = list("Recarmloss")
 	_dd95.demon_unique = TRUE
 	DEMON_DB["Anat"] = _dd95
 
@@ -1450,7 +1450,7 @@
 	_dd96.demon_spd = 18
 	_dd96.demon_off = 15
 	_dd96.demon_def = 12
-	_dd96.demon_skill = "Prayer"
+	_dd96.demon_skills = list("Prayer")
 	_dd96.demon_unique = TRUE
 	DEMON_DB["Kali"] = _dd96
 
@@ -1465,7 +1465,7 @@
 	_dd97.demon_spd = 18
 	_dd97.demon_off = 13
 	_dd97.demon_def = 12
-	_dd97.demon_skill = "None"
+	_dd97.demon_skills = list("None")
 	_dd97.demon_unique = TRUE
 	DEMON_DB["Lilith"] = _dd97
 
@@ -1480,7 +1480,7 @@
 	_dd98.demon_spd = 12
 	_dd98.demon_off = 5
 	_dd98.demon_def = 5
-	_dd98.demon_skill = "Berserk"
+	_dd98.demon_skills = list("Berserk")
 	_dd98.demon_unique = TRUE
 	DEMON_DB["Ghost Q"] = _dd98
 
@@ -1495,7 +1495,7 @@
 	_dd99.demon_spd = 11
 	_dd99.demon_off = 5
 	_dd99.demon_def = 6
-	_dd99.demon_skill = "Death Call"
+	_dd99.demon_skills = list("Death Call")
 	_dd99.demon_unique = TRUE
 	DEMON_DB["Sage of Time"] = _dd99
 
@@ -1510,7 +1510,7 @@
 	_dd100.demon_spd = 14
 	_dd100.demon_off = 8
 	_dd100.demon_def = 8
-	_dd100.demon_skill = "Life Drain"
+	_dd100.demon_skills = list("Life Drain")
 	_dd100.demon_unique = TRUE
 	DEMON_DB["Billiken"] = _dd100
 
@@ -1525,7 +1525,7 @@
 	_dd101.demon_spd = 20
 	_dd101.demon_off = 8
 	_dd101.demon_def = 8
-	_dd101.demon_skill = "Judgement"
+	_dd101.demon_skills = list("Judgement")
 	_dd101.demon_unique = TRUE
 	DEMON_DB["Trumpeter"] = _dd101
 
@@ -1540,7 +1540,7 @@
 	_dd102.demon_spd = 24
 	_dd102.demon_off = 12
 	_dd102.demon_def = 12
-	_dd102.demon_skill = "None"
+	_dd102.demon_skills = list("None")
 	_dd102.demon_unique = TRUE
 	DEMON_DB["Alice"] = _dd102
 
@@ -1555,7 +1555,7 @@
 	_dd103.demon_spd = 6
 	_dd103.demon_off = 5
 	_dd103.demon_def = 3
-	_dd103.demon_skill = "Anger Hit"
+	_dd103.demon_skills = list("Anger Hit")
 	_dd103.demon_unique = TRUE
 	DEMON_DB["Tam Lin"] = _dd103
 
@@ -1570,7 +1570,7 @@
 	_dd104.demon_spd = 4
 	_dd104.demon_off = 6
 	_dd104.demon_def = 5
-	_dd104.demon_skill = "Agi"
+	_dd104.demon_skills = list("Agi")
 	_dd104.demon_unique = FALSE
 	DEMON_DB["Jambavan"] = _dd104
 
@@ -1585,7 +1585,7 @@
 	_dd105.demon_spd = 9
 	_dd105.demon_off = 6
 	_dd105.demon_def = 3
-	_dd105.demon_skill = "Elec Dance"
+	_dd105.demon_skills = list("Elec Dance")
 	_dd105.demon_unique = FALSE
 	DEMON_DB["Ictinike"] = _dd105
 
@@ -1600,7 +1600,7 @@
 	_dd106.demon_spd = 8
 	_dd106.demon_off = 7
 	_dd106.demon_def = 4
-	_dd106.demon_skill = "Maragi"
+	_dd106.demon_skills = list("Maragi")
 	_dd106.demon_unique = FALSE
 	DEMON_DB["Tlaloc"] = _dd106
 
@@ -1615,7 +1615,7 @@
 	_dd107.demon_spd = 17
 	_dd107.demon_off = 7
 	_dd107.demon_def = 5
-	_dd107.demon_skill = "Berserk"
+	_dd107.demon_skills = list("Berserk")
 	_dd107.demon_unique = FALSE
 	DEMON_DB["Hanuman"] = _dd107
 
@@ -1630,7 +1630,7 @@
 	_dd108.demon_spd = 11
 	_dd108.demon_off = 11
 	_dd108.demon_def = 6
-	_dd108.demon_skill = "Mazio"
+	_dd108.demon_skills = list("Mazio")
 	_dd108.demon_unique = TRUE
 	DEMON_DB["Cu Chulainn"] = _dd108
 
@@ -1645,7 +1645,7 @@
 	_dd109.demon_spd = 15
 	_dd109.demon_off = 7
 	_dd109.demon_def = 6
-	_dd109.demon_skill = "Marin Karin"
+	_dd109.demon_skills = list("Marin Karin")
 	_dd109.demon_unique = TRUE
 	DEMON_DB["Kama"] = _dd109
 
@@ -1660,7 +1660,7 @@
 	_dd110.demon_spd = 14
 	_dd110.demon_off = 12
 	_dd110.demon_def = 6
-	_dd110.demon_skill = "Agidyne"
+	_dd110.demon_skills = list("Agidyne")
 	_dd110.demon_unique = TRUE
 	DEMON_DB["Kresnik"] = _dd110
 
@@ -1675,7 +1675,7 @@
 	_dd111.demon_spd = 14
 	_dd111.demon_off = 10
 	_dd111.demon_def = 7
-	_dd111.demon_skill = "Mediarahan"
+	_dd111.demon_skills = list("Mediarahan")
 	_dd111.demon_unique = TRUE
 	DEMON_DB["Kangiten"] = _dd111
 
@@ -1690,7 +1690,7 @@
 	_dd112.demon_spd = 4
 	_dd112.demon_off = 13
 	_dd112.demon_def = 13
-	_dd112.demon_skill = "Deathbound"
+	_dd112.demon_skills = list("Deathbound")
 	_dd112.demon_unique = FALSE
 	DEMON_DB["Ganesha"] = _dd112
 
@@ -1705,7 +1705,7 @@
 	_dd113.demon_spd = 27
 	_dd113.demon_off = 10
 	_dd113.demon_def = 8
-	_dd113.demon_skill = "Holy Strike"
+	_dd113.demon_skills = list("Holy Strike")
 	_dd113.demon_unique = TRUE
 	DEMON_DB["Jarilo"] = _dd113
 
@@ -1720,7 +1720,7 @@
 	_dd114.demon_spd = 27
 	_dd114.demon_off = 12
 	_dd114.demon_def = 9
-	_dd114.demon_skill = "Taunt"
+	_dd114.demon_skills = list("Taunt")
 	_dd114.demon_unique = TRUE
 	DEMON_DB["Heimdall"] = _dd114
 
@@ -1735,7 +1735,7 @@
 	_dd115.demon_spd = 4
 	_dd115.demon_off = 2
 	_dd115.demon_def = 2
-	_dd115.demon_skill = "Agi"
+	_dd115.demon_skills = list("Agi")
 	_dd115.demon_unique = FALSE
 	DEMON_DB["Poltergeist"] = _dd115
 
@@ -1750,7 +1750,7 @@
 	_dd116.demon_spd = 5
 	_dd116.demon_off = 3
 	_dd116.demon_def = 3
-	_dd116.demon_skill = "Agi"
+	_dd116.demon_skills = list("Agi")
 	_dd116.demon_unique = FALSE
 	DEMON_DB["Agathion"] = _dd116
 
@@ -1765,7 +1765,7 @@
 	_dd117.demon_spd = 5
 	_dd117.demon_off = 4
 	_dd117.demon_def = 5
-	_dd117.demon_skill = "Berserk"
+	_dd117.demon_skills = list("Berserk")
 	_dd117.demon_unique = FALSE
 	DEMON_DB["Tenong Cut"] = _dd117
 
@@ -1780,7 +1780,7 @@
 	_dd118.demon_spd = 13
 	_dd118.demon_off = 6
 	_dd118.demon_def = 4
-	_dd118.demon_skill = "Assassinate"
+	_dd118.demon_skills = list("Assassinate")
 	_dd118.demon_unique = FALSE
 	DEMON_DB["Kumbhanda"] = _dd118
 
@@ -1795,7 +1795,7 @@
 	_dd119.demon_spd = 7
 	_dd119.demon_off = 6
 	_dd119.demon_def = 7
-	_dd119.demon_skill = "Extra Cancel"
+	_dd119.demon_skills = list("Extra Cancel")
 	_dd119.demon_unique = FALSE
 	DEMON_DB["Loa"] = _dd119
 
@@ -1810,7 +1810,7 @@
 	_dd120.demon_spd = 10
 	_dd120.demon_off = 6
 	_dd120.demon_def = 11
-	_dd120.demon_skill = "Desperation"
+	_dd120.demon_skills = list("Desperation")
 	_dd120.demon_unique = FALSE
 	DEMON_DB["Pisaca"] = _dd120
 
@@ -1825,7 +1825,7 @@
 	_dd121.demon_spd = 16
 	_dd121.demon_off = 10
 	_dd121.demon_def = 9
-	_dd121.demon_skill = "Bufudyne"
+	_dd121.demon_skills = list("Bufudyne")
 	_dd121.demon_unique = TRUE
 	DEMON_DB["Kudlak"] = _dd121
 
@@ -1840,7 +1840,7 @@
 	_dd122.demon_spd = 13
 	_dd122.demon_off = 8
 	_dd122.demon_def = 11
-	_dd122.demon_skill = "Judgement"
+	_dd122.demon_skills = list("Judgement")
 	_dd122.demon_unique = TRUE
 	DEMON_DB["Purple Mirror"] = _dd122
 
@@ -1855,7 +1855,7 @@
 	_dd123.demon_spd = 11
 	_dd123.demon_off = 6
 	_dd123.demon_def = 4
-	_dd123.demon_skill = "Mow Down"
+	_dd123.demon_skills = list("Mow Down")
 	_dd123.demon_unique = TRUE
 	DEMON_DB["Neko Shogun"] = _dd123
 
@@ -1870,7 +1870,7 @@
 	_dd124.demon_spd = 13
 	_dd124.demon_off = 9
 	_dd124.demon_def = 7
-	_dd124.demon_skill = "Assassinate"
+	_dd124.demon_skills = list("Assassinate")
 	_dd124.demon_unique = TRUE
 	DEMON_DB["Hagen"] = _dd124
 
@@ -1885,7 +1885,7 @@
 	_dd125.demon_spd = 13
 	_dd125.demon_off = 12
 	_dd125.demon_def = 9
-	_dd125.demon_skill = "Hassohappa"
+	_dd125.demon_skills = list("Hassohappa")
 	_dd125.demon_unique = TRUE
 	DEMON_DB["Jeanne D'Arc"] = _dd125
 
@@ -1900,7 +1900,7 @@
 	_dd126.demon_spd = 23
 	_dd126.demon_off = 11
 	_dd126.demon_def = 6
-	_dd126.demon_skill = "Hassohappa"
+	_dd126.demon_skills = list("Hassohappa")
 	_dd126.demon_unique = TRUE
 	DEMON_DB["Yoshitsune"] = _dd126
 
@@ -1915,7 +1915,7 @@
 	_dd127.demon_spd = 13
 	_dd127.demon_off = 13
 	_dd127.demon_def = 11
-	_dd127.demon_skill = "Holy Strike"
+	_dd127.demon_skills = list("Holy Strike")
 	_dd127.demon_unique = TRUE
 	DEMON_DB["Guan Yu"] = _dd127
 
@@ -1930,7 +1930,7 @@
 	_dd128.demon_spd = 24
 	_dd128.demon_off = 13
 	_dd128.demon_def = 12
-	_dd128.demon_skill = "None"
+	_dd128.demon_skills = list("None")
 	_dd128.demon_unique = TRUE
 	DEMON_DB["Masakado"] = _dd128
 
@@ -1945,7 +1945,7 @@
 	_dd129.demon_spd = 4
 	_dd129.demon_off = 3
 	_dd129.demon_def = 3
-	_dd129.demon_skill = "Dia"
+	_dd129.demon_skills = list("Dia")
 	_dd129.demon_unique = FALSE
 	DEMON_DB["Obariyon"] = _dd129
 
@@ -1960,7 +1960,7 @@
 	_dd130.demon_spd = 3
 	_dd130.demon_off = 5
 	_dd130.demon_def = 3
-	_dd130.demon_skill = "Anger Hit"
+	_dd130.demon_skills = list("Anger Hit")
 	_dd130.demon_unique = FALSE
 	DEMON_DB["Ogre"] = _dd130
 
@@ -1975,7 +1975,7 @@
 	_dd131.demon_spd = 6
 	_dd131.demon_off = 5
 	_dd131.demon_def = 5
-	_dd131.demon_skill = "Berserk"
+	_dd131.demon_skills = list("Berserk")
 	_dd131.demon_unique = FALSE
 	DEMON_DB["Mokoi"] = _dd131
 
@@ -1990,7 +1990,7 @@
 	_dd132.demon_spd = 9
 	_dd132.demon_off = 8
 	_dd132.demon_def = 5
-	_dd132.demon_skill = "Brutal Hit"
+	_dd132.demon_skills = list("Brutal Hit")
 	_dd132.demon_unique = FALSE
 	DEMON_DB["Ogun"] = _dd132
 
@@ -2005,7 +2005,7 @@
 	_dd133.demon_spd = 13
 	_dd133.demon_off = 8
 	_dd133.demon_def = 6
-	_dd133.demon_skill = "Brutal Hit"
+	_dd133.demon_skills = list("Brutal Hit")
 	_dd133.demon_unique = FALSE
 	DEMON_DB["Wendigo"] = _dd133
 
@@ -2020,7 +2020,7 @@
 	_dd134.demon_spd = 9
 	_dd134.demon_off = 5
 	_dd134.demon_def = 10
-	_dd134.demon_skill = "Bufudyne"
+	_dd134.demon_skills = list("Bufudyne")
 	_dd134.demon_unique = FALSE
 	DEMON_DB["Legion"] = _dd134
 
@@ -2035,7 +2035,7 @@
 	_dd135.demon_spd = 10
 	_dd135.demon_off = 10
 	_dd135.demon_def = 10
-	_dd135.demon_skill = "Bufudyne"
+	_dd135.demon_skills = list("Bufudyne")
 	_dd135.demon_unique = FALSE
 	DEMON_DB["Girimehkala"] = _dd135
 
@@ -2050,7 +2050,7 @@
 	_dd136.demon_spd = 20
 	_dd136.demon_off = 12
 	_dd136.demon_def = 8
-	_dd136.demon_skill = "Deathbound"
+	_dd136.demon_skills = list("Deathbound")
 	_dd136.demon_unique = FALSE
 	DEMON_DB["Rakshasa"] = _dd136
 
@@ -2065,7 +2065,7 @@
 	_dd137.demon_spd = 16
 	_dd137.demon_off = 14
 	_dd137.demon_def = 12
-	_dd137.demon_skill = "Tetrakarn"
+	_dd137.demon_skills = list("Tetrakarn")
 	_dd137.demon_unique = TRUE
 	DEMON_DB["Grendel"] = _dd137
 
@@ -2080,7 +2080,7 @@
 	_dd138.demon_spd = 20
 	_dd138.demon_off = 14
 	_dd138.demon_def = 11
-	_dd138.demon_skill = "Mabufudyne"
+	_dd138.demon_skills = list("Mabufudyne")
 	_dd138.demon_unique = TRUE
 	DEMON_DB["Black Frost"] = _dd138
 
@@ -2095,7 +2095,7 @@
 	_dd139.demon_spd = 6
 	_dd139.demon_off = 7
 	_dd139.demon_def = 6
-	_dd139.demon_skill = "Berserk"
+	_dd139.demon_skills = list("Berserk")
 	_dd139.demon_unique = FALSE
 	DEMON_DB["Ubelluris"] = _dd139
 
@@ -2110,7 +2110,7 @@
 	_dd140.demon_spd = 9
 	_dd140.demon_off = 7
 	_dd140.demon_def = 7
-	_dd140.demon_skill = "Power Hit"
+	_dd140.demon_skills = list("Power Hit")
 	_dd140.demon_unique = FALSE
 	DEMON_DB["Nalagiri"] = _dd140
 
@@ -2125,7 +2125,7 @@
 	_dd141.demon_spd = 12
 	_dd141.demon_off = 9
 	_dd141.demon_def = 8
-	_dd141.demon_skill = "Might Call"
+	_dd141.demon_skills = list("Might Call")
 	_dd141.demon_unique = TRUE
 	DEMON_DB["Hitokotonusi"] = _dd141
 
@@ -2140,7 +2140,7 @@
 	_dd142.demon_spd = 11
 	_dd142.demon_off = 12
 	_dd142.demon_def = 8
-	_dd142.demon_skill = "Mazio"
+	_dd142.demon_skills = list("Mazio")
 	_dd142.demon_unique = TRUE
 	DEMON_DB["Take-Mikazuchi"] = _dd142
 
@@ -2155,7 +2155,7 @@
 	_dd143.demon_spd = 12
 	_dd143.demon_off = 11
 	_dd143.demon_def = 9
-	_dd143.demon_skill = "Agidyne"
+	_dd143.demon_skills = list("Agidyne")
 	_dd143.demon_unique = TRUE
 	DEMON_DB["Zouchouten"] = _dd143
 
@@ -2170,7 +2170,7 @@
 	_dd144.demon_spd = 11
 	_dd144.demon_off = 12
 	_dd144.demon_def = 11
-	_dd144.demon_skill = "Ziodyne"
+	_dd144.demon_skills = list("Ziodyne")
 	_dd144.demon_unique = TRUE
 	DEMON_DB["Jikokuten"] = _dd144
 
@@ -2185,7 +2185,7 @@
 	_dd145.demon_spd = 15
 	_dd145.demon_off = 13
 	_dd145.demon_def = 12
-	_dd145.demon_skill = "Mazandyne"
+	_dd145.demon_skills = list("Mazandyne")
 	_dd145.demon_unique = TRUE
 	DEMON_DB["Koumoukuten"] = _dd145
 
@@ -2200,7 +2200,7 @@
 	_dd146.demon_spd = 17
 	_dd146.demon_off = 15
 	_dd146.demon_def = 13
-	_dd146.demon_skill = "Hassohappa"
+	_dd146.demon_skills = list("Hassohappa")
 	_dd146.demon_unique = TRUE
 	DEMON_DB["Bishamonten"] = _dd146
 
@@ -2215,7 +2215,7 @@
 	_dd147.demon_spd = 15
 	_dd147.demon_off = 14
 	_dd147.demon_def = 10
-	_dd147.demon_skill = "None"
+	_dd147.demon_skills = list("None")
 	_dd147.demon_unique = TRUE
 	DEMON_DB["Ometeotl"] = _dd147
 
@@ -2230,7 +2230,7 @@
 	_dd148.demon_spd = 26
 	_dd148.demon_off = 14
 	_dd148.demon_def = 12
-	_dd148.demon_skill = "None"
+	_dd148.demon_skills = list("None")
 	_dd148.demon_unique = TRUE
 	DEMON_DB["Zaou-Gongen"] = _dd148
 
@@ -2245,7 +2245,7 @@
 	_dd149.demon_spd = 7
 	_dd149.demon_off = 3
 	_dd149.demon_def = 4
-	_dd149.demon_skill = "Diarama"
+	_dd149.demon_skills = list("Diarama")
 	_dd149.demon_unique = FALSE
 	DEMON_DB["Sarasvati"] = _dd149
 
@@ -2260,7 +2260,7 @@
 	_dd150.demon_spd = 7
 	_dd150.demon_off = 5
 	_dd150.demon_def = 6
-	_dd150.demon_skill = "Media"
+	_dd150.demon_skills = list("Media")
 	_dd150.demon_unique = FALSE
 	DEMON_DB["Kikuri-Hime"] = _dd150
 
@@ -2275,7 +2275,7 @@
 	_dd151.demon_spd = 10
 	_dd151.demon_off = 5
 	_dd151.demon_def = 5
-	_dd151.demon_skill = "Recarm"
+	_dd151.demon_skills = list("Recarm")
 	_dd151.demon_unique = TRUE
 	DEMON_DB["Hathor"] = _dd151
 
@@ -2290,7 +2290,7 @@
 	_dd152.demon_spd = 13
 	_dd152.demon_off = 5
 	_dd152.demon_def = 5
-	_dd152.demon_skill = "Media"
+	_dd152.demon_skills = list("Media")
 	_dd152.demon_unique = FALSE
 	DEMON_DB["Brigid"] = _dd152
 
@@ -2305,7 +2305,7 @@
 	_dd153.demon_spd = 11
 	_dd153.demon_off = 9
 	_dd153.demon_def = 6
-	_dd153.demon_skill = "Recarm"
+	_dd153.demon_skills = list("Recarm")
 	_dd153.demon_unique = TRUE
 	DEMON_DB["Scathach"] = _dd153
 
@@ -2320,7 +2320,7 @@
 	_dd154.demon_spd = 16
 	_dd154.demon_off = 7
 	_dd154.demon_def = 8
-	_dd154.demon_skill = "Mediarahan"
+	_dd154.demon_skills = list("Mediarahan")
 	_dd154.demon_unique = FALSE
 	DEMON_DB["Laksmi"] = _dd154
 
@@ -2335,7 +2335,7 @@
 	_dd155.demon_spd = 13
 	_dd155.demon_off = 8
 	_dd155.demon_def = 8
-	_dd155.demon_skill = "Mediarahan"
+	_dd155.demon_skills = list("Mediarahan")
 	_dd155.demon_unique = TRUE
 	DEMON_DB["Isis"] = _dd155
 
@@ -2350,7 +2350,7 @@
 	_dd156.demon_spd = 16
 	_dd156.demon_off = 6
 	_dd156.demon_def = 10
-	_dd156.demon_skill = "Mediarahan"
+	_dd156.demon_skills = list("Mediarahan")
 	_dd156.demon_unique = TRUE
 	DEMON_DB["Parvati"] = _dd156
 
@@ -2365,7 +2365,7 @@
 	_dd157.demon_spd = 20
 	_dd157.demon_off = 10
 	_dd157.demon_def = 8
-	_dd157.demon_skill = "Prayer"
+	_dd157.demon_skills = list("Prayer")
 	_dd157.demon_unique = TRUE
 	DEMON_DB["Norn"] = _dd157
 
@@ -2380,7 +2380,7 @@
 	_dd158.demon_spd = 16
 	_dd158.demon_off = 13
 	_dd158.demon_def = 12
-	_dd158.demon_skill = "Prayer"
+	_dd158.demon_skills = list("Prayer")
 	_dd158.demon_unique = TRUE
 	DEMON_DB["Pallas Athena"] = _dd158
 
@@ -2395,7 +2395,7 @@
 	_dd159.demon_spd = 19
 	_dd159.demon_off = 11
 	_dd159.demon_def = 11
-	_dd159.demon_skill = "Prayer"
+	_dd159.demon_skills = list("Prayer")
 	_dd159.demon_unique = TRUE
 	DEMON_DB["Amaterasu"] = _dd159
 
@@ -2410,7 +2410,7 @@
 	_dd160.demon_spd = 10
 	_dd160.demon_off = 5
 	_dd160.demon_def = 11
-	_dd160.demon_skill = "None"
+	_dd160.demon_skills = list("None")
 	_dd160.demon_unique = FALSE
 	DEMON_DB["Saki Mitama"] = _dd160
 
@@ -2425,7 +2425,7 @@
 	_dd161.demon_spd = 23
 	_dd161.demon_off = 6
 	_dd161.demon_def = 6
-	_dd161.demon_skill = "None"
+	_dd161.demon_skills = list("None")
 	_dd161.demon_unique = FALSE
 	DEMON_DB["Kusi Mitama"] = _dd161
 
@@ -2440,7 +2440,7 @@
 	_dd162.demon_spd = 13
 	_dd162.demon_off = 11
 	_dd162.demon_def = 7
-	_dd162.demon_skill = "None"
+	_dd162.demon_skills = list("None")
 	_dd162.demon_unique = FALSE
 	DEMON_DB["Ara Mitama"] = _dd162
 
@@ -2455,7 +2455,7 @@
 	_dd163.demon_spd = 14
 	_dd163.demon_off = 7
 	_dd163.demon_def = 7
-	_dd163.demon_skill = "None"
+	_dd163.demon_skills = list("None")
 	_dd163.demon_unique = FALSE
 	DEMON_DB["Nigi Mitama"] = _dd163
 
@@ -2470,7 +2470,7 @@
 	_dd164.demon_spd = 11
 	_dd164.demon_off = 9
 	_dd164.demon_def = 6
-	_dd164.demon_skill = "Might Call"
+	_dd164.demon_skills = list("Might Call")
 	_dd164.demon_unique = TRUE
 	DEMON_DB["Tonatiuh"] = _dd164
 
@@ -2485,7 +2485,7 @@
 	_dd165.demon_spd = 10
 	_dd165.demon_off = 10
 	_dd165.demon_def = 8
-	_dd165.demon_skill = "Gigajama"
+	_dd165.demon_skills = list("Gigajama")
 	_dd165.demon_unique = TRUE
 	DEMON_DB["Chernobog"] = _dd165
 
@@ -2500,7 +2500,7 @@
 	_dd166.demon_spd = 21
 	_dd166.demon_off = 12
 	_dd166.demon_def = 7
-	_dd166.demon_skill = "Multi-Strike"
+	_dd166.demon_skills = list("Multi-Strike")
 	_dd166.demon_unique = TRUE
 	DEMON_DB["Wu Kong"] = _dd166
 
@@ -2515,7 +2515,7 @@
 	_dd167.demon_spd = 26
 	_dd167.demon_off = 10
 	_dd167.demon_def = 6
-	_dd167.demon_skill = "Megido"
+	_dd167.demon_skills = list("Megido")
 	_dd167.demon_unique = TRUE
 	DEMON_DB["Kartikeya"] = _dd167
 
@@ -2530,7 +2530,7 @@
 	_dd168.demon_spd = 12
 	_dd168.demon_off = 13
 	_dd168.demon_def = 10
-	_dd168.demon_skill = "Mazandyne"
+	_dd168.demon_skills = list("Mazandyne")
 	_dd168.demon_unique = TRUE
 	DEMON_DB["Susano-o"] = _dd168
 
@@ -2545,7 +2545,7 @@
 	_dd169.demon_spd = 23
 	_dd169.demon_off = 14
 	_dd169.demon_def = 8
-	_dd169.demon_skill = "Megidolaon"
+	_dd169.demon_skills = list("Megidolaon")
 	_dd169.demon_unique = TRUE
 	DEMON_DB["Beiji-Weng"] = _dd169
 
@@ -2560,7 +2560,7 @@
 	_dd170.demon_spd = 20
 	_dd170.demon_off = 13
 	_dd170.demon_def = 13
-	_dd170.demon_skill = "None"
+	_dd170.demon_skills = list("None")
 	_dd170.demon_unique = TRUE
 	DEMON_DB["Shiva"] = _dd170
 
@@ -2575,7 +2575,7 @@
 	_dd171.demon_spd = 9
 	_dd171.demon_off = 4
 	_dd171.demon_def = 3
-	_dd171.demon_skill = "Dia"
+	_dd171.demon_skills = list("Dia")
 	_dd171.demon_unique = FALSE
 	DEMON_DB["Makara"] = _dd171
 
@@ -2590,7 +2590,7 @@
 	_dd172.demon_spd = 5
 	_dd172.demon_off = 7
 	_dd172.demon_def = 7
-	_dd172.demon_skill = "Assassinate"
+	_dd172.demon_skills = list("Assassinate")
 	_dd172.demon_unique = FALSE
 	DEMON_DB["Nozuchi"] = _dd172
 
@@ -2605,7 +2605,7 @@
 	_dd173.demon_spd = 6
 	_dd173.demon_off = 11
 	_dd173.demon_def = 6
-	_dd173.demon_skill = "Fatal Strike"
+	_dd173.demon_skills = list("Fatal Strike")
 	_dd173.demon_unique = FALSE
 	DEMON_DB["Pendragon"] = _dd173
 
@@ -2620,7 +2620,7 @@
 	_dd174.demon_spd = 6
 	_dd174.demon_off = 6
 	_dd174.demon_def = 11
-	_dd174.demon_skill = "Mighty Hit"
+	_dd174.demon_skills = list("Mighty Hit")
 	_dd174.demon_unique = FALSE
 	DEMON_DB["Gui Xian"] = _dd174
 
@@ -2635,7 +2635,7 @@
 	_dd175.demon_spd = 7
 	_dd175.demon_off = 8
 	_dd175.demon_def = 14
-	_dd175.demon_skill = "Mabufu"
+	_dd175.demon_skills = list("Mabufu")
 	_dd175.demon_unique = FALSE
 	DEMON_DB["Quetzalcoatl"] = _dd175
 
@@ -2650,7 +2650,7 @@
 	_dd176.demon_spd = 18
 	_dd176.demon_off = 11
 	_dd176.demon_def = 8
-	_dd176.demon_skill = "Deathbound"
+	_dd176.demon_skills = list("Deathbound")
 	_dd176.demon_unique = FALSE
 	DEMON_DB["Seiryuu"] = _dd176
 
@@ -2665,7 +2665,7 @@
 	_dd177.demon_spd = 19
 	_dd177.demon_off = 10
 	_dd177.demon_def = 11
-	_dd177.demon_skill = "Shield All"
+	_dd177.demon_skills = list("Shield All")
 	_dd177.demon_unique = FALSE
 	DEMON_DB["Gucumatz"] = _dd177
 
@@ -2680,7 +2680,7 @@
 	_dd178.demon_spd = 13
 	_dd178.demon_off = 15
 	_dd178.demon_def = 13
-	_dd178.demon_skill = "Hassohappa"
+	_dd178.demon_skills = list("Hassohappa")
 	_dd178.demon_unique = FALSE
 	DEMON_DB["Orochi"] = _dd178
 
@@ -2695,7 +2695,7 @@
 	_dd179.demon_spd = 13
 	_dd179.demon_off = 16
 	_dd179.demon_def = 13
-	_dd179.demon_skill = "Makarakarn"
+	_dd179.demon_skills = list("Makarakarn")
 	_dd179.demon_unique = FALSE
 	DEMON_DB["Ananta"] = _dd179
 
@@ -2710,7 +2710,7 @@
 	_dd180.demon_spd = 22
 	_dd180.demon_off = 15
 	_dd180.demon_def = 13
-	_dd180.demon_skill = "None"
+	_dd180.demon_skills = list("None")
 	_dd180.demon_unique = TRUE
 	DEMON_DB["Hoyau Kamui"] = _dd180
 
@@ -2725,7 +2725,7 @@
 	_dd181.demon_spd = 7
 	_dd181.demon_off = 2
 	_dd181.demon_def = 3
-	_dd181.demon_skill = "Anger Hit"
+	_dd181.demon_skills = list("Anger Hit")
 	_dd181.demon_unique = FALSE
 	DEMON_DB["Kobold"] = _dd181
 
@@ -2740,7 +2740,7 @@
 	_dd182.demon_spd = 7
 	_dd182.demon_off = 4
 	_dd182.demon_def = 4
-	_dd182.demon_skill = "Fatal Strike"
+	_dd182.demon_skills = list("Fatal Strike")
 	_dd182.demon_unique = FALSE
 	DEMON_DB["Bilwis"] = _dd182
 
@@ -2755,7 +2755,7 @@
 	_dd183.demon_spd = 6
 	_dd183.demon_off = 7
 	_dd183.demon_def = 6
-	_dd183.demon_skill = "Berserk"
+	_dd183.demon_skills = list("Berserk")
 	_dd183.demon_unique = FALSE
 	DEMON_DB["Gozuki"] = _dd183
 
@@ -2770,7 +2770,7 @@
 	_dd184.demon_spd = 9
 	_dd184.demon_off = 6
 	_dd184.demon_def = 5
-	_dd184.demon_skill = "Mazio"
+	_dd184.demon_skills = list("Mazio")
 	_dd184.demon_unique = FALSE
 	DEMON_DB["Mezuki"] = _dd184
 
@@ -2785,7 +2785,7 @@
 	_dd185.demon_spd = 9
 	_dd185.demon_off = 9
 	_dd185.demon_def = 6
-	_dd185.demon_skill = "Assassinate"
+	_dd185.demon_skills = list("Assassinate")
 	_dd185.demon_unique = FALSE
 	DEMON_DB["Ikusa"] = _dd185
 
@@ -2800,7 +2800,7 @@
 	_dd186.demon_spd = 9
 	_dd186.demon_off = 13
 	_dd186.demon_def = 8
-	_dd186.demon_skill = "None"
+	_dd186.demon_skills = list("None")
 	_dd186.demon_unique = TRUE
 	DEMON_DB["Berserker"] = _dd186
 
@@ -2815,7 +2815,7 @@
 	_dd187.demon_spd = 11
 	_dd187.demon_off = 11
 	_dd187.demon_def = 9
-	_dd187.demon_skill = "Mighty Hit"
+	_dd187.demon_skills = list("Mighty Hit")
 	_dd187.demon_unique = FALSE
 	DEMON_DB["Lham Dearg"] = _dd187
 
@@ -2830,7 +2830,7 @@
 	_dd188.demon_spd = 18
 	_dd188.demon_off = 12
 	_dd188.demon_def = 7
-	_dd188.demon_skill = "Deathbound"
+	_dd188.demon_skills = list("Deathbound")
 	_dd188.demon_unique = FALSE
 	DEMON_DB["Yaksa"] = _dd188
 
@@ -2845,7 +2845,7 @@
 	_dd189.demon_spd = 20
 	_dd189.demon_off = 11
 	_dd189.demon_def = 9
-	_dd189.demon_skill = "Deathbound"
+	_dd189.demon_skills = list("Deathbound")
 	_dd189.demon_unique = TRUE
 	DEMON_DB["Nata Taishi"] = _dd189
 
@@ -2860,7 +2860,7 @@
 	_dd190.demon_spd = 16
 	_dd190.demon_off = 16
 	_dd190.demon_def = 15
-	_dd190.demon_skill = "None"
+	_dd190.demon_skills = list("None")
 	_dd190.demon_unique = TRUE
 	DEMON_DB["Oumitsunu"] = _dd190
 
@@ -2875,7 +2875,7 @@
 	_dd191.demon_spd = 7
 	_dd191.demon_off = 7
 	_dd191.demon_def = 5
-	_dd191.demon_skill = "Mabufu"
+	_dd191.demon_skills = list("Mabufu")
 	_dd191.demon_unique = TRUE
 	DEMON_DB["King Frost"] = _dd191
 
@@ -2890,7 +2890,7 @@
 	_dd192.demon_spd = 8
 	_dd192.demon_off = 10
 	_dd192.demon_def = 5
-	_dd192.demon_skill = "None"
+	_dd192.demon_skills = list("None")
 	_dd192.demon_unique = TRUE
 	DEMON_DB["Moloch"] = _dd192
 
@@ -2905,7 +2905,7 @@
 	_dd193.demon_spd = 10
 	_dd193.demon_off = 8
 	_dd193.demon_def = 6
-	_dd193.demon_skill = "Death Call"
+	_dd193.demon_skills = list("Death Call")
 	_dd193.demon_unique = TRUE
 	DEMON_DB["Balor"] = _dd193
 
@@ -2920,7 +2920,7 @@
 	_dd194.demon_spd = 12
 	_dd194.demon_off = 8
 	_dd194.demon_def = 6
-	_dd194.demon_skill = "Diarahan"
+	_dd194.demon_skills = list("Diarahan")
 	_dd194.demon_unique = TRUE
 	DEMON_DB["Hecate"] = _dd194
 
@@ -2935,7 +2935,7 @@
 	_dd195.demon_spd = 10
 	_dd195.demon_off = 10
 	_dd195.demon_def = 8
-	_dd195.demon_skill = "Maziodyne"
+	_dd195.demon_skills = list("Maziodyne")
 	_dd195.demon_unique = TRUE
 	DEMON_DB["Tzitzimitl"] = _dd195
 
@@ -2950,7 +2950,7 @@
 	_dd196.demon_spd = 15
 	_dd196.demon_off = 9
 	_dd196.demon_def = 11
-	_dd196.demon_skill = "Megidolaon"
+	_dd196.demon_skills = list("Megidolaon")
 	_dd196.demon_unique = TRUE
 	DEMON_DB["Loki"] = _dd196
 
@@ -2965,7 +2965,7 @@
 	_dd197.demon_spd = 8
 	_dd197.demon_off = 10
 	_dd197.demon_def = 13
-	_dd197.demon_skill = "None"
+	_dd197.demon_skills = list("None")
 	_dd197.demon_unique = TRUE
 	DEMON_DB["Mot"] = _dd197
 
@@ -2980,7 +2980,7 @@
 	_dd198.demon_spd = 19
 	_dd198.demon_off = 16
 	_dd198.demon_def = 8
-	_dd198.demon_skill = "Deathbound"
+	_dd198.demon_skills = list("Deathbound")
 	_dd198.demon_unique = TRUE
 	DEMON_DB["Astaroth"] = _dd198
 
@@ -2995,7 +2995,7 @@
 	_dd199.demon_spd = 23
 	_dd199.demon_off = 13
 	_dd199.demon_def = 10
-	_dd199.demon_skill = "None"
+	_dd199.demon_skills = list("None")
 	_dd199.demon_unique = TRUE
 	DEMON_DB["Nergal"] = _dd199
 
@@ -3010,7 +3010,7 @@
 	_dd200.demon_spd = 19
 	_dd200.demon_off = 15
 	_dd200.demon_def = 15
-	_dd200.demon_skill = "None"
+	_dd200.demon_skills = list("None")
 	_dd200.demon_unique = TRUE
 	DEMON_DB["Belial"] = _dd200
 
@@ -3025,7 +3025,7 @@
 	_dd201.demon_spd = 26
 	_dd201.demon_off = 17
 	_dd201.demon_def = 11
-	_dd201.demon_skill = "None"
+	_dd201.demon_skills = list("None")
 	_dd201.demon_unique = TRUE
 	DEMON_DB["Beelzebub"] = _dd201
 
@@ -3040,7 +3040,7 @@
 	_dd202.demon_spd = 28
 	_dd202.demon_off = 15
 	_dd202.demon_def = 14
-	_dd202.demon_skill = "None"
+	_dd202.demon_skills = list("None")
 	_dd202.demon_unique = TRUE
 	DEMON_DB["Lucifer"] = _dd202
 
@@ -3055,7 +3055,7 @@
 	_dd203.demon_spd = 6
 	_dd203.demon_off = 9
 	_dd203.demon_def = 6
-	_dd203.demon_skill = "Brutal Hit"
+	_dd203.demon_skills = list("Brutal Hit")
 	_dd203.demon_unique = FALSE
 	DEMON_DB["Orcus"] = _dd203
 
@@ -3070,7 +3070,7 @@
 	_dd204.demon_spd = 12
 	_dd204.demon_off = 5
 	_dd204.demon_def = 5
-	_dd204.demon_skill = "Drain"
+	_dd204.demon_skills = list("Drain")
 	_dd204.demon_unique = FALSE
 	DEMON_DB["Baphomet"] = _dd204
 
@@ -3085,7 +3085,7 @@
 	_dd205.demon_spd = 9
 	_dd205.demon_off = 7
 	_dd205.demon_def = 9
-	_dd205.demon_skill = "Holy Dance"
+	_dd205.demon_skills = list("Holy Dance")
 	_dd205.demon_unique = TRUE
 	DEMON_DB["Pazuzu"] = _dd205
 
@@ -3100,7 +3100,7 @@
 	_dd206.demon_spd = 12
 	_dd206.demon_off = 9
 	_dd206.demon_def = 9
-	_dd206.demon_skill = "Bufudyne"
+	_dd206.demon_skills = list("Bufudyne")
 	_dd206.demon_unique = FALSE
 	DEMON_DB["Abaddon"] = _dd206
 
@@ -3115,7 +3115,7 @@
 	_dd207.demon_spd = 16
 	_dd207.demon_off = 12
 	_dd207.demon_def = 9
-	_dd207.demon_skill = "Deathbound"
+	_dd207.demon_skills = list("Deathbound")
 	_dd207.demon_unique = TRUE
 	DEMON_DB["Arioch"] = _dd207
 
@@ -3130,7 +3130,7 @@
 	_dd208.demon_spd = 15
 	_dd208.demon_off = 10
 	_dd208.demon_def = 8
-	_dd208.demon_skill = "Megidolaon"
+	_dd208.demon_skills = list("Megidolaon")
 	_dd208.demon_unique = TRUE
 	DEMON_DB["Tao Tie"] = _dd208
 
@@ -3145,7 +3145,7 @@
 	_dd209.demon_spd = 14
 	_dd209.demon_off = 13
 	_dd209.demon_def = 10
-	_dd209.demon_skill = "Gigajama"
+	_dd209.demon_skills = list("Gigajama")
 	_dd209.demon_unique = TRUE
 	DEMON_DB["Tezcatlipoca"] = _dd209
 
@@ -3160,7 +3160,7 @@
 	_dd210.demon_spd = 25
 	_dd210.demon_off = 15
 	_dd210.demon_def = 10
-	_dd210.demon_skill = "None"
+	_dd210.demon_skills = list("None")
 	_dd210.demon_unique = TRUE
 	DEMON_DB["Nyarlathotep"] = _dd210
 
@@ -3175,7 +3175,7 @@
 	_dd211.demon_spd = 9
 	_dd211.demon_off = 3
 	_dd211.demon_def = 3
-	_dd211.demon_skill = "Amrita"
+	_dd211.demon_skills = list("Amrita")
 	_dd211.demon_unique = FALSE
 	DEMON_DB["Hare of Inaba"] = _dd211
 
@@ -3190,7 +3190,7 @@
 	_dd212.demon_spd = 8
 	_dd212.demon_off = 5
 	_dd212.demon_def = 3
-	_dd212.demon_skill = "Berserk"
+	_dd212.demon_skills = list("Berserk")
 	_dd212.demon_unique = FALSE
 	DEMON_DB["Waira"] = _dd212
 
@@ -3205,7 +3205,7 @@
 	_dd213.demon_spd = 11
 	_dd213.demon_off = 8
 	_dd213.demon_def = 5
-	_dd213.demon_skill = "Berserk"
+	_dd213.demon_skills = list("Berserk")
 	_dd213.demon_unique = FALSE
 	DEMON_DB["Garm"] = _dd213
 
@@ -3220,7 +3220,7 @@
 	_dd214.demon_spd = 14
 	_dd214.demon_off = 7
 	_dd214.demon_def = 7
-	_dd214.demon_skill = "Mighty Hit"
+	_dd214.demon_skills = list("Mighty Hit")
 	_dd214.demon_unique = FALSE
 	DEMON_DB["Afanc"] = _dd214
 
@@ -3235,7 +3235,7 @@
 	_dd215.demon_spd = 13
 	_dd215.demon_off = 4
 	_dd215.demon_def = 6
-	_dd215.demon_skill = "Nigayomogi"
+	_dd215.demon_skills = list("Nigayomogi")
 	_dd215.demon_unique = TRUE
 	DEMON_DB["Xiezhai"] = _dd215
 
@@ -3250,7 +3250,7 @@
 	_dd216.demon_spd = 7
 	_dd216.demon_off = 7
 	_dd216.demon_def = 9
-	_dd216.demon_skill = "Mazan"
+	_dd216.demon_skills = list("Mazan")
 	_dd216.demon_unique = FALSE
 	DEMON_DB["Mothman"] = _dd216
 
@@ -3265,7 +3265,7 @@
 	_dd217.demon_spd = 16
 	_dd217.demon_off = 11
 	_dd217.demon_def = 6
-	_dd217.demon_skill = "Death Call"
+	_dd217.demon_skills = list("Death Call")
 	_dd217.demon_unique = FALSE
 	DEMON_DB["Taown"] = _dd217
 
@@ -3280,7 +3280,7 @@
 	_dd218.demon_spd = 24
 	_dd218.demon_off = 11
 	_dd218.demon_def = 8
-	_dd218.demon_skill = "None"
+	_dd218.demon_skills = list("None")
 	_dd218.demon_unique = FALSE
 	DEMON_DB["Sleipnir"] = _dd218
 
@@ -3295,7 +3295,7 @@
 	_dd219.demon_spd = 9
 	_dd219.demon_off = 17
 	_dd219.demon_def = 15
-	_dd219.demon_skill = "Deathbound"
+	_dd219.demon_skills = list("Deathbound")
 	_dd219.demon_unique = FALSE
 	DEMON_DB["Behemoth"] = _dd219
 
@@ -3310,6 +3310,6 @@
 	_dd220.demon_spd = 15
 	_dd220.demon_off = 16
 	_dd220.demon_def = 13
-	_dd220.demon_skill = "Deathbound"
+	_dd220.demon_skills = list("Deathbound")
 	_dd220.demon_unique = TRUE
 	DEMON_DB["Ammut"] = _dd220

@@ -697,6 +697,19 @@ mob/var
 	demon_record_page = 1
 	demon_meditate_start = 0
 	demon_meditate_healed = FALSE
+	list/demon_skill_hud = null     // list of /obj/DemonSkillSlot screen objects
+	demon_fusion_open = FALSE       
+	demon_compendium_open = FALSE
+	demon_record_open = FALSE
+	demon_withdraw_open = FALSE
+	demon_inherit_open = FALSE
+	// Temp vars for pending fusion inheritance
+	demon_pending_fuse_a = ""
+	demon_pending_fuse_b = ""
+	demon_pending_fuse_result = ""
+	list/demon_pending_fuse_base_skills = null
+	list/demon_pending_fuse_pool = null
+	demon_pending_fuse_open_slots = 0
 
 /proc/reduceGodKi(mob/player, num)
 	player.GodKi -= num
