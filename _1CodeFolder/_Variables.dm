@@ -187,9 +187,10 @@ mob/var
 	BarelyStandingColor
 
 	Potential=1
-	PotentialStatus="Distracted"
+	PotentialStatus="Caught Up"
 	PotentialRate=1
 	PotentialCap=1
+	PotentialHeadStart
 	potential_trans=0//entering trans state sets this
 	potential_power_mult=1
 	potential_last_checked=0
@@ -699,7 +700,7 @@ mob/var
 	demon_meditate_start = 0
 	demon_meditate_healed = FALSE
 	list/demon_skill_hud = null     // list of /obj/DemonSkillSlot screen objects
-	demon_fusion_open = FALSE       
+	demon_fusion_open = FALSE
 	demon_compendium_open = FALSE
 	demon_record_open = FALSE
 	demon_withdraw_open = FALSE
