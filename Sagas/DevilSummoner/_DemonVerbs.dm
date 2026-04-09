@@ -152,8 +152,6 @@
 			old.ai_owner = null // Stop AI loop immediately
 			animate(old, alpha=0, time=8)
 			spawn(8) del(old)
-		if(SagaLevel >= 4)
-			RemoveDemonRacialPassive()
 		ai_followers -= demon_active
 		demon_active = null
 		demon_active_name = ""

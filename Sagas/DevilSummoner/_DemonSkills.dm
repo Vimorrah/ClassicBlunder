@@ -633,17 +633,14 @@ var/global/list/DEMON_SKILL_VFX = list()
 
 	proc/DemonBerserk(mob/target)
 		if(!DemonValidTarget(target)) return FALSE
-		var/orig_str = StrMod
-		var/orig_end = EndMod
-		var/orig_def = DefMod
 		StrMod *= 1.5
 		EndMod *= 0.7
 		DefMod *= 0.7
 		spawn(200)
 			if(src)
-				StrMod = orig_str
-				EndMod = orig_end
-				DefMod = orig_def
+				StrMod /= 1.5
+				EndMod /= 0.7
+				DefMod /= 0.7
 		var/dmg = max(1, round(StrMod * 0.5))
 		target.DoDamage(src, TrueDamage(dmg))
 		Bump(target)
@@ -652,15 +649,13 @@ var/global/list/DEMON_SKILL_VFX = list()
 
 	proc/DemonStrBuff(mult)
 		if(!ai_owner || !ai_owner.Target) return FALSE
-		var/orig_str = StrMod
 		StrMod *= mult
-		spawn(300)
-			if(src) StrMod = orig_str
-		var/orig_pb = ai_owner.PowerBoost
-		ai_owner.PowerBoost *= mult
 		var/mob/saved_owner = ai_owner
+		saved_owner.PowerBoost *= mult
 		spawn(300)
-			if(saved_owner) saved_owner.PowerBoost = orig_pb
+			if(src) StrMod /= mult
+		spawn(300)
+			if(saved_owner) saved_owner.PowerBoost /= mult
 		DemonSpawnVFX(src)
 		return TRUE
 

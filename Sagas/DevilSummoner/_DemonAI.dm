@@ -99,7 +99,8 @@
 		if(ai_owner.icon_state == "Meditate")
 			icon_state = "Meditate"
 			return
-		icon_state = ""
+		if(demon_data)
+			icon_state = demon_data.demon_icon_state
 		if(get_dist(src, ai_owner) >= 3)
 			if(ai_owner.z != src.z)
 				loc = locate(ai_owner.x, ai_owner.y, ai_owner.z)
@@ -130,7 +131,7 @@
 			ai_owner << "<b>[name] has been defeated and returned.</b> Meditate to restore them."
 		del(src)
 
-	DoDamage(mob/attacker, damage_type/damage)
+	DoDamage(mob/attacker, damage)
 		if(ai_owner && ai_owner.PureRPMode) return
 		if(ai_owner && istype(attacker, /mob))
 			if(attacker == ai_owner) return
@@ -142,7 +143,12 @@
 			if(ai_owner) ai_owner << "<font color='#88ddff'>[name]'s barrier reflects the attack!</font>"
 			attacker.DoDamage(src, TrueDamage(reflect_dmg))
 			return
-		. = ..()
+		// Demons use their own HP system - apply damage directly to demon_hp
+		var/raw_dmg = 0
+		if(isnum(damage))
+			raw_dmg = max(1, round(damage))
+		if(raw_dmg <= 0) return
+		demon_hp = max(0, demon_hp - raw_dmg)
 		if(!ai_owner) return
 		for(var/datum/party_demon/pd in ai_owner.demon_party)
 			if(pd.demon_name == name)
