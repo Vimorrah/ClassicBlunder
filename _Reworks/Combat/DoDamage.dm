@@ -125,6 +125,20 @@
 	if(passive_handler.Get("Aspect of Death"))
 		purered*=0.75
 	trueMult -= purered
+	// Unbroken for Makyos
+	var/unbrokenVal = defender.passive_handler.Get("Unbroken")
+	if(unbrokenVal)
+		if(!glob.PURE_MOD_POST_CALC)
+			unbrokenVal *= glob.PURE_MODIFIER
+		trueMult -= unbrokenVal
+		if(defender.unbreakable_tracking)
+			// Cap at 40 so half never exceeds +20 DamageMult, subject to change
+			defender.unbroken_absorbed = min(defender.unbroken_absorbed + (val * 0.1 * unbrokenVal), 40)
+	// Inevitable
+	if(unarmed || sword)
+		var/inevVal = passive_handler.Get("Inevitable")
+		if(inevVal)
+			trueMult += 5 * inevVal
 	#if DEBUG_DAMAGE
 	log2text("trueMult", "After Purered", "damageDebugs.txt", "[src.ckey]/[src.name]")
 	log2text("trueMult", trueMult,"damageDebugs.txt", "[src.ckey]/[src.name]")

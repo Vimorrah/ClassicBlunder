@@ -88,6 +88,71 @@
 			adjust(usr)
 			src.Trigger(usr)
 
+/obj/Skills/Buffs/SlotlessBuffs/Makyo/Expand
+	Slotless      = 1
+	ActiveMessage = "expands their size, becoming a hulking mass of muscle!"
+	OffMessage    = "releases their expanded form."
+
+	var/ExpandLevel         = 1
+	var/matrix/expandBaseTransform = null
+
+	adjust(mob/p)
+		var/maxLevel = min(2 + p.AscensionsAcquired, 5)
+		var/list/levelList = list()
+		for(var/i = 1 to maxLevel)
+			levelList += i
+		ExpandLevel = input(p, "Choose Expand level (max [maxLevel]):", "Expand") in levelList
+
+		var/N = ExpandLevel
+		passives = list(
+			"PureDamage"    =  N,
+			"PureReduction" =  N,
+			"Steady"        =  2 * N,
+			"Inevitable"    =  N,
+			"Flow"          = -N,
+			"Instinct"      = -N,
+			"FluidForm"     = -0.5 * N
+		)
+		if(N >= 3)
+			passives["GiantForm"]     = 1
+		if(N >= 4)
+			passives["LifeGeneration"] = 2
+		if(N >= 5)
+			passives["FatigueImmune"]  = 1
+			passives["DebuffReversal"] = 1
+			passives["Brutalize"]      = 6
+			passives["NoDodge"]        = 1
+
+	Trigger(mob/user)
+		. = ..()
+		if(!SlotlessOn) return
+
+		expandBaseTransform = user.transform
+
+		var/targetScale = 1.0
+		switch(ExpandLevel)
+			if(2) targetScale = 1.25
+			if(3) targetScale = 1.5
+			if(4) targetScale = 1.75
+			if(5) targetScale = 2.0
+
+		if(targetScale > 1.0)
+			animate(user, transform=expandBaseTransform * targetScale, time=20, easing=SINE_EASING)
+
+	proc/deactivate(mob/user)
+		if(expandBaseTransform)
+			animate(user, transform=expandBaseTransform, time=20, easing=SINE_EASING)
+			expandBaseTransform = null
+		user.RemoveSlotlessBuff(src)
+
+	verb/Expand()
+		set category="Skills"
+		if(usr.BuffOn(src))
+			deactivate(usr)
+		else
+			adjust(usr)
+			src.Trigger(usr)
+
 /obj/Skills/Buffs/SlotlessBuffs/Makyo/Fall/Shedding_Leaves
 	EndMult=0.6
 	TimerLimit=60

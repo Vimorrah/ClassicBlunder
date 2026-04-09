@@ -568,6 +568,8 @@ mob/var
 	JaganBase//holds old base mod when using JEM
 	AscensionsUnlocked=0
 	AscensionsAcquired=0
+	unbreakable_tracking=0//Makyo shit
+	unbroken_absorbed=0//Makyo shit
 	BioArmor//How much extra health you have
 	BioArmorMax//The total amount of extra health you can have
 
