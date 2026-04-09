@@ -4466,14 +4466,14 @@ obj
 				StyleNeeded="Ansatsuken"
 				proc/alter(mob/player)
 					ManaCost = 0
-					var/damage = clamp(0.6 + 0.3 * (usr.SagaLevel/2), 0.3, 3)
+					var/damage = clamp(0.6 + 0.3 * (player.SagaLevel/2), 0.3, 3)
 					var/path = player.AnsatsukenPath == "Tatsumaki" ? 1 : 0
 					var/rounds = 3
 					var/cooldown = 40
 					var/launch = 0
 					if(path)
 						cooldown = 30
-						damage = clamp(0.6 + 0.5 * (usr.SagaLevel/2), 0.3, 5)
+						damage = clamp(0.6 + 0.5 * (player.SagaLevel/2), 0.3, 5)
 						rounds = 3
 					DamageMult = damage
 					Cooldown = cooldown
@@ -6608,7 +6608,7 @@ obj
 						if(m.SagaLevel>1&&m.Saga=="Path of a Hero: Rebirth")
 							if(m.passive_handler["Determination(Purple)"]||m.passive_handler["Determination(White)"])
 								m.HealMana(m.SagaLevel*3, 1)
-								if(m.ManaAmount>=100 && m.RebirthHeroType=="Cyan"||!m.passive_handler["Determination(White)"])
+								if(m.ManaAmount>=100 && (m.RebirthHeroType=="Cyan"||!m.passive_handler["Determination(White)"]))
 									m.passive_handler.Set("Determination(Green)", 1)
 									m.passive_handler.Set("Determination(Purple)", 0)
 									m<<"Your SOUL color shifts to green!"

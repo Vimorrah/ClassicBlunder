@@ -204,7 +204,7 @@ obj/Skills/Utility/Recall_Armaments
 			src.Trigger(usr)
 	Ultra_Instinct
 		Copyable=0
-		passives = list("Flow" = 2, "Deflection" = 1, "SoftStyle" = 1, "Flow" = 3, "Instinct" = 3, "CounterMaster" = 3, "Godspeed" = 1, "UnarmedDamage"=4)
+		passives = list("Flow" = 3, "Deflection" = 1, "SoftStyle" = 1, "Instinct" = 3, "CounterMaster" = 3, "Godspeed" = 1, "UnarmedDamage"=4)
 		NeedsSword=0
 		NeedsStaff=0
 		NoSword=0
@@ -224,7 +224,7 @@ obj/Skills/Utility/Recall_Armaments
 		NoSword=1
 		StyleActive="Ultra Instinct (Complete)"
 		adjust(mob/p)
-			passives = list("Flow" = 2, "Deflection" = 1, "SoftStyle" = 1, "Flow" = 3, "Instinct" = 3, "CounterMaster" = 3, "Godspeed" = 1, "BlurringStrikes"=4, "UnarmedDamage"=4)
+			passives = list("Flow" = 3, "Deflection" = 1, "SoftStyle" = 1, "Instinct" = 3, "CounterMaster" = 3, "Godspeed" = 1, "BlurringStrikes"=4, "UnarmedDamage"=4)
 			StyleStr=1.35
 			StyleFor=1.35
 			StyleSpd=1.75

@@ -25,7 +25,7 @@
 		if(defenderMartialStyle)
 			blockChance += 5 + (5 * defender.StyleBuff.SignatureTechnique)
 			critBlock += 0.05 + (0.05 * defender.StyleBuff.SignatureTechnique)
-			if(Saga && SagaLevel)
+			if(defender.Saga && defender.SagaLevel)
 				blockChance += 5 + (2.5 * defender.SagaLevel)
 				critBlock += 0.1 + (0.05 * defender.SagaLevel)
 	if(prob(critChance))

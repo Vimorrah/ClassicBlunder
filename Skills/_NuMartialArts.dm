@@ -38,7 +38,7 @@ obj
 			   p.StyleBuff.StyleActive == "Cold Style")
 						hotColdStorage = p.StyleBuff?:hotCold
 					last_storage = world.time
-					Trigger(usr, 1)
+					Trigger(p, 1)
 					cooldown_remaining = 0
 				proc/giveBackTension(mob/p)
 					if(last_storage + 1200 > world.time) // this should never happen ?
@@ -180,7 +180,7 @@ obj
 						StyleActive="Strong Fist"
 						passives = list("Pursuer" = 1, "TechniqueMastery" = 1, "Flicker"=1)
 						AllOutAttack=1
-						verb/Ansatsuken_Style()
+						verb/Strong_Fist_Style()
 							set hidden=1
 							src.Trigger(usr)
 					Stronger_Fist //t3?
@@ -456,7 +456,7 @@ obj
 							IconApart=1
 							Finisher="/obj/Skills/Queue/Finisher/Wing_Blade"
 							adjust(mob/p)
-								StyleSpd = 1 + (0.05 * p.SagaLevel)
+								StyleStr = 1 + (0.05 * p.SagaLevel)
 								StyleEnd = 1 + (0.05 * p.SagaLevel)
 								StyleSpd = 1 + (0.1 * p.SagaLevel)
 							verb/Wing_Blade_Style()
@@ -617,7 +617,7 @@ obj
 								StyleSpd = 1 + (0.1 * p.SagaLevel)
 								StyleEnd = 1 + (0.1 * p.SagaLevel)
 								StyleStr = 1 + (0.1 * p.SagaLevel)
-							verb/Vector_to_the_Heavense_Style()
+							verb/Nachtflugel_Style()
 								set hidden=1
 								adjust(usr)
 								src.Trigger(usr)

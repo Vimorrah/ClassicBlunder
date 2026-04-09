@@ -260,21 +260,21 @@ obj/Skills
 
 		proc
 			Activate(var/mob/User)
-				if(glob.DISABLE_ALL_TELEPORTS&&!usr.passive_handler.Get("FreeTeleport"))
-					usr<<"The ability to teleport has been sealed off!"
+				if(glob.DISABLE_ALL_TELEPORTS&&!User.passive_handler.Get("FreeTeleport"))
+					User<<"The ability to teleport has been sealed off!"
 					return
 				if(src.type==/obj/Skills/Teleport/Traverse_Underworld&&User.Saga!="Cosmo")
 					src.TeleportMessage="bends their demonic energy to traverse mortality!"
 					src.ArriveMessage="arrives with a flux of demonic energy!"
 				if(src.NoPassengers)
-					if(usr.Grab)
-						usr << "You can't use [src] while having someone grabbed!"
+					if(User.Grab)
+						User << "You can't use [src] while having someone grabbed!"
 						return
-				if(usr.Dead&&!usr.KeepBody)
-					usr<<"You cannot use a teleportation ability while dead."
+				if(User.Dead&&!User.KeepBody)
+					User<<"You cannot use a teleportation ability while dead."
 					return
-				if(usr.movementSealed)
-					usr << "You can't use [src] while your movement is sealed!"
+				if(User.movementSealed)
+					User << "You can't use [src] while your movement is sealed!"
 					return
 				if(!NoReturn)
 					if(src.ReturnX&&src.ReturnY&&src.ReturnZ)
@@ -539,7 +539,7 @@ obj/Skills
 				src.Cooldown()
 
 			Return(var/mob/User)
-				OMsg(usr, "[User] [src.ReturnMessage]")
+				OMsg(User, "[User] [src.ReturnMessage]")
 				if(!src.NoPassengers)
 					for(var/mob/Player/m in view(1, User))
 						m.Move(locate(src.ReturnX, src.ReturnY, src.ReturnZ))

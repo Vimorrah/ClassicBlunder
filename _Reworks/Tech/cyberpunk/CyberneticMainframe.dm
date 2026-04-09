@@ -72,7 +72,7 @@
 							src.Using=0
 							return
 					usr.AddSkill(NewS)
-					del Choice
 					usr << "You've integrated [Choice] into your chasis!"
+					del Choice
 					src.Using=0
 					return

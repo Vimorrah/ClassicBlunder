@@ -17,10 +17,10 @@
 		for(var/x in scalingValues)
 			vars[x] = scalingValues[x][asc]
 	Trigger(mob/p)
-		adjust(usr)
-		ManaCost = usr.ManaAmount
+		adjust(p)
+		ManaCost = p.ManaAmount
 		DamageMult = 1 + (ManaCost * DamageMult)
-		if(Using || cooldown_remaining || !(p.Target.Health <= 50))
+		if(Using || cooldown_remaining || !p.Target || !(p.Target.Health <= 50))
 			p << "On cd, being used, or target is above 50."
 			return FALSE
 		var/aaa = p.Activate(src)

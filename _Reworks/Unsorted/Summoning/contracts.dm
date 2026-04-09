@@ -167,7 +167,7 @@ Contract item
             summoner = p.key
         signatures += name + ","
         sigKeys[key] += p.EnergySignature
-        if(sigKeys >= 2)
+        if(sigKeys.len >= 2)
             signed = TRUE
         viewers(p) << "[p] signs a contract with their blood!"
     else
