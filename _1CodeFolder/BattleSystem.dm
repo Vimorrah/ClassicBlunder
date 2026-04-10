@@ -242,13 +242,13 @@ mob/proc/Unconscious(mob/P,var/text)
 			src.VaizardHealth+=20
 			src.HealthAnnounce10+=3
 			return
-	if(src.passive_handler.Get("Alter The Future")&&src.passive_handler.Get("TheAlmighty"))
+	if(src.passive_handler.Get("Alter the Future")&&src.passive_handler.Get("The Almighty"))
 		if(src.HealthAnnounce10<=4)
-			if(prob(src.passive_handler.Get("Alter The Future")))
+			if(prob(src.passive_handler.Get("Alter the Future")))
 				src.KO=0
 				src.OMessage(15, "...but [src] rewrites the future to prevent their defeat!", "<font color=red>[src]([src.key]) rewrites the future!")
 				src.Health=10
-				src.passive_handler.Decrease("Alter The Future", 25)
+				src.passive_handler.Decrease("Alter the Future", 25)
 				src.VaizardHealth+=20
 				src.HealthAnnounce10+=1
 				return

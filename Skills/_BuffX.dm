@@ -10456,7 +10456,7 @@ NEW VARIABLES
 						OffMult=1.4
 						DefMult=1.2
 						EndMult=1.2
-						passives = list("TensionLock" = 1,"Steady" = 2, "CriticalChance" = 5, "CrticalDamage" = 0.25)
+						passives = list("TensionLock" = 1,"Steady" = 2, "CriticalChance" = 5, "CriticalDamage" = 0.25)
 						ActiveMessage="is blessed by a turn of fortune!"
 						OffMessage="uses up their karma..."
 					Speed_of_Sound
