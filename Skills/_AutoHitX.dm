@@ -229,6 +229,7 @@ obj
 				NeedsHealth
 
 				DirectWounds//Deals (this value) of wound % per hit.
+				FrenzyDebuff
 
 			skillDescription()
 				..()
@@ -654,28 +655,6 @@ obj
 				Icon='SweepingKick.dmi'
 				IconX=-32
 				IconY=-32
-				IconTime=10
-				Cooldown=4
-			Shunshin_Massacre
-				Area="Target"
-				NoLock=1
-				NoAttackLock=1
-				Distance=10
-				Instinct=4
-				DamageMult = T2_DMG_MULT / 2 / 5;
-				Rounds=5
-				DelayTime=30
-				GuardBreak=1
-				StrOffense=1
-				EndDefense=1
-				PassThrough=1
-				ActiveMessage="rips through their opponent with rapid godspeed slashes!"
-				HitSparkIcon='Slash - Zan.dmi'
-				HitSparkX=-16
-				HitSparkY=-16
-				HitSparkSize=2
-				HitSparkTurns=1
-				HitSparkLife=10
 				IconTime=10
 				Cooldown=4
 			Stop_Effect
@@ -1268,6 +1247,19 @@ obj
 										usr.gainStyleRating(1)
 									else
 										return
+								else if(usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/HellFire))
+									var/obj/Skills/Buffs/SlotlessBuffs/Hellraiser/hr = usr.SlotlessBuffs["Hellraiser"]
+									if(!hr)
+										hr = new/obj/Skills/Buffs/SlotlessBuffs/Hellraiser()
+									hr.stackBuff(usr)
+									usr.endDemonMagicCast()
+									usr.gainStyleRating(1)
+								else if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/Corruption))
+									src.CorruptionDebuff = 1
+									usr.endDemonMagicCast()
+									usr.gainStyleRating(1)
+								else
+									src.CorruptionDebuff = 0
 					usr.Activate(src)
 				verb/Disable_Innovate()
 					set category = "Other"
@@ -1345,14 +1337,44 @@ obj
 						Rounds= 10 + (p.Potential/10)
 						DamageMult = 1 + (p.Potential/100)
 						PullIn = 6
+						Shearing = 0
+						TurfShift = 0
+						TurfShiftDuration = 0
+					else if(p.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(p) && p.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/DarkMagic))
+						Rounds = 10 + (p.Potential/10)
+						DamageMult = 1 + (p.Potential/100)
+						PullIn = 6
+						Shearing = 2 + (p.Potential/20)
+						TurfShift = 'blackflameaura.dmi'
+						TurfShiftDuration = 3
 					else
 						Size = 2
 						Rounds= 20
 						DamageMult = 0.55
 						PullIn = 0
+						Shearing = 0
+						TurfShift = 0
+						TurfShiftDuration = 0
+					if(p.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(p) && p.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/Corruption))
+						CorruptionDebuff = 1
+					else
+						CorruptionDebuff = 0
 				verb/Spinning_Clothesline()
 					set category="Skills"
 					adjust(usr)
+					if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/DarkMagic))
+						usr.endDemonMagicCast()
+						usr.gainStyleRating(1)
+					else if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/HellFire))
+						var/obj/Skills/Buffs/SlotlessBuffs/Hellraiser/hr = usr.SlotlessBuffs["Hellraiser"]
+						if(!hr)
+							hr = new/obj/Skills/Buffs/SlotlessBuffs/Hellraiser()
+						hr.stackBuff(usr)
+						usr.endDemonMagicCast()
+						usr.gainStyleRating(1)
+					else if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/Corruption))
+						usr.endDemonMagicCast()
+						usr.gainStyleRating(1)
 					usr.Activate(src)
 				verb/Disable_Innovate()
 					set category = "Other"
@@ -1411,6 +1433,8 @@ obj
 						Rounds=10
 						TurfErupt=1.25
 						TurfEruptOffset=6
+						TurfShift=0
+						TurfShiftDuration=0
 						IgnoreAlreadyHit=1
 						ComboMaster=1
 						Launcher=3
@@ -1425,6 +1449,35 @@ obj
 						HitSparkY=0
 						Instinct=1
 						Earthshaking=25
+						Shearing=0
+					else if(p.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(p) && p.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/DarkMagic))
+						Area="Around Target"
+						NoLock=1
+						NoAttackLock=1
+						StrOffense=1
+						DamageMult=1 + p.Potential/200
+						Distance=5
+						DistanceAround=4
+						Rounds=10
+						TurfErupt=1.25
+						TurfEruptOffset=6
+						TurfShift='blackflameaura.dmi'
+						TurfShiftDuration=3
+						IgnoreAlreadyHit=1
+						ComboMaster=1
+						Launcher=3
+						Icon='Ki Fist Sprite.dmi'
+						Size=3
+						IconX=-30
+						IconY=0
+						Falling=1//animates towards pixel_z=0 while it is displayed
+						HitSparkIcon='Hit Effect Dark.dmi'
+						WindUp=0
+						HitSparkX=-32
+						HitSparkY=-32
+						Instinct=1
+						Earthshaking=25
+						Shearing=3 + round(p.Potential/30)
 					else
 						Area="Wide Wave"
 						NoLock=0
@@ -1436,6 +1489,8 @@ obj
 						Rounds=0
 						TurfErupt=0
 						TurfEruptOffset=0
+						TurfShift=0
+						TurfShiftDuration=0
 						IgnoreAlreadyHit=0
 						ComboMaster=0
 						Launcher=0
@@ -1450,9 +1505,27 @@ obj
 						HitSparkY=0
 						Instinct=0
 						Earthshaking=0
+						Shearing=0
+					if(p.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(p) && p.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/Corruption))
+						CorruptionDebuff = 1
+					else
+						CorruptionDebuff = 0
 				verb/Hyper_Crash()
 					set category="Skills"
 					adjust(usr)
+					if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/DarkMagic))
+						usr.endDemonMagicCast()
+						usr.gainStyleRating(1)
+					else if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/HellFire))
+						var/obj/Skills/Buffs/SlotlessBuffs/Hellraiser/hr = usr.SlotlessBuffs["Hellraiser"]
+						if(!hr)
+							hr = new/obj/Skills/Buffs/SlotlessBuffs/Hellraiser()
+						hr.stackBuff(usr)
+						usr.endDemonMagicCast()
+						usr.gainStyleRating(1)
+					else if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/Corruption))
+						usr.endDemonMagicCast()
+						usr.gainStyleRating(1)
 					usr.Activate(src)
 				verb/Disable_Innovate()
 					set category = "Other"
@@ -2200,7 +2273,7 @@ obj
 					TurfShiftDurationDespawn = 0
 					name = "Chidori"
 				adjust(mob/p)
-					if(p.isInnovative(HUMAN, "Any") && !isInnovationDisable(p))
+					if(p.isInnovative(HUMAN, "Any") && !isInnovationDisable(p) && p.Class == "Heroic")
 						name = "Lightning Blade"
 						Area = "Circle"
 
@@ -2339,9 +2412,110 @@ obj
 				Instinct=1
 				DirectWounds=5
 				Shearing=5
+				proc/set2default()
+					AllOutAttack=1
+					StrOffense=0
+					ForOffense=1
+					DamageMult=13
+					WoundCost=5
+					ComboMaster=1
+					Area="Around Target"
+					Distance=15
+					DistanceAround=4
+					Divide=1
+					Launcher=2
+					GuardBreak=1
+					Stunner=2
+					WindUp=1.5
+					WindupIcon='Ripple Radiance.dmi'
+					WindupIconUnder=1
+					WindupIconX=-32
+					WindupIconY=-32
+					WindupIconSize=1
+					WindupMessage="begins drawing on their life force..."
+					ActiveMessage="unleashes an explosive wave of power directly at their enemy!"
+					HitSparkIcon='BLANK.dmi'
+					HitSparkX=0
+					HitSparkY=0
+					PreShockwave=1
+					PreShockwaveDelay=2
+					PostShockwave=0
+					Shockwaves=2
+					Shockwave=0.5
+					ShockIcon='KenShockwaveGold.dmi'
+					ShockBlend=2
+					ShockDiminish=1.15
+					ShockTime=4
+					TurfShift='Lightning.dmi'
+					TurfShiftLayer=6
+					TurfShiftDuration=-10
+					TurfShiftDurationSpawn=0
+					TurfShiftDurationDespawn=5
+					TurfErupt=2
+					Cooldown=150
+					Earthshaking=15
+					GuardBreak=1
+					Crippling=3
+					Instinct=1
+					DirectWounds=5
+					Shearing=5
+				adjust(mob/p)
+					var/asc= p.AscensionsAcquired
+					if(p.isInnovative(HUMAN, "Any") && !isInnovationDisable(p) && p.Class == "Heroic")
+						AllOutAttack=1
+						StrOffense=1
+						ForOffense=1
+						DamageMult=13 + asc
+						WoundCost=5 + asc
+						ComboMaster=1
+						Area="Around Target"
+						Rounds= 1 + asc
+						Distance=15
+						DistanceAround=4
+						Divide=1
+						Launcher=2
+						GuardBreak=1
+						Stunner=2
+						WindUp=1.5
+						WindupIcon='Ripple Radiance.dmi'
+						WindupIconUnder=1
+						WindupIconX=-32
+						WindupIconY=-32
+						WindupIconSize=1
+						WindupMessage="begins drawing on their life force..."
+						ActiveMessage="unleashes an explosive wave of power directly at their enemy!"
+						HitSparkIcon='BLANK.dmi'
+						HitSparkX=0
+						HitSparkY=0
+						PreShockwave=1
+						PreShockwaveDelay=2
+						PostShockwave=0
+						Shockwaves=2
+						Shockwave=0.5
+						ShockIcon='KenShockwaveGold.dmi'
+						ShockBlend=2
+						ShockDiminish=1.15
+						ShockTime=4
+						TurfShift='Lightning.dmi'
+						TurfShiftLayer=6
+						TurfShiftDuration=-10
+						TurfShiftDurationSpawn=0
+						TurfShiftDurationDespawn=5
+						TurfErupt=2
+						Cooldown=150 + (10 * asc)
+						CooldownStatic=1
+						Earthshaking=15
+						GuardBreak=1
+						Crippling=3
+						Instinct=1
+						DirectWounds=5 + asc
+						Shearing=5
+					else
+						set2default()
 				verb/Kikoho()
 					set category="Skills"
 					src.StrOffense= usr.TotalInjury > 25 ? (usr.TotalInjury/100) : 0;
+					adjust(usr)
 					usr.Activate(src)
 
 			Shin_Kikoho
@@ -2448,6 +2622,36 @@ obj
 						Distance = 6 + (3 * usr.AscensionsAcquired)
 						ForOffense = 0.3 + (0.1 * usr.AscensionsAcquired)
 						StrOffense = 0.3 + (0.1 * usr.AscensionsAcquired)
+					usr.Activate(src)
+			Frenzy_Breath
+				ElementalClass="Dark"
+				StrOffense=1.5
+				SpecialAttack=1
+				DamageMult=15
+				WindUp=0.5
+				Distance=20
+				Area="Arc"
+				Icon='fevExplosion - Hellfire.dmi'
+				IconX=-16
+				IconY=-16
+				Size=1.5
+				HitSparkIcon='Slash.dmi'
+				HitSparkX=-32
+				HitSparkY=-32
+				HitSparkTurns=1
+				HitSparkSize=1
+				HitSparkDispersion=1
+				TurfStrike=1
+				FrenzyDebuff=100
+				Cooldown=90
+				verb/Frenzy_Breath()
+					set category="Skills"
+					if(!altered)
+						DamageMult = 6 + (1.5 * usr.AscensionsAcquired)
+						Cooldown = 60 - (5 * usr.AscensionsAcquired)
+						Distance = 6 + (4 * usr.AscensionsAcquired)
+						StrOffense = 1 + (0.25 * usr.AscensionsAcquired)
+						FrenzyDebuff = 40 + (10 * usr.AscensionsAcquired)
 					usr.Activate(src)
 			Poison_Gas
 				ElementalClass="Poison"
@@ -3228,7 +3432,6 @@ obj
 						Rounds = 2
 						Stunner=2
 						Distance= 4 + (round(pot/10))
-						Rounds = 2
 						HitSparkIcon='Slash.dmi'
 						HitSparkX=-32
 						HitSparkY=-32
@@ -3237,6 +3440,30 @@ obj
 						HitSparkDispersion=1
 						TurfStrike=1
 						TurfShift='Dark.dmi'
+						TurfShiftDuration=3
+					else if(p.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(p) && p.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/DarkMagic))
+						var/pot = p.Potential
+						Area="Wave"
+						ComboMaster=1
+						GuardBreak=1
+						StrOffense=1
+						PassThrough=1
+						PreShockwave=1
+						PostShockwave=0
+						Shockwave=2
+						Shockwaves=2
+						DamageMult= 5 + (pot/100)
+						Rounds = 2
+						Stunner=3
+						Distance= 4 + (round(pot/10))
+						HitSparkIcon='Slash - Hellfire.dmi'
+						HitSparkX=-32
+						HitSparkY=-32
+						HitSparkTurns=1
+						HitSparkSize=1
+						HitSparkDispersion=1
+						TurfStrike=1
+						TurfShift='blackflameaura.dmi'
 						TurfShiftDuration=3
 					else
 						Area="Target"
@@ -3252,7 +3479,6 @@ obj
 						Rounds = 0
 						Stunner=0
 						Distance= 10
-						Rounds = 0
 						HitSparkIcon=0
 						HitSparkX=0
 						HitSparkY=0
@@ -3262,9 +3488,26 @@ obj
 						TurfStrike=0
 						TurfShift=0
 						TurfShiftDuration=0
+					if(p.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(p) && p.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/Corruption))
+						CorruptionDebuff = 1
+					else
+						CorruptionDebuff = 0
 				verb/Jet_Slicer()
 					set category="Skills"
 					adjust(usr)
+					if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/DarkMagic))
+						usr.endDemonMagicCast()
+						usr.gainStyleRating(1)
+					else if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/HellFire))
+						var/obj/Skills/Buffs/SlotlessBuffs/Hellraiser/hr = usr.SlotlessBuffs["Hellraiser"]
+						if(!hr)
+							hr = new/obj/Skills/Buffs/SlotlessBuffs/Hellraiser()
+						hr.stackBuff(usr)
+						usr.endDemonMagicCast()
+						usr.gainStyleRating(1)
+					else if(usr.isInnovative(CELESTIAL, "Any") && !isInnovationDisable(usr) && usr.isDemonMagicCasting(/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/Corruption))
+						usr.endDemonMagicCast()
+						usr.gainStyleRating(1)
 					usr.Activate(src)
 			Crowd_Cutter
 				SkillCost=TIER_3_COST
@@ -4204,92 +4447,6 @@ obj
 						EnergyCost=20
 					usr.Activate(src)
 
-///Hiten
-			Sonic_Sheath
-				name="Ryumeisen"
-				Area="Circle"
-				StrOffense=1
-				StyleNeeded="Hiten Mitsurugi"
-				DamageMult=10
-				Distance=7
-				GuardBreak = 1
-				PassThrough=1
-				Stunner=5
-				PreShockwave=1
-				Shockwave=5
-				Shockwaves=5
-				PostShockwave=0
-				Cooldown=180
-				NoLock=1
-				NoAttackLock=1
-				HitSparkIcon='BLANK.dmi'
-				ActiveMessage="sheathes their sword with stunning authority!"
-				verb/Ryumeisen()
-					set category="Skills"
-					usr.Activate(src)
-			NestedSlash
-				name="Ryusousen"
-				StyleNeeded="Hiten Mitsurugi"
-				Area="Arc"
-				StrOffense=1
-				DamageMult = 3
-				Launcher = 2
-				ComboMaster = 1
-				EnergyCost=2
-				Rush=3
-				ControlledRush=1
-				Cooldown=60
-				Icon='Nest Slash.dmi'
-				IconTime=0.7
-				IconX=-16
-				IconY=-16
-				Size=0.8
-				HitSparkIcon='Slash.dmi'
-				HitSparkX=-32
-				HitSparkY=-32
-				HitSparkSize=0.8
-				HitSparkTurns=1
-				HitSparkCount=10
-				NoLock=1
-				NoAttackLock=1
-				ActiveMessage="throws countless sword strikes in an endless flurry!"
-				verb/Ryusousen()
-					set category="Skills"
-					usr.Activate(src)
-			CoiledSlash
-				name="Ryukansen"
-				NeedsSword=1
-				StyleNeeded="Hiten Mitsurugi"
-				Area="Wave"
-				StrOffense=1
-				DamageMult=5
-				ChargeTech=1
-				SpeedStrike = 2
-				Crippling = 50
-				PassThrough = 1
-				ChargeTime=0
-				DelayTime=0
-				Cooldown=60
-				Distance = 3
-				Size=1
-				Rounds=6
-				Icon='Air Slash.dmi'
-				IconX=-8
-				IconY=-8
-				HitSparkIcon='Slash.dmi'
-				HitSparkX=-32
-				HitSparkY=-32
-				HitSparkSize=0.8
-				HitSparkTurns=1
-				TurfStrike=1
-				EnergyCost=2
-				NoLock=1
-				NoAttackLock=1
-				ActiveMessage="bursts forward, performing a whirling slash!"
-				verb/Ryukansen()
-					set category="Skills"
-					usr.Activate(src)
-
 ///Ansatsuken
 			Tatsumaki
 				UnarmedOnly=1
@@ -4309,14 +4466,14 @@ obj
 				StyleNeeded="Ansatsuken"
 				proc/alter(mob/player)
 					ManaCost = 0
-					var/damage = clamp(0.6 + 0.3 * (usr.SagaLevel/2), 0.3, 3)
+					var/damage = clamp(0.6 + 0.3 * (player.SagaLevel/2), 0.3, 3)
 					var/path = player.AnsatsukenPath == "Tatsumaki" ? 1 : 0
 					var/rounds = 3
 					var/cooldown = 40
 					var/launch = 0
 					if(path)
 						cooldown = 30
-						damage = clamp(0.6 + 0.5 * (usr.SagaLevel/2), 0.3, 5)
+						damage = clamp(0.6 + 0.5 * (player.SagaLevel/2), 0.3, 5)
 						rounds = 3
 					DamageMult = damage
 					Cooldown = cooldown
@@ -5854,12 +6011,14 @@ obj
 			Crippling
 			Shocking
 			Poisoning
+			FrenzyDebuff
 
 			grabNerf = 0
 			BuffAffected = 0
 			buffAffectedType = 0
 			buffAffectedCompare = 0
 			buffAffectedBoon = 0
+			CorruptionDebuff = 0
 
 			PullIn
 
@@ -6011,6 +6170,7 @@ obj
 			src.buffAffectedType  = Z.buffAffectedType
 			src.buffAffectedCompare = Z.buffAffectedCompare
 			src.buffAffectedBoon = Z.buffAffectedBoon
+			src.CorruptionDebuff = Z.CorruptionDebuff
 			PullIn = Z.PullIn
 			if(Z.Burning)
 				src.Burning+=Z.Burning
@@ -6034,6 +6194,8 @@ obj
 				src.Toxic+=Z.Toxic
 			if(Z.Crippling)
 				src.Crippling+=Z.Crippling
+			if(Z.FrenzyDebuff)
+				src.FrenzyDebuff = Z.FrenzyDebuff
 			if(Z.DirectWounds)
 				src.DirectWounds=Z.DirectWounds;
 			if(Z.ObjIcon)
@@ -6331,7 +6493,7 @@ obj
 								m << "You redirected the force of the attack back at [src.Owner]!"
 								return
 
-				if(src.CanBeBlocked||m.passive_handler.Get("YataNoKagami")||m.passive_handler.Get("The CrownlessKing"))
+				if(src.CanBeBlocked||m.passive_handler.Get("YataNoKagami")||m.passive_handler.Get("The Crownless King"))
 					if(Accuracy_Formula(src.Owner, m, AccMult=Precision, BaseChance=glob.WorldDefaultAcc, IgnoreNoDodge=0) == WHIFF)
 						if(!src.Owner.NoWhiff())
 							var/obj/Items/Sword/s = Owner.EquippedSword()
@@ -6367,8 +6529,8 @@ obj
 					m.HealEnergy(Heal)
 				if(Owner.Attunement == "Fox Fire")
 					var/heal = FinalDmg * ( (1 + Owner.AscensionsAcquired + (FoxFire))/10)
-					m:LoseEnergy(heal/2)
-					m:LoseMana(heal/2)
+					m.LoseEnergy(heal/2)
+					m.LoseMana(heal/2)
 					Owner.HealEnergy(heal/2)
 					Owner.HealMana(heal/2)
 				if(m.HasDeflection()&&!src.CanBeDodged)
@@ -6402,6 +6564,8 @@ obj
 					m.AddCrippling(Crippling, Owner)
 				if(Shearing)
 					m.AddShearing(Shearing, Owner)
+				if(FrenzyDebuff)
+					m.AddFrenzy(FrenzyDebuff, Owner)
 
 				if(Cleansing && src.Owner.shouldCleanse(m))
 					m.CleanseDebuff(Cleansing*10);
@@ -6446,7 +6610,7 @@ obj
 						if(m.SagaLevel>1&&m.Saga=="Path of a Hero: Rebirth")
 							if(m.passive_handler["Determination(Purple)"]||m.passive_handler["Determination(White)"])
 								m.HealMana(m.SagaLevel*3, 1)
-								if(m.ManaAmount>=100 && m.RebirthHeroType=="Cyan"||!m.passive_handler["Determination(White)"])
+								if(m.ManaAmount>=100 && (m.RebirthHeroType=="Cyan"||!m.passive_handler["Determination(White)"]))
 									m.passive_handler.Set("Determination(Green)", 1)
 									m.passive_handler.Set("Determination(Purple)", 0)
 									m<<"Your SOUL color shifts to green!"
@@ -6531,7 +6695,7 @@ obj
 					m.applySentenced(60)
 				if(src.Owner.UsingAnsatsuken())
 					src.Owner.HealMana(src.Owner.SagaLevel)
-				if(src.Owner.SagaLevel>1&src.Owner.Saga=="Path of a Hero: Rebirth")
+				if(src.Owner.SagaLevel>1&&src.Owner.Saga=="Path of a Hero: Rebirth")
 					if(src.Owner.passive_handler["Determination"])
 						src.Owner.HealMana(src.Owner.SagaLevel/4)
 					else
@@ -6636,6 +6800,11 @@ obj
 							m.AddSkill(S)
 						S.Password = m.name
 
+				if(CorruptionDebuff)
+					var/obj/Skills/Buffs/SlotlessBuffs/Ruin/ruin = m.SlotlessBuffs["Ruin"]
+					if(!ruin)
+						ruin = new/obj/Skills/Buffs/SlotlessBuffs/Ruin()
+					ruin.applyStack(m)
 
 
 
@@ -7093,6 +7262,7 @@ obj
 				src.Deluge=AH.Deluge
 				src.Stunner=AH.Stunner
 				src.Destructive=AH.Destructive
+				src.FrenzyDebuff=AH.FrenzyDebuff
 				src.Bang=AH.Bang
 				src.Bolt=AH.Bolt
 				src.Scratch=AH.Scratch
@@ -7161,6 +7331,7 @@ obj
 				src.Deluge=AH.Deluge
 				src.Stunner=AH.Stunner
 				src.Destructive=AH.Destructive
+				src.FrenzyDebuff=AH.FrenzyDebuff
 				src.Bang=AH.Bang
 				src.Bolt=AH.Bolt
 				src.Scratch=AH.Scratch
@@ -7230,6 +7401,7 @@ obj
 				src.Stunner=AH.Stunner
 				src.Deluge=AH.Deluge
 				src.Destructive=AH.Destructive
+				src.FrenzyDebuff=AH.FrenzyDebuff
 				src.Bang=AH.Bang
 				src.Bolt=AH.Bolt
 				src.Scratch=AH.Scratch

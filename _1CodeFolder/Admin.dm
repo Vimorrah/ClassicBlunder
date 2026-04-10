@@ -48,7 +48,7 @@ mob/verb
 	if(!whichMap) return
 	if(fexists("Maps/map_[whichMap].sav"))
 		var/overwrite = alert(usr, "A map already exists with the name [whichMap]! Do you want to override it?",, "Yes", "No")
-		if(overwrite=="Yes") return
+		if(overwrite!="Yes") return
 	var/firstX = input(usr, "X1?") as null|num
 	var/firstY = input(usr, "Y1?") as null|num
 	var/secondX = input(usr, "X2?") as null|num
@@ -104,7 +104,7 @@ mob/Admin3/verb/LoadSwapMap()
 				m.PrevX = null
 				m.PrevY = null
 				m.PrevZ = null
-				map.Del()
+			map.Del()
 			break
 
 /mob/Admin3/verb/ForceSaveSwapMap()
@@ -311,7 +311,8 @@ mob/Admin3/verb
 		for(var/mob/Players/m in players)
 			if(m.ActiveBuff)
 				if(m.CheckActive("Eight Gates"))
-					m.ActiveBuff:Stop_Cultivation()
+					var/obj/Skills/Buffs/ActiveBuffs/Eight_Gates/eg = m.ActiveBuff
+					eg.Stop_Cultivation()
 				else
 					m.ActiveBuff.Trigger(m)
 			if(m.SpecialBuff)
@@ -473,11 +474,12 @@ proc/ConvertTime(var/amount)
 	var/end=round(size)
 	return "[Value(end,1)] [ending]\s"
 
-proc/ExtractInfo(var/x)
-	if(istype(x,/mob))
-		if(x:client)
-			return "[x:key]</a href>([x])"
-	return "[x]([x:type])"
+proc/ExtractInfo(var/atom/x)
+	if(istype(x, /mob))
+		var/mob/mx = x
+		if(mx.client)
+			return "[mx.key]</a href>([mx])"
+	return "[x]([x.type])"
 
 
 Admin_Help_Object
@@ -647,7 +649,7 @@ mob/Admin3/verb
 				if(Choice=="Cancel")
 					return
 				m.knowledgeTracker.learnedKnowledge.Remove(Choice)
-				Log("Admin", "[ExtractInfo(m)] removed [Choice] knowledge breakthrough from [ExtractInfo(m)]!")
+				Log("Admin", "[ExtractInfo(src)] removed [Choice] knowledge breakthrough from [ExtractInfo(m)]!")
 			if("View")
 				src << "[m]'s Unlocked Breakthroughs:"
 				for(var/o in m.knowledgeTracker.learnedKnowledge)
@@ -745,10 +747,11 @@ mob/Admin2/verb
 			return
 		Log("Admin","[ExtractInfo(usr)] has deleted [A]([A.type]).")
 		if(ismob(A))
-			if(A:client)
+			var/mob/mob_a = A
+			if(mob_a.client)
 				Log("Admin","[ExtractInfo(usr)] booted [ExtractInfo(A)].")
 				world<<"<font color=#FFFF00>[A] has been booted"
-				del(A:client)
+				del(mob_a.client)
 		del(A)
 
 
@@ -838,7 +841,8 @@ mob/Admin2/verb
 		else
 			Log("Admin","[ExtractInfo(usr)] renamed [ExtractInfo(A)] from [Old_Name].")
 			if(isplayer(A))
-				glob.IDs[A:UniqueID] = "[A.name]"
+				var/mob/Players/pa = A
+				glob.IDs[pa.UniqueID] = "[A.name]"
 
 
 	Warper(_x as num,_y as num,_z as num)
@@ -917,13 +921,13 @@ mob/Admin2/verb
 					world<<"<font color=red><b>[A] becomes the path its darkness advances upon.</b></font>"
 					sleep(30)
 					world<<"<font color=red><b>Shinka no Yami.</b></font>"
-					HealAllCutTax();
+					A.HealAllCutTax();
 					A.FullRestore();
 					sleep(30)
-					DeathEvolutionEffects()
-					Conscious();
+					A.DeathEvolutionEffects()
+					A.Conscious();
 					world<<"<font color=red><b>Death-X-Evolution...</b></font>"
-					de.Trigger(src)
+					de.Trigger(A)
 				return
 			A.Unconscious(null,"ADMIN")
 			Log("Admin","<font color=red>[ExtractInfo(usr)] admin-KOed [ExtractInfo(A)].")
@@ -1685,7 +1689,7 @@ mob/Admin3/verb
 					if("Delay")
 						glob.SwordAscDelay = changeto
 
-		Log("Admin", "[ExtractInfo(src)] set [m]'s [y] to [changeto] increase per ascension!")
+		Log("Admin", "[ExtractInfo(src)] set [m]'s [changing] to [changeto] increase per ascension!")
 
 
 	// Nox_Claim()

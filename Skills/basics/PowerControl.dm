@@ -1,107 +1,117 @@
+/mob/proc/canPC(goingUp=0)
+    if(KO) return 0;
+    if(hasHeavenlyPURestriction()) return 0;
+    //PoweringDown does not take time so it is fine to remove its check
+    if(passive_handler.Get("Piloting")) return 0;
+    if(CheckSlotless("Great Ape"))
+        if(goingUp) CanTransform()
+        return 0;
+    if(goingUp)
+        if(CheckActive("Ki Control")) return 0;
+    return 1;
+
+/mob/proc/canDoATransform()
+    if(!canPC()) return 0;//doesn't check for ki control
+    if(isRace(HUMAN)) return 0;//humans do not transform like this!
+    if(ChangelingTransformRequirements()) return 1;//changelings transform weird
+    if(StandardTransformRequirements()) return 1;
+    return 0;
+
+/mob/proc/StandardTransformRequirements()
+    if(ActiveBuff || icon_state=="Train")
+        if(transActive() < transUnlocked)
+            return 1;
+    return 0;
+/mob/proc/ChangelingTransformRequirements()
+    if(isRace(CHANGELING))
+        if(CheckSpecial("One Hundred Percent Power") || CheckSpecial("Fifth Form"))
+            if(transUnlocked < 4)
+                if(transActive() < transUnlocked)
+                    return 1;
+    return 0;
+
+
+
 mob/proc/PowerUp() // Handles Normal (read: Not Kaioken/Shin) power up related code
-    if("PowerUp")
-        if(src.KO)return
-        if(Secret == "Heavenly Restriction" && secretDatum?:hasRestriction("Power Control")) return
-        if(src.PoweringDown)return
-        if(CheckSlotless("Great Ape"))
-            CanTransform()
-            return
-        if(passive_handler.Get("Piloting"))return
-        if(src.passive_handler.Get("Kaioken"))
-            KaiokenPowerUp() // This proc is at line 101
-            return
-        if(Secret == "Shin" && ((usingShinBuff() && !MangOnCD())|| usingMangBuff()) && ActiveBuff)
-            MangPowerUp() // This proc is at line 189
-        if(src.CheckActive("Ki Control")||(src.CheckSpecial("One Hundred Percent Power")&&src.transUnlocked<4)||(src.CheckSpecial("Fifth Form")&&src.transUnlocked<4))
-            if(src.transActive()<src.transUnlocked)
-                if(src.isRace(HUMAN))
-                    return
-                src.Transform()
-            return
-        if(src.HasPULock()||src.HasGatesPULock())
-            return
-        if(src.PoweringUp==1)
-            if(src.transActive()<src.transUnlocked)
-                if(src.isRace(HUMAN))
-                    return
-                src.PoweringUp=0
-                src.Transform()
-                return
-        if(!src.PoweringUp)
-            src.PoweringUp=1
-            if(src.PowerControl>=100)
-                if(src.Saga=="Cosmo")
-                    OMsg(src, "[src] ignites their Cosmo!!")
-                else if(src.custom_powerup)
-                    if(customPUnameInclude)
-                        OMsg(src, "[src] [src.custom_powerup]")
-                    else
-                        OMsg(src, "[src.custom_powerup]")
+    if(canDoATransform())
+        Transform();
+        return;
+    if(!canPC(goingUp=1)) return 0;
+    if(hasSecret("Shin") && ActiveBuff && canMangPU())
+        if(!KO) MangPowerUp()
+        return
+    if(passive_handler.Get("Kaioken"))
+        if(!KO) KaiokenPowerUp()
+        return
+    if(HasPULock()) return
+    if(!PoweringUp)
+        PoweringUp=1
+        if(PowerControl>=100)
+            if(Saga=="Cosmo")
+                OMsg(src, "[src] ignites their Cosmo!!")
+            else if(custom_powerup)
+                if(customPUnameInclude)
+                    OMsg(src, "[src] [src.custom_powerup]")
                 else
-                    OMsg(src, "[src] begins gathering power!!")
-                src.Auraz("Add")
+                    OMsg(src, "[src.custom_powerup]")
             else
-                src.PowerControl=100
-                src << "You return to normal power."
-                src.PoweringUp=0
+                OMsg(src, "[src] begins gathering power!!")
+            Auraz("Add")
+        else
+            PowerControl=100
+            src << "You return to normal power."
+            PoweringUp=0
 
 // Handles Normal Power Down related code
 mob/proc/PowerDown()
-    if("PowerDown")
-        if(src.KO)
+    if(!canPC()) return;
+    if(passive_handler.Get("Kaioken"))
+        KaiokenPowerDown() // This Proc is at line 156
+        return
+    if(Secret == "Shin" && usingMangBuff())
+        MangPowerDown() // This proc is at line 202
+        if(GetMangLevel()==0)
+            MangToShin()
+        return
+    if(HasPULock())
+        return
+    if(PoweringUp)
+        PoweringUp=0
+        src << "You stop powering up."
+        Auraz("Remove")
+        return
+    else
+        if(CheckActive("Ki Control"))
+            for(var/obj/Skills/Buffs/ActiveBuffs/Ki_Control/KC in src)
+                UseBuff(KC)
+                return
+        if(CheckSpecial("One Hundred Percent Power"))
+            for(var/obj/Skills/Buffs/SpecialBuffs/OneHundredPercentPower/FF in src)
+                UseBuff(FF)
+                return
+        if(CheckSpecial("Fifth Form"))
+            for(var/obj/Skills/Buffs/SpecialBuffs/FifthForm/FF in src)
+                UseBuff(FF)
+                return
+        if(HasKiControl() && src.PowerControl > 100)
+            PowerControl=100
+            Auraz("Remove")
+            src << "You return to normal power."
             return
-        if(Secret == "Heavenly Restriction" && secretDatum?:hasRestriction("Power Control")) return
-        if(CheckSlotless("Great Ape"))
-            return
-        if(passive_handler.Get("Piloting"))
-            return
-        if(src.passive_handler.Get("Kaioken"))
-            KaiokenPowerDown() // This Proc is at line 156
-            return
-        if(Secret == "Shin" && usingMangBuff())
-            MangPowerDown() // This proc is at line 202
-            if(GetMangLevel()==0)
-                MangToShin()
-            return
-        if(src.HasPULock()||src.HasGatesPULock())
-            return
-        if(src.PoweringUp)
-            src.PoweringUp=0
-            src << "You stop powering up."
-            src.Auraz("Remove")
+        if(transActive&&!HasNoRevert()&&!isMazokuHuman())
+            for(var/obj/Skills/Buffs/B in src)
+                if(BuffOn(B)&&B.Transform&&!B.AlwaysOn)
+                    B.Trigger(src)
+                    return
+            Revert()
+            src << "You revert from your transformed state."
             return
         else
-            if(src.CheckActive("Ki Control"))
-                for(var/obj/Skills/Buffs/ActiveBuffs/Ki_Control/KC in src)
-                    src.UseBuff(KC)
-                    return
-            if(src.CheckSpecial("One Hundred Percent Power"))
-                for(var/obj/Skills/Buffs/SpecialBuffs/OneHundredPercentPower/FF in src)
-                    src.UseBuff(FF)
-                    return
-            if(src.CheckSpecial("Fifth Form"))
-                for(var/obj/Skills/Buffs/SpecialBuffs/FifthForm/FF in src)
-                    src.UseBuff(FF)
-                    return
-            if(src.HasKiControl() && src.PowerControl > 100)
-                src.PowerControl=100
-                src.Auraz("Remove")
-                src << "You return to normal power."
+            if(PowerControl!=1)
+                PowerControl=1
+                src << "You restrain your power..."
+                Auraz("Remove")
                 return
-            if(transActive&&!src.HasNoRevert())
-                for(var/obj/Skills/Buffs/B in src)
-                    if(src.BuffOn(B)&&B.Transform&&!B.AlwaysOn)
-                        B.Trigger(src)
-                        return
-                src.Revert()
-                src << "You revert from your transformed state."
-                return
-            else
-                if(src.PowerControl!=1)
-                    src.PowerControl=1
-                    src << "You restrain your power..."
-                    src.Auraz("Remove")
-                    return
 
 // Handles Kaioken Power Up related code
 mob/proc/KaiokenPowerUp()

@@ -117,6 +117,7 @@ obj
 			var/RipplePower=1//used to make ripple go higher
 			var/DrainBlood=0// This is used for vampire grab + toss, makes them gain bloodpower
 			var/ForceCost = 0
+			var/WaveHit=0//Applies BYOND wave filter briefly on the hit target
 
 			var/Ooze
 
@@ -703,26 +704,6 @@ obj
 					FollowUp="/obj/Skills/AutoHit/Shun_Goku_Satsu"
 					BuffSelf="/obj/Skills/Buffs/SlotlessBuffs/Autonomous/QueueBuff/Finisher/Violent_Personality"
 
-
-				//Hiten Finisher
-				Flash_Strike
-					DamageMult=3
-					Counter=1
-					Warp=10
-					SpeedStrike=2
-					SlayerMod=2
-					FollowUp="/obj/Skills/AutoHit/Shunshin_Massacre"
-					BuffSelf="/obj/Skills/Buffs/SlotlessBuffs/Autonomous/QueueBuff/Finisher/Shunshin"
-				True_Flash_Strike
-					DamageMult=2.5
-					Counter=1
-					Warp=10
-					SpeedStrike=2
-					SlayerMod=3
-					FollowUp="/obj/Skills/AutoHit/Shunshin_Massacre"
-					BuffAffected="/obj/Skills/Buffs/SlotlessBuffs/Autonomous/QueueBuff/Godspeed_Assaulted"
-					BuffSelf="/obj/Skills/Buffs/SlotlessBuffs/Autonomous/QueueBuff/Finisher/Shunshin_Shin"
-
 				//Keyblade Finishers
 				Fever_Pitch
 					KBAdd=2
@@ -969,10 +950,11 @@ obj
 
 						var/obj/Skills/Queue/Secret_Heavy_Strike/hs = usr.getSpecialHeavyStrike();
 						if(hs)
+							if(hs.Using || Using) return;//if heavy strike or secret heavy strike is on cooldown, stop
 							hs.adjust(usr);
 							usr.SetQueue(hs);
-						else usr.SetQueue(src);
-						
+						else if(usr.canNormalHeavyStrike()) usr.SetQueue(src);
+
 			Meteor_Mash
 				name="Meteor Mash"
 				DamageMult=1

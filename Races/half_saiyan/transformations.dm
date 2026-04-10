@@ -103,6 +103,7 @@
 		unlock_potential=90
 	transform_animation(mob/user)
 		if(first_time)
+			user.CutsceneMode()
 			user.BeastAnimation()
 	adjust_transformation_visuals(mob/user)
 		if(user.Hair_Base && !form_hair_icon)

@@ -143,18 +143,12 @@ mob/proc/GetAssess()
 mob
 	proc
 		GetHealthBPMult()
-			var/Return=0
-			Return=min(src.TotalInjury/100,0.25)*(-1)
-			if(Return>0)
-				Return=0
+			var/Return = min(src.TotalInjury / 100, 0.25) * (-1)
 			return Return
 		GetEnergyBPMult()
-			var/Return=0
-			Return=min(src.TotalFatigue/100,0.5)*(-1)
-			if(Return>0)
-				Return=0
+			var/Return = min(src.TotalFatigue / 100, 0.5) * (-1)
 			if(src.passive_handler.Get("Anaerobic"))
-				Return=min(src.TotalFatigue-20/100,0.5)
+				Return = min((src.TotalFatigue - 20) / 100, 0.5)
 			return Return
 
 
@@ -231,7 +225,7 @@ mob/Players/Stat()
 			if(!src.DefTax&&!src.DefCut)
 				stat("Defense","[src.BaseDef()]")
 			else
-				stat("Defense","[src.BaseDef()]) (Tax: [round((src.DefTax+src.DefCut)*100)]%)")
+				stat("Defense","[src.BaseDef()] (Tax: [round((src.DefTax+src.DefCut)*100)]%)")
 			if(!src.RecovTax&&!src.RecovCut)
 				stat("Recovery","[round(src.BaseRecov(), 0.05)]")
 			else
@@ -247,8 +241,8 @@ mob/Players/Stat()
 				stat("Donate RPP:", "[round(usr.RPPDonate)]")
 			if(usr.PotentialRate>0)
 				switch(usr.PotentialStatus)
-					if("Distracted")
-						stat("Focus Status: ", "<font color='red'>[usr.PotentialStatus]</font color>")
+					if("Caught Up")
+						stat("Focus Status: ", "<font color='blue'>[usr.PotentialStatus]</font color>")
 					if("Average")
 						stat("Focus Status: ", "<font color='yellow'>[usr.PotentialStatus]</font color>")
 					if("Focused")
@@ -439,7 +433,9 @@ mob/Players/Stat()
 /mob/proc/outputVitals()
 	var/vaiHealth = hasClearSight()&&Target.VaizardHealth ? " ([Target.VaizardHealth])" : ""
 	var/healthDisplay = "[Target.Health][vaiHealth]%"
-
+	var/SpawnDisplay="[Target.SpawnArea]"
+	if(src.Target.passive_handler.Get("Obfuscated Origin"))
+		SpawnDisplay = "<font color='red'><b>Unknowable</b></font color>"
 	if(Target.BioArmor) healthDisplay = getBioArmorDisplay()
 	var/powReplace=Get_Sense_Reading(Target)
 	if(TrgIsBatshitCrazy() && !hasClearSight())
@@ -463,6 +459,7 @@ mob/Players/Stat()
 		stat("Energy: ","<font color=#FF0000>Because I do not believe you <i>do.</i></font color>")
 	else
 		stat("Energy: ","[(Target.Energy/Target.EnergyMax)*100]%")
+	stat("Origin:","[SpawnDisplay]");
 
 
 
@@ -712,6 +709,7 @@ mob/proc/Recover(var/blah,Amount=1)
 			// if(src.SummonReturnTimer)
 			// 	return
 			if(passive_handler.Get("LunarWrath"))
+				src.ManaAmount=0
 				return
 			if(UsingAnsatsuken())
 				return
@@ -932,7 +930,7 @@ mob/proc/
 						if(src.DefianceCounter)
 							a+=src.DefianceCounter*0.05
 						// WrathFactor
-						if(src.passive_handler.Get("WrathFactor"))
+						if(src.passive_handler.Get("WrathFactor") && src.isInDemonDevilTrigger())
 							var/missing = max(0, 100 - Health)
 							var/steps = round(missing / 10)
 							if(steps > 0)
@@ -1070,7 +1068,7 @@ mob/proc/
 
 			var/PUGain=src.PUSpeedModifier
 
-			if(src.HasPULock()||src.HasGatesPULock())
+			if(src.HasPULock())
 				PUGain=0
 
 			if(!src.HasHealthPU())
@@ -1250,7 +1248,12 @@ mob/proc/Update_Stat_Labels()
 			src<<output("CHL: [round(Slow, 1)]","BarSlow")
 		else
 			winshow(src, "BarSlow",0)
-		if(src.Sheared>0)
+		if(src.Frenzy>0)
+			winshow(src, "BarFrenzy",1)
+			src<<output("FRENZY: [round(Frenzy, 1)]","BarFrenzy")
+		else
+			winshow(src, "BarFrenzy",0)
+		if(src.Sheared>0 && !(src.Frenzy>0 && !src.IsDarkDragonPlayer()))
 			winshow(src, "BarPotion",1)
 			src<<output("SHR: [round(Sheared, 1)]","BarPotion")
 		else

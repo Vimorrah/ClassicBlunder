@@ -6,13 +6,13 @@
 	return round(damageMultiplier, 0.01)
 
 /mob/proc/lightRush(mob/enemy, option)
-	if("Launch")
+	if(option == "Launch")
 		if(enemy.Launched)
 			if(passive_handler["Sajire Rush"])
 				return TRUE
 			if(Secret == "Heavenly Restriction" && secretDatum?:hasImprovement("Launchers"))
 				return TRUE
-	else if("Stun")
+	else if(option == "Stun")
 		if(enemy.Stunned)
 			if(passive_handler["Sajire Rush"])
 				return TRUE
@@ -390,9 +390,16 @@
 		// 				QUEUE	 				//
 				var/knockDistance = 0
 				var/speedStrike = GetBlurringStrikes() //This is in the _Reworks/Passives folder
-				if(UsingFencing() || speedStrike)
-					speedStrike += UsingFencing()
-					damage *= clamp(sqrt( 1  + ( (GetSpd()) * (speedStrike/15) ) ),1,3)
+				var/fenceBonus = UsingFencing()
+				if(fenceBonus || speedStrike)
+					var/totalStrike = speedStrike + fenceBonus
+					var/bsMult = clamp(sqrt(1+(GetSpd()*(totalStrike/15))),1,3)
+					if(speedStrike > 0 && enemy && enemy.passive_handler && enemy.passive_handler.Get("ApathyFactor") && enemy.isInHighTension() && enemy.Health >= 30)
+						var/fenceMult = fenceBonus > 0 ? clamp(sqrt(1+(GetSpd()*(fenceBonus/15))),1,3) : 1
+						enemy.applyApathyBonus(damage * (bsMult - fenceMult))
+						damage *= fenceMult
+					else
+						damage *= bsMult
 				if(AttackQueue)
 					damage *= QueuedDamage(enemy)
 					if(Secret=="Heavenly Restriction" && secretDatum?:hasImprovement("Queues"))
@@ -961,6 +968,8 @@
 		if(src.HasSpecialStrike()||EquippedStaff()||src.passive_handler["Determination(Yellow)"]||src.passive_handler["Determination(White)"])
 			flick("Attack",src)
 			NextAttack=world.time
+			if(src.passive_handler.Get("Gun Kata"))
+				GetAndUseSkill(/obj/Skills/Projectile/GunKataShot, Projectiles, TRUE)
 			if(src.passive_handler["Determination(Yellow)"]||src.passive_handler["Determination(White)"])
 				if(SagaLevel<4)
 					GetAndUseSkill(/obj/Skills/Projectile/SmallLemonThing, Projectiles, TRUE)
@@ -1008,16 +1017,16 @@
 					else
 						src.ClearQueue()
 						src.Activate(new/obj/Skills/AutoHit/Heavenly_Ring_Dance)
-						for(var/obj/Skills/Buffs/SlotlessBuffs/Heavenly_Ring_Dance/TH in usr.AutoHits)
-							usr.UseBuff(TH)
+						for(var/obj/Skills/Buffs/SlotlessBuffs/Heavenly_Ring_Dance/TH in src.AutoHits)
+							src.UseBuff(TH)
 
 					NextAttack+=30
 					sleep(10)
 					src.Target.Frozen=0
 				else
 					src.Activate(new/obj/Skills/AutoHit/Heavenly_Ring_Dance_Burst)
-					for(var/obj/Skills/Buffs/SlotlessBuffs/Heavenly_Ring_Dance/TH in usr.AutoHits)
-						usr.UseBuff(TH)
+					for(var/obj/Skills/Buffs/SlotlessBuffs/Heavenly_Ring_Dance/TH in src.AutoHits)
+						src.UseBuff(TH)
 			else if(src.CheckSlotless("Libra Armory")&&src.AttackQueue)
 				GetAndUseSkill(/obj/Skills/Projectile/Libra_Slash, Projectiles, TRUE)
 				src.ClearQueue()

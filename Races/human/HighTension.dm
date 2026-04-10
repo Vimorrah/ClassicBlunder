@@ -47,6 +47,7 @@
     tryIncreaseTension()
         if(!isRace(HUMAN) && !isRace(CELESTIAL)) return 0;
         //they have to be human or celestial to get this far
+        if(isMazokuHuman()) return 0; // Mazoku transforms are health-triggered, not tension-based
         if(canHT())
             race.transformations[1].transform(src, TRUE);
             return 1;

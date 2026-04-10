@@ -22,6 +22,6 @@ mob/proc/
         . += passive_handler.Get("MeleeResist");
         . = clamp(., glob.MELEE_RESIST_MIN, glob.MELEE_RESIST_MAX);
     getMaxMeleeResistValue()
-        . = (glob.CONTROL_RESIST_EPT * glob.CONTROL_RESIST_MAX);
+        . = (glob.MELEE_RESIST_EPT * glob.MELEE_RESIST_MAX);
     getMinMeleeResistValue()
-        . = FULL_MELEE_DMG - (glob.CONTROL_RESIST_EPT * glob.CONTROL_RESIST_MIN);
+        . = FULL_MELEE_DMG - (glob.MELEE_RESIST_EPT * glob.MELEE_RESIST_MIN);

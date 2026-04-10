@@ -13,7 +13,7 @@ globalTracker/var/list/IGNORE_POWER_CLAMP_PASSIVES = list("Wrathful", "LimitBrok
     for(var/passive in glob.IGNORE_POWER_CLAMP_PASSIVES)
         if(passive_handler|=passive)
             return TRUE
-    if(passive_handler.Get("WrathFactor") && Health <= 50)
+    if(passive_handler.Get("WrathFactor") && Health <= 50 && isInDemonDevilTrigger())
         return TRUE
     if(passive_handler.Get("Kaioken") && Health<=20||passive_handler.Get("Kaioken") && Kaioken>=5)
         return TRUE

@@ -67,7 +67,7 @@ obj/Skills/Utility/Recall_Armaments
 
 //no ascensions
 /obj/Items/Sword/Guardian/Sword_of_the_Saint
-	passives = list()
+	passives = list("SpiritSword" = 1)
 	Class = "Medium"
 	SubType = "Weapons"
 	DamageEffectiveness=1.05
@@ -75,7 +75,7 @@ obj/Skills/Utility/Recall_Armaments
 	SpeedEffectiveness=1.15
 	ShatterCounter=800
 	ShatterMax=800
-	Ascended = 1
+	Ascended = 6
 	Augmented = 1
 	Stealable = 0
 	Destructable = 0
@@ -84,6 +84,7 @@ obj/Skills/Utility/Recall_Armaments
 	icon = 'Samurai_sword_3.dmi'
 //ascension 1
 /obj/Items/Wearables/Guardian/Belt_of_Truth
+	passives = list("Persistence" = 4)
 	Augmented = 1
 	Stealable = 0
 	Destructable = 0
@@ -92,8 +93,8 @@ obj/Skills/Utility/Recall_Armaments
 	icon = 'MachoBrace.dmi'
 //ascension 2
 /obj/Items/Armor/Guardian/Breastplate_of_Righteousness
-	passives = list("Juggernaut" = 0.25, "Steady" = 0.5)
-	Ascended = 2
+	passives = list("Juggernaut" = 3, "GiantForm" = 1, "Steady" = 5)
+	Ascended = 6
 	Class = "Medium"
 	SubType = "Armor"
 	DamageEffectiveness=0.75
@@ -108,7 +109,7 @@ obj/Skills/Utility/Recall_Armaments
 	desc = "A shining cuirass that shields the heart with virtue."
 	icon = 'ArmorLight-White.dmi'
 /obj/Items/Wearables/Guardian/Sandals_of_Peace
-	passives = list("MovemementMastery" = 2, "Purity" = 1)
+	passives = list("MovementMastery" = 10, "Purity" = 1, "BeyondPurity" = 1)
 	Augmented = 1
 	Stealable = 0
 	Destructable = 0
@@ -117,7 +118,7 @@ obj/Skills/Utility/Recall_Armaments
 	icon = 'shoes_mono.dmi'
 //ascension 3
 /obj/Items/Wearables/Guardian/Helmet_of_Salvation
-	passives = list("DebuffResistance" = 0.5, "VenomResistance" = 0.5, "Anaerobic" = 1.5)
+	passives = list("DebuffResistance" = 3,  "LifeGeneration" = 2, "Anaerobic" = 2, "Pressure" = 5)
 	Augmented = 1
 	Stealable = 0
 	Destructable = 0
@@ -125,6 +126,7 @@ obj/Skills/Utility/Recall_Armaments
 	desc = "A helm of light that guards the mind with divine insight."
 	icon = 'goldsaintlibra_helmet.dmi'
 /obj/Items/Wearables/Guardian/Shield_of_Faith
+	passives = list("BlockChance" = 25, "CriticalBlock" = 0.2)
 	Techniques = list(new/obj/Skills/Buffs/SpecialBuffs/Aphotic_Shield)
 	Augmented = 1
 	Stealable = 0
@@ -135,7 +137,7 @@ obj/Skills/Utility/Recall_Armaments
 //ascension 4
 /obj/Items/Sword/Guardian/Sword_of_the_Spirit
 	Techniques = list(new/obj/Skills/Buffs/SpecialBuffs/The_Ten_Commandments, new/obj/Skills/Buffs/SlotlessBuffs/Autonomous/The_Word_Of_God)
-	passives = list()
+	passives = list("SweepingStrike" = 1, "SpiritSword" = 1, "BlurringStrikes" = 3, "DoubleStrike" = 1, "TripleStrike" = 1)
 	Class = "Medium"
 	SubType = "Weapons"
 	DamageEffectiveness=1.1
@@ -143,7 +145,7 @@ obj/Skills/Utility/Recall_Armaments
 	SpeedEffectiveness=1.25
 	ShatterCounter=800
 	ShatterMax=800
-	Ascended = 3
+	Ascended = 6
 	Augmented = 1
 	Stealable = 0
 	Destructable = 0
@@ -202,7 +204,7 @@ obj/Skills/Utility/Recall_Armaments
 			src.Trigger(usr)
 	Ultra_Instinct
 		Copyable=0
-		passives = list("Flow" = 2, "Deflection" = 1, "SoftStyle" = 1, "Flow" = 3, "Instinct" = 3, "CounterMaster" = 3, "Godspeed" = 1, "UnarmedDamage"=4)
+		passives = list("Flow" = 3, "Deflection" = 1, "SoftStyle" = 1, "Instinct" = 3, "CounterMaster" = 3, "Godspeed" = 1, "UnarmedDamage"=4)
 		NeedsSword=0
 		NeedsStaff=0
 		NoSword=0
@@ -222,7 +224,7 @@ obj/Skills/Utility/Recall_Armaments
 		NoSword=1
 		StyleActive="Ultra Instinct (Complete)"
 		adjust(mob/p)
-			passives = list("Flow" = 2, "Deflection" = 1, "SoftStyle" = 1, "Flow" = 3, "Instinct" = 3, "CounterMaster" = 3, "Godspeed" = 1, "BlurringStrikes"=4, "UnarmedDamage"=4)
+			passives = list("Flow" = 3, "Deflection" = 1, "SoftStyle" = 1, "Instinct" = 3, "CounterMaster" = 3, "Godspeed" = 1, "BlurringStrikes"=4, "UnarmedDamage"=4)
 			StyleStr=1.35
 			StyleFor=1.35
 			StyleSpd=1.75

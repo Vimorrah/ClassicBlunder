@@ -32,6 +32,7 @@ obj
 			pixel_y=0
 			var
 				CorruptionGain
+				RuinOnHit
 
 				FoxFire
 				while_warping = FALSE
@@ -1533,6 +1534,22 @@ obj
 //T3 is further down, in Beams.
 
 //T4 gets damage mult 4 - 6.
+			GunKataShot //BIG SHOT mechanic coming sooner or later
+				Buster=0//rate that blast charges
+				DamageMult=0.5
+				BusterDamage=0//max damage when fully charged
+				BusterRadius=1//max radius from charging
+				AccMult=4
+				BusterAccuracy=10
+				BusterSize=2//purely aesthetic
+				Knockback=0
+			//	Explode=2
+				EnergyCost=0
+				Cooldown=0
+				IconLock='Blast - Small.dmi'
+				LockX=0
+				LockY=0
+				Cooldown=0.15
 			SmallLemonThing //BIG SHOT mechanic coming sooner or later
 				Buster=0//rate that blast charges
 				DamageMult=1
@@ -1550,9 +1567,6 @@ obj
 				LockY=0
 				Cooldown=0.15
 				Variation=0
-				verb/SmallLemonThing()
-					set category="Skills"
-					usr.UseProjectile(src)
 			BIG_SHOT //It pulls the strings and makes them ring
 				Buster=0//rate that blast charges
 				DamageMult=7.5
@@ -1570,9 +1584,6 @@ obj
 				LockX=0
 				LockY=0
 				Variation=0
-				verb/BIG_SHOT()
-					set category="Skills"
-					usr.UseProjectile(src)
 			Power_Buster
 				Copyable=4
 				SkillCost=TIER_4_COST
@@ -2302,6 +2313,54 @@ obj
 				Deflectable=1
 				Distance=10
 				Instinct=2
+
+			DarkKinshasaProjectile
+				IconLock='shadowflameball.dmi'
+				IconSize=0.75
+				Dodgeable=-1
+				Radius=0.5
+				Striking=1
+				ZoneAttack=1
+				ZoneAttackX=0
+				ZoneAttackY=0
+				FireFromSelf=1
+				FireFromEnemy=0
+				Variation=0
+				StrRate=0.5
+				EndRate=0.5
+				ForRate=0.5
+				Knockback=5
+				MultiHit=2
+				DamageMult=0.25
+				AccMult = 1.25
+				Deflectable=0
+				Distance=8
+				Instinct=2
+				CorruptionGain=1
+
+			CorruptKinshasaProjectile
+				IconLock='shadowflameball.dmi'
+				IconSize=0.75
+				Dodgeable=-1
+				Radius=0.5
+				Striking=1
+				ZoneAttack=1
+				ZoneAttackX=0
+				ZoneAttackY=0
+				FireFromSelf=1
+				FireFromEnemy=0
+				Variation=0
+				StrRate=0.5
+				EndRate=0.5
+				ForRate=0.5
+				Knockback=5
+				MultiHit=2
+				DamageMult=0.25
+				AccMult = 1.25
+				Deflectable=0
+				Distance=8
+				Instinct=2
+				RuinOnHit=1
 
 			GaleStrikeProjectile
 				IconLock='Boosting Winds.dmi'
@@ -3942,30 +4001,6 @@ obj
 						set category="Skills"
 						usr.UseProjectile(src)
 
-				Hiten_Mitsurugi
-					StyleNeeded="Hiten Mitsurugi"
-					Earth_Dragon_Flash
-						name="Doryusen"
-						Distance=5
-						AccMult = 1.175
-						DamageMult=2
-						Blasts=5
-						Radius=1
-						Slashing=0
-						Striking=1
-						Crushing=2
-						Crippling=2
-						EnergyCost=5
-						Cooldown=90
-						Stream=2
-						IconLock='Boulder Normal2.dmi'
-						IconSize=0.2
-						LockX=-36
-						LockY=-36
-						Variation=12
-						verb/Doryusen()
-							set category="Skills"
-							usr.UseProjectile(src)
 				Bard
 					StrRate=1
 					ForRate=1
@@ -5423,6 +5458,7 @@ obj
 					src.Knockback=Z.Knockback
 					src.MiniDivide=Z.MiniDivide
 					src.CorruptionGain = Z.CorruptionGain
+					src.RuinOnHit = Z.RuinOnHit
 					src.Divide=Z.Divide
 					src.Trail=Z.Trail
 					src.MultiTrail=Z.MultiTrail
@@ -6043,12 +6079,17 @@ obj
 										found=1
 								if(!found)//If you don't find what you're supposed to hunt
 									goto SkipDamage
-						if(src.HolyMod)
-							EffectiveDamage*=1+src.Owner.HolyDamage(a, Forced=src.HolyMod)/glob.HOLY_DAMAGE_DIVISOR
-						if(src.AbyssMod)
-							EffectiveDamage*=1+src.Owner.AbyssDamage(a, Forced=src.AbyssMod)/glob.ABYSS_DAMAGE_DIVISOR
-						if(src.SlayerMod)
-							EffectiveDamage*=1+src.Owner.SlayerDamage(a, Forced=src.SlayerMod)/glob.SLAYER_DAMAGE_DIVISOR
+						var/list/specDmgTypes = list();
+						if(HolyMod) specDmgTypes["Holy"] = HolyMod;
+						if(AbyssMod) specDmgTypes["Abyss"] = AbyssMod;
+						if(SlayerMod) specDmgTypes["Slayer"] = SlayerMod;
+						if(specDmgTypes.len) EffectiveDamage *= Owner.attackModifiers(m, specDmgTypes);
+						//Technically these are going to get doubletapped for projectiles
+						//because attackModifiers is called here as well as in dodamage
+						//which will be run further below
+						//but projectiles are kind of weak
+						//so we let it slide
+						//(i do not want to do that rework)
 						if(src.AngelMagicCompatible && m.passive_handler.Get("Judged"))
 							EffectiveDamage *= 1.25
 						if(src.WarpUser)
@@ -6109,6 +6150,11 @@ obj
 									src.Owner.DoDamage(a, EffectiveDamage, SpiritAttack=1, Destructive=src.Destructive)
 									if(CorruptionGain)
 										Owner.gainCorruption((EffectiveDamage * 1.5) * glob.CORRUPTION_GAIN)
+									if(RuinOnHit && m)
+										var/obj/Skills/Buffs/SlotlessBuffs/Ruin/ruin = m.SlotlessBuffs["Ruin"]
+										if(!ruin)
+											ruin = new/obj/Skills/Buffs/SlotlessBuffs/Ruin()
+										ruin.applyStack(m)
 									if(m)
 										AlreadyHit["[m.ckey]"]++
 									if(Piercing && PiercingBang)
@@ -6162,7 +6208,7 @@ obj
 							spawn()
 								LaunchEffect(src.Owner, a, Launcher )
 						if(src.Stasis&&!a:StasisFrozen)
-							a:SetStasis(src.Stasis.world.tick_lag)
+							a:SetStasis(src.Stasis * world.tick_lag)
 
 						if(src.Striking)
 							src.Owner.HitEffect(a)

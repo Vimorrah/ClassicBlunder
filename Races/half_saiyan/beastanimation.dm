@@ -147,3 +147,4 @@
     del lightness
     client.eye = src
     overlays += aura
+    src.CutsceneMode()

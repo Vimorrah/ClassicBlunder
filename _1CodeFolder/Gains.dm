@@ -88,7 +88,7 @@ var/game_loop/mainLoop = new(0, "newGainLoop")
 				if(!BarelyStandingColor)
 					OMessage(10, "<font color=#F07E1F>[src] [BarelyStandingMessage ? "[BarelyStandingMessage]" : " is barely standing!"]!", "[src]([src.key]) has 10% health left.</font>")
 				else
-					OMessage(10,"font color='[BarelyStandingColor]'>[src] [BarelyStandingMessage ? "[BarelyStandingMessage]" : " is barely standing!"]!", "[src]([src.key]) has 10% health left.</font>")
+					OMessage(10,"<font color='[BarelyStandingColor]'>[src] [BarelyStandingMessage ? "[BarelyStandingMessage]" : " is barely standing!"]!", "[src]([src.key]) has 10% health left.</font>")
 		HealthAnnounce10 = 1
 //**TESTED AND WORKS */
 /mob/proc/reduceErodeStolen()
@@ -187,6 +187,7 @@ var/game_loop/mainLoop = new(0, "newGainLoop")
 			reduceErodeStolen()
 
 		if(MeditateTime == 15)
+			src.ClearHostileFrenzyFromMeditate()
 			if(src.Lunacy)
 				src << "Your mind is your own, alone, once more. <font color='black'>...</font color>"
 				src.ClearLunacy();
@@ -215,6 +216,11 @@ var/game_loop/mainLoop = new(0, "newGainLoop")
 		if(Secret == "Zombie" && MeditateTime == 70)
 			zombieGetUps = 0
 			src << "Your get ups have been reset"
+		if(Secret == "Black Flash")
+			var/SecretInformation/BlackFlash/bf = getBlackFlashSecret();
+			if (bf.BlackFlashChance != bf.BlackFlashBaseChance)
+				bf.BlackFlashChance = bf.BlackFlashBaseChance
+				src << "Your Black Flash chance has been reset."
 		if(src.passive_handler.Get("Triple Helix"))
 			src.passive_handler.Set("Triple Helix", 0)
 
@@ -223,12 +229,13 @@ var/game_loop/mainLoop = new(0, "newGainLoop")
 			if(Anger)
 				Calm()
 		if(MeditateTime == 15)
-			usr << "If any skills reset on Meditate, they've been reset."
+			src << "If any skills reset on Meditate, they've been reset."
 		if(CheckSpecial("Jinchuuriki") || CheckSpecial("Vaizard Mask"))
 			if(SpecialBuff.Mastery <= 1)
 				SpecialBuff.Trigger(src, Override=1)
 	else
 		MeditateTime=0
+	DemonMeditateCheck()
 //**TESTED AND WORKS **/
 /mob/proc/drainTransformations(trans, transMastery)
 	// TRANS / TRANSMASTERY FOR CHANGIE 4TH FORM
@@ -520,12 +527,13 @@ mob
 				src.Revert()
 			if(src.passive_handler.Get("Utterly Powerless") && !src.passive_handler.Get("Our Future"))
 				src.Revert()
-			if(passive_handler.Get("LunarWrath")&&PowerControl>100)
+			if(passive_handler.Get("LunarWrath")&&PowerControl>100&&!passive_handler.Get("Unrelenting Wrath"))
 				var/ManaRando=rand(6,15)
 				src.ManaAmount+=0.5*(ManaRando/10)
 			if(passive_handler.Get("LunarAnger")&&ManaAmount>50)
+				src.LunarWrathAnger()
 				src.Anger()
-			if(passive_handler["TensionPowered"])
+			if(passive_handler["TensionPowered"] && !src.isMazokuHuman())
 				if(src.canHTM())
 					src.race.transformations[2].transform(src, TRUE)
 			if(src.transActive==1&&src.isRace(NAMEKIAN))
@@ -561,10 +569,27 @@ mob
 						src.DoDamage(src, (rand(1,5)/30))
 			if(passive_handler["Grit"])
 				AdjustGrit("sub", glob.racials.GRITSUBTRACT)
-			if(isRace(HUMAN)||isRace(CELESTIAL)&&CelestialAscension=="Angel")
+			if((isRace(HUMAN)||isRace(CELESTIAL)&&CelestialAscension=="Angel") && !isMazokuHuman())
 				if(Health<=30)
 					if(transActive==4&&transUnlocked>=5&&DoubleHelix>=4)
 						src.race.transformations[5].transform(src, TRUE)
+			if(isMazokuHuman() && src.icon_state != "Meditate")
+				// ≤75% HP from base form → activate Devil Trigger (slot 6)
+				if(transActive == 0 && Health <= 75 * (1 - HealthCut))
+					if(race && race.transformations && race.transformations.len >= 6)
+						transActive = 5
+						race.transformations[6].transform(src, TRUE)
+				// DT to HT threshold: 40% for Ascension 6, 25% otherwise
+				var/ht_trigger_threshold = isMazokuAscension6() ? 40 : 25
+				if(isInMazokuDT() && Health <= ht_trigger_threshold * (1 - HealthCut))
+					race.transformations[transActive].revert(src)
+					mazokuActivateHighestHT()
+				// ≤25% HP in HT (Ascension 6 only): revert all HT forms, activate Sacred Energy Aura
+				if(isMazokuAscension6() && transActive >= 1 && !isInMazokuDT() && !isInMazokuSEA() && Health <= 25 * (1 - HealthCut))
+					if(race && race.transformations && race.transformations.len >= 7)
+						mazokuRevertAllHT()
+						transActive = 6
+						race.transformations[7].transform(src, TRUE)
 			if((isRace(SAIYAN) || isRace(HALFSAIYAN))&&transActive>0)
 				if(HellspawnBerserk)
 					HellspawnTimer-=1
@@ -764,6 +789,10 @@ mob
 								src.underlays+=image('The Ripple.dmi', pixel_x=-32, pixel_y=-32)
 						if(src.Secret=="Senjutsu"&&src.CheckSlotless("Senjutsu Focus"))
 							src << "You managed to mold some natural energy!"
+						if(src.PoseTime >= 5 && src.passive_handler.Get("Stylish"))
+							if(!src.CheckSlotless("Half Moon Form") && !src.CheckSlotless("Full Moon Form"))
+								src.gainStyleRating(1, TRUE)
+								src.PoseTime = 0
 
 			if(src.Stasis||src.StasisFrozen)
 				src.Stasis-=world.tick_lag
@@ -1047,7 +1076,8 @@ mob
 				if(src.ActiveBuff.HealthThreshold&&!src.ActiveBuff.AllOutAttack)
 					if(src.Health<src.ActiveBuff.HealthThreshold*(1-src.HealthCut)||src.KO)
 						if(src.CheckActive("Eight Gates"))
-							src.ActiveBuff:Stop_Cultivation()
+							var/obj/Skills/Buffs/ActiveBuffs/Eight_Gates/eg = src.ActiveBuff
+							eg.Stop_Cultivation()
 							GatesActive=0
 						else
 							src.ActiveBuff.Trigger(src,Override=1)
@@ -1073,7 +1103,8 @@ mob
 				if(src.ActiveBuff.FatigueThreshold&&!src.ActiveBuff.AllOutAttack)
 					if(src.TotalFatigue>=src.ActiveBuff.FatigueThreshold)
 						if(src.CheckActive("Eight Gates"))
-							src.ActiveBuff:Stop_Cultivation()
+							var/obj/Skills/Buffs/ActiveBuffs/Eight_Gates/eg2 = src.ActiveBuff
+							eg2.Stop_Cultivation()
 							GatesActive=0
 						else
 							src.ActiveBuff.Trigger(src,Override=1)
@@ -1104,7 +1135,8 @@ mob
 					src.ActiveBuff.Timer+=world.tick_lag
 					if(src.ActiveBuff.Timer>=src.ActiveBuff.TimerLimit)//If the timer has filled up entirely...
 						if(src.CheckActive("Eight Gates"))
-							src.ActiveBuff:Stop_Cultivation()
+							var/obj/Skills/Buffs/ActiveBuffs/Eight_Gates/eg3 = src.ActiveBuff
+							eg3.Stop_Cultivation()
 							GatesActive=0
 						else
 							src.ActiveBuff.Trigger(src,Override=1)//toggle it off.
@@ -1491,7 +1523,10 @@ mob
 						A.Trigger(src,Override=1)
 					if(A.Triggers)
 						A.Triggers.checkTrigger(src, A)
-
+				if(A.LunarWrath)
+					if(src.ManaAmount>=((src.ManaMax-src.TotalCapacity)*src.GetManaCapMult()))
+						if(!A.Using&&!A.SlotlessOn)
+							A.Trigger(src,Override=1)
 
 				//Deactivations
 				if(A.SlotlessOn)
@@ -1577,6 +1612,10 @@ mob
 						if(A.GatesNeeded>src.GatesActive)
 							A.Trigger(src,Override=1)
 							continue
+					if(A.LunarWrath)
+						if(src.ManaAmount<=1)
+							A.Trigger(src,Override=1)
+							continue
 
 				if(A.AlwaysOn) //This only gets run if it has been deactivated
 					if(A.Using)
@@ -1644,7 +1683,7 @@ mob
 					if(SM.suffix)
 						BreathingMaskOn=1
 				if(BreathingMaskOn==0)
-					if(!passive_handler.Get("SpaceWalk")&&(!src.race in list(MAJIN,DRAGON)))
+					if(!passive_handler.Get("SpaceWalk")&&!(src.race in list(MAJIN,DRAGON)))
 						src.Oxygen-=rand(2,4)
 						if(src.Oxygen<0)
 							src.Oxygen=0

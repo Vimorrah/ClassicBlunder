@@ -1,3 +1,4 @@
+#define ALWAYS_ON_HEAVY_STRIKES list("Eldritch (Shrouded)", "Haki", "Werewolf", "Vampire", "Zombie")
 /mob/proc/
     getSpecialHeavyStrike()
         if(hasWitchCraftStrike()) return findOrAddSkill(/obj/Skills/Queue/Secret_Heavy_Strike/Soulsap_Strike);
@@ -7,6 +8,7 @@
         if(hasSenjutsuStrike()) return findOrAddSkill(/obj/Skills/Queue/Secret_Heavy_Strike/Sage_Energy_Strike);
         if(hasWerewolfStrike()) return findOrAddSkill(/obj/Skills/Queue/Secret_Heavy_Strike/Rip_and_Tear);
         if(hasVampireStrike()) return getVampireStrike();
+        if(hasBlackFlashStrike()) return getBlackFlashStrike();
         if(hasZombieStrike()) return findOrAddSkill(/obj/Skills/Queue/Secret_Heavy_Strike/Death_Grasp);
         if(hasHeavenlyRestrictionStrike()) return findOrAddSkill(/obj/Skills/Queue/Secret_Heavy_Strike/Heavenly_Strike);
         if(hasShinStrike()) return getShinStrike();
@@ -19,6 +21,16 @@
         if(hasElvenStrike()) return 0;
         return 0;
 
+    canNormalHeavyStrike()
+        for(var/obj/Skills/Queue/Secret_Heavy_Strike/shs in src)
+            if(shs.Using) return 0;
+        return 1;
+    canSpecialHeavyStrike()
+        for(var/obj/Skills/Queue/Heavy_Strike/hs in src)//check to see if default hs is on cd
+            if(hs.Using) return 0;
+        for(var/obj/Skills/Queue/Secret_Heavy_Strike/shs in src)//or any of your special heavy strikes
+            if(shs.Using) return 0;
+        return 1;
     hasWitchCraftStrike()
         if(hasWitchCraft() && StyleActive=="Witch") return 1;
         return 0;
@@ -39,6 +51,25 @@
     hasHakiStrike()
         if(hasSecret("Haki")) return 1;
         return 0;
+    hasBlackFlashStrike()
+        if(hasSecret("Black Flash"))
+            if(canBlackFlashStrike()) return 1;
+        return 0;
+    canBlackFlashStrike()//only gamba if all of your heavy strikes are off cd
+        for(var/obj/Skills/Queue/Heavy_Strike/hs in src)
+            if(hs.Using) return 0;
+        for(var/obj/Skills/Queue/Secret_Heavy_Strike/shs in src)
+            if(shs.Using) return 0;
+        return 1;
+    getBlackFlashStrike()
+        if(!secretDatum)
+            admins << "<b><font size=+1>DEBUG:</font size></b> Somehow, [src] called getBlackFlashStrike() while not having a secretDatum...That's a bug!";
+            src << "Your character has called getBlackFlashStrike() while not having a defined secret datum. Admins have been notified, but you can drop a bug report in the Discord as well.";
+            return 0;
+        var/usedChance = getBlackFlashChance();
+        admins << "used [usedChance] for the chance to try blackflash";
+        if(prob(usedChance)) return findOrAddSkill(/obj/Skills/Queue/Secret_Heavy_Strike/Black_Flash/Black_Flash_Strike);
+        return findOrAddSkill(/obj/Skills/Queue/Secret_Heavy_Strike/Black_Flash/Divergent_Fist);
     getHakiStrike()
         if(!secretDatum)
             admins << "<b><font size=+1>DEBUG:</font size></b> Somehow, [src] called getHakiStrike() while not having a secretDatum...That's a bug!";
@@ -89,7 +120,7 @@
         if(CheckSlotless("Shin Radiance")) return findOrAddSkill(/obj/Skills/Queue/Secret_Heavy_Strike/Shin/Shin_Strike);
         if(CheckSlotless("Mang Resonance")) return findOrAddSkill(/obj/Skills/Queue/Secret_Heavy_Strike/Shin/Mang_Strike);
         return 0;
-    
+
     //i dont use hasSecret for these because i don't reeeallly wanna support themmm
     hasGoeticStrike()
         if(Secret == "Goetic Virtue") return 1;
@@ -100,4 +131,3 @@
     hasElvenStrike()
         if(Secret == "Elven Sanctuary") return 1;
         return 0;
-    

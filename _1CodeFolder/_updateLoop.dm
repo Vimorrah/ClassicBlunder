@@ -104,6 +104,8 @@ world
 
         try
             general_tick()
+            if(ticker % 2 == 0)
+                Shadowbringer_Process()
         catch()
 
 

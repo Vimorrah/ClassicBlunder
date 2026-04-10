@@ -1,4 +1,5 @@
 /obj/Skills/Buffs/NuStyle/UnarmedStyle
+	CyberSignature=1
 	Lucha_Libre_Style
 		Copyable = 0
 		StyleComboUnlock=list("/obj/Skills/Buffs/NuStyle/UnarmedStyle/Turtle_Style"="/obj/Skills/Buffs/NuStyle/UnarmedStyle/Red_Cyclone_Style", \

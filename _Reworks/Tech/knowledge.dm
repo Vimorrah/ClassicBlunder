@@ -90,7 +90,7 @@ Fast Actig -> Automed dispensers
 
         Armor
             name = "Armor"
-            description = "Allows access to Armors from Access Technology menu.\nNeeded in order to gain Engineering, Advanced Plating, and Shock Absorbers."
+            description = "Allows access to Armors from Access Technology menu.\nNeeded in order to gain Engineering and Advanced Plating."
             requires = list("Weighted Clothing")
         Repair
             name = "Repair"
@@ -109,38 +109,23 @@ Fast Actig -> Automed dispensers
 
         Advanced_Plating
             name = "Advanced Plating"
-            description = "Allows access to ceramic plating and refractive plating in Access Technology menu.\nNeeded for Molecular Technology."
+            description = "Allows access to ceramic plating, resistant coating, and refractive plating in Access Technology menu."
             requires = list("Armor", "Repair")
-
-        Shock_Absorbers
-            name = "Shock Absorbers"
-            description = "Allows access to resistant coating in Access Technology menu.\nNeeded for Molecular Technology and Force Shielding."
-            requires = list("Armor", "Repair")
-
-        Molecular_Technology
-            name = "Molecular Technology"
-            description = "Allows access to fiber bonding agent in Access Technology menu.\nNeeded for Power Generators."
-            requires = list("Advanced Plating", "Shock Absorbers")
 
         Modular_Weaponry
             name = "Modular Weaponry"
-            description = "Allows access to trick weapon kit in Access Technology menu.\nDoesn't unlock any specific technology."
+            description = "Allows access to trick weapon kit, fiber bonding agents, and quicksilver alloys in Access Technology menu.\nDoesn't unlock any specific technology."
             requires = list("Engineering", "Weapons")
-
-        Light_Alloys
-            name = "Light Alloys"
-            description = "Allows access to quicksilver alloy in Access Technology menu\nNeeded for Jet Propolsion."
-            requires = list("Smelting")
 
         Power_Generators
             name = "Power Generators"
             description = "Allows access to charging stations in Access Technology menu.\nNeeded for Jet Propulsion."
-            requires = list("Molecular Technology", "Engineering")
+            requires = list("Engineering")
 
         Jet_Propulsion
             name = "Jet Propulsion"
             description = "Allows access to jet boots in Access Technology menu.\nNeeded for CyberEngineering."
-            requires = list("Power Generators", "Light Alloys")
+            requires = list("Power Generators")
 
         Cyber_Engineering
             name = "CyberEngineering"
@@ -161,13 +146,13 @@ Fast Actig -> Automed dispensers
 
         War_Crimes
             name = "War Crimes"
-            description = "Allows for nonconsensual implantation of cybernetics (yuck). Allows access to Controller Chip in Access Technology. Unlocks a short list of modules for Cyberization. Punishment Chip, Failsafe Circuit, Explosive Implantation. Girlframes, eat your heart out.\nNeeded for Singularity."
+            description = "Allows for nonconsensual implantation of cybernetics (yuck). Allows access to Controller Chip in Access Technology. Unlocks a short list of modules for Cyberization. Punishment Chip, Failsafe Circuit, Explosive Implantation. Girlframes, eat your heart out."
             requires = list("Neuron Manipulation", "Cyber Augmentations")
 
         Singularity
             name = "Singularity"
             description = "Unlocks a number of buff modules for Cyberization. Ripper Mode, Armstrong Augmentation, Ray Gear, Infinity Drive, Overdrive. Only one of these can be installed.\nDoes not unlock any further technology."
-            requires = list("War Crimes")
+            requires = list("Neuron Manipulation", "Cyber Augmentations")
 
         Hazard_Suits
             name = "Hazard Suits"
@@ -177,7 +162,7 @@ Fast Actig -> Automed dispensers
         Force_Shielding
             name = "Force Shielding"
             description = "Allows access to deflector shields in Access Technology menu.\nDoesn't unlock any further technology."
-            requires = list("Engineering", "Shock Absorbers")
+            requires = list("Engineering", "Advanced Plating")
 
         Medicine
             name = "Medicine"

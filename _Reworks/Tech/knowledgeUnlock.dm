@@ -522,7 +522,7 @@ var/knowledgePaths/tech/list/TechnologyTree = list()
 					del h
 
 		if("Temporal Rewinding")
-			TimeMagicUnlocked++
+			TimeMagicUnlocked--
 			if(locate(/obj/Skills/Buffs/SlotlessBuffs/Magic/Reverse_Wounds, src))
 				for(var/obj/Skills/Buffs/SlotlessBuffs/Magic/Reverse_Wounds/rw in src)
 					del rw

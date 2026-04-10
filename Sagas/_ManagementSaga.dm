@@ -1,3 +1,5 @@
+
+
 mob/var
 	SagaLevel=0//Level for all tier s.
 	SagaEXP=0//holds rpp investment
@@ -101,10 +103,12 @@ mob/Admin3/verb
 	SagaManagement(mob/Players/P in players)
 		set category="Admin"
 		var/Level7=0
-		var/list/SagaList=list("Cancel","Ansatsuken","Eight Gates","Cosmo","Spiral","King of Courage", "Hero","Hiten Mitsurugi-Ryuu","Kamui","Keyblade","King of Braves","Path of a Hero: Rebirth","Sharingan","Weapon Soul", "Unlimited Blade Works","Force")
+		var/list/SagaList=list("Cancel","Ansatsuken","Devil Summoner","Eight Gates","Cosmo","Spiral","King of Courage", "Hero","Hiten Mitsurugi-Ryuu","Kamui","Keyblade","King of Braves","Path of a Hero: Rebirth","Sharingan","Weapon Soul", "Unlimited Blade Works","Force")
 		if(P.Saga)
-			if(P.Saga=="Keyblade"||P.Saga=="Weapon Soul"||P.Saga=="Cosmo"||P.Saga=="King of Braves")
+			if(P.Saga=="Keyblade"||P.Saga=="Weapon Soul"||P.Saga=="Cosmo"||P.Saga=="King of Braves"||P.Saga=="Hiten Mitsurugi-Ryuu")
 				Level7=1
+			if(P.Saga=="Devil Summoner")
+				Level7=2  // Devil Summoner has 8 tiers
 			if(P.SagaLevel>=6+Level7)
 				src << "They've already fully mastered the power of their soul."
 				return
@@ -135,6 +139,7 @@ mob/Admin3/verb
 			for(var/obj/Skills/Buffs/NuStyle/s in P)
 				if(P.BuffOn(s))
 					s.Trigger(usr, TRUE)
+			var/list/passiveGain=list();
 			switch(selection)
 				if("Hero")
 					P.Saga="Hero"
@@ -242,27 +247,13 @@ mob/Admin3/verb
 						P<<"You can reinforce your body leagues past anything else..."
 
 				if("Hiten Mitsurugi-Ryuu")
-					P<<"You embark down the path of slaying men... <b>Hiten Mitsurugi Style</b>!"
-					P.Saga="Hiten Mitsurugi-Ryuu"
-					P.SagaLevel=1
-					if(!locate(/obj/Skills/Buffs/NuStyle/SwordStyle/Hiten_Mitsurugi_Ryuu, P))
-						var/obj/Skills/Buffs/NuStyle/s=new/obj/Skills/Buffs/NuStyle/SwordStyle/Hiten_Mitsurugi_Ryuu
-						P.AddSkill(s)
-					if(!locate(/obj/Skills/Queue/JawStrike,P))
-						P.AddSkill(new/obj/Skills/Queue/JawStrike)
-					if(!locate(/obj/Skills/Queue/FallingBlade,P))
-						P.AddSkill(new/obj/Skills/Queue/FallingBlade)
-					P.passive_handler.Increase("SlayerMod", 0.625)
-					P.passive_handler.Increase("Pursuer", 0.5)
-					P.passive_handler.Increase("SuperDash", 0.25)
-					P.passive_handler.Increase("Godspeed", 0.25)
-					P.passive_handler.Set("FavoredPrey", "All")
+					P.gainHitenMitsurugi();
 				if("Ansatsuken")
 					P<<"You begin to learn of the assassin's fist... <b>Ansatsuken</b>!"
 					P.Saga="Ansatsuken"
 					P.SagaLevel=1
 					P.passive_handler.Increase("SlayerMod", 0.625)
-					P.passive_handler.Set("FavoredPrey", "All")
+					P.passive_handler.Set("FavoredPrey", "Mortal")
 					if(!locate(/obj/Skills/Buffs/NuStyle/UnarmedStyle/Ansatsuken_Style, P))
 						var/obj/Skills/Buffs/NuStyle/s=new/obj/Skills/Buffs/NuStyle/UnarmedStyle/Ansatsuken_Style
 						P.AddSkill(s)
@@ -405,6 +396,19 @@ mob/Admin3/verb
 							P.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Prismatic_Hero)
 				//	tierUpSaga("Rebirth")
 
+				if("Devil Summoner")
+					P.Saga = "Devil Summoner"
+					P.SagaLevel = 1
+					P.demon_party_cap = 3
+					if(!P.demon_party)      P.demon_party      = list()
+					if(!P.demon_compendium) P.demon_compendium = list()
+					P.verbs += /mob/proc/verb_SummonDemon
+					P.verbs += /mob/proc/verb_CallDemon
+					P << "You have gained the ability to summon and use existences known as demons... you have become a <b>Devil Summoner</b>!"
+					P << "You may carry up to 3 demons. Seek out demons through Potential, then use <b>Summon Demon</b> to call them to your side."
+					P << "Meditate for 15 seconds to restore your demons' HP."
+					P.GrantStarterDemons(1)
+
 				if("Keyblade")
 					var/list/Choices=list("A Sword of Courage", "A Staff of Spirit", "A Shield of Kindness")
 					var/choice
@@ -432,29 +436,11 @@ mob/Admin3/verb
 					P.SagaLevel=1
 					P.KeybladeColor=Color
 					if(P.KeybladeType=="Sword")
-						var/choice2
-						var/confirm2
-						while(confirm2!="Yes")
-							var/list/Choices2=list("Sonic Blade", "Strike Raid", "Magnet Burst")
-							choice2=input(P, "What skill do you want?", "Martial Keyblade Skill") in Choices2
-							switch(choice2)
-								if("Sonic Blade")
-									confirm=alert(P, "Quickly dash towards your opponent three times.", "Yes", "No")
-								if("Strike Raid")
-									confirm=alert(P, "Throw your Keyblade at your opponent in the form of an autohit wave.", "Yes", "No")
-								if("Magnet Burst")
-									confirm=alert(P, "A weak Area-Of-Effect move that pulls in everyone nearby and stuns.", "Yes", "No")
-						switch(choice2)
-							if("Sonic Blade")
-								P.AddSkill(new/obj/Skills/AutoHit/Sonic_Blade)
-							if("Strike Raid")
-								P.AddSkill(new/obj/Skills/AutoHit/Strike_Raid)
-							if("Magnet Burst")
-								P.AddSkill(new/obj/Skills/AutoHit/Magnet_Burst)
+						P.ChooseMartialSkill(1)
 					if(P.KeybladeType=="Shield")
 						var/inp = input(P, "What path of magic will you fall under?") in list("Fire", "Ice", "Thunder")
 						P.KeybladePath = inp
-						switch(KeybladePath)
+						switch(P.KeybladePath)
 							if("Fire")
 								P.AddSkill(new/obj/Skills/Projectile/Magic/Fire)
 							if("Ice")
@@ -474,6 +460,7 @@ mob/Admin3/verb
 						if("Darkness")
 							P.KeychainAttached="Kingdom Key D"
 							P.SyncAttached="Kingdom Key D"
+			if(passiveGain.len > 0) passive_handler.increaseList(passiveGain);
 			Log("Admin","[ExtractInfo(usr)] granted [selection] to [P].")
 
 	Keychain_Add(mob/Players/m in players)
@@ -1036,87 +1023,9 @@ mob
 					tierUpSaga("Spiral")
 				if("Weapon Soul")
 					tierUpSaga("Weapon Soul")
-/*					if(src.SagaLevel==2)
-						src << "Your knowledge on classic swordplay improves."
-					if(src.SagaLevel==3)
-						var/Choice=alert(src, "Is your swordsmanship guided by Intuition or Experience?", "Weapon Soul", "Intuition", "Experience")
-						if(Choice=="Intuition")
-							passive_handler.Increase("Instinct", 2)
-							passive_handler.Increase("Flow")
-						if(Choice=="Experience")
-							passive_handler.Increase("TechniqueMastery", 2)
-						src << "You develop the acumen to draw forth greater power from your weapons."
-						var/Choice2=alert(src, "Is your soul one of light or dark?", "Weapon Soul", "Light", "Dark")
-						if(Choice2=="Light")
-							src << "You've learned to infuse your sword with the power of holy light."
-							src.AddSkill(new/obj/Skills/Queue/Holy_Blade)
-						if(Choice2=="Dark")
-							src << "You've learned to infuse your sword with overwhelming darkness."
-							src.AddSkill(new/obj/Skills/Queue/Darkness_Blade)
-						passive_handler.Increase("Flicker")
-						passive_handler.Increase("Godspeed")
-						passive_handler.Increase("Extend")
-						passive_handler.Increase("Duelist")
-					if(SagaLevel == 4)
-						if(!BoundLegend)
-							var/list/openSwords = glob.WeaponSoulNames
-							if(!glob.infWeaponSoul)
-								openSwords = glob.getOpen("WeaponSoul")
-								if(openSwords.len<1)
-									glob.ResetSwords()
-							src.BoundLegend=input(src, "What sword have you merged with?", "Sword Claim") in openSwords
-						src << "You have gained knowledge sufficient to wield a legendary weapon with its original powers!"
-						src << "[src.BoundLegend] accepts you as its current wielder!"
-						switch(BoundLegend)
-							if("Green Dragon Crescent Blade")
-								if(!locate(/obj/Items/Sword/Heavy/Legendary/WeaponSoul/Spear_of_War, src))
-									new/obj/Items/Sword/Heavy/Legendary/WeaponSoul/Spear_of_War(src)
 
-							if("Ruyi Jingu Bang")
-								if(!locate(/obj/Items/Sword/Wooden/Legendary/WeaponSoul/RyuiJinguBang, src))
-									new/obj/Items/Sword/Wooden/Legendary/WeaponSoul/RyuiJinguBang(src)
-
-							if("Masamune")
-								if(!locate(/obj/Items/Sword/Light/Legendary/WeaponSoul/Sword_of_Purity, src))
-									new/obj/Items/Sword/Light/Legendary/WeaponSoul/Sword_of_Purity(src)
-
-							if("Kusanagi")
-								if(!locate(/obj/Items/Sword/Medium/Legendary/WeaponSoul/Sword_of_Faith, src))
-									new/obj/Items/Sword/Medium/Legendary/WeaponSoul/Sword_of_Faith(src)
-
-							if("Durendal")
-								if(!locate(/obj/Items/Sword/Heavy/Legendary/WeaponSoul/Sword_of_Hope, src))
-									new/obj/Items/Sword/Heavy/Legendary/WeaponSoul/Sword_of_Hope(src)
-
-							if("Caledfwlch")
-								if(!locate(/obj/Items/Sword/Medium/Legendary/WeaponSoul/Sword_of_Glory, src))
-									new/obj/Items/Sword/Medium/Legendary/WeaponSoul/Sword_of_Glory(src)
-
-							if("Muramasa")
-								if(!locate(/obj/Items/Sword/Light/Legendary/WeaponSoul/Bane_of_Blades, src))
-									new/obj/Items/Sword/Light/Legendary/WeaponSoul/Bane_of_Blades(src)
-
-							if("Soul Calibur")
-								if(!locate(/obj/Items/Sword/Medium/Legendary/WeaponSoul/Blade_of_Order, src))
-									new/obj/Items/Sword/Medium/Legendary/WeaponSoul/Blade_of_Order(src)
-
-							if("Soul Edge")
-								if(!locate(/obj/Items/Sword/Heavy/Legendary/WeaponSoul/Blade_of_Chaos, src))
-									new/obj/Items/Sword/Heavy/Legendary/WeaponSoul/Blade_of_Chaos(src)
-
-							if("Dainsleif")
-								if(!locate(/obj/Items/Sword/Medium/Legendary/WeaponSoul/Blade_of_Ruin, src))
-									new/obj/Items/Sword/Medium/Legendary/WeaponSoul/Blade_of_Ruin(src)
-
-							if("Moonlight Greatsword")
-								if(!locate(/obj/Items/Sword/Heavy/Legendary/WeaponSoul/Sword_of_the_Moon, src))
-									new/obj/Items/Sword/Heavy/Legendary/WeaponSoul/Sword_of_the_Moon(src)
-					if(src.SagaLevel==5)
-						src << "You have gained knowledge sufficient to unleash the secret trump card of legendary weapons!"
-					if(src.SagaLevel==6)
-						if(!locate(/obj/Skills/Buffs/SpecialBuffs/OverSoul, src))
-							src.AddSkill(new/obj/Skills/Buffs/SpecialBuffs/OverSoul)
-							src << "You've learned to unseal the true form of your legendary weapon."*/
+				if("Devil Summoner")
+					tierUpSaga("Devil Summoner")
 
 				if("Unlimited Blade Works")
 					switch(src.SagaLevel)
@@ -1226,58 +1135,8 @@ mob
 							src<< "You grasp the understanding of a legendary weapon forgotten to time..."
 
 
-				if("Hiten Mitsurugi-Ryuu")
-					passive_handler.Increase("SlayerMod", 0.625)
-					passive_handler.Increase("Pursuer", 0.5)
-					passive_handler.Increase("SuperDash", 0.25)
-					passive_handler.Increase("Godspeed", 0.5)
-					if(src.SagaLevel==2)
-						if(!locate(/obj/Skills/AutoHit/CoiledSlash, src))
-							src << "You learn how to add the momentum of your spin to perform an unavoidable slash!"
-							src.AddSkill(new/obj/Skills/AutoHit/CoiledSlash)
-						//Hiten Style now gives Godspeed 1
-						if(!locate(/obj/Skills/AutoHit/NestedSlash, src))
-							src<< "You learn how to strike countless times with incredible speed!"
-							src.AddSkill(new/obj/Skills/AutoHit/NestedSlash)
-					if(src.SagaLevel==3)
-						if(!locate(/obj/Skills/Projectile/Sword/Hiten_Mitsurugi/Earth_Dragon_Flash, src))
-							src.AddSkill(new/obj/Skills/Projectile/Sword/Hiten_Mitsurugi/Earth_Dragon_Flash)
-							src << "You learn to strike the ground and unleash a torrent of debris!"
-						if(!locate(/obj/Skills/Queue/Twin_Dragon_Slash, src))
-							src.AddSkill(new/obj/Skills/Queue/Twin_Dragon_Slash)
-							src << "You can deliver a quick blow with your blade only to be followed with a crushing strike from your sheath!"
-					if(src.SagaLevel==4)
-						src << "You learn to unleash Hiten Mitsurugi techniques with even faster alacrity!"
-						passive_handler.Increase("MovementMastery", 5)
-						var/Choice=alert(src, "Hiten Mitsurugi can follow the path of tradition, embracing the code of a hermit and honorable warrior or can truly become an ultimate tool of murder. What is the mantle you will bear?", "Hiten Path", "Tradition", "Slaughter")
-						if(Choice=="Tradition")
-							src<<"You embrace the path of tradition, sharpening your art and making it a constant presence in your life!"
-							src.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/Dance_Of_The_Full_Moon)
-							src<<"You can now draw out the full form of the Moon by using paired blades."
-						if(Choice=="Slaughter")
-							src.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Hitokiri_Battosai)
-							src<<"You embrace the path of a killer and assassin, revealing your true nature in moments of strife!"
-					if(src.SagaLevel==5)
-						for(var/obj/Skills/Buffs/NuStyle/SwordStyle/Hiten_Mitsurugi_Ryuu/hmr in src.contents)
-							if(hmr.Finisher!="/obj/Skills/Queue/Finisher/True_Flash_Strike")
-								hmr.Finisher="/obj/Skills/Queue/Finisher/True_Flash_Strike"
-								src << "You have refined your finishing technique: True Flash Strike!"
-						if(!locate(/obj/Skills/AutoHit/Sonic_Sheath, src))
-							src << "You learn to sheath your sword with such authority that it stuns those around you!"
-							src.AddSkill(new/obj/Skills/AutoHit/Sonic_Sheath)
-						src<<"Your use of Godspeed has been ingrained in your body!"
-						src<<"You can slay even inhuman foes!"
-						if(!locate(/obj/Skills/Queue/Nine_Dragons_Strike, src))
-							src << "You learn of nine killing blows: Kuzuryusen!"
-							src.AddSkill(new/obj/Skills/Queue/Nine_Dragons_Strike)
-					if(src.SagaLevel==6)
-						src<<"Your speed transcends mortal limit and you can chase down any foe..."
-						if(!locate(/obj/Skills/Queue/Heavenly_Dragon_Flash, src))
-							src << "You learn the ultimate killing technique...even if you avoid the fangs of the flying dragon, the claws will rip you apart!"
-							src.AddSkill(new/obj/Skills/Queue/Heavenly_Dragon_Flash)
-
+				if("Hiten Mitsurugi-Ryuu") tierUpSaga("Hiten Mitsurugi-Ryuu");
 				if("Ansatsuken")
-
 					if(src.SagaLevel>=1&&src.SagaLevel<4)
 						if(!locate(/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Satsui_Infected, src))
 							if(prob(glob.SATSUICHANCE))
@@ -1636,19 +1495,7 @@ mob
 
 				if("Keyblade")
 					if(src.SagaLevel==2)
-						var/list/Options=glob.Keychains
-						var/keybladedecision
-						var/Choice
-						while(keybladedecision!="Yes")
-							for(var/o in src.Keychains)
-								Options.Remove(o)
-							Choice=input(usr, "You've gained the ability to change your keychain.  Which one do you choose?", "Keychain Ascension") in Options
-							var/KBPassives=GetKeybladePassives(Choice,src.SagaLevel)
-							src<<"<b>Note, some of these passives may scale based on your SagaLevel. Most of the ones that would have scaling effects do.</b>"
-							src<<"<b>Passives:</b>[KBPassives]"
-							keybladedecision=alert(src, "Is [Choice] the keychain you want?", "Yes", "No")
-						src.Keychains.Add(Choice)
-						src.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/Attach_Keychain)
+						src.ChooseKeychain()
 				/*		var/Choice2 = prompt("Your mastery of both keyblades and magical elements allows you to refine your command style.  Which style do you develop?", "Command Style", list("Firestorm", "Diamond Dust", "Thunderbolt"))
 						switch(Choice2)
 							if("Firestorm")
@@ -1658,7 +1505,7 @@ mob
 							if("Thunderbolt")
 								src.AddSkill(new/obj/Skills/Buffs/NuStyle/SwordStyle/Command/Thunderbolt_Style)
 						src << "You've obtained the [Choice2] command style!"*/
-					/*	switch(src.KeybladeType)
+						switch(src.KeybladeType)
 							if("Sword")
 								src.AddSkill(new/obj/Skills/Buffs/NuStyle/SwordStyle/Command/Speed_Rave_Style)
 								src << "You've developed the focus necessary to move with blistering speeds: <b>Speed Rave Style</b>!"
@@ -1667,8 +1514,8 @@ mob
 								src << "You've developed the power necessary to make every blow count: <b>Critical Impact Style</b>!"
 							if("Staff")
 								src.AddSkill(new/obj/Skills/Buffs/NuStyle/SwordStyle/Command/Spell_Weaver_Style)
-								src << "You've developed the flexibility necessary to combine spells with swordplay: <b>Spell Weaver Style</b>!"*/
-						switch(KeybladePath)
+								src << "You've developed the flexibility necessary to combine spells with swordplay: <b>Spell Weaver Style</b>!"
+						switch(src.KeybladePath)
 							if("Fire")
 								AddSkill(new/obj/Skills/Projectile/Magic/Fira)
 							if("Ice")
@@ -1680,78 +1527,11 @@ mob
 								AddSkill(new/obj/Skills/AutoHit/Magic/Blizzara)
 								AddSkill(new/obj/Skills/AutoHit/Magic/Thundara)
 						if(src.KeybladeType=="Shield")
-							var/choiceshield
-							var/confirmshield
-							while(confirmshield!="Yes")
-								var/list/Choices2=list("Sonic Blade", "Strike Raid", "Magnet Burst")
-								choiceshield=input(src, "What skill do you want?", "Martial Keyblade Skill") in Choices2
-								switch(choiceshield)
-									if("Sonic Blade")
-										confirmshield=alert(src, "Quickly dash towards your opponent three times.", "Yes", "No")
-									if("Strike Raid")
-										confirmshield=alert(src, "Throw your Keyblade at your opponent in the form of an autohit wave.", "Yes", "No")
-									if("Magnet Burst")
-										confirmshield=alert(src, "A weak Area-Of-Effect move that pulls in everyone nearby and stuns.", "Yes", "No")
-							switch(choiceshield)
-								if("Sonic Blade")
-									src.AddSkill(new/obj/Skills/AutoHit/Sonic_Blade)
-								if("Strike Raid")
-									src.AddSkill(new/obj/Skills/AutoHit/Strike_Raid)
-								if("Magnet Burst")
-									src.AddSkill(new/obj/Skills/AutoHit/Magnet_Burst)
+							src.ChooseMartialSkill(1)
 
 						if(src.KeybladeType=="Sword")
-							var/choice2
-							var/confirm2
-							var/choice3
-							var/confirm3
-							while(confirm2!="Yes")
-								var/list/Choices2=list("Sonic Blade", "Strike Raid", "Magnet Burst")
-								choice2=input(src, "What tier 1 skill do you want? Selecting the same one you had prior will upgrade it, lowering its cooldown and strengthening certain aspects of it.", "Martial Keyblade Skill") in Choices2
-								switch(choice2)
-									if("Sonic Blade")
-										confirm2=alert(src, "Quickly dash towards your opponent three times. Upgrading boosts the range, damage, and number of rounds.", "Yes", "No")
-									if("Strike Raid")
-										confirm2=alert(src, "Throw your Keyblade at your opponent in the form of an autohit wave. Upgrading boosts the damage and causes you to fire it off multiple times.", "Yes", "No")
-									if("Magnet Burst")
-										confirm2=alert(src, "A weak Area-Of-Effect move that pulls in everyone nearby and stuns. Upgrading boosts the range and greatly boosts the damage.", "Yes", "No")
-							switch(choice2)
-								if("Sonic Blade")
-									if(!locate(/obj/Skills/AutoHit/Sonic_Blade, src))
-										src.AddSkill(new/obj/Skills/AutoHit/Sonic_Blade)
-									else if(locate(/obj/Skills/AutoHit/Sonic_Blade, src))
-										for(var/obj/Skills/AutoHit/Sonic_Blade/R in src)
-											R.UpgradedKeybladeSkill=1
-								if("Strike Raid")
-									if(!locate(/obj/Skills/AutoHit/Strike_Raid, src))
-										src.AddSkill(new/obj/Skills/AutoHit/Strike_Raid)
-									else if(locate(/obj/Skills/AutoHit/Strike_Raid, src))
-										for(var/obj/Skills/AutoHit/Strike_Raid/R in src)
-											R.UpgradedKeybladeSkill=1
-								if("Magnet Burst")
-									src.AddSkill(new/obj/Skills/AutoHit/Magnet_Burst)
-									if(!locate(/obj/Skills/AutoHit/Magnet_Burst, src))
-										src.AddSkill(new/obj/Skills/AutoHit/Magnet_Burst)
-									else if(locate(/obj/Skills/AutoHit/Magnet_Burst, src))
-										for(var/obj/Skills/AutoHit/Magnet_Burst/R in src)
-											R.UpgradedKeybladeSkill=1
-							while(confirm3!="Yes")
-								var/list/Choices3=list("Ripple Drive", "Stun Impact", "Explosion")
-								choice3=input(src, "What tier 2 skill do you want?", "Martial Keyblade Skill") in Choices3
-								switch(choice3)
-									if("Ripple Drive")
-										confirm3=alert(src, "Release a powerful wave of energy with a strong knockback.", "Yes", "No")
-									if("Stun Impact")
-										confirm3=alert(src, "Queues up a stunning attack.", "Yes", "No")
-									if("Explosion")
-										confirm3=alert(src, "Queue up a weak hit that follows up with a powerful explosive one.", "Yes", "No")
-							switch(choice3)
-								if("Ripple Drive")
-									src.AddSkill(new/obj/Skills/AutoHit/Ripple_Drive)
-								if("Stun Impact")
-									src.AddSkill(new/obj/Skills/Queue/Stun_Impact)
-								if("Explosion")
-									src.AddSkill(new/obj/Skills/Queue/Explosion)
+							src.ChooseMartialSkill(1)
+							src.ChooseMartialSkill(2)
 
 					if(src.SagaLevel==3)
 						//T2 Command Style
@@ -1777,45 +1557,51 @@ mob
 							if("Blade Charge")
 								src.AddSkill(new/obj/Skills/Buffs/NuStyle/SwordStyle/Command/Blade_Charge_Style)
 						src << "You've obtained the [Style] command style!"
-						var/Choice
-						Choice=prompt("Every strong heart must devote itself to some key facet.  What are you devoted to?", "Keychain Ascension", list("Self-Reliance", "Memories", "Promises"))
-						switch(Choice)
-							if("Self-Reliance")
-								src.Keychains.Add("Fenrir")
-							if("Memories")
-								src.Keychains.Add("Oblivion")
-							if("Promises")
-								src.Keychains.Add("Oathkeeper")
-						src << "You've obtained your devotion keychain!"
-						switch(KeybladePath)
+						src.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/Keyblade_Armor)
+						src << "You've obtained your Keyblade armor!"
+						if(src.KeybladeType=="Staff")
+							src.AddSkill(new/obj/Skills/AutoHit/Magic/Holy)
+							src.AddSkill(new/obj/Skills/AutoHit/Magic/Gravity)
+						if(src.KeybladeType=="Shield")
+							src.AddSkill(new/obj/Skills/AutoHit/Magic/Magnet)
+					/*	switch(KeybladePath)
+							if("Magic")
+								AddSkill(new/obj/Skills/AutoHit/Magic/Holy)
+								AddSkill(new/obj/Skills/AutoHit/Magic/Gravity)
+							if("Fire")
+								AddSkill(new/obj/Skills/Projectile/Magic/Firaga)
+							if("Ice")
+								AddSkill(new/obj/Skills/AutoHit/Magic/Blizzaga)
+							if("Thunder")
+								AddSkill(new/obj/Skills/AutoHit/Magic/Thundaga)*/
+
+					if(src.SagaLevel==4)
+						//Valor Form
+						//T2 Magic
+						if(src.KeybladeColor=="Light")
+							if(src.KeybladeType=="Shield")
+								src.AddSkill(new/obj/Skills/Buffs/SpecialBuffs/Valor_Form)
+								src.ChooseKeychain()
+								src << "You learn to imbue every action with valor!"
+								src << "Use the Attach Keychain verb to set your sync keyblade for Valor Form."
+							else if(src.KeybladeType=="Staff")
+								src.AddSkill(new/obj/Skills/Buffs/SpecialBuffs/Wisdom_Form)
+								src << "You learn to imbue every action with wisdom!"
+							else if(src.KeybladeType=="Sword")
+								src.AddSkill(new/obj/Skills/Buffs/SpecialBuffs/Limit_Form)
+						else
+							src.AddSkill(new/obj/Skills/Buffs/SpecialBuffs/Dark_Mode)
+							src << "Your reliance on darkness will empower you when pressed to your limits!"
+						switch(src.KeybladePath)
+							if("Magic")
+								AddSkill(new/obj/Skills/AutoHit/Magic/Holy)
+								AddSkill(new/obj/Skills/AutoHit/Magic/Gravity)
 							if("Fire")
 								AddSkill(new/obj/Skills/Projectile/Magic/Firaga)
 							if("Ice")
 								AddSkill(new/obj/Skills/AutoHit/Magic/Blizzaga)
 							if("Thunder")
 								AddSkill(new/obj/Skills/AutoHit/Magic/Thundaga)
-
-					if(src.SagaLevel==4)
-						//Valor Form
-						//T2 Magic
-						if(src.KeybladeColor=="Light")
-							src.AddSkill(new/obj/Skills/Buffs/SpecialBuffs/Valor_Form)
-							src << "You learn to imbue every action with valor!"
-							src << "Use the Attach Keychain verb to set your sync keyblade for Valor Form."
-							src.AddSkill(new/obj/Skills/Buffs/SpecialBuffs/Wisdom_Form)
-							src << "You learn to imbue every action with wisdom!"
-						else
-							src.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Rage_Form)
-							src << "Your reliance on darkness will empower you when pressed to your limits!"
-
-						switch(KeybladePath)
-							if("Fire")
-								src.AddSkill(new/obj/Skills/Projectile/Magic/Meteor)
-							if("Ice")
-								src.AddSkill(new/obj/Skills/AutoHit/Magic/Flare)
-							if("Thunder")
-								src.AddSkill(new/obj/Skills/Projectile/Magic/Disintegrate)
-						passive_handler.Increase("ManaCapMult",0.25)
 
 					if(src.SagaLevel==5)
 						//Master Form
@@ -1986,49 +1772,48 @@ mob
 				if("Caladbolg")
 					src.AddSkill(new/obj/Skills/Projectile/Zone_Attacks/Caladbolg)
 mob/Admin3/verb
-    SagaRemoval(mob/Players/P in players)
-        set category="Admin"
-        var/Choice=input(usr, "Are you sure you want to remove [P]'s saga?", "Saga Decision") in list("Yes", "No")
-        if(Choice=="No")
-            return
-
-        var/list/obj/Skills/SagaSkills = list("/obj/Skills/Buffs/SpecialBuff/Spiral","/obj/Skills/Buffs/SpecialBuff/King_Of_Courage",\
-    "/obj/Skills/AutoHit/Pegasus_Meteor_Fist","/obj/Skills/Queue/Rising_Dragon_Fist",\
-    "/obj/Skills/Projectile/Diamond_Dust","/obj/Skills/Projectile/Nebula_Stream",\
-    "/obj/Skills/Queue/Phoenix_Demon_Illusion_Strike","/obj/Skills/AutoHit/Unicorn_Gallop",\
-    "/obj/Skills/Buffs/ActiveBuffs/Persona","/obj/Skills/Buffs/SpecialBuffs/King_of_Braves",\
-    "/obj/Skills/Buffs/SlotlessBuffs/Will_Knife","/obj/Skills/Buffs/SlotlessBuffs/Protect_Shade",\
-    "/obj/Skills/Projectile/King_of_Braves/Broken_Magnum","/obj/Skills/Buffs/SlotlessBuffs/Copy_Blade",\
-    "/obj/Skills/Buffs/SlotlessBuffs/Projection","/obj/Skills/Buffs/NuStyle/SwordStyle/Sword_Savant",\
-    "/obj/Skills/Buffs/SlotlessBuffs/Magic/Reinforce_Self","/obj/Skills/Queue/JawStrike",\
-    "/obj/Skills/Queue/FallingBlade","/obj/Skills/Buffs/NuStyle/UnarmedStyle/Ansatsuken_Style",\
-    "/obj/Skills/Projectile/Ansatsuken/Hadoken","/obj/Skills/Queue/Shoryuken","/obj/Skills/AutoHit/Tatsumaki",\
-    "/obj/Skills/Buffs/ActiveBuffs/Eight_Gates","/obj/Skills/Queue/Front_Lotus","/obj/Skills/AutoHit/Sharingan_Genjutsu",\
-    "/obj/Skills/Buffs/SpecialBuffs/Sharingan","/obj/Skills/Buffs/NuStyle/UnarmedStyle/Move_Duplication",\
-    "/obj/Skills/Buffs/SlotlessBuffs/Spirit_Sword","/obj/Skills/Buffs/SlotlessBuffs/Spirit_Bow",\
-    "/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Hero_Soul","/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Hero_Heart",\
-    "/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Prismatic_Hero","/obj/Skills/Buffs/ActiveBuffs/Keyblade")
-
-        if(P.Saga == "Cosmo")
-            P.KiControlMastery-=1
-//Later add removing it based on path, lazy rn. Can just check for them all and remove them.
-        if(P.Saga == "Hiten Mitsurugi-Ryuu")
-            P.passive_handler.Decrease("SlayerMod", 0.625)
-            P.passive_handler.Decrease("Pursuer", 0.5)
-            P.passive_handler.Decrease("SuperDash", 0.25)
-            P.passive_handler.Decrease("Godspeed", 0.25)
-            P.passive_handler.Set("FavoredPrey", null)
-        if(P.Saga == "Ansatsuken")
-            P.passive_handler.Decrease("SlayerMod", 0.625)
-            P.passive_handler.Set("FavoredPrey", null)
-        for(var/x=1, x<=SagaSkills.len,x++)
-            var/obj/Skills/s = P.FindSkill(SagaSkills[x])
-            if(s)
-                P.contents -= s
-                P << "[s] removed."
-                del s
-
-        P.ClothBronze=null
-        P.SagaLevel=0
-        P.Saga=null
-        Log("Admin","[ExtractInfo(usr)] removed Saga from [P].")
+	SagaRemoval(mob/Players/P in players)
+		set category="Admin"
+		var/Choice=input(usr, "Are you sure you want to remove [P]'s saga?", "Saga Decision") in list("Yes", "No")
+		if(Choice=="No") return
+		var/list/obj/Skills/SagaSkills = list("/obj/Skills/Buffs/SpecialBuff/Spiral","/obj/Skills/Buffs/SpecialBuff/King_Of_Courage",\
+"/obj/Skills/AutoHit/Pegasus_Meteor_Fist","/obj/Skills/Queue/Rising_Dragon_Fist",\
+"/obj/Skills/Projectile/Diamond_Dust","/obj/Skills/Projectile/Nebula_Stream",\
+"/obj/Skills/Queue/Phoenix_Demon_Illusion_Strike","/obj/Skills/AutoHit/Unicorn_Gallop",\
+"/obj/Skills/Buffs/ActiveBuffs/Persona","/obj/Skills/Buffs/SpecialBuffs/King_of_Braves",\
+"/obj/Skills/Buffs/SlotlessBuffs/Will_Knife","/obj/Skills/Buffs/SlotlessBuffs/Protect_Shade",\
+"/obj/Skills/Projectile/King_of_Braves/Broken_Magnum","/obj/Skills/Buffs/SlotlessBuffs/Copy_Blade",\
+"/obj/Skills/Buffs/SlotlessBuffs/Projection","/obj/Skills/Buffs/NuStyle/SwordStyle/Sword_Savant",\
+"/obj/Skills/Buffs/SlotlessBuffs/Magic/Reinforce_Self","/obj/Skills/Queue/JawStrike",\
+"/obj/Skills/Queue/FallingBlade","/obj/Skills/Buffs/NuStyle/UnarmedStyle/Ansatsuken_Style",\
+"/obj/Skills/Projectile/Ansatsuken/Hadoken","/obj/Skills/Queue/Shoryuken","/obj/Skills/AutoHit/Tatsumaki",\
+"/obj/Skills/Buffs/ActiveBuffs/Eight_Gates","/obj/Skills/Queue/Front_Lotus","/obj/Skills/AutoHit/Sharingan_Genjutsu",\
+"/obj/Skills/Buffs/SpecialBuffs/Sharingan","/obj/Skills/Buffs/NuStyle/UnarmedStyle/Move_Duplication",\
+"/obj/Skills/Buffs/SlotlessBuffs/Spirit_Sword","/obj/Skills/Buffs/SlotlessBuffs/Spirit_Bow",\
+"/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Hero_Soul","/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Hero_Heart",\
+"/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Prismatic_Hero","/obj/Skills/Buffs/ActiveBuffs/Keyblade");
+		if(P.Saga == "Cosmo") P.KiControlMastery-=1
+		if(P.Saga == "Hiten Mitsurugi-Ryuu")
+			P.passive_handler["SlayerMod"] = 0
+			P.passive_handler["Flicker"] = 0
+			P.passive_handler["Pursuer"] = 0
+			P.passive_handler["Godspeed"] = 0
+			P.passive_handler["AttackSpeed"] = 0
+			P.passive_handler["Brutalize"] = 0
+			P.passive_handler["MovementMastery"] = 0
+			P.passive_handler["TechniqueMastery"] = 0
+			P.passive_handler["AsuraStrike"] = 0
+			P.passive_handler["FavoredPrey"] = null;
+		if(P.Saga == "Ansatsuken")
+			P.passive_handler.Decrease("SlayerMod", 0.625)
+			P.passive_handler.Set("FavoredPrey", null)
+		for(var/x=1, x<=SagaSkills.len,x++)
+			var/obj/Skills/s = P.FindSkill(SagaSkills[x])
+			if(s)
+				P.contents -= s
+				P << "[s] removed."
+				del s
+		P.ClothBronze=null
+		P.SagaLevel=0
+		P.Saga=null
+		Log("Admin","[ExtractInfo(usr)] removed Saga from [P].")

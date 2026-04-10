@@ -170,21 +170,23 @@ mob
 				if(src.HasSwordAscension())
 					Ascensions+=src.GetSwordAscension()
 					// change it to heavy sword damage, fuck it
+				if(s.HighFrequency&&src.CyberCancel)
+					Ascensions+=1
+					if(src.CyberneticMainframe)
+						Ascensions+=1
 				if(Ascensions>6)
 					Ascensions=6
 				if(src.Saga)
 					if(src.Saga in Swordsmanship)
-						switch(Saga)
-							if("Weapon Soul")
-								if(src.SagaLevel)
-									Ascensions += SagaLevel
-							if("Hiten Mitsurugi-Ryuu")
-								if(src.SagaLevel)
-									Ascensions += SagaLevel
+						Ascensions += SagaLevel;
 					if(Ascensions>6)
 						Ascensions=6
 				if(s.Glass)
 					Ascensions+=1
+					if(s.HighFrequency&&src.CyberCancel)
+						Ascensions+=1
+						if(src.CyberneticMainframe)
+							Ascensions+=1
 				if(s.Conversions=="Sharp")
 					Ascensions += (0.1) * s.ShatterTier
 			else if(src.CheckSlotless("Excalibur"))
@@ -203,6 +205,12 @@ mob
 			if(s)
 				Total=s.SpeedEffectiveness
 				Ascensions=s.Ascended
+				if(s.HighFrequency&&src.CyberCancel)
+					Ascensions+=1
+					if(src.CyberneticMainframe)
+						Ascensions+=1
+					if(Ascensions>6)
+						Ascensions=6
 				if(src.HasSwordAscension())
 					Ascensions+=src.GetSwordAscension()
 					if(Ascensions>6)
@@ -220,6 +228,10 @@ mob
 						Ascensions=6
 				if(s.Glass)
 					Ascensions+=1
+					if(s.HighFrequency&&src.CyberCancel)
+						Ascensions+=1
+						if(src.CyberneticMainframe)
+							Ascensions+=1
 				if(s.Conversions=="Light")
 					Ascensions+=1
 			else if(src.CheckSlotless("Excalibur"))
@@ -238,6 +250,12 @@ mob
 			if(s)
 				Total=s.AccuracyEffectiveness
 				Ascensions=s.Ascended
+				if(s.HighFrequency&&src.CyberCancel)
+					Ascensions+=1
+					if(src.CyberneticMainframe)
+						Ascensions+=1
+					if(Ascensions>6)
+						Ascensions=6
 				if(src.HasSwordAscension())
 					Ascensions+=src.GetSwordAscension()
 					if(Ascensions>6)
@@ -255,8 +273,14 @@ mob
 						Ascensions=6
 				if(s.Glass)
 					Ascensions+=1
+					if(s.HighFrequency&&src.CyberCancel)
+						Ascensions+=1
+						if(src.CyberneticMainframe)
+							Ascensions+=1
 				if(s.Conversions=="Hardened")
 					Ascensions-=1
+					if(s.HighFrequency&&src.CyberCancel)
+						Ascensions+=1
 			else if(src.CheckSlotless("Excalibur"))
 				Total=0.9
 				if(src.HasSwordAscension())
@@ -1071,10 +1095,6 @@ mob
 			if(passive_handler.Get("PULock"))
 				return passive_handler.Get("PULock")
 			return 0
-		HasGatesPULock()
-			if(passive_handler.Get("Gates PULock"))
-				return passive_handler.Get("Gates PULock")
-			return 0
 		HasPUSpike()
 			if(passive_handler.Get("PUSpike"))
 				return 1
@@ -1352,13 +1372,13 @@ mob
 			return Return
 		HasDebuffResistance()
 			if(src.HasDebuffReversal()) return 0;
-			if(passive_handler.Get("DebuffResistance")||passive_handler.Get("Determination(Green")||passive_handler.Get("Determination(White)"))
+			if(passive_handler.Get("DebuffResistance")||passive_handler.Get("Determination(Green)")||passive_handler.Get("Determination(White)"))
 				return 1
 			return 0
 		GetDebuffResistance()
 			var/GreenVal=0
 			if(src.HasDebuffReversal()) return 0;
-			if(passive_handler.Get("Determination(Green")||passive_handler.Get("Determination(White)"))
+			if(passive_handler.Get("Determination(Green)")||passive_handler.Get("Determination(White)"))
 				GreenVal=round(ManaAmount/20,1)
 			return passive_handler.Get("DebuffResistance") + GreenVal
 		HasVenomImmune()
@@ -1713,6 +1733,12 @@ mob
 					if(de.evolution_charges)
 						return 1;
 			return 0;
+		hasMazokuRevival()
+			if(!isRace(HUMAN)) return 0
+			if(AscensionsAcquired < 3) return 0
+			if(!passive_handler.Get("DormantDemon")) return 0
+			if(passive_handler.Get("DeathDefied")) return 0
+			return 1
 		HasHellPower()
 			if(CheckSlotless("Satsui no Hado") && SagaLevel>=6)
 				return 1
@@ -2169,24 +2195,23 @@ mob
 			return 0
 		GetEnraging()
 			return passive_handler.Get("Enraging")
-		HasDoubleStrike()
-			if(passive_handler.Get("DoubleStrike"))
-				return 1
-			return 0
+//these could also use their own pages
+globalTracker/var
+	DOUBLE_STRIKE_MAX = 4;//max values are the amt that is needed in order to hit 100% probability
+	TRIPLE_STRIKE_MAX = 3;
+	ASURA_STRIKE_MAX = 2;
+mob
+	proc
 		GetDoubleStrike()
-			return passive_handler.Get("DoubleStrike")
-		HasTripleStrike()
-			if(passive_handler.Get("TripleStrike"))
-				return 1
-			return 0
+			var/anotherOne = passive_handler.Get("DoubleStrike");
+			return anotherOne ? (100 / glob.DOUBLE_STRIKE_MAX * anotherOne) : 0;
 		GetTripleStrike()
-			return passive_handler.Get("TripleStrike")
-		HasAsuraStrike()
-			if(passive_handler.Get("AsuraStrike"))
-				return 1
-			return 0
+			var/anotherOne = passive_handler.Get("TripleStrike");
+			return anotherOne ? (100 / glob.TRIPLE_STRIKE_MAX * anotherOne) : 0;
 		GetAsuraStrike()
-			return passive_handler.Get("AsuraStrike")
+			var/anotherOne = passive_handler.Get("AsuraStrike");
+			return anotherOne ? (100 / glob.ASURA_STRIKE_MAX * anotherOne) : 0;
+		
 		HasDebuffReversal()
 			if(passive_handler.Get("DebuffReversal"))
 				return 1
@@ -2237,39 +2262,57 @@ mob
 			if(src.TarotFate=="The Lovers")
 				Extra=2.5
 			return (passive_handler.Get("AbyssMod")+Extra-Reduce)
-		HasSlayerMod(mob/enemy)
-			if(passive_handler.Get("SlayerMod"))
-				if(passive_handler["FavoredPrey"] == "All")
-					return 1
-				if(passive_handler["FavoredPrey"] == "Secrets")
-					if(enemy.secretDatum && enemy.secretDatum.name)
-						return 1
-				else if(passive_handler["FavoredPrey"] == "Sagas")
-					if(enemy.Saga)
-						return 1
-				else if(passive_handler["FavoredPrey"] in SAGAS)
-					if(enemy.Saga == passive_handler["FavoredPrey"])
-						return 1
-				else if(passive_handler["FavoredPrey"] in SECRETS)
-					if(enemy.secretDatum && enemy.secretDatum.name == passive_handler["FavoredPrey"])
-						return 1
-				else if(passive_handler["FavoredPrey"] == "Races")
-					if(enemy)
-						if(!enemy.secretDatum)
-							return 1
-				else if(passive_handler["FavoredPrey"] in RACES)
-					if(enemy.race.name == passive_handler["FavoredPrey"])
-						return 1
-				else if(passive_handler["FavoredPrey"] == "Depths")
-					if(enemy.isRace(DEMON)||enemy.isRace(ELDRITCH))
-						return 1
-				else if(passive_handler["FavoredPrey"] == "Beyond")
-					if(enemy.isRace(DEMON)||enemy.isRace(ELDRITCH)||enemy.isRace(MAKAIOSHIN)||enemy.isRace(ANGEL)||enemy.isRace(POPO))
-						return 1
-				return 0
-			return 0
-		GetSlayerMod()
-			return passive_handler.Get("SlayerMod")
+
+//----------------------------------------------------------------------
+//TODO Between Wipes: Move this to a separate passive page for SlayerMod
+globalTracker/var/
+	SLAYER_DAMAGE_MIN = -10;
+	SLAYER_DAMAGE_MAX = 10;
+	SLAYER_SPEC_MULT = 1.5;
+#define VALID_FAVORED_PREY list("All", "Mortal", "Depths", "Beyond", "Secret", "Saga")
+#define DEPTHS_RACES list(ELDRITCH, DEMON)
+#define BEYOND_RACES DEPTHS_RACES+list(MAKAIOSHIN, ANGEL, POPO)
+#define INHERENT_SECRET list(ELDRITCH, ANGEL)
+#define SLAYER_SPEC_SAGAS list("Ansatsuken", "Hiten Mitsurugi-Ryuu")
+mob
+	proc
+		invalidPrey(preyType, mob/enemy)
+			var/invalid=0;
+			if(!(preyType in VALID_FAVORED_PREY))
+				liveDebugMsg("[src]([src.key]) is using [preyType] as a FavoredPrey for their SlayerMod. Make a note of it in Coding Chat and edit it to one of the valid FavoredPrey options:");
+				var/options = "";
+				for(var/x in VALID_FAVORED_PREY)
+					options += "[x] | "
+				options = copytext(options, 1, length(options)-3);//backspace the last bit after the list has been iterated
+				liveDebugMsg(options);
+				invalid++;
+			if(!enemy) invalid++;
+			switch(preyType)//no check for "All" because it will always be valid if there is an enemy
+				if("Secret") if(!enemy.Secret || (enemy.race.type in INHERENT_SECRET)) invalid++;
+				if("Saga") if(!enemy.Saga) invalid++;
+				if("Mortal") if((enemy.race.type in DEPTHS_RACES) || (enemy.race.type in BEYOND_RACES)) invalid++;
+				if("Depths") if(!(enemy.race.type in DEPTHS_RACES)) invalid++;
+				if("Beyond") if(!(enemy.race.type in BEYOND_RACES)) invalid++;
+			return invalid;
+		GetSlayerMod(mob/enemy, forced=0)
+			var/slayer = passive_handler.Get("SlayerMod");
+			var/prey = passive_handler.Get("FavoredPrey");
+			if(!enemy) return 0;
+			if(!slayer) return 0;
+			if(!prey)
+				liveDebugMsg("[src]([src.key]) has SlayerMod marked with no FavoredPrey.");
+				return 0;
+			if(invalidPrey(prey, enemy)) return 0;
+			. = 0;
+			. += passive_handler.Get("SlayerMod");
+			if(prey != "All") . -= (max(0, enemy.passive_handler.Get("Xenobiology")) * .);
+			if(Saga in SLAYER_SPEC_SAGAS) . *= glob.SLAYER_SPEC_MULT;
+			if (. > 0)
+				if(enemy.UsingMuken()) . *= (-1);
+			if(forced) . = forced;
+			. = clamp(., glob.SLAYER_DAMAGE_MIN, glob.SLAYER_DAMAGE_MAX);
+//----------------------------------------------------------------------
+
 		HasBeyondPurity()
 			if(passive_handler.Get("BeyondPurity"))
 				return 1
@@ -2944,6 +2987,8 @@ mob
 					asc+=src.GetSwordAscension()
 				if(asc>6)
 					asc=6
+				if(S.HighFrequency&&src.CyberneticMainframe)
+					asc=6
 				Found+=clamp(round(0.16 + (0.16 * asc),0.25),0.16,1)
 			if(src.StyleActive=="Hiten Mitsurugi")
 				Found+=1
@@ -2952,6 +2997,10 @@ mob
 			if(S)
 				if(S.ExtraClass&&S.Class=="Light")
 					Found+=1
+				if(S.HighFrequency&&src.CyberCancel)
+					Found+=1
+					if(src.CyberneticMainframe)
+						Found+=2
 			return Found
 		BonusParry()
 			var/Found=0
@@ -2960,6 +3009,10 @@ mob
 			if(S)
 				if(S.ExtraClass&&S.Class=="Medium")
 					Found+=0.5
+				if(S.HighFrequency&&src.CyberCancel)
+					Found+=0.5
+					if(src.CyberneticMainframe)
+						Found+=1
 			return Found
 
 		UsingGladiator()
@@ -2976,7 +3029,7 @@ mob
 			Found += passive_handler.Get("Half-Sword")
 			if(S)
 				if(S.ExtraClass&&S.Class=="Heavy")
-					Found+=0.5
+					Found+=1
 			return Found
 		UsingFTG()
 			return passive_handler["Flying Thunder God"]

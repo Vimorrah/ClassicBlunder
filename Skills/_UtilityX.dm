@@ -742,6 +742,7 @@ obj/Skills/Utility
 					Choice.JaganPowerNerf=0.5
 					OMsg(usr, "[usr] bestows [Choice] with a powerful demonic eye, but it will leech [Choice]'s life until they learn to control it properly...")
 					del src
+					return
 				else
 					OMsg(usr, "[Choice] refuses [usr]'s offer of power...")
 					src.Using=0
@@ -958,7 +959,7 @@ obj/Skills/Utility
 			if(usr.ArmamentEnchantmentUnlocked>=4||usr.ForgingUnlocked>=5)
 				if(Type=="Sword"&&Chosen:Class!="Wooden"&&!Chosen:ExtraClass)
 					Upgrades.Add("Refine")
-			if(usr.ArmamentEnchantmentUnlocked>=1||usr.RepairAndConversionUnlocked>=3)
+			if(usr.ArmamentEnchantmentUnlocked>=1||usr.RepairAndConversionUnlocked>=3||"Combat Scanning" in usr.knowledgeTracker.learnedKnowledge)
 				Upgrades.Add("Fire")
 				Upgrades.Add("Water")
 				Upgrades.Add("Earth")
@@ -976,6 +977,17 @@ obj/Skills/Utility
 			if(usr.ArmamentEnchantmentUnlocked==5&&usr.ForgingUnlocked==5&&usr.RepairAndConversionUnlocked==5&&usr.AlchemyUnlocked==5&&usr.ImprovedAlchemyUnlocked==5&&usr.ToolEnchantmentUnlocked==5)
 				if(Type=="Sword"||Type=="Staff")
 					Upgrades.Add("Ultima (True)")
+			if(Chosen:HighFrequency)
+				Upgrades.Remove("Fire")
+				Upgrades.Remove("Water")
+				Upgrades.Remove("Earth")
+				Upgrades.Remove("Wind")
+				Upgrades.Remove("Light")
+				Upgrades.Remove("Dark")
+				Upgrades.Remove("Ultima!?")
+				Upgrades.Remove("Ultima (True)")
+				Upgrades.Remove("Poison")
+				Upgrades.Remove("Silver")
 			var/Choice2=input("What type of Enchantment will you apply? Mind, the process is extremely exhausting.") in Upgrades
 			switch(Choice2)
 				//T1
@@ -991,7 +1003,7 @@ obj/Skills/Utility
 					if(Chosen:Ascended + 1 > glob.progress.maxAscension && !usr.MasterCrafts)
 						usr<<"Ascending [Chosen] is beyond your abilities."
 						return
-					Cost*=5*(4**Chosen:Ascended)
+					Cost*=5*(3**Chosen:Ascended)
 
 				//T2
 				if("Poison")
@@ -1094,7 +1106,7 @@ obj/Skills/Utility
 									del Chosen
 							//:o
 						usr.TakeMoney(Cost)
-			if(Choice2!="Ultima (True)"||Choice2!="Ultima!?")
+			if(Choice2 != "Ultima (True)" && Choice2 != "Ultima!?")
 				usr << "You feel exhausted."
 				usr.GainFatigue(50/max(1,usr.ArmamentEnchantmentUnlocked))
 			if(Choice2=="Ultima!?")
@@ -1575,6 +1587,7 @@ obj/Skills/Utility
 				usr.contents+=CS
 				usr << "You've successfully crystallized three powerful commands!"
 				del src
+				return
 			src.Using=0
 
 	Seal_Break
@@ -1640,6 +1653,7 @@ obj/Skills/Utility
 				MC.loc=usr.loc
 				usr << "You've successfully drawn your magic circle!"
 				del src
+				return
 			src.Using=0
 
 	Create_Magic_Crest
@@ -1661,6 +1675,7 @@ obj/Skills/Utility
 				MC.ObjectUse(usr)
 				usr << "You've created your own Magic Crest!  After filling it with knowledge of your spells, pass it on to a worthy successor to let them to do the same."
 				del src
+				return
 			src.Using=0
 
 	Pocket_Dimension
@@ -2346,6 +2361,8 @@ obj/Skills/Utility
 
 				if(usr.ArmamentEnchantmentUnlocked)
 					Cost/=max(usr.RepairAndConversionUnlocked+usr.ForgingUnlocked,1)
+				if(Choice:Glass&&Choice:HighFrequency)
+					Cost*=50
 
 				Confirm=alert(usr, "It will cost [Commas(Cost*CostMultiplier)] to repair [Choice].  Do you wish to repair the [Category]?", "Reforge", "No", "Yes")
 
@@ -2588,7 +2605,7 @@ obj/Skills/Utility
 
 		verb/Scan()
 			set src in usr
-			if(!src.suffix=="*Equipped*")
+			if(src.suffix != "*Equipped*")
 				usr << "You have to equip the scouter to use it!"
 				return
 			usr << "<b>Current Coordinates: ([usr.x], [usr.y], [usr.z])</b>"
@@ -2686,7 +2703,7 @@ obj/Skills/Utility
 			set category="Utility"
 			if(src.Using)
 				return
-			if(usr.GetAndroidIntegrated()<2+usr.AscensionsAcquired)
+			if(usr.GetAndroidIntegrated()<3+usr.AscensionsAcquired)
 				src.Using=1
 				var/obj/Items/Gear/Choice
 				var/list/obj/Items/Gear/IG=list("Cancel")
@@ -2845,6 +2862,26 @@ obj/Skills/Utility
 				OMsg(usr, "[usr] decides not to tinker.")
 				src.Using=0
 				return
+			if(M.CyberneticMainframe)
+				switch(M.AscensionsAcquired)
+					if(0 to 1)
+						if(M.EnhanceChipsMax<10)
+							M.EnhanceChipsMax=10
+					if(2)
+						if(M.EnhanceChipsMax<16)
+							M.EnhanceChipsMax=16
+					if(3)
+						if(M.EnhanceChipsMax<22)
+							M.EnhanceChipsMax=22
+					if(4)
+						if(M.EnhanceChipsMax<26)
+							M.EnhanceChipsMax=26
+					if(5)
+						if(M.EnhanceChipsMax<30)
+							M.EnhanceChipsMax=30
+					if(6)
+						if(M.EnhanceChipsMax<34)
+							M.EnhanceChipsMax=34
 
 
 			if(M.EnhanceChips>=M.EnhanceChipsMax)
@@ -2897,7 +2934,7 @@ obj/Skills/Utility
 				ModChoices.Remove("Ray Gear")
 				ModChoices.Remove("Overdrive")
 
-			if(M.isRace(ANDROID))
+			if(M.isRace(ANDROID)||M.CyberneticMainframe)
 				if(M.Maimed||M.HealthCut)
 					ModChoices.Add("Repair")
 				if("Bio-Mechanical Augmentations" in usr.knowledgeTracker.learnedKnowledge || (usr.isRace(ANDROID)))

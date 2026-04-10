@@ -46,8 +46,34 @@ obj
 				Grapple=1
 				EnergyCost=5
 				BuffSelf="/obj/Skills/Buffs/SlotlessBuffs/Autonomous/QueueBuff/Brolic_Grip"
+				adjust(mob/p)
+					var/asc= p.AscensionsAcquired
+					if(p.isInnovative(HUMAN, "Any") && !isInnovationDisable(p) && p.Class == "Heroic")
+						DamageMult= 7 +(asc)
+						AccuracyMult=1.5
+						Opener=1
+						Duration=5
+						Instinct=1
+						Warp=2
+						WarpAway=2
+						Grapple=1
+						Cooldown=150 + (10 * asc)
+						CooldownStatic=1
+						BuffSelf="/obj/Skills/Buffs/SlotlessBuffs/Autonomous/QueueBuff/Serum_W"
+						HitMessage= "grasps the opponent's face in a crushing grip, dragging them through a series of portals!"
+					else
+						DamageMult=11
+						Duration=5
+						Opener=1
+						Warp=2
+						Instinct=2
+						WarpAway=null
+						Cooldown=150
+						Grapple=1
+						BuffSelf="/obj/Skills/Buffs/SlotlessBuffs/Autonomous/QueueBuff/Brolic_Grip"
 				verb/The_Claw()
 					set category="Skills"
+					adjust(usr)
 					usr.SetQueue(src)
 			Nerve_Shot
 				SignatureTechnique=1
@@ -151,7 +177,7 @@ obj
 				verb/Blade_Dance()
 					set category="Skills"
 					if(!Using)
-						current_hits = 0 
+						current_hits = 0
 					usr.SetQueue(src)
 			Blade_Dance2
 				NeedsSword=1

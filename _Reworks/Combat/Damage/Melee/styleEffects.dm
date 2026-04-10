@@ -4,7 +4,7 @@ mob/var/tmp/lastDisarm=0;
 mob/var/tmp/disarm_timer=-10;
 
 mob/proc/DisarmTarget(mob/target)
-    if(target.lastDisarm < world.time+(glob.DISARM_COOLDOWN*10))
+    if(target.lastDisarm + (glob.DISARM_COOLDOWN*10) < world.time)
         src.Disarm(target);
 
 /mob/proc/Disarm(mob/target)

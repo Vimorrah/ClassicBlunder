@@ -384,7 +384,8 @@ transformation
 				user.Tail(1)
 
 			transform_animation(mob/user)
-				if(first_time) // store the pre-form appearance and then the post-form appearance before calling the animation. also remove the hair set on overlay afterwards since it's not supposed to be an overlay
+				if(first_time)
+					user.CutsceneMode() // store the pre-form appearance and then the post-form appearance before calling the animation. also remove the hair set on overlay afterwards since it's not supposed to be an overlay
 					var/appearance1 = user.appearance
 					world << "app1 is [appearance1]"
 					user.overlays += form_icon_1
@@ -397,7 +398,7 @@ transformation
 					world << "[user.Hair]"
 					var/appearance2 = user.appearance
 					world << "app2 is [appearance2]"
-					user.HellSSJ4Animation1(appearance1, appearance2)
+					user.HellSSJ4Animation1(appearance1, appearance2, user)
 					user.overlays -= form_hair
 		//Golden Oozaru is intended to be unlocked about 10 potential before SSj4!
 		super_saiyan_4

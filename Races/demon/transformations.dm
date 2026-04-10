@@ -58,3 +58,8 @@ transformation
 					KenShockwave(user, icon='KenShockwaveBloodlust.dmi', Size=ShockSize, Blend=2, Time=8)
 					ShockSize/=2
 
+			revert(mob/user)
+				..()
+				if(!user || user.isInDemonDevilTrigger()) return
+				user.resetDevilTriggerSinBonuses()
+

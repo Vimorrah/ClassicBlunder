@@ -4,20 +4,21 @@ race
 		desc = "An otherworldly race hailing from the Void. There are two varieties: ancient mentors to mortalkind that are said to be masters of martial and spiritual arts alike, and otherworldly guardians of (REDACTED)."
 		visual = 'Angels.png'
 		locked = TRUE
-		power = 5
-		strength = 2.7
-		endurance = 3
-		speed = 3.25
-		offense = 2.5
-		defense = 2.6
-		force = 2.45
-		recovery = 2.75
-		anger = 1.7
-		regeneration = 1
+		statPoints = 5
+		power = 7
+		strength = 7
+		endurance = 7
+		speed = 7
+		offense = 7
+		defense = 7
+		force = 7
+		recovery = 3
+		anger = 2
+		regeneration = 1.7
 		imagination = 3
 		var/devil_arm_upgrades = 1
 
-		passives = list("HolyMod" = 0.5, "StaticWalk" = 1, "SpaceWalk" = 1, "SpiritPower" = 1, "MartialMagic" = 1)
+		passives = list("HolyMod" = 7, "StaticWalk" = 1, "SpaceWalk" = 1, "SpiritPower" = 2, "MartialMagic" = 1, "GodKi" = 0.7, "CalmAnger" = 1, "KiControlMastery" = 1, "TechniqueMastery" = 7)
 		skills = list()
 		onFinalization(mob/user)
 			user.Timeless = 1
@@ -44,8 +45,7 @@ race
 							user << "You have embarked upon the path of true martial arts mastery: Ultra Instinct."
 							user.Secret="Ultra Instinct"
 							user.UILevel=1
-							passives["TechniqueMastery"]=2
-							passives["StyleMastery"]=2
+							passives["StyleMastery"]=7
 				user.AngelAscension = Choice
 				//t1 style/armor unlocked
 

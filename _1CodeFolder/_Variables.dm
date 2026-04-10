@@ -187,9 +187,10 @@ mob/var
 	BarelyStandingColor
 
 	Potential=1
-	PotentialStatus="Distracted"
+	PotentialStatus="Caught Up"
 	PotentialRate=1
 	PotentialCap=1
+	PotentialHeadStart=0
 	potential_trans=0//entering trans state sets this
 	potential_power_mult=1
 	potential_last_checked=0
@@ -198,6 +199,7 @@ mob/var
 	RewardsLastGained = 0 //when was the last time you were rewarded?
 	PowerBoost=1//Now it ain't borked!?
 	PowerInvisible=1//only used for buffs now
+	Shadowbringer=0
 	PotentialUnlocked//You need a better UP after a previous one.
 	ContractPowered=0//Like UP, but with contracts.
 	SummonContract//just for summoning
@@ -396,7 +398,9 @@ mob/var
 	Sight_Range=10
 	Spawn="True Spawn"
 	PureRPMode=0
+	CutsceneWatch=0
 	ForceHeavyStrike=0
+	SpawnArea = "None" //different from Spawn for Reasons
 
 	CyberizeMod = 0
 	tmp/IconClicked=0
@@ -501,6 +505,7 @@ mob/var
 	Poison=0
 	BlindingVenom = 0
 	Burn=0
+	Frenzy=0
 	Slow=0
 	Shatter=0
 	Harden=0
@@ -539,6 +544,10 @@ mob/var
 	//JJBA vars
 	TimeStop
 	TimeFrozen
+
+	//Eldritch Reflected state
+	ReflectedFrozen = 0
+	ReflectedFrozenTimer = 0
 	WorldImmune=0
 
 	//gates
@@ -561,6 +570,8 @@ mob/var
 	JaganBase//holds old base mod when using JEM
 	AscensionsUnlocked=0
 	AscensionsAcquired=0
+	unbreakable_tracking=0//Makyo shit
+	unbroken_absorbed=0//Makyo shit
 	BioArmor//How much extra health you have
 	BioArmorMax//The total amount of extra health you can have
 
@@ -675,6 +686,32 @@ mob/var
 	ObliteratedX
 	ObliteratedY
 	ObliteratedZ
+
+	// DEVIL SUMMONER
+	list/demon_party = null
+	demon_party_cap = 0
+	list/demon_compendium = null
+	demon_active = null
+	demon_active_name = ""
+	demon_summon_cooldown = 0
+	demon_call_cooldown = 0
+	demon_fusion_page = 1
+	demon_record_page = 1
+	demon_meditate_start = 0
+	demon_meditate_healed = FALSE
+	list/demon_skill_hud = null     // list of /obj/DemonSkillSlot screen objects
+	demon_fusion_open = FALSE
+	demon_compendium_open = FALSE
+	demon_record_open = FALSE
+	demon_withdraw_open = FALSE
+	demon_inherit_open = FALSE
+	// Temp vars for pending fusion inheritance
+	demon_pending_fuse_a = ""
+	demon_pending_fuse_b = ""
+	demon_pending_fuse_result = ""
+	list/demon_pending_fuse_base_skills = null
+	list/demon_pending_fuse_pool = null
+	demon_pending_fuse_open_slots = 0
 
 /proc/reduceGodKi(mob/player, num)
 	player.GodKi -= num

@@ -18,14 +18,14 @@
     offense = 0.5;
 
 /ascension/sub_ascension/beastkin/rus
-    passives = list("GodSpeed" = 1, "ChillResistance" = 1);
+    passives = list("Godspeed" = 1, "ChillResistance" = 1);
     speed = 1.5;
 
 /ascension/sub_ascension/beastkin/mer
     passives = list("Deflection" = 1, "ControlResist" = 1);
     endurance = 0.5;
     speed = 0.5;
-    defnse = 0.5;
+    defense = 0.5;
 
 /ascension/sub_ascension/beastkin/mil
     passives=list("Unnerve" = 1, "MeleeResist" = 1);

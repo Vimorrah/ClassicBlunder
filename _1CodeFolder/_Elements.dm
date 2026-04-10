@@ -316,6 +316,9 @@ mob
 					Value*=1.5
 				else if(Attacker.Attunement=="HellFire")
 					Value*=glob.HELLFIRE_VALUE_MOD
+			// Devil Summoner Vile racial
+			if(Attacker && Attacker.demon_racial_vile_active)
+				Value *= Attacker.GetDemonVileMult()
 			if(src.Attunement=="Wind")
 				Value*=1.5
 			if(Attunement=="Fire" && !src.passive_handler.Get("BurningShot"))
@@ -474,6 +477,9 @@ mob
 		AddPoison(var/Value, var/mob/Attacker=null)
 			if(src.Stasis)
 				return
+			// Devil Summoner Vile racial
+			if(Attacker && Attacker.demon_racial_vile_active)
+				Value *= Attacker.GetDemonVileMult()
 
 			if(Attunement=="Poison")
 				Value/=2
@@ -523,7 +529,7 @@ mob
 				return
 			if(src.Stasis)
 				return
-			Value = Value*(1-(src.Sheared/glob.DEBUFF_STACK_RESISTANCE))
+			Value = Value*(1-(src.GetEffectiveShearForStackingEffects()/glob.DEBUFF_STACK_RESISTANCE))
 			src.Sheared+=Value
 			if(src.Sheared>100)
 				src.Sheared=100
@@ -628,6 +634,9 @@ mob
 				doDebuffDamage("Poison")
 			if(src.Burn)
 				doDebuffDamage("Burn")
+
+			if(src.Frenzy)
+				doDebuffDamage("Frenzy")
 
 			if(src.Shatter)
 				if(src.Shatter > glob.DEBUFF_STACK_MAX)

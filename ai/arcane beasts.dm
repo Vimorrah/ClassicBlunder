@@ -484,7 +484,7 @@ obj/Skills/AutoHit/Lesser_Division
 	Instinct=2
 	TurfErupt=1
 	TurfEruptOffset=6
-	HitSparkIcon='Icons/Effects/Arcane Division.dmi'
+	//HitSparkIcon='Icons/Effects/Arcane Division.dmi' I have to come back to fix this//
 	HitSparkX=-16
 	HitSparkY=-16
 	HitSparkSize=1
@@ -778,6 +778,7 @@ obj/Skills/Arcane_Regrowth
 		if(!usr.is_arcane_beast)
 			usr << "Due to a lack of a bond, you no longer have access to Regrowth."
 			del(src)
+			return
 
 		if(world.realtime > last_click + 20)
 			last_click = world.realtime
@@ -943,6 +944,7 @@ obj/Skills/Companion/arcane_follower
 			for(var/mob/Player/AI/Nympharum/aa in usr.ai_followers)
 				aa.EndLife(1)
 			del src
+			return
 
 
 

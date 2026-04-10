@@ -14,8 +14,8 @@ race
 		anger = 1
 		intellect = 3
 		imagination = 0.05
-		classes = list("Samurai", "Sorcerer", "Berserker","Imaginary")
-		stats_per_class = list("Samurai" = list(1.75, 1, 1, 1.75, 1.5, 1.5),"Sorcerer" = list(1,2,1.75,1.5,1.5,1),"Berserker" = list(1.5,1.5,2,1,1,1),"Imaginary" = list(1.5, 1.5, 1, 1.25, 1.25, 1.25))
+		classes = list("Samurai", "Sorcerer", "Berserker","Imaginary", "Reaper")
+		stats_per_class = list("Samurai" = list(1.75, 1, 1, 1.75, 1.5, 1.5),"Sorcerer" = list(1,1.75,2,1.5,1.5,1),"Berserker" = list(1.5,2,1.5,1,1,1),"Imaginary" = list(1.5, 1.5, 1, 1.25, 1.25, 1.25), "Reaper" = list(1.75, 1, 1.5, 1.5, 1, 1.5))
 		onFinalization(mob/user)
 			if(!islist(user.race.transformations))
 				user.race.transformations = list()
@@ -33,11 +33,16 @@ race
 			if(user.Class=="Berserker")
 				user.ManaAmount=0
 				user.AddSkill(new /obj/Skills/Queue/Desperation/LunarRave)
+				user.AddSkill(new /obj/Skills/Buffs/SlotlessBuffs/Autonomous/Racial/Nobody/Lunar_Wrath)
 				passives = list("LunarDurability" = 1, "LunarWrath" = 1,"RenameMana" = "WRATH","LunarAnger"=1)
 				user.NobodyOrigin()
 			if(user.Class=="Imaginary")
 				user.AddSkill(new /obj/Skills/Projectile/Zone_Attacks/Desperation/MagicHour)
 				user.ImaginaryKeyblade()
+				user.NobodyOrigin()
+			if(user.Class=="Reaper")
+				passives = list( "SlayerMod" = 1, "FavoredPrey" = "Mortal", "Extend" = 1, "Gum Gum" = 1, "CriticalChance" = 15, "CriticalDamage" = 0.25, "Instinct" = 1 )
+		//		user.AddSkill(new /obj/Skills/Projectile/Zone_Attacks/Desperation/Deathscythe)
 				user.NobodyOrigin()
 			..()
 /mob/proc/NobodyOrigin()
@@ -88,7 +93,7 @@ race
 	src.KeybladeColor=Color
 	var/inp = input(src, "What path of magic will you fall under?") in list("Fire", "Ice", "Thunder")
 	src.KeybladePath = inp
-	switch(KeybladePath)
+	switch(src.KeybladePath)
 		if("Fire")
 			src.AddSkill(new/obj/Skills/Projectile/Magic/Fire)
 		if("Ice")

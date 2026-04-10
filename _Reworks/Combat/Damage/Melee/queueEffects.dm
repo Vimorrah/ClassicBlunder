@@ -37,6 +37,12 @@
             applyDebuff(enemy, /obj/Skills/Buffs/SlotlessBuffs/Autonomous/Debuff/Marked_Prey, FALSE, FALSE, FALSE)
         if(passive_handler["Heavy Strike"] == "Fox Fire")
             applyDebuff(enemy, /obj/Skills/Buffs/SlotlessBuffs/Autonomous/Debuff/Soul_Drained, FALSE, FALSE, FALSE)
+    if(AttackQueue.WaveHit)
+        var/waveFilter = filter(type="wave", x=3, y=3, size=2)
+        enemy.filters += waveFilter
+        spawn(8)
+            if(enemy)
+                enemy.filters -= waveFilter
     if(AttackQueue.Explosive)
         Bang(enemy.loc, AttackQueue.Explosive)
     if(AttackQueue.Shining)

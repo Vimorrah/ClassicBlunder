@@ -2,6 +2,51 @@ ascension
 	makyo
 		one
 			unlock_potential = ASCENSION_ONE_POTENTIAL
+			passives = list("Juggernaut" = 0.5, "DemonicDurability" = 1, "HeavyHitter" = 0.5, "Trample" = 1)
+			skills = list(/obj/Skills/Buffs/SlotlessBuffs/Makyo/Expand)
+			strength = 0.5
+			force = 0.25
+			intimidation = 25
+		two
+			unlock_potential = ASCENSION_TWO_POTENTIAL
+			passives = list("Pressure" = 1, "DemonicDurability" = 1, "HeavyHitter" = 0.5)
+			endurance = 0.25
+			offense = 0.5
+			intimidation = 50
+		three
+			unlock_potential = ASCENSION_THREE_POTENTIAL
+			passives = list("Juggernaut" = 1, "DemonicDurability" = 0.5, "HeavyHitter" = 0.5)
+			strength = 0.5
+			endurance = 0.25
+			force = 0.5
+			intimidation = 50
+		four
+			unlock_potential = ASCENSION_FOUR_POTENTIAL
+			passives = list("Juggernaut" = 0.5, "DemonicDurability" = 0.5, "HeavyHitter" = 1)
+			strength = 0.5
+			endurance = 0.25
+			force = 0.5
+			intimidation = 25
+		five
+			unlock_potential = ASCENSION_FIVE_POTENTIAL
+			passives = list("Juggernaut" = 0.5, "DemonicDurability" = 0.5, "HeavyHitter" = 2)
+			strength = 1
+			endurance = 0.25
+			force = 1
+			intimidation = 25
+
+		six
+			unlock_potential = ASCENSION_SIX_POTENTIAL
+			passives = list("Juggernaut" = 0.5, "DemonicDurability" = 0.5, "HeavyHitter" = 2)
+			strength = 1
+			endurance = 0.25
+			force = 1
+			intimidation = 25
+
+/*ascension
+	makyo
+		one
+			unlock_potential = ASCENSION_ONE_POTENTIAL
 			choices = list("Winter" = /ascension/sub_ascension/makyo/winter, "Summer"= /ascension/sub_ascension/makyo/summer, "Fall" = /ascension/sub_ascension/makyo/fall, "Spring" = /ascension/sub_ascension/makyo/spring)
 			choiceTitle = "From which Court do you Hail?"
 			choiceMessage ="As you've grown, the Court of Seasons calls, which House are you most attuned to?\n\nSummer:Passionate yet fickle, you burn too bright for most, for you know in no time at all you shall be snuffed out...\n\nWinter: Stagnant and solitary, slow to act, yet bringing forth the inevitable end once roused...\n\nFall: The most mystical and  mysterious of all, wise beyond your years and yet always in the midst of fading...\n\nSpring: The most vivacious and inexperienced, always creating new marvels while rarely perfecting what you bring to bloom..."
@@ -29,7 +74,7 @@ ascension
 					strength = 0.25
 					speed = 0.25
 					defense = 0.25
-					passives+= list("GodSpeed" = 1, "BlurringStrikes"=1)
+					passives+= list("Godspeed" = 1, "BlurringStrikes"=1)
 				..()
 		three
 			unlock_potential = ASCENSION_THREE_POTENTIAL
@@ -40,6 +85,7 @@ ascension
 					force = 0.25
 					endurance = -0.125
 					defense = -0.125
+					passives+= list("Scorching" = 2)
 				if(owner.race.ascensions[1].choiceSelected == /ascension/sub_ascension/makyo/winter)
 					endurance = 0.25
 					defense = 0.25
@@ -50,11 +96,12 @@ ascension
 					force = 0.25
 					endurance = 0.25
 					offense = 0.25
+					passives+= list("Shattering" = 2)
 				if(owner.race.ascensions[1].choiceSelected == /ascension/sub_ascension/makyo/spring)
 					strength = 0.25
 					speed = 0.25
 					defense = 0.25
-					passives+= list("Pursuer" = 1)
+					passives+= list("Pursuer" = 1, "Shocking" = 2)
 				..()
 
 		four
@@ -79,7 +126,7 @@ ascension
 					strength = 0.25
 					speed = 0.25
 					defense = 0.25
-					passives+= list("GodSpeed" = 1, "BlurringStrikes"=1)
+					passives+= list("Godspeed" = 1, "BlurringStrikes"=1)
 				..()
 		five
 			unlock_potential = ASCENSION_FIVE_POTENTIAL
@@ -137,7 +184,7 @@ ascension
 				defense = 0.5
 				intelligenceAdd=3
 				imaginationAdd=-2
-				passives= list("GodSpeed"= 1, "Flicker" = 1)
+				passives= list("Godspeed"= 1, "Flicker" = 1)
 
 				onAscension(mob/owner)
 					owner.Class = "Spring"
@@ -152,3 +199,4 @@ ascension
 				onAscension(mob/owner)
 					owner.Class = "Fall"
 					..()
+					*/

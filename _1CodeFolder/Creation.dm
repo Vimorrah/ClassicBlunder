@@ -1,6 +1,6 @@
 #define WIPE_TOPIC "https://docs.google.com/document/d/1WXcBFGjQXbeWakbepjPoo12XJvI97kd5qHWjiOvbqf0/edit?tab=t.0"
 #define DISCORD_INVITE "https://discord.gg/DXtR4dGzM3"
-#define PATREON_LINK "https://patreon.com/jordanzoSupport"
+#define PATREON_LINK "https://patreon.com/sunshinejesse"
 #define KO_FI_LINK "https://ko-fi.com/boberjones"
 #define DONATION_MESSAGE "<a href='[PATREON_LINK]'>Patreon (Monthly)</a> <a href='[KO_FI_LINK]'>Ko-Fi (One Time)</a>"
 #define THANKS_MESSAGE_DONATOR(tier) "Thank you for supporting! You have Tier [tier] donator benefits!"
@@ -74,7 +74,7 @@ mob/Players
 			src.contents += new/obj/Money
 
 		spawn() initPersonalMagicTrees();
-		
+
 		winshow(usr,"StatsWindow",0)
 		winshow(usr,"StatsWindow2",0)
 		for(var/e in list("Health","Energy","Power","Mana"))
@@ -302,8 +302,6 @@ mob/Players
 			src.ModifyPrime=0
 		if(src.ModifyLate)
 			src.ModifyLate=0
-		if(src.ModifyPrime)
-			src.ModifyPrime=0
 
 		// var/Dif=glob.progress.Era-src.EraAge
 
@@ -460,9 +458,11 @@ mob/Players
 					if(PACT_BROKEN_SUBJECT_PENALTY)
 						whoToInflict = PACT_SUBJECT
 				p.breakPact(TRUE, whoToInflict)
+		DevilSummonerRestoreVerbs()
 		initShortcuts();
 		return
 	Logout()
+		DevilSummonerLogout()
 		players -= src
 		if(dancing) transform=dancing
 		last_online = world.realtime
@@ -537,7 +537,7 @@ mob/Creation
 	Login()
 		winset(usr, null, "browser-options=find")
 		client.perspective=MOB_PERSPECTIVE | EDGE_PERSPECTIVE
-		usr.client.view=8
+		usr.client.view=18
 		usr<<browse("[basehtml][Notes]")
 		winshow(usr, "HungerLabel", 0)
 		winshow(usr, "Hunger", 0)
@@ -897,13 +897,13 @@ obj/Login
 	Grabbable=0
 	Screenz
 		layer=555
-		icon='OldLogin.png'
+		icon='FourthFateTitleScreen.png'
 		density=1
 	Newz
 		icon='ArtificalObj.dmi'
 		icon_state="Misc"
 		layer=999
-		alpha=0
+	//	alpha=0
 		Click()
 			if(WorldLoading)
 				usr<<"Please wait until the world is done loading..."
@@ -929,7 +929,7 @@ obj/Login
 		icon='ArtificalObj.dmi'
 		icon_state="Misc"
 		layer=999
-		alpha=0
+	//	alpha=0
 		Click()
 			if(WorldLoading)
 				usr<<"Please wait until the world is done loading..."
@@ -1140,8 +1140,9 @@ mob/proc
 				src.EraAge=0
 				src.EraBody="Adult"
 
+			// Always set RewardsLastGained for new characters so they don't get catch-up rewards for days before they existed
+			src.RewardsLastGained = glob.progress.DaysOfWipe
 			if(glob.progress.WipeStart)
-				src.RewardsLastGained=glob.progress.DaysOfWipe-1
 				src.PotentialLastDailyGain=glob.progress.WipeStart
 				if(src.Potential==DaysOfWipe())//if its a bad boi who gets free potential
 					src.PotentialLastDailyGain=glob.progress.DaysOfWipe-1

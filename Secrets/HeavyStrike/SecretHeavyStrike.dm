@@ -7,6 +7,7 @@
     KBMult=3
     Cooldown=15
 
+
 //ELDRITCH
 #define ELDRITCH_BOON_VARS list("Scorching"=3, "Freezing"=3, "Paralyzing"=3, "Shattering"=3, "Toxic"=3)
 /obj/Skills/Queue/Secret_Heavy_Strike
@@ -60,16 +61,16 @@
     Cooldown=20;
     AccuracyMult=1.15;
     IconLock='Ultima Arm.dmi';
-    
+
     Ripple_Overdrive
         DamageMult=1;
         HitMessage="channels the Ripple through their strikes: <b>Ripple Overdrive!!</b>";
-    
+
     Metal_Silver_Overdrive
         Cooldown=30;
         Warp=2;
         HitMessage="channels the Ripple through metal: <b>Metal Silver Overdrive!!</b>";
-    
+
     Sendo_Ripple_Overdrive
         DamageMult=3;
         AccuracyMult=1.1;
@@ -77,23 +78,23 @@
         KBMult=5;
         Shattering=10;
         HitMessage="channels the Ripple through solid rock: <b>Sendo Ripple Overdrive!!</b>";
-    
+
     Tornado_Overdrive
         Paralyzing=10;
         Warp=3;
         Rapid=1;
         HitMessage="channels the Ripple through a spinning kick: <b>Tornado Overdrive!!</b>"
-    
+
     Scarlet_Overdrive
         DamageMult=3;
         AccuracyMult=1.1;
         Scorching=10;
         HitMessage="channels the Ripple into fire: <b>Scarlet Overdrive!!</b>";
-    
+
     Turqoiuse_Blue_Overdrive
         Freezing=10;
         HitMessage="channels the Ripple through water: <b>Turqoise Blue Overdrive!!</b>";
-    
+
     Overdrive_Barrage
         DamageMult=1;
         KBAdd=1;
@@ -103,7 +104,7 @@
         Warp=5;
         IconLock='Ripple Arms.dmi'
         HitMessage="channels the Ripple for multiple powerful hits: <b>OVERDRIVE BARRAGE!!</b>";
-    
+
     Flaming_Scarlet_Overdrive//and i do mean flaming
         DamageMult=4;
         Cooldown=30;
@@ -122,7 +123,7 @@
     LifeSteal=100;
     HitSparkX=-32
     HitSparkY=-32
-    
+
     Vampire_Strike
         HitSparkIcon='Hit Effect Vampire.dmi'
         HitSparkTurns=0;
@@ -229,3 +230,43 @@
         adjust(mob/p)
             DamageMult=clamp(p.GetMangLevel() * 2, 3, 10);
             HitMessage="strikes with the power of [p.GetMangLevel()] Mang Ring\s!!";
+
+
+
+//BLACK FLASH
+/obj/Skills/Queue/Secret_Heavy_Strike/Black_Flash
+    Cooldown=15;
+    Duration=5;
+    Divergent_Fist
+        ActiveMessage="'s own energy lags behind...!"
+        HitMessage="'s impact is doubled up from their energy lagging behind!"
+        DamageMult=2
+        HitSparkIcon='CE Hitspark.dmi'
+        HitSparkTurns=1
+        HitSparkSize=1
+        AccuracyMult=1
+        KBAdd=5
+        KBMult=3
+    Black_Flash_Strike
+        TextColor = "#DC143C";
+        ActiveMessage="'s fists sparks black...!"
+        HitMessage="lands a <b>BLACK FLASH!!</b>"
+        DamageMult = (2 ** 2.5)
+        AccuracyMult = 10
+        KBAdd = 10
+        Duration=4
+        PushOut=2
+        HitSparkX=-14
+        HitSparkY=-12
+        HitSparkSize=2
+        PushOutWaves=3
+        PushOutIcon='DarkKiai.dmi'
+        HitSparkIcon='Black_Flash_Hitspark_1.dmi'
+        HitSparkTurns=1
+        HitSparkSize=4
+        KBMult = 10
+        BuffSelf="/obj/Skills/Buffs/SlotlessBuffs/Autonomous/QueueBuff/BlackFlash_Potential"
+        adjust(mob/p)
+            var/SecretInformation/BlackFlash/bf = p.secretDatum
+            bf.BlackFlashChance = bf.BlackFlashBaseChance
+            admins << "Queue'd a Black Flash, reset the chance to [bf.BlackFlashChance]"

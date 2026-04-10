@@ -417,6 +417,10 @@ obj/Items/Tech
 					usr << "You need to get [Choice] reforged.  It is already broken."
 					src.Using=0
 					return
+				if(istype(Choice, /obj/Items/Sword)&&Choice.Glass&&Choice.HighFrequency)
+					usr << "[Choice] has to be repaired by hand."
+					src.Using=0
+					return
 				usr.Frozen=2
 				usr << "Repairing [Choice]... (This will take 15 seconds)"
 				sleep(150)
@@ -431,7 +435,7 @@ obj/Items/Tech
 
 	Fiber_Bonding_Agent
 		TechType="RepairAndConversion"
-		SubType="Molecular Technology"
+		SubType="Modular Weaponry"
 		icon='Tech.dmi'
 		icon_state="Fiber Bond"
 		Cost=5
@@ -473,7 +477,11 @@ obj/Items/Tech
 				sleep(150)
 				usr.Frozen=0
 				usr << "Finished bonding [Choice]."
-				Choice.ShatterTier+=1
+				Choice.ShatterTier+=5
+				if(istype(Choice, /obj/Items/Sword)&& Choice.HighFrequency)
+					Choice.ShatterTier+=5
+					Choice.ShatterMax*=2
+					Choice.ShatterMax=round(Choice.ShatterMax)
 				Choice.Conversions="Sharp"//This will flag another shatter tier which won't be repaired by reforging
 				src.TotalStack--
 				if(src.TotalStack<=0)
@@ -483,7 +491,7 @@ obj/Items/Tech
 
 	Quicksilver_Alloy
 		TechType="RepairAndConversion"
-		SubType="Light Alloys"
+		SubType="Modular Weaponry"
 		icon='Tech.dmi'
 		icon_state="Quicksilver"
 		Cost=5
@@ -542,6 +550,8 @@ obj/Items/Tech
 				usr.Frozen=0
 				usr << "Finished quicksilver bonding [Choice]."
 				Choice.ShatterMax/=2
+				if(istype(Choice, /obj/Items/Sword)&&Choice.HighFrequency)
+					Choice.ShatterMax*=2
 				Choice.ShatterMax=round(Choice.ShatterMax)
 				if(Choice.ShatterCounter>Choice.ShatterMax)
 					Choice.ShatterCounter=Choice.ShatterMax
@@ -613,7 +623,7 @@ obj/Items/Tech
 
 	Resistant_Coating
 		TechType="RepairAndConversion"
-		SubType="Shock Absorbers"
+		SubType="Advanced Plating"
 		icon='Tech.dmi'
 		icon_state="Resin"
 		Cost=5
@@ -2385,7 +2395,8 @@ obj/Items/Tech
 								if(!m.CheckSlotless("FullMoonForm"))
 									if(m.ActiveBuff)
 										if(m.CheckActive("Eight Gates"))
-											m.ActiveBuff:Stop_Cultivation()
+											var/obj/Skills/Buffs/ActiveBuffs/Eight_Gates/eg = m.ActiveBuff
+											eg.Stop_Cultivation()
 											m.GatesActive=0
 										else
 											m.ActiveBuff.Trigger(m)
@@ -3748,9 +3759,9 @@ obj/Items/Gear
 		Health=1000000000000
 		proc/changeType(mob/player)
 			if(MechType)
-				switch(input(player, "Do you want to change your mech's type? Each type has a different boon") in list("Yes","No")=="No")
-					if("Yes")
-						MechType = input(player, "What type?") in list("Speed","Tank","Assault")
+				var/answer = input(player, "Do you want to change your mech's type? Each type has a different boon") in list("Yes","No")
+				if(answer == "Yes")
+					MechType = input(player, "What type?") in list("Speed","Tank","Assault")
 			else
 				MechType = input(player, "What type of mech do you want to use?", "Mech Type") in list("Speed","Tank","Assault")
 		proc/setup(mob/player)

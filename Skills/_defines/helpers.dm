@@ -32,7 +32,7 @@
     throwSkill(s)
 
 /mob/proc/cycleStackingBuffs(var/obj/Skills/S)
-    if(istype(AttackQueue, /obj/Skills/Buffs/SlotlessBuffs/Autonomous/QueueBuff/Finisher/Samsara) || istype(AttackQueue?:type, /obj/Skills/Queue/Finisher/Cycle_of_Samsara))
+    if(istype(AttackQueue, /obj/Skills/Buffs/SlotlessBuffs/Autonomous/QueueBuff/Finisher/Samsara) || istype(AttackQueue, /obj/Skills/Queue/Finisher/Cycle_of_Samsara))
         AttackQueue.Mastery++
         for(var/obj/Skills/Buffs/SlotlessBuffs/Autonomous/QueueBuff/Finisher/Samsara/s in SlotlessBuffs)
             s.Timer = 0
@@ -74,6 +74,8 @@ mob/proc/UsingHotnCold()
 	return FALSE
 
 /mob/proc/applySnare(limit, _icon, force = FALSE)
+	if(passive_handler.Get("Trample") && is_dashing)
+		return
 	var/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Debuff/Snare/s = findOrAddSkill(/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Debuff/Snare) // try to find it
 	if(force)
 		if(BuffOn(s))

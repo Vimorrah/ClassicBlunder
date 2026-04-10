@@ -7,6 +7,7 @@
 /mob/var/transGod = 0
 /mob/var/tmp/DevilTriggerSinDamageBonus = 0
 /mob/var/tmp/DevilTriggerSlothBonus = 0
+/mob/var/tmp/DevilTriggerEnvyMirrorPending = 0
 /mob/var/tmp/LastSlothTick = 0
 /mob/var/tmp/list/tmp_removed_ssj_forms = list()
 /mob/var/list/removed_ssj_forms = list()
@@ -113,7 +114,7 @@ mob
 
 			fieldAndDefense(defender, UnarmedAttack, SwordAttack, SpiritAttack, val)
 
-			if(defender.passive_handler["Determination(Purple)"||defender.passive_handler["Determination(White)"]])
+			if(defender.passive_handler["Determination(Purple)"] || defender.passive_handler["Determination(White)"])
 				defender.HealMana(defender.SagaLevel / 60, 1)
 				if(defender.ManaAmount>=100 && defender.RebirthHeroType=="Cyan"&&!defender.passive_handler["Determination(White)"])
 					defender.passive_handler.Set("Determination(Green)", 1)
@@ -248,6 +249,8 @@ mob
 				DEBUGMSG("this is the damage actually dealt: [val]")
 				var/final_damage = max(0,val)
 				defender.LoseHealth(final_damage)
+
+			src.ApplyFrenzyCombatHooks(defender, max(0, val), UnarmedAttack, SwordAttack, SpiritAttack)
 
 			if(defender.Flying)
 				var/obj/Items/check = defender.EquippedFlyingDevice()
@@ -573,6 +576,12 @@ mob
 				cursedSheathValue += val
 				cursedSheathValue = clamp(0, cursedSheathValue, SagaLevel*50)
 
+			// Devil Summoner racial on-hit passives
+			if(src.demon_racial_femme_active)
+				src.DemonFemmeCharmCheck(defender)
+			if(src.demon_racial_snake_active)
+				src.DemonSnakePoisonCheck(defender)
+
 			if(src.HasErosion())
 				var/Erosion = (src.GetErosion()/4)
 				var/MPow=defender.Power_Multiplier/8
@@ -685,9 +694,9 @@ mob
 						WoundsInflicted=val/defender.GetEnd(glob.CURSED_WOUNDS_RATE)
 					else if(src.SwordWounds())
 						if(defender.GetEnd(0.5) < 2)
-							WoundsInflicted=val/clamp((1 + defender.GetEnd(0.5))/(GetSwordDamage(s)), 1, 15)
+							WoundsInflicted=val/clamp((1 + defender.GetEnd(0.5))/max(GetSwordDamage(s),0.01), 1, 15)
 						else
-							WoundsInflicted= val / clamp(defender.GetEnd(0.5)/(GetSwordDamage(s)), 1, 15)
+							WoundsInflicted= val / clamp(defender.GetEnd(0.5)/max(GetSwordDamage(s),0.01), 1, 15)
 					else
 						if(defender.GetEnd(0.5) < 2)
 							WoundsInflicted=val/clamp(1 + defender.GetEnd(0.5), 1, 15)
@@ -858,7 +867,7 @@ mob
 				if(PrideDrain<0.01)
 					PrideDrain=0.01
 				val*=PrideDrain
-				if(src.Health>=85&!passive_handler.Get("PowerStressed"))
+				if(src.Health>=85&&!passive_handler.Get("PowerStressed"))
 					val*=0
 			src.Energy-=val
 			if(src.Energy<0)
@@ -916,23 +925,29 @@ mob
 			if(src.TotalCapacity>=100)
 				src.TotalCapacity=100
 		HealHealth(var/val)
-			if(src.Sheared)
+			if(src.GetEffectiveShearForStackingEffects())
 				if(src.HasShearImmunity())
 					val=val
 					src.Sheared=0
 				if(src.HasHellPower())
-					src.Sheared-=val/(2/src.GetHellPower())
-					if(src.Sheared<0)
-						val+=(-1)*src.Sheared
-						src.Sheared=0
-					else
+					if(src.Sheared > 0)
+						src.Sheared-=val/(2/src.GetHellPower())
+						if(src.Sheared<0)
+							val+=(-1)*src.Sheared
+							src.Sheared=0
+						else
+							val=val*0.5
+					else if(!src.IsDarkDragonPlayer() && src.Frenzy > 0)
 						val=val*0.5
 				else
-					src.Sheared-=val
-					if(src.Sheared<0)
-						val=(-1)*src.Sheared
-						src.Sheared=0
-					else
+					if(src.Sheared > 0)
+						src.Sheared-=val
+						if(src.Sheared<0)
+							val=(-1)*src.Sheared
+							src.Sheared=0
+						else
+							val=val/4
+					else if(!src.IsDarkDragonPlayer() && src.Frenzy > 0)
 						val=val/4
 			if(src.PotionCD)
 				val/=glob.HEALTH_POTION_NERF
@@ -966,15 +981,18 @@ mob
 			src.ManaAmount+=val
 			src.MaxMana()
 		HealWounds(var/val, var/StableHeal=0)
-			if(src.Sheared)
+			if(src.GetEffectiveShearForStackingEffects())
 				if(src.HasShearImmunity())
 					val=val
 					src.Sheared=0
-				src.Sheared-=val
-				if(src.Sheared<0)
-					val=(-1)*src.Sheared
-					src.Sheared=0
-				else
+				if(src.Sheared > 0)
+					src.Sheared-=val
+					if(src.Sheared<0)
+						val=(-1)*src.Sheared
+						src.Sheared=0
+					else
+						val=val/2
+				else if(!src.IsDarkDragonPlayer() && src.Frenzy > 0)
 					val=val/2
 			if(src.PotionCD)
 				val/=1.25
@@ -1188,7 +1206,7 @@ mob
 		// forgive the sin below, im not replacing basestat() in all the codebase
 		getEnhanced(statName)
 			var/enhance = vars["Enhanced[statName]"] * 0.3
-			if(isRace(ANDROID)||passive_handler.Get("Enhanced Cybernetic Mainframe"))
+			if(isRace(ANDROID)||CyberneticMainframe)
 				enhance = vars["Enhanced[statName]"] * 0.6
 			if(Target && ismob(Target))
 				if(Target.passive_handler["Rusting"])
@@ -1223,15 +1241,34 @@ mob
 			if(!istype(current, /transformation/demon/devil_trigger)) return FALSE
 			return TRUE
 
+		resetDevilTriggerSinBonuses()
+			DevilTriggerSinDamageBonus = 0
+			DevilTriggerSlothBonus = 0
+			LastSlothTick = 0
+			if(DevilTriggerEnvyMirrorPending && passive_handler)
+				if(passive_handler.Get("MirrorStats") > 0)
+					passive_handler.Decrease("MirrorStats", 1)
+				if(passive_handler.Get("MirrorStats") < 0)
+					passive_handler.Set("MirrorStats", 0)
+				DevilTriggerEnvyMirrorPending = 0
+			// Deactivate the shockwave buff when Devil Trigger ends
+			var/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Sloth_Factor/sf = FindSkill(/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Sloth_Factor)
+			if(sf && sf.SlotlessOn)
+				sf.Trigger(src, TRUE)
+
 		getDevilTriggerSinBonusMult()
-			if(!isInDemonDevilTrigger()) return 0
+			if(!isInDemonDevilTrigger())
+				resetDevilTriggerSinBonuses()
+				return 0
 
 			var/mult = 0
+			var/pride_bonus = 0
 
 			// EnvyFactor
 			if(passive_handler && passive_handler.Get("EnvyFactor"))
 				if(!passive_handler.Get("MirrorStats"))
 					passive_handler.Set("MirrorStats", 1)
+					DevilTriggerEnvyMirrorPending = 1
 
 			// LustFactor
 			if(passive_handler && passive_handler.Get("LustFactor"))
@@ -1256,24 +1293,25 @@ mob
 			if(DevilTriggerSlothBonus > 0)
 				mult += DevilTriggerSlothBonus
 
-			// PrideFactor
+			// PrideFactor (uncapped; other sin bonuses stay capped at 3)
 			if(passive_handler && passive_handler.Get("PrideFactor") && Target && istype(Target, /mob/Players))
 				var/healthDiff = Health - Target:Health
 				if(healthDiff > 0)
 					var/steps = round(healthDiff / 10)
 					if(steps > 0)
-						var/pride_bonus = 0.25 * steps * passive_handler.Get("PrideFactor")
-						mult += pride_bonus
+						pride_bonus = 0.25 * steps * passive_handler.Get("PrideFactor")
 
 			//these aren't actually multipliers btw teehee, they are additive. They started out as multiplicative but I changed my mind after the fact
 			if(mult < 0)
 				mult = 0
 
-			if(passive_handler && passive_handler.Get("PrideFactor") && mult < 1.5)
-				mult = 1.5
-
 			if(mult > 3)
 				mult = 3
+
+			mult += pride_bonus
+
+			if(passive_handler && passive_handler.Get("PrideFactor") && mult < 1.5)
+				mult = 1.5
 
 			return mult
 
@@ -1289,7 +1327,7 @@ mob
 			if(amount <= 0) return
 			if(!isInDemonDevilTrigger()) return
 
-			var/rate = 0.0001
+			var/rate = 0.01
 
 			if(passive_handler && passive_handler.Get("Sadist"))
 				var/inc = amount * rate
@@ -1306,7 +1344,7 @@ mob
 			if(amount <= 0) return
 			if(!isInDemonDevilTrigger()) return
 
-			var/rate = 0.0001
+			var/rate = 0.01
 
 			if(passive_handler && passive_handler.Get("Sadist"))
 				var/dec = amount * rate * 0.5
@@ -1323,6 +1361,10 @@ mob
 		resetSlothTracking()
 			DevilTriggerSlothBonus = 0
 			LastSlothTick = world.time
+			// Deactivate the shockwave buff when the demon moves
+			var/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Sloth_Factor/sf = FindSkill(/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Sloth_Factor)
+			if(sf && sf.SlotlessOn)
+				sf.Trigger(src, TRUE)
 
 		updateSlothSinBonus()
 			if(!isInDemonDevilTrigger()) return
@@ -1340,6 +1382,14 @@ mob
 			var/inc = 1 / 10 * passive_handler.Get("SlothFactor")
 			DevilTriggerSlothBonus += inc
 			LastSlothTick = world.time
+
+			// Activate the Sloth_Factor shockwave buff once the bonus is running
+			var/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Sloth_Factor/sf = findOrAddSkill(/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Sloth_Factor)
+			// Recovery: SlotlessOn saved as 1 but loop died (e.g. after relog)
+			if(sf.SlotlessOn && !sf.waveLoopRunning)
+				sf.startWaveLoop(src)
+			else if(!sf.SlotlessOn)
+				sf.Trigger(src, TRUE)
 
 		GetStrMult()
 			return src.StrMultTotal
@@ -1407,6 +1457,20 @@ mob
 
 		GetStr(var/Mult=1)
 			var/Str=src.StrMod
+			var/EldritchMod=0
+			if(src.EldritchPacted)
+				switch(src.ReflectedPactType)
+					if("Devotion")
+						EldritchMod=0.5
+					if("Power")
+						EldritchMod=1
+					if("Knowledge")
+						EldritchMod=0
+					if("Ambition")
+						EldritchMod=0
+					if("Survival")
+						EldritchMod=0.25
+			Str+=EldritchMod
 			//mecha suits replace base stats with their level up to max value of 3, which is a cutoff line for many races
 			Str+=src.StrAscension
 			//stat ascensions gained through racial or saga improvements
@@ -1465,7 +1529,7 @@ mob
 					if(SlotlessBuffs["What Must Be Done"].Password)
 						Mod+=min(0.5, SlotlessBuffs["What Must Be Done"].Mastery/10)
 			if(src.InfinityModule)
-				var/obj/Skills/Buffs/ActiveBuffs/Ki_Control/ki = usr.FindSkill(/obj/Skills/Buffs/ActiveBuffs/Ki_Control)
+				var/obj/Skills/Buffs/ActiveBuffs/Ki_Control/ki = src.FindSkill(/obj/Skills/Buffs/ActiveBuffs/Ki_Control)
 				if(ki && "Str" in ki.selectedStats)
 					Mult += round(glob.progress.totalPotentialToDate,5) / 150 * ki.StrMult
 			if(glob.racials.DEVIL_ARM_STAT_MULTS)
@@ -1479,8 +1543,6 @@ mob
 					Mod*=(1+(BM*glob.BUFF_MASTERY_LOWMULT))
 				else if(Mod>=glob.BUFF_MASTER_HIGHTHRESHOLD)
 					Mod*=(1+(BM*glob.BUFF_MASTERY_HIGHMULT))
-			// Demon Devil Trigger sins bonus
-			Mod += getDevilTriggerSinBonusMult()
 			if(src.Burn)
 				if(passive_handler.Get("BurningShot"))
 					if(src.Burn>0&&src.Burn<=25)
@@ -1541,6 +1603,9 @@ mob
 				Mod += 0.1 * src.StyleRating * src.getStyleBonusMult()
 			// Demon Devil Trigger sins bonus
 			Mod += getDevilTriggerSinBonusMult()
+			Mod += getMazokuSinBonusMult()
+			if(IsDarkDragonPlayer() && Frenzy > 0)
+				Mod += 0.5 * (min(Frenzy, glob.DEBUFF_STACK_MAX) / glob.DEBUFF_STACK_MAX)
 			var/STM=GetStrTransMult()
 			Str*=STM
 			Str*=Mod
@@ -1583,6 +1648,20 @@ mob
 
 		GetFor(var/Mult=1)
 			var/For=src.ForMod
+			var/EldritchMod=0
+			if(src.EldritchPacted)
+				switch(src.ReflectedPactType)
+					if("Devotion")
+						EldritchMod=0.5
+					if("Power")
+						EldritchMod=0
+					if("Knowledge")
+						EldritchMod=1
+					if("Ambition")
+						EldritchMod=0.25
+					if("Survival")
+						EldritchMod=0
+			For+=EldritchMod
 			For+=src.ForAscension
 			var/enhanced = getEnhanced("Force")
 			For+=src.EnhancedForce ? enhanced : 0
@@ -1635,7 +1714,7 @@ mob
 					if(SlotlessBuffs["What Must Be Done"].Password)
 						Mod+=min(0.5, SlotlessBuffs["What Must Be Done"].Mastery/10)
 			if(src.InfinityModule)
-				var/obj/Skills/Buffs/ActiveBuffs/Ki_Control/ki = usr.FindSkill(/obj/Skills/Buffs/ActiveBuffs/Ki_Control)
+				var/obj/Skills/Buffs/ActiveBuffs/Ki_Control/ki = src.FindSkill(/obj/Skills/Buffs/ActiveBuffs/Ki_Control)
 				if(ki && "For" in ki.selectedStats)
 					Mult += round(glob.progress.totalPotentialToDate,5) / 150 * ki.ForMult
 			// if((isRace(SAIYAN) || isRace(HALFSAIYAN))&&transActive&&!src.SpecialBuff)
@@ -1689,6 +1768,7 @@ mob
 
 			// Demon Devil Trigger sins bonus (additive)
 			Mod += getDevilTriggerSinBonusMult()
+			Mod += getMazokuSinBonusMult()
 
 			var/adaptive = passive_handler.Get("AngerAdaptiveForce")
 			if(adaptive && (src.HasCalmAnger() || passive_handler.Get("EndlessAnger") || Anger))
@@ -1754,6 +1834,20 @@ mob
 
 		GetEnd(var/Mult=1)
 			var/End=src.EndMod
+			var/EldritchMod=0
+			if(src.EldritchPacted)
+				switch(src.ReflectedPactType)
+					if("Devotion")
+						EldritchMod=0.5
+					if("Power")
+						EldritchMod=0.25
+					if("Knowledge")
+						EldritchMod=0.25
+					if("Ambition")
+						EldritchMod=0
+					if("Survival")
+						EldritchMod=1
+			End+=EldritchMod
 			End+=src.EndAscension
 			var/enhanced = getEnhanced("Endurance")
 			End+=EnhancedEndurance ? enhanced : 0
@@ -1790,7 +1884,7 @@ mob
 					if(SlotlessBuffs["What Must Be Done"].Password)
 						Mod+=min(0.5, SlotlessBuffs["What Must Be Done"].Mastery/10)
 			if(src.InfinityModule)
-				var/obj/Skills/Buffs/ActiveBuffs/Ki_Control/ki = usr.FindSkill(/obj/Skills/Buffs/ActiveBuffs/Ki_Control)
+				var/obj/Skills/Buffs/ActiveBuffs/Ki_Control/ki = src.FindSkill(/obj/Skills/Buffs/ActiveBuffs/Ki_Control)
 				if(ki && "End" in ki.selectedStats)
 					Mult += round(glob.progress.totalPotentialToDate,5) / 150 * ki.EndMult
 			// if((isRace(SAIYAN) || isRace(HALFSAIYAN))&&transActive&&!src.SpecialBuff)
@@ -1892,6 +1986,20 @@ mob
 
 		GetSpd(Mult=1)
 			var/Spd=src.SpdMod
+			var/EldritchMod=0
+			if(src.EldritchPacted)
+				switch(src.ReflectedPactType)
+					if("Devotion")
+						EldritchMod=0.5
+					if("Power")
+						EldritchMod=0.25
+					if("Knowledge")
+						EldritchMod=0.25
+					if("Ambition")
+						EldritchMod=1
+					if("Survival")
+						EldritchMod=0
+			Spd+=EldritchMod
 			Spd+=src.SpdAscension
 			var/enhanced = getEnhanced("Speed")
 			Spd+=EnhancedSpeed ? enhanced : 0
@@ -1917,7 +2025,7 @@ mob
 				Mod+=0.75
 			if(Saga&&src.Saga=="Eight Gates")
 				Mod+=0.01*GatesActive
-			if(passive_handler["Determination(Red)"||passive_handler["Determination(Yellow)"]]||passive_handler.Get("Determination(White)"))
+			if(passive_handler["Determination(Red)"]||passive_handler["Determination(Yellow)"]||passive_handler.Get("Determination(White)"))
 				Mod+=(0.025*ManaAmount)
 			if(Secret == "Heavenly Restriction")
 				if(secretDatum?:hasImprovement("Speed"))
@@ -1926,7 +2034,7 @@ mob
 				if(SlotlessBuffs["What Must Be Done"].Password)
 					Mod+=min(0.5, SlotlessBuffs["What Must Be Done"].Mastery/10)
 			if(src.InfinityModule)
-				var/obj/Skills/Buffs/ActiveBuffs/Ki_Control/ki = usr.FindSkill(/obj/Skills/Buffs/ActiveBuffs/Ki_Control)
+				var/obj/Skills/Buffs/ActiveBuffs/Ki_Control/ki = src.FindSkill(/obj/Skills/Buffs/ActiveBuffs/Ki_Control)
 				if(ki && "Spd" in ki.selectedStats)
 					Mult += round(glob.progress.totalPotentialToDate,5) / 150 * ki.SpdMult
 			// if((isRace(SAIYAN) || isRace(HALFSAIYAN))&&transActive&&!src.SpecialBuff)
@@ -1979,6 +2087,9 @@ mob
 				Mod += 0.1 * src.StyleRating * src.getStyleBonusMult()
 			// Demon Devil Trigger sins bonus
 			Mod += getDevilTriggerSinBonusMult()
+			Mod += getMazokuSinBonusMult()
+			if(IsDarkDragonPlayer() && Frenzy > 0)
+				Mod += 0.5 * (min(Frenzy, glob.DEBUFF_STACK_MAX) / glob.DEBUFF_STACK_MAX)
 			var/SpTM=GetSpdTransMult()
 			Spd*=SpTM
 			Spd*=Mod
@@ -2024,6 +2135,20 @@ mob
 
 		GetOff(var/Mult=1)
 			var/Off=src.OffMod
+			var/EldritchMod=0
+			if(src.EldritchPacted)
+				switch(src.ReflectedPactType)
+					if("Devotion")
+						EldritchMod=0.5
+					if("Power")
+						EldritchMod=0.5
+					if("Knowledge")
+						EldritchMod=0.5
+					if("Ambition")
+						EldritchMod=0
+					if("Survival")
+						EldritchMod=0
+			Off+=EldritchMod
 			Off+=src.OffAscension
 			var/enhanced = getEnhanced("Aggression")
 			Off+=EnhancedAggression ? enhanced : 0
@@ -2075,6 +2200,9 @@ mob
 				Mod += 0.1 * src.StyleRating * src.getStyleBonusMult()
 			// Demon Devil Trigger sins bonus
 			Mod += getDevilTriggerSinBonusMult()
+			Mod += getMazokuSinBonusMult()
+			if(IsDarkDragonPlayer() && Frenzy > 0)
+				Mod += 0.5 * (min(Frenzy, glob.DEBUFF_STACK_MAX) / glob.DEBUFF_STACK_MAX)
 			var/OTM=GetOffTransMult()
 			Off*=OTM
 			Off*=Mod
@@ -2120,7 +2248,20 @@ mob
 
 		GetDef(var/Mult=1)
 			var/Def=src.DefMod
-
+			var/EldritchMod=0
+			if(src.EldritchPacted)
+				switch(src.ReflectedPactType)
+					if("Devotion")
+						EldritchMod=0.5
+					if("Power")
+						EldritchMod=0
+					if("Knowledge")
+						EldritchMod=0
+					if("Ambition")
+						EldritchMod=0.5
+					if("Survival")
+						EldritchMod=0.5
+			Def+=EldritchMod
 			Def+=src.DefAscension
 			var/enhanced = getEnhanced("Reflexes")
 			Def+=EnhancedReflexes ? enhanced : 0
@@ -2175,6 +2316,7 @@ mob
 				Mod += 0.1 * src.StyleRating * src.getStyleBonusMult()
 			// Demon Devil Trigger sins bonus
 			Mod += getDevilTriggerSinBonusMult()
+			Mod += getMazokuSinBonusMult()
 			var/DTM=GetDefTransMult()
 			Def*=DTM
 			Def*=Mod
@@ -2273,6 +2415,14 @@ mob
 			src.AngerMax=1+((src.AngerMax-1)*num)
 		AngerDiv(var/num)
 			src.AngerMax=1+((src.AngerMax-1)/num)
+		LunarWrathAnger()
+			if(src.ManaAmount>=50)
+				if(src.passive_handler.Get("LunarWrath")&&!src.passive_handler.Get("Unrelenting Wrath"))
+					src.AngerMax=1+(src.ManaAmount/100)
+			else if(src.passive_handler.Get("Unrelenting Wrath"))
+				src.AngerMax=5
+			else
+				src.AngerMax=1
 		WeirdAngerStuff() //additive anger that won't be affected by mult
 			var/AngerTotal
 			if(src.passive_handler.Get("Red Hot Rage"))
@@ -2393,29 +2543,29 @@ mob
 			src.OMessage(10, "[src]'s sword has shattered!!", "[src]([src.key]) got their sword broken.")
 			if(src.StyleBuff)
 				if(src.StyleBuff.NeedsSword||src.StyleBuff.MakesSword)
-					if(!passive_handler["Sword Master"])
+					if(StyleBuff.MakesSword||StyleBuff.NeedsSword&&!passive_handler["Sword Master"])
 						src.StyleBuff.Trigger(src, Override=1)
 					if(src.StyleBuff.MakesSword)
-
 						del(s)
+					else
 			if(src.ActiveBuff)
 				if(src.ActiveBuff.NeedsSword||src.ActiveBuff.MakesSword)
-					if(!passive_handler["Sword Master"])
-						src.StyleBuff.Trigger(src, Override=1)
+					if(ActiveBuff.MakesSword||ActiveBuff.NeedsSword&&!passive_handler["Sword Master"])
+						ActiveBuff.Trigger(src, Override=1)
 					if(src.ActiveBuff.MakesSword)
 						del(s)
 			if(src.SpecialBuff)
 				if(src.SpecialBuff.NeedsSword||src.SpecialBuff.MakesSword)
-					if(!passive_handler["Sword Master"])
-						src.StyleBuff.Trigger(src, Override=1)
+					if(SpecialBuff.MakesSword||SpecialBuff.NeedsSword&&!passive_handler["Sword Master"])
+						src.SpecialBuff.Trigger(src, Override=1)
 					if(src.SpecialBuff.MakesSword)
 						del(s)
 			for(var/b in SlotlessBuffs)
 				var/obj/Skills/Buffs/SlotlessBuffs/sb = SlotlessBuffs[b]
 				if(sb)
 					if(sb.NeedsSword||sb.MakesSword)
-						if(!passive_handler["Sword Master"])
-							src.StyleBuff.Trigger(src, Override=1)
+						if(sb.MakesSword||sb.NeedsSword&&!passive_handler["Sword Master"])
+							sb.Trigger(src, Override=1)
 						if(sb.MakesSword)
 							del(s)
 			if(s)
@@ -2438,7 +2588,10 @@ mob
 					s.onBroken()
 					if(s.Glass)
 						OMsg(src, "[src]'s glass weaponry shatters into a million pieces!")
-						del s
+						if(!s.HighFrequency)
+							del s
+						else if(!s.HighFrequency)
+							OMsg(src, "But luckily, the hilt remains!")
 					if(s.Conjured)
 						OMsg(src, "[src]'s conjured weapontry shatters into arcane mist!")
 						del s
@@ -2601,24 +2754,6 @@ mob
 			else if(GetSpiritPower()>=0.25)
 				var/spiritPower = (GetSpiritPower() / 2)
 				return clamp(src.GetAbyssMod()*spiritPower, 0.001, 10)
-		SlayerDamage(mob/P, Forced=0)
-			if(HasSlayerMod(P))
-				if(P.UsingMuken())
-					return (-1)*src.GetSlayerMod()
-				var/ignore = P.passive_handler.Get("Xenobiology")
-				if(ignore && ((passive_handler["FavoredPrey"] == P.race.name) || passive_handler["FavoredPrey"] == "All"))
-					ignore = 0
-				if(src.Saga in list("Hiten Mitsurugi-Ryuu", "Ansatsuken"))
-					if(src.SagaLevel>=1)
-						if(!Forced)
-							return clamp((src.GetSlayerMod() * 1.5) - ignore, 0, glob.SLAYER_DAMAGE_CLAMP)
-						else
-							return clamp((Forced *1.5) - ignore, 0, glob.SLAYER_DAMAGE_CLAMP)
-				if(!Forced)
-					return clamp((src.GetSlayerMod() * 1.5) - ignore, 0, glob.SLAYER_DAMAGE_CLAMP)
-				else
-					return clamp(Forced - ignore, 0, glob.SLAYER_DAMAGE_CLAMP)
-				return 1
 
 		SpiritShift()
 			var/SFStr=src.BaseFor()+(glob.SPIRIT_FORM_BASE_RATE*src.AscensionsAcquired*(src.BaseStr()-src.BaseFor()))
@@ -2831,7 +2966,7 @@ mob
 				src.AddCyberCancel(ConversionCancel)
 		GetAndroidIntegrated()
 			var/Count=0
-			for(var/obj/Skills/S in usr)
+			for(var/obj/Skills/S in src)
 				if(istype(S, /obj/Skills/Buffs/SlotlessBuffs/Gear/Integrated))
 					Count++
 					continue
@@ -2844,9 +2979,9 @@ mob
 				if(istype(S, /obj/Skills/AutoHit/Gear/Integrated))
 					Count++
 					continue
-			if(Count>=2+usr.AscensionsAcquired)
+			if(Count>=2+src.AscensionsAcquired)
 				src << "You already have the full number of integrated gears possible!"
-				return 2+usr.AscensionsAcquired
+				return 2+src.AscensionsAcquired
 			return Count
 
 		ForceCancelBeam()
@@ -3193,9 +3328,6 @@ mob
 					return
 				src.saga_up_self()
 				return
-			if(src.CyberneticMainframe)
-				//
-				return
 			if(src.Potential>=glob.progress.T2_STYLES[1]&&src.passive_handler.Get("True Inheritor"))
 				if(!locate(/obj/Skills/Buffs/NuStyle/Legendary/Legacy_Of_The_Fabled_King, src))
 					src.AddSkill(new/obj/Skills/Buffs/NuStyle/Legendary/Legacy_Of_The_Fabled_King)
@@ -3215,7 +3347,8 @@ mob
 				DevelopSignature(src, 2, "Style")
 			if(styles_available(2) && src.Potential>=glob.progress.T2_STYLES[2] && src.req_styles(1, 2))
 				DevelopSignature(src, 2, "Style")
-
+			if(src.CyberneticMainframe)
+				return
 			// if(styles_available(3) && src.Potential>=glob.progress.T3_STYLES[1] && src.req_styles(0, 3))
 			// 	DevelopSignature(src, 3, "Style")
 			if(src.req_pot(glob.progress.T1_SIGS[1]) && src.req_sigs(0, 1))
@@ -3235,9 +3368,10 @@ mob
 			for(var/obj/Skills/s in src.Skills)
 				if(s.SignatureTechnique)
 					if(!s.SagaSignature)
-						if(!src.BuffOn(s))
-							src << "[s] has been removed as it is not one of your saga signatures."
-							del s
+						if(!s.CyberSignature&&src.CyberneticMainframe)
+							if(!src.BuffOn(s))
+								src << "[s] has been removed as it is not one of your saga signatures."
+								del s
 
 		MovementChargeBuildUp(var/Mult=1)
 			//this ticks per second

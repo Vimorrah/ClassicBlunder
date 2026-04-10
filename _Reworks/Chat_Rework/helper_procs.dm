@@ -7,7 +7,7 @@ proc
 
 mob/proc/OMessage(View=10,Msg,Log)
 	for(var/mob/Players/E in hearers(View,src))
-		if(!E.client) return
+		if(!E.client) continue
 		if(Msg)
 			if(E.client.getPref("CombatMessagesInIC"))
 				E.client.outputToChat("[Msg]", ALL_OUTPUT)

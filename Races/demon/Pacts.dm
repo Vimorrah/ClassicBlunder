@@ -100,9 +100,11 @@ proc/findPactByID(id)
 	choosePenaltyHarshness(owner)
 	if(!confirmDetails(owner))
 		del src
+		return
 	if(!presentPact(subject))
 		owner << "[subject] rejected your pact!"
 		del src
+		return
 	owner << "[subject] has accepted your pact!"
 	subject << "The pact is signed..."
 	sealed = TRUE
@@ -172,7 +174,7 @@ proc/findPactByID(id)
 	picker << "The subject penalties are [translatePenalty(PACT_SUBJECT)]"
 
 /datum/Pact/proc/choosePenaltyHarshness(mob/picker)
-	var/harshness
+	var/harshness = -1
 	while(harshness == -1)
 		harshness = input(picker, "What amount of harshness do you want the penalty to be? From 1 to 100. 1 being a 1% tax on break, or a 1% health cut and so on. This doesn't impact Death Penalty.", "Penalty Harshness") as num
 		if(harshness > 100 || harshness < 0)

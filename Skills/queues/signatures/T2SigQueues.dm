@@ -214,8 +214,42 @@ obj
 				HitSparkTurns=1
 				HitSparkSize=1.1
 				HitStep=/obj/Skills/Queue/Omnislash2
+				adjust(mob/p)
+					if(p.isInnovative(HUMAN, "Any") && !isInnovationDisable(p) && p.Class == "Heroic")
+						name="Furioso"
+						ActiveMessage="takes aim with a pair of pistols..."
+						HitMessage="opens up their assault with a burst of fire!"
+						Stunner=3
+						DamageMult=0.25
+						AccuracyMult=2
+						Combo=2
+						Instinct=2
+						Cooldown=-1
+						HitStep=/obj/Skills/Queue/Furioso2
+					else
+						name="Omnislash"
+						ActiveMessage="begins to glow with limitless bravery!"
+						DamageMult=0.5
+						AccuracyMult = 1.25
+						KBMult=0.00001
+						KBAdd=2
+						Combo=12
+						Warp=3
+						Duration=5
+						Cooldown=180 //once per fight
+						Decider=1
+						NeedsSword=1
+						Instinct=4
+						EnergyCost=5
+						HitSparkIcon='Slash - Power.dmi'
+						HitSparkX=-32
+						HitSparkY=-32
+						HitSparkTurns=1
+						HitSparkSize=1.1
+						HitStep=/obj/Skills/Queue/Omnislash2
 				verb/Omnislash()
 					set category="Skills"
+					adjust(usr)
 					usr.SetQueue(src)
 			Omnislash2
 				ActiveMessage="goes for the finishing blow!"
@@ -237,4 +271,66 @@ obj
 				verb/Omnislash()
 					set category="Skills"
 					usr.SetQueue(src)
+			Furioso2
+				ActiveMessage="charges forward to pierce with a Lance..."
+				DamageMult=1.5
+				Warp=5
+				Launcher=4
+				HitStep=/obj/Skills/Queue/Furioso3
+			Furioso3
+				ActiveMessage="smashes down with a Hammer..."
+				Warp=1
+				Dunker=3
+				DamageMult=1.25
+				HitSparkIcon='FevExplosion - Steam.dmi'
+				HitStep=/obj/Skills/Queue/Furioso4
+			Furioso4
+				ActiveMessage="makes a whirlwind of cuts with a Katana..."
+				Dunker=2
+				Combo=10
+				DamageMult=0.25
+				Determinator=1
+				HitStep=/obj/Skills/Queue/Furioso5
+			Furioso5
+				ActiveMessage="tears forth with a pair of Claws..."
+				Combo=2
+				Crippling=5
+				DamageMult=0.5
+				HitSparkIcon='Claw Markings.dmi'
+				HitStep=/obj/Skills/Queue/Furioso6
+			Furioso6
+				ActiveMessage="hacks forth with an Axe..."
+				Combo=3
+				Shearing=5
+				DamageMult=0.25
+				HitStep=/obj/Skills/Queue/Furioso7
+			Furioso7
+				ActiveMessage="sweeps wide with a Greatsword..."
+				DamageMult=0.75
+				Launcher=2
+				HitStep=/obj/Skills/Queue/Furioso8
+			Furioso8
+				ActiveMessage="sunders all defense with a blast of a Shotgun..."
+				Shattering=50
+				Stunner=3
+				DamageMult=1.5
+				HitStep=/obj/Skills/Queue/Furioso9
+			Furioso9
+				ActiveMessage="...Rends through space with a peerless Cut!"
+				DamageMult=12
+				AccuracyMult = 1.25
+				KBMult=10
+				Warp=5
+				Duration=5
+				Decider=1
+				Finisher=1
+				NeedsSword=1
+				Instinct=4
+				EnergyCost=15
+				IconLock='UltraInstinctSpark.dmi'
+				HitSparkIcon='Slash - Power.dmi'
+				HitSparkX=-32
+				HitSparkY=-32
+				HitSparkTurns=0
+				HitSparkSize=2
 

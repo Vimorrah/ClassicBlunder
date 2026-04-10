@@ -15,7 +15,7 @@
     if(Corruption < 0)
         Corruption = 0
     Corruption = Corruption
-    client.updateCorruption()
+    if(client) client.updateCorruption()
 
 
 

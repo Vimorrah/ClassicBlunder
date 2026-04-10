@@ -18,6 +18,9 @@
 		OffMessage="releases their tremendous focus..."
 		verb/Activate_High_Tension()
 			set category="Skills"
+			if(usr.isMazokuHuman())
+				usr << "You can't access your power at will."
+				return
 			if(usr.transActive || usr.passive_handler.Get("SSJRose") >= 1)
 				usr<<"You can't use this while transformed!"
 				return
@@ -40,6 +43,9 @@
 		Cooldown=-1
 		verb/Double_Helix()
 			set category="Skills"
+			if(usr.isMazokuHuman())
+				usr << "You can't."
+				return
 			if(usr.passive_handler.Get("DoubleHelix"))
 				switch(usr.DoubleHelix)
 					if(0)
