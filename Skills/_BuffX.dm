@@ -2012,7 +2012,7 @@ NEW VARIABLES
 			EndMult=0.9
 			DefMult=0.8
 			RecovMult=1.2
-			passives = list("SlayerMod" = 3.5, "LifeSteal" = 20, "FavoredPrey" = "Depths", "Holymod" = 2, "MovementMastery" = 1, "TechniqueMastery" = 2.5,"Deicide"= 1.5 )
+			passives = list("SlayerMod" = 3.5, "LifeSteal" = 20, "FavoredPrey" = "Depths", "Holymod" = 2, "MovementMastery" = 6 "TechniqueMastery" = 2.5,"Deicide"= 15)
 			ManaGlowSize=3
 			ManaGlow="C03434"
 			TextColor=rgb(192, 52, 52)
