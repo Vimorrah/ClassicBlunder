@@ -1,5 +1,5 @@
-var/list/Turfs=new
-var/list/CustomTurfs=new
+var/list/Turfs=list()
+var/list/CustomTurfs=list()
 obj/var/
 	LogPEndurance=5000000000
 turf/var/

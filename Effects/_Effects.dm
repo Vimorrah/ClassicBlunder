@@ -364,13 +364,15 @@ obj/Effects
 			src.Lifetime=Life
 		else if(!Lifetime)
 			src.Lifetime=10
-		spawn(1)
-			animate(src,alpha=overwrite_alpha,time=src.Lifetime)
 
-		if(Lifetime > 0)
-			spawn(src.Lifetime+1)//Hopefully this doesn't fuck things up.
-				//if it does, just make this spawn equal to Lifetime+1.
-				//Hopefully it won't require any higher logic.
+		// Only run the fade and finalize chain for effects with a positive Lifetime.
+		// Persistent props (FusionCamera, etc.) use Lifetime <= 0 to opt out —
+		// animate(time<=0) errors with "nothing to animate" on BYOND 516, and a
+		// finalize spawn on a persistent atom would delete it prematurely.
+		if(src.Lifetime > 0)
+			spawn(1)
+				animate(src,alpha=overwrite_alpha,time=src.Lifetime)
+			spawn(src.Lifetime+1)
 				EffectFinish()
 	proc/EffectFinish()
 		for(var/atom/movable/a in vis_locs)

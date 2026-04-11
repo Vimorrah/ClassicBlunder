@@ -20,7 +20,7 @@ update_loop
 	New(tick_lag = 0)
 		..()
 		src.tick_lag = tick_lag
-		updaters = new
+		updaters = list()
 		spawn Loop()
 
 	proc

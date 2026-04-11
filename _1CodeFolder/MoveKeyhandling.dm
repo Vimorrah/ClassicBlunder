@@ -18,7 +18,10 @@ client
 		//	setMacros() injects movement commands into all macro lists.
 		setMacros()
 
-			var/macros=params2list(winget(src,null,"macro"))
+			var/raw=winget(src,null,"macro")
+			if(!raw) return
+			var/list/macros=params2list(raw)
+			if(!macros || !macros.len) return
 			for(var/m in macros)
 
 

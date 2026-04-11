@@ -488,6 +488,7 @@ turf/Special
 						usr.contents+=new/obj/Skills/Keyblade/BestowKeyblade*/
 obj/Effects
 	FusionCamera
+		Lifetime = -1 // Persistent map prop for fusion dance mechanic — opts out of the Effect fade/finalize chain.
 obj/Spirit
 	icon='NewObjects.dmi'
 	icon_state="35"

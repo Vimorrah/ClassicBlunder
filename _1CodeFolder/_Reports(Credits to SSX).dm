@@ -1,5 +1,5 @@
 var
-	list/reports=new
+	list/reports=list()
 	number = 0
 proc/Reports(type)
 	switch(type)
@@ -7,7 +7,7 @@ proc/Reports(type)
 			var/savefile/E = new ("Saves/ReportFile")
 			E["reports"] >> reports
 			E["number"] >> number
-			if(!reports) reports=new
+			if(!reports) reports=list()
 		if("Save")
 			var/savefile/E = new ("Saves/ReportFile")
 			E["reports"] << reports

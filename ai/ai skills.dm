@@ -18,12 +18,10 @@ var/list/play_action_database = list()
 var/play_action_generated
 proc/GeneratePlayActionDatabase()
 	if(play_action_generated) return
-	var/list/derieved = typesof(/ai_play_action)
-	for(var/index = 1 to derieved.len)
-		var/ai_play_action/a = derieved[index]
-		a = new a
-		if(!a.id)
-			continue
+	for(var/T in typesof(/ai_play_action))
+		if(!ispath(T)) continue
+		var/ai_play_action/a = new T
+		if(!a || !a.id) continue
 		play_action_database[a.id] = a //Add a copy to the global list
 	play_action_generated=1
 

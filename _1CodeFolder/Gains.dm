@@ -36,10 +36,10 @@ update_loop/gain_loop
 		for(var/list/l in updaters)
 			l -= updater
 	Loop()
-		updaters = list()
-		updaters.len = 10
+		var/list/fresh = list()
 		for(var/index = 1 to 10 step 1)
-			updaters[index] = list()
+			fresh += list(list())
+		updaters = fresh
 		for()
 			for(var/list/l in updaters)
 				for(var/mob/updater in l)

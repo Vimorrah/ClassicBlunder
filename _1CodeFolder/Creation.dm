@@ -531,7 +531,7 @@ mob/Players
 		del(usr)
 
 client/Del()
-	if(highlightedAtoms.len > 0)
+	if(src.highlightedAtoms && src.highlightedAtoms.len > 0)
 		ClearHighlights()
 	..()
 

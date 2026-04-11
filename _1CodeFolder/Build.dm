@@ -1,4 +1,4 @@
-var/list/worldObjectList = new // Looped through during the saving of objects
+var/list/worldObjectList = list() // Looped through during the saving of objects
 
 /mob/Admin4/verb/checkworldObjectList()
 	for(var/obj/x in worldObjectList)
@@ -22,23 +22,23 @@ proc/Save_Custom_Turfs()
 	var/Amount=0
 	var/E=1
 	var/savefile/F=new("Saves/Map/CustomTurfs[E]")
-	var/list/Types=new
-	var/list/Healths=new
-	var/list/Levels=new
-	var/list/Builders=new
-	var/list/Xs=new
-	var/list/Ys=new
-	var/list/Zs=new
-	var/list/Icons=new
-	var/list/Icons_States=new
-	var/list/Densitys=new
-	var/list/isRoof=new
-	var/list/Opacitys=new
-	var/list/FlyOver=new
-	var/list/isOutside=new
-	var/list/isUnderwater=new
-	var/list/LogPEndurance=new
-	var/list/Destructable=new
+	var/list/Types=list()
+	var/list/Healths=list()
+	var/list/Levels=list()
+	var/list/Builders=list()
+	var/list/Xs=list()
+	var/list/Ys=list()
+	var/list/Zs=list()
+	var/list/Icons=list()
+	var/list/Icons_States=list()
+	var/list/Densitys=list()
+	var/list/isRoof=list()
+	var/list/Opacitys=list()
+	var/list/FlyOver=list()
+	var/list/isOutside=list()
+	var/list/isUnderwater=list()
+	var/list/LogPEndurance=list()
+	var/list/Destructable=list()
 	for(var/turf/CustomTurf/A in CustomTurfs)
 		if(A)
 			Types+=A.type
@@ -81,23 +81,23 @@ proc/Save_Custom_Turfs()
 				F["Destructable"]<<Destructable
 				E ++
 				F=new("Saves/Map/CustomTurfs[E]")
-				Types=new
-				Healths=new
-				Levels=new
-				Builders=new
-				Xs=new
-				Ys=new
-				Zs=new
-				Icons=new
-				Icons_States=new
-				Densitys=new
-				isRoof=new
-				Opacitys=new
-				FlyOver=new
-				isOutside=new
-				isUnderwater=new
-				LogPEndurance=new
-				Destructable=new
+				Types=list()
+				Healths=list()
+				Levels=list()
+				Builders=list()
+				Xs=list()
+				Ys=list()
+				Zs=list()
+				Icons=list()
+				Icons_States=list()
+				Densitys=list()
+				isRoof=list()
+				Opacitys=list()
+				FlyOver=list()
+				isOutside=list()
+				isUnderwater=list()
+				LogPEndurance=list()
+				Destructable=list()
 
 	if(Amount % 20000 != 0)
 		F["Types"]<<Types
@@ -190,18 +190,18 @@ proc/Save_Turfs()
 	var/Amount=0
 	var/E=1
 	var/savefile/F=new("Saves/Map/File[E]")
-	var/list/Types=new
-	var/list/Healths=new
-	var/list/Levels=new
-	var/list/Builders=new
-	var/list/Xs=new
-	var/list/Ys=new
-	var/list/Zs=new
-	var/list/FlyOver=new
-	var/list/isOutside=new
-	var/list/isUnderwater=new
-	var/list/LogPEndurance=new
-	var/list/Destructable=new
+	var/list/Types=list()
+	var/list/Healths=list()
+	var/list/Levels=list()
+	var/list/Builders=list()
+	var/list/Xs=list()
+	var/list/Ys=list()
+	var/list/Zs=list()
+	var/list/FlyOver=list()
+	var/list/isOutside=list()
+	var/list/isUnderwater=list()
+	var/list/LogPEndurance=list()
+	var/list/Destructable=list()
 
 //	debuglog << "[__FILE__]:[__LINE__] We got this far for mapfile[E]"
 
@@ -234,18 +234,18 @@ proc/Save_Turfs()
 				F["Destructable"]<<Destructable
 				E ++
 				F=new("Saves/Map/File[E]")
-				Types=new
-				Healths=new
-				Levels=new
-				Builders=new
-				Xs=new
-				Ys=new
-				Zs=new
-				FlyOver=new
-				isOutside=new
-				isUnderwater=new
-				LogPEndurance=new
-				Destructable=new
+				Types=list()
+				Healths=list()
+				Levels=list()
+				Builders=list()
+				Xs=list()
+				Ys=list()
+				Zs=list()
+				FlyOver=list()
+				isOutside=list()
+				isUnderwater=list()
+				LogPEndurance=list()
+				Destructable=list()
 
 //	debuglog << "[__FILE__]:[__LINE__] We got this far for mapfile[E]"
 
@@ -327,8 +327,8 @@ proc/Load_Turfs()
 
 
 
-var/list/Builds=new // Builds is a list used to display icons in the buildpanel for players. This is NOT the things they have already built!
-var/list/AdminBuilds=new //This is for /turf/Special, which is (normally) admin accessable only.
+var/list/Builds=list() // Builds is a list used to display icons in the buildpanel for players. This is NOT the things they have already built!
+var/list/AdminBuilds=list() //This is for /turf/Special, which is (normally) admin accessable only.
 proc/Add_Builds()
 	var/obj/Turfs/CustomObj1/customobj = new
 	var/obj/Others/Build/E = new
@@ -345,7 +345,9 @@ proc/Add_Builds()
 	J.name ="-[customturf.name]-"
 	Builds += J
 	for(var/A in subtypesof(/obj/Turfs))
+		if(!ispath(A)) continue
 		var/obj/B = new A
+		if(!B) continue
 		if(B.Buildable&& B.name!="DBR")
 			var/obj/Others/Build/C=new
 			C.icon=B.icon
@@ -354,7 +356,9 @@ proc/Add_Builds()
 			C.name="-[B.name]-"
 			Builds+=C
 	for(var/A in subtypesof(/obj/KatieObj))
+		if(!ispath(A)) continue
 		var/obj/B=new A
+		if(!B) continue
 		var/obj/Others/Build/C=new
 		C.icon=B.icon
 		C.icon_state=B.icon_state
@@ -656,8 +660,8 @@ proc/Save_Objects()
 	var/Amount=0
 	var/E=1
 	var/savefile/F=new("Saves/Itemsave/File[E]")
-	var/list/Types=new
-	var/list/Icons=new
+	var/list/Types=list()
+	var/list/Icons=list()
 	for(var/obj/A in global.worldObjectList)
 		if(!A)
 			world.log << "null entry"
@@ -674,8 +678,8 @@ proc/Save_Objects()
 				F["Icons"]<<Icons
 				E++
 				F=new("Saves/Itemsave/File[E]")
-				Types=new
-				Icons=new
+				Types=list()
+				Icons=list()
 	if(Amount % 500 != 0)
 		F["Types"]<<Types
 		F["Icons"]<<Icons
@@ -694,7 +698,7 @@ proc/Load_Objects()
 	filenum++
 	if(fexists("Saves/Itemsave/File[filenum]"))
 		var/savefile/F=new("Saves/Itemsave/File[filenum]")
-		var/list/L=new
+		var/list/L=list()
 		if(length(F["Types"]) < 1)
 			goto wowza
 		F["Types"]>>L

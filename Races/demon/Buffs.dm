@@ -156,7 +156,7 @@
 		target.LoseHealth(FinalDmg)
 		owner.applySinBonusFromDealtDamage(FinalDmg)
 
-		var/obj/Effects/HE = new('fevExplosion - Hellfire.dmi', -32, -32, 0, 1, 8)
+		var/obj/Effects/HE = new(null, 'fevExplosion - Hellfire.dmi', -32, -32, 0, 1, 8)
 		HE.appearance_flags = KEEP_APART | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 		HE.Target = target
 		target.vis_contents += HE

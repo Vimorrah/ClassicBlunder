@@ -33,8 +33,7 @@ proc/Log(var/e,var/Info,var/NoPinkText=0, adminLevel = 1)
 	if(e=="AdminPM")
 		e="Saves/AdminLogs/[TimeStamp(1)]"
 	Info=html_encode(Info)
-	var/Event/E = new/Event/writeToLog( T = "<br><font color=black>[time2text(world.timeofday,"MM/DD/YY(hh:mm:ss)")] [Info]",
-                                        D = "[e]") // We're explicitly setting the variables to make sure it doesn't take either of these as a reschedule time.
+	var/Event/E = new/Event/writeToLog("<br><font color=black>[time2text(world.timeofday,"MM/DD/YY(hh:mm:ss)")] [Info]", "[e]")
 	LOGscheduler.schedule( E, 5 ) // every log to file has a .5 second delay
 
 	//file("[e][numz]")<<"<br><font color=black>[time2text(world.timeofday,"MM/DD/YY(hh:mm:ss)")] [Info]"
@@ -47,8 +46,7 @@ proc/TempLog(var/e,var/Info)
 	while(length(file("[e]Temp[numz]"))>1024*200)
 		numz++
 
-	var/Event/F = new/Event/writeToLog( T = "<br><font color=black>[time2text(world.timeofday,"MM/DD/YY(hh:mm:ss)")] [Info]",
-                                        D = "[e]Temp[numz]") // We're explicitly setting the variables to make sure it doesn't take either of these as a reschedule time.
+	var/Event/F = new/Event/writeToLog("<br><font color=black>[time2text(world.timeofday,"MM/DD/YY(hh:mm:ss)")] [Info]", "[e]Temp[numz]")
 	LOGscheduler.schedule( F, 5 ) // every log to file has a .5 second delay
 
 proc/ArchiveLog(var/e,var/Info)
@@ -57,8 +55,7 @@ proc/ArchiveLog(var/e,var/Info)
 	while(length(file("[e]Temp[numz]"))>1024*200)
 		numz++
 
-	var/Event/F = new/Event/writeToLog( T = "<br><font color=black>[time2text(world.timeofday,"MM/DD/YY(hh:mm:ss)")] [Info]",
-                                        D = "[e]Archive[numz]") // We're explicitly setting the variables to make sure it doesn't take either of these as a reschedule time.
+	var/Event/F = new/Event/writeToLog("<br><font color=black>[time2text(world.timeofday,"MM/DD/YY(hh:mm:ss)")] [Info]", "[e]Archive[numz]")
 	LOGscheduler.schedule( F, 5 ) // every log to file has a .5 second delay
 
 proc/SkillLog(var/e,var/Info)
@@ -67,8 +64,7 @@ proc/SkillLog(var/e,var/Info)
 	while(length(file("[e]Skill[numz]"))>1024*200)
 		numz++
 
-	var/Event/G = new/Event/writeToLog( T = "<br><font color=black>[time2text(world.timeofday,"MM/DD/YY(hh:mm:ss)")] [Info]",
-                                        D = "[e]Skill[numz]") // We're explicitly setting the variables to make sure it doesn't take either of these as a reschedule time.
+	var/Event/G = new/Event/writeToLog("<br><font color=black>[time2text(world.timeofday,"MM/DD/YY(hh:mm:ss)")] [Info]", "[e]Skill[numz]")
 	LOGscheduler.schedule( G, 5 ) // every log to file has a .5 second delay
 
 mob/proc/ChatLog()
@@ -248,8 +244,7 @@ client/proc/LoginLog(var/title=null)
 			AdminMessage("[TimeStamp()]<b> [src.key]</b> | Possible Alts: ([matches]) ([title])")
 		else
 			AdminMessage("[TimeStamp()]<b> [src.key]</b> ([title])")
-		var/Event/E = new/Event/writeToLog( T = "<font color=black>[TimeStamp()]<b> [src.key]</b> | [src.address] | [src.computer_id] ([title])<br>",
-                                            D = "Saves/LoginLogs/[TimeStamp(1)].txt") // We're explicitly setting the variables to make sure it doesn't take either of these as a reschedule time.
+		var/Event/E = new/Event/writeToLog("<font color=black>[TimeStamp()]<b> [src.key]</b> | [src.address] | [src.computer_id] ([title])<br>", "Saves/LoginLogs/[TimeStamp(1)].txt")
 		LOGscheduler.schedule( E, 5 ) // every log to file has a .5 second delay
 
 //		var/ISF=file("Saves/LoginLogs/[TimeStamp(1)].txt")

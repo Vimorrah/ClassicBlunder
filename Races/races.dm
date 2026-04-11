@@ -14,23 +14,29 @@ var/list/races = list()
 proc
 	//this adds a copy of all races to a global list called races.
 	BuildRaceList()
-		for(var/a in subtypesof(/race/))
-			races += new a
+		for(var/a in subtypesof(/race))
+			if(!ispath(a)) continue
+			var/race/r = new a
+			if(!r) continue
+			races += r
 			var/list/male_icons = list()
 			var/list/female_icons = list()
 			var/list/neuter_icons = list()
-			for(var/male_icon in races[races.len]:icon_male)
-				var/obj/race_grid_visual/visual = new(male_icon)
-				male_icons += visual
-			for(var/female_icon in races[races.len]:icon_female)
-				var/obj/race_grid_visual/visual = new(female_icon)
-				female_icons += visual
-			for(var/neuter_icon in races[races.len]:icon_neuter)
-				var/obj/race_grid_visual/visual = new(neuter_icon)
-				neuter_icons += visual
-			races[races.len]:icon_male = male_icons.Copy()
-			races[races.len]:icon_female = female_icons.Copy()
-			races[races.len]:icon_neuter = neuter_icons.Copy()
+			if(r.icon_male)
+				for(var/male_icon in r.icon_male)
+					var/obj/race_grid_visual/visual = new(male_icon)
+					male_icons += visual
+			if(r.icon_female)
+				for(var/female_icon in r.icon_female)
+					var/obj/race_grid_visual/visual = new(female_icon)
+					female_icons += visual
+			if(r.icon_neuter)
+				for(var/neuter_icon in r.icon_neuter)
+					var/obj/race_grid_visual/visual = new(neuter_icon)
+					neuter_icons += visual
+			r.icon_male = male_icons.Copy()
+			r.icon_female = female_icons.Copy()
+			r.icon_neuter = neuter_icons.Copy()
 	//this will return a list of all race types.
 	GetRaceTypes()
 		for(var/race/race in races)

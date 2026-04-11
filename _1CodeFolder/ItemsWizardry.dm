@@ -1,17 +1,17 @@
 obj/var/EnchType
 
-var/list/Enchantment_List=new
-var/list/BasicEnchantment_List=new
-var/list/Alchemy_List=new
-var/list/ImprovedAlchemy_List=new
-var/list/ToolEnchantment_List=new
-var/list/ArmamentEnchantment_List=new
-var/list/TomeCreation_List=new
-var/list/CrestCreation_List=new
-var/list/SummoningMagic_List=new
-var/list/SealingMagic_List=new
-var/list/SpaceMagic_List=new
-var/list/TimeMagic_List=new
+var/list/Enchantment_List=list()
+var/list/BasicEnchantment_List=list()
+var/list/Alchemy_List=list()
+var/list/ImprovedAlchemy_List=list()
+var/list/ToolEnchantment_List=list()
+var/list/ArmamentEnchantment_List=list()
+var/list/TomeCreation_List=list()
+var/list/CrestCreation_List=list()
+var/list/SummoningMagic_List=list()
+var/list/SealingMagic_List=list()
+var/list/SpaceMagic_List=list()
+var/list/TimeMagic_List=list()
 
 proc/Add_Enchantment()
 	for(var/A in typesof(/obj/Items/Enchantment))

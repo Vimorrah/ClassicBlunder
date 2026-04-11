@@ -3571,7 +3571,15 @@ var/list/general_magic_database = list()
 var/list/general_weaponry_database = list()
 proc
 	BuildGeneralMagicDatabase() // This is a list of generally obtainable magics. For now, it's just used for Crimson grimoire.
-		general_magic_database = SkillTree["MagicT1"] + SkillTree["MagicT2"] + SkillTree["MagicT3"] + SkillTree["MagicT4"]
+		// Guard: SkillTree is populated by MakeSkillTreeList which runs from BootWorld("Load").
+		// This proc must be called AFTER MakeSkillTreeList, otherwise SkillTree is null/empty.
+		if(!SkillTree || !islist(SkillTree))
+			return
+		general_magic_database = list()
+		if(islist(SkillTree["MagicT1"])) general_magic_database += SkillTree["MagicT1"]
+		if(islist(SkillTree["MagicT2"])) general_magic_database += SkillTree["MagicT2"]
+		if(islist(SkillTree["MagicT3"])) general_magic_database += SkillTree["MagicT3"]
+		if(islist(SkillTree["MagicT4"])) general_magic_database += SkillTree["MagicT4"]
 		general_magic_database = general_magic_database.Copy() //Makes it so we don't reference vars in the SkillTree variable.
 
 		for(var/index in general_magic_database) //remove all spell cost references for now.
@@ -3581,31 +3589,33 @@ proc
 		var/obj/Skills/s
 		for(var/index in general_magic_database)
 			s = text2path(index)
+			if(!s) continue
 			s = new s
 			if(s && istype(s))
 				if(!s.MagicNeeded)
 					general_magic_database -= index
 
 	BuildGeneralWeaponryDatabase()
-		var/list/weaponry_queues=list(
-		"/obj/Skills/Queue/Gear/Integrated/Integrated_Pile_Bunker",
-		"/obj/Skills/Queue/Gear/Integrated/Integrated_Power_Fist",
-		"/obj/Skills/Queue/Gear/Integrated/Integrated_Power_Claw",
-		"/obj/Skills/Queue/Gear/Integrated/Integrated_Hook_Grip_Claw",
-		"/obj/Skills/Queue/Cyberize/Taser_Strike"
-		)
-		var/list/weaponry_autohits=list(
-		"/obj/Skills/AutoHit/Gear/Integrated/Integrated_Incinerator",
-		"/obj/Skills/AutoHit/Cyberize/Machine_Gun_Flurry"
-		)
-		var/list/weaponry_projectiles=list(
-		"/obj/Skills/Projectile/Machine_Gun_Burst",
-		"/obj/Skills/Projectile/Homing_Ray_Missiles",
-		"/obj/Skills/Projectile/Plasma_Cannon",
-		"/obj/Skills/Projectile/Gear/Integrated/Integrated_Missile_Launcher",
-		"/obj/Skills/Projectile/Gear/Integrated/Integrated_Chemical_Mortar",
-		"/obj/Skills/Projectile/Cyberize/Rocket_Punch"
-		)
+		var/list/weaponry_queues = list()
+		weaponry_queues += "/obj/Skills/Queue/Gear/Integrated/Integrated_Pile_Bunker"
+		weaponry_queues += "/obj/Skills/Queue/Gear/Integrated/Integrated_Power_Fist"
+		weaponry_queues += "/obj/Skills/Queue/Gear/Integrated/Integrated_Power_Claw"
+		weaponry_queues += "/obj/Skills/Queue/Gear/Integrated/Integrated_Hook_Grip_Claw"
+		weaponry_queues += "/obj/Skills/Queue/Cyberize/Taser_Strike"
 
-		general_weaponry_database = weaponry_queues + weaponry_autohits + weaponry_projectiles
-		general_weaponry_database = general_weaponry_database.Copy()
+		var/list/weaponry_autohits = list()
+		weaponry_autohits += "/obj/Skills/AutoHit/Gear/Integrated/Integrated_Incinerator"
+		weaponry_autohits += "/obj/Skills/AutoHit/Cyberize/Machine_Gun_Flurry"
+
+		var/list/weaponry_projectiles = list()
+		weaponry_projectiles += "/obj/Skills/Projectile/Machine_Gun_Burst"
+		weaponry_projectiles += "/obj/Skills/Projectile/Homing_Ray_Missiles"
+		weaponry_projectiles += "/obj/Skills/Projectile/Plasma_Cannon"
+		weaponry_projectiles += "/obj/Skills/Projectile/Gear/Integrated/Integrated_Missile_Launcher"
+		weaponry_projectiles += "/obj/Skills/Projectile/Gear/Integrated/Integrated_Chemical_Mortar"
+		weaponry_projectiles += "/obj/Skills/Projectile/Cyberize/Rocket_Punch"
+
+		general_weaponry_database = list()
+		general_weaponry_database += weaponry_queues
+		general_weaponry_database += weaponry_autohits
+		general_weaponry_database += weaponry_projectiles

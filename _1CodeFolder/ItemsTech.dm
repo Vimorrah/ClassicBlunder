@@ -6,19 +6,19 @@ mob/proc
 
 
 
-var/list/Technology_List=new
-var/list/BasicTechnology_List=new
-var/list/Forging_List=new
-var/list/RepairAndConversion_List=new
-var/list/Medicine_List=new
-var/list/ImprovedMedicalTechnology_List=new
-var/list/Telecommunications_List=new
-var/list/AdvancedTransmissionTechnology_List=new
-var/list/Engineering_List=new
-var/list/CyberEngineering_List=new
-var/list/MilitaryTechnology_List=new
-var/list/MilitaryEngineering_List=new
-var/list/PowerPack_List=new
+var/list/Technology_List=list()
+var/list/BasicTechnology_List=list()
+var/list/Forging_List=list()
+var/list/RepairAndConversion_List=list()
+var/list/Medicine_List=list()
+var/list/ImprovedMedicalTechnology_List=list()
+var/list/Telecommunications_List=list()
+var/list/AdvancedTransmissionTechnology_List=list()
+var/list/Engineering_List=list()
+var/list/CyberEngineering_List=list()
+var/list/MilitaryTechnology_List=list()
+var/list/MilitaryEngineering_List=list()
+var/list/PowerPack_List=list()
 
 proc/Add_Technology()
 	for(var/A in typesof(/obj/Items/Tech))

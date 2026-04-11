@@ -30,37 +30,69 @@ globalTracker/var/
     glob.SpaceTreeNodes=list();
 /proc/
     initWaterTree()
+        var/list/nodes = list()
         for(var/t in subtypesof(/magic_node/water_tree))
-            var/magic_node/mn = new t;
-            glob.WaterTreeNodes[mn.name] = mn;
+            if(!ispath(t)) continue
+            var/magic_node/mn = new t
+            if(mn && mn.name)
+                nodes[mn.name] = mn
+        glob.WaterTreeNodes = nodes
     initFireTree()
+        var/list/nodes = list()
         for(var/t in subtypesof(/magic_node/fire_tree))
-            var/magic_node/mn = new t;
-            glob.FireTreeNodes[mn.name] = mn;
+            if(!ispath(t)) continue
+            var/magic_node/mn = new t
+            if(mn && mn.name)
+                nodes[mn.name] = mn
+        glob.FireTreeNodes = nodes
     initAirTree()
+        var/list/nodes = list()
         for(var/t in subtypesof(/magic_node/air_tree))
-            var/magic_node/mn = new t;
-            glob.AirTreeNodes[mn.name] = mn;
+            if(!ispath(t)) continue
+            var/magic_node/mn = new t
+            if(mn && mn.name)
+                nodes[mn.name] = mn
+        glob.AirTreeNodes = nodes
     initEarthTree()
+        var/list/nodes = list()
         for(var/t in subtypesof(/magic_node/earth_tree))
-            var/magic_node/mn = new t;
-            glob.EarthTreeNodes[mn.name] = mn;
+            if(!ispath(t)) continue
+            var/magic_node/mn = new t
+            if(mn && mn.name)
+                nodes[mn.name] = mn
+        glob.EarthTreeNodes = nodes
     initLightTree()
+        var/list/nodes = list()
         for(var/t in subtypesof(/magic_node/light_tree))
-            var/magic_node/mn = new t;
-            glob.LightTreeNodes[mn.name] = mn;
+            if(!ispath(t)) continue
+            var/magic_node/mn = new t
+            if(mn && mn.name)
+                nodes[mn.name] = mn
+        glob.LightTreeNodes = nodes
     initTimeTree()
+        var/list/nodes = list()
         for(var/t in subtypesof(/magic_node/time_tree))
-            var/magic_node/mn = new t;
-            glob.TimeTreeNodes[mn.name] = mn;
+            if(!ispath(t)) continue
+            var/magic_node/mn = new t
+            if(mn && mn.name)
+                nodes[mn.name] = mn
+        glob.TimeTreeNodes = nodes
     initDarkTree()
+        var/list/nodes = list()
         for(var/t in subtypesof(/magic_node/dark_tree))
-            var/magic_node/mn = new t;
-            glob.DarkTreeNodes[mn.name] = mn;
+            if(!ispath(t)) continue
+            var/magic_node/mn = new t
+            if(mn && mn.name)
+                nodes[mn.name] = mn
+        glob.DarkTreeNodes = nodes
     initSpaceTree()
+        var/list/nodes = list()
         for(var/t in subtypesof(/magic_node/space_tree))
-            var/magic_node/mn = new t;
-            glob.SpaceTreeNodes[mn.name] = mn;
+            if(!ispath(t)) continue
+            var/magic_node/mn = new t
+            if(mn && mn.name)
+                nodes[mn.name] = mn
+        glob.SpaceTreeNodes = nodes
 
 /mob/proc/initPersonalMagicTrees()
     initWaterTreeButtons();

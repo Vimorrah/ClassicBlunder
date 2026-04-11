@@ -2,18 +2,96 @@
 //We need to setup so that admins can impend new entries and save them.
 var/list/squad_database
 
+// Helper — builds a flat property list step-by-step. Used to avoid BYOND 516 quirks
+// with complex inline list literals containing many mixed keys in a single expression.
+proc/_squad_props(icon_path, name_text, potential, str_mod, end_mod, for_mod, off_mod, def_mod, spd_mod, spammer)
+	var/list/p = list()
+	p["icon"] = icon_path
+	p["name"] = name_text
+	p["Potential"] = potential
+	p["StrMod"] = str_mod
+	p["EndMod"] = end_mod
+	p["ForMod"] = for_mod
+	p["OffMod"] = off_mod
+	p["DefMod"] = def_mod
+	p["SpdMod"] = spd_mod
+	p["ai_spammer"] = spammer
+	return p
+
 proc/BuildSquadDatabase()
 	squad_database = list()
-	squad_database["basic bot"] = new/ai_sheet("basic bot", list("icon"='Icons/Characters/Androids/Android1.dmi', "name"="Basic Bot", "Potential"=0.3, "StrMod"=2, "EndMod"=2, "ForMod"=2, "OffMod"=2, "DefMod"=2, "SpdMod"=2, "ai_spammer"=0.5), list("/obj/Skills/AutoHit/Focus_Punch", "/obj/Skills/AutoHit/Sweeping_Kick", "/obj/Skills/Projectile/Gear/Plasma_Blaster"))
-	squad_database["battle bot"] = new/ai_sheet("battle bot", list("icon"='Icons/Characters/Androids/Android2.dmi', "name"="Battle Bot", "Potential"=0.5, "StrMod"=3, "EndMod"=2, "ForMod"=2, "OffMod"=2, "DefMod"=2, "SpdMod"=2, "ai_spammer"=1), list("/obj/Skills/AutoHit/Flying_Kick", "/obj/Skills/Projectile/Dragon_Nova"))
-	squad_database["bullet bot"] = new/ai_sheet("bullet bot", list("icon"='Icons/Characters/Androids/Android4.dmi', "name"="Bullet Bot", "Potential"=0.5, "StrMod"=2, "EndMod"=3, "ForMod"=2, "OffMod"=2, "DefMod"=2, "SpdMod"=2, "ai_spammer"=1), list("/obj/Skills/Projectile/Gear/Plasma_Gatling", "/obj/Skills/Projectile/Gear/Plasma_Blaster"))
-	squad_database["guardian bot"] = new/ai_sheet("guardian bot", list("icon"='Icons/Characters/Androids/Android11.dmi', "name"="Guardian Bot", "Potential"=0.6, "StrMod"=3, "EndMod"=3, "ForMod"=3, "OffMod"=3, "DefMod"=3, "SpdMod"=3, "ai_spammer"=1), list("/obj/Skills/AutoHit/Flying_Kick", "/obj/Skills/AutoHit/Force_Palm", "/obj/Skills/Projectile/Dragon_Nova", "/obj/Skills/Projectile/Gear/Plasma_Blaster"))
-	squad_database["gajalaka"] = new/ai_sheet("gajalaka", list("icon"='Icons/NPCS/New Monsters/GajalakaWild.dmi', "name"="Gajalaka", "Potential"=0.3, "StrMod"=2, "EndMod"=2, "ForMod"=2, "OffMod"=2, "DefMod"=2, "SpdMod"=2, "ai_spammer"=0.5), list("/obj/Skills/AutoHit/Focus_Punch", "/obj/Skills/AutoHit/Sweeping_Kick", "/obj/Skills/Projectile/Gear/Plasma_Blaster"))
-	squad_database["gajalaka warrior"] = new/ai_sheet("gajalaka warrior", list("icon"='Icons/NPCS/New Monsters/GajalakaWild.dmi', "name"="Gajalaka Warrior", "Potential"=0.5, "StrMod"=3, "EndMod"=2, "ForMod"=2, "OffMod"=2, "DefMod"=2, "SpdMod"=2, "ai_spammer"=1), list("/obj/Skills/AutoHit/Flying_Kick", "/obj/Skills/Projectile/Force_Palm"))
-	squad_database["gajalaka thrower"] = new/ai_sheet("gajalaka thrower", list("icon"='Icons/NPCS/New Monsters/GajalakaWild.dmi', "name"="Gajalaka Thrower", "Potential"=0.5, "StrMod"=2, "EndMod"=3, "ForMod"=2, "OffMod"=2, "DefMod"=2, "SpdMod"=2, "ai_spammer"=1), list("/obj/Skills/Projectile/Gear/Plasma_Gatling", "/obj/Skills/Projectile/Blast"))
-	squad_database["gajalaka champion"] = new/ai_sheet("gajalaka champion", list("icon"='Icons/NPCS/New Monsters/GajalakaWild.dmi', "name"="Gajalaka Champion", "Potential"=0.6, "StrMod"=3, "EndMod"=3, "ForMod"=3, "OffMod"=3, "DefMod"=3, "SpdMod"=3, "ai_spammer"=1), list("/obj/Skills/AutoHit/Flying_Kick", "/obj/Skills/AutoHit/Force_Palm", "/obj/Skills/Projectile/Dragon_Nova", "/obj/Skills/Projectile/Blast"))
-	squad_database["gajalaka berserker"] = new/ai_sheet("gajalaka berserker", list("icon"='Icons/NPCS/New Monsters/GajalakaWild.dmi', "name"="Gajalaka Berserker", "Potential"=0.4, "StrMod"=3, "EndMod"=3, "ForMod"=3, "OffMod"=3, "DefMod"=3, "SpdMod"=3, "ai_spammer"=1), list("/obj/Skills/AutoHit/Flying_Kick", "/obj/Skills/AutoHit/Force_Palm", "/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Turns_Red"))
-	squad_database["oliphant spirit"] = new/ai_sheet("oliphant spirit", list("icon"='Sagas/Weapon Soul/Durendal/knight.dmi', "name"="Oliphant Spirit", "Potential"=0.4, "StrMod"=3, "EndMod"=0.2, "ForMod"=3, "OffMod"=3, "DefMod"=1, "SpdMod"=2, "Health"=20, "ai_spammer"=1, "ai_movement_type"="ranged"), list("/obj/Skills/Projectile/Dragon_Nova", "/obj/Skills/Projectile/Kienzan", "/obj/Skills/Projectile/Tracking_Bomb"))
+
+	var/list/basic_bot_techs = list()
+	basic_bot_techs += "/obj/Skills/AutoHit/Focus_Punch"
+	basic_bot_techs += "/obj/Skills/AutoHit/Sweeping_Kick"
+	basic_bot_techs += "/obj/Skills/Projectile/Gear/Plasma_Blaster"
+	squad_database["basic bot"] = new/ai_sheet("basic bot", _squad_props('Icons/Characters/Androids/Android1.dmi', "Basic Bot", 0.3, 2, 2, 2, 2, 2, 2, 0.5), basic_bot_techs)
+
+	var/list/battle_bot_techs = list()
+	battle_bot_techs += "/obj/Skills/AutoHit/Flying_Kick"
+	battle_bot_techs += "/obj/Skills/Projectile/Dragon_Nova"
+	squad_database["battle bot"] = new/ai_sheet("battle bot", _squad_props('Icons/Characters/Androids/Android2.dmi', "Battle Bot", 0.5, 3, 2, 2, 2, 2, 2, 1), battle_bot_techs)
+
+	var/list/bullet_bot_techs = list()
+	bullet_bot_techs += "/obj/Skills/Projectile/Gear/Plasma_Gatling"
+	bullet_bot_techs += "/obj/Skills/Projectile/Gear/Plasma_Blaster"
+	squad_database["bullet bot"] = new/ai_sheet("bullet bot", _squad_props('Icons/Characters/Androids/Android4.dmi', "Bullet Bot", 0.5, 2, 3, 2, 2, 2, 2, 1), bullet_bot_techs)
+
+	var/list/guardian_bot_techs = list()
+	guardian_bot_techs += "/obj/Skills/AutoHit/Flying_Kick"
+	guardian_bot_techs += "/obj/Skills/AutoHit/Force_Palm"
+	guardian_bot_techs += "/obj/Skills/Projectile/Dragon_Nova"
+	guardian_bot_techs += "/obj/Skills/Projectile/Gear/Plasma_Blaster"
+	squad_database["guardian bot"] = new/ai_sheet("guardian bot", _squad_props('Icons/Characters/Androids/Android11.dmi', "Guardian Bot", 0.6, 3, 3, 3, 3, 3, 3, 1), guardian_bot_techs)
+
+	var/list/gajalaka_techs = list()
+	gajalaka_techs += "/obj/Skills/AutoHit/Focus_Punch"
+	gajalaka_techs += "/obj/Skills/AutoHit/Sweeping_Kick"
+	gajalaka_techs += "/obj/Skills/Projectile/Gear/Plasma_Blaster"
+	squad_database["gajalaka"] = new/ai_sheet("gajalaka", _squad_props('Icons/NPCS/New Monsters/GajalakaWild.dmi', "Gajalaka", 0.3, 2, 2, 2, 2, 2, 2, 0.5), gajalaka_techs)
+
+	var/list/gaja_warrior_techs = list()
+	gaja_warrior_techs += "/obj/Skills/AutoHit/Flying_Kick"
+	gaja_warrior_techs += "/obj/Skills/Projectile/Force_Palm"
+	squad_database["gajalaka warrior"] = new/ai_sheet("gajalaka warrior", _squad_props('Icons/NPCS/New Monsters/GajalakaWild.dmi', "Gajalaka Warrior", 0.5, 3, 2, 2, 2, 2, 2, 1), gaja_warrior_techs)
+
+	var/list/gaja_thrower_techs = list()
+	gaja_thrower_techs += "/obj/Skills/Projectile/Gear/Plasma_Gatling"
+	gaja_thrower_techs += "/obj/Skills/Projectile/Blast"
+	squad_database["gajalaka thrower"] = new/ai_sheet("gajalaka thrower", _squad_props('Icons/NPCS/New Monsters/GajalakaWild.dmi', "Gajalaka Thrower", 0.5, 2, 3, 2, 2, 2, 2, 1), gaja_thrower_techs)
+
+	var/list/gaja_champ_techs = list()
+	gaja_champ_techs += "/obj/Skills/AutoHit/Flying_Kick"
+	gaja_champ_techs += "/obj/Skills/AutoHit/Force_Palm"
+	gaja_champ_techs += "/obj/Skills/Projectile/Dragon_Nova"
+	gaja_champ_techs += "/obj/Skills/Projectile/Blast"
+	squad_database["gajalaka champion"] = new/ai_sheet("gajalaka champion", _squad_props('Icons/NPCS/New Monsters/GajalakaWild.dmi', "Gajalaka Champion", 0.6, 3, 3, 3, 3, 3, 3, 1), gaja_champ_techs)
+
+	var/list/gaja_berserk_techs = list()
+	gaja_berserk_techs += "/obj/Skills/AutoHit/Flying_Kick"
+	gaja_berserk_techs += "/obj/Skills/AutoHit/Force_Palm"
+	gaja_berserk_techs += "/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Turns_Red"
+	squad_database["gajalaka berserker"] = new/ai_sheet("gajalaka berserker", _squad_props('Icons/NPCS/New Monsters/GajalakaWild.dmi', "Gajalaka Berserker", 0.4, 3, 3, 3, 3, 3, 3, 1), gaja_berserk_techs)
+
+	// Oliphant spirit has extra custom fields beyond the helper — build inline step by step.
+	var/list/oliphant_props = list()
+	oliphant_props["icon"] = 'Sagas/Weapon Soul/Durendal/knight.dmi'
+	oliphant_props["name"] = "Oliphant Spirit"
+	oliphant_props["Potential"] = 0.4
+	oliphant_props["StrMod"] = 3
+	oliphant_props["EndMod"] = 0.2
+	oliphant_props["ForMod"] = 3
+	oliphant_props["OffMod"] = 3
+	oliphant_props["DefMod"] = 1
+	oliphant_props["SpdMod"] = 2
+	oliphant_props["Health"] = 20
+	oliphant_props["ai_spammer"] = 1
+	oliphant_props["ai_movement_type"] = "ranged"
+	var/list/oliphant_techs = list()
+	oliphant_techs += "/obj/Skills/Projectile/Dragon_Nova"
+	oliphant_techs += "/obj/Skills/Projectile/Kienzan"
+	oliphant_techs += "/obj/Skills/Projectile/Tracking_Bomb"
+	squad_database["oliphant spirit"] = new/ai_sheet("oliphant spirit", oliphant_props, oliphant_techs)
 
 
 mob/Player/AI

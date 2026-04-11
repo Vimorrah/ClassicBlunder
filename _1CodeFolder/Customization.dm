@@ -342,9 +342,11 @@ mob/proc/Hairz(var/Z)
 
 proc/Add_Customizations()
 	for(var/A in subtypesof(/obj/Hairs))
+		if(!ispath(A)) continue
 		if(A!=/obj/Hairs)
 			Hair_List+=new A
 	for(var/A in subtypesof(/obj/Items/Wearables))
+		if(!ispath(A)) continue
 		var/obj/Items/Wearables/w = new A
 		if(istype(w, /obj/Items/Wearables/Guardian))
 			del(w)
@@ -364,7 +366,7 @@ proc/Add_Customizations()
 	for(var/A in subtypesof(/obj/Aura_Icons)) if(A!=/obj/Aura_Icons) Aura_List+=new A
 	for(var/A in subtypesof(/obj/Blast_Icons)) if(A!=/obj/Blast_Icons) Blast_List+=new A
 
-var/list/Hair_List=new
+var/list/Hair_List=list()
 obj/Hairs
 	proc/Hair_Click(mob/A)
 		if(A.IconClicked==0)
@@ -976,14 +978,14 @@ mob
 			usr.Grid("BaseIcon")
 
 var/list
-	Human_List=new
-	Alien_List=new
-	Demon_List=new
-	Namekian_List=new
-	Makyo_List=new
-	Changeling_List=new
-	Kaio_List=new
-	Android_List=new
+	Human_List=list()
+	Alien_List=list()
+	Demon_List=list()
+	Namekian_List=list()
+	Makyo_List=list()
+	Changeling_List=list()
+	Kaio_List=list()
+	Android_List=list()
 
 obj/Creation_Icons
 	proc/Creation_Click(mob/A)
@@ -1191,10 +1193,10 @@ obj/Creation_Icons
 		Chilled
 			icon='Chilled1.dmi'
 
-var/list/Clothes_List=new
-var/list/Turfs_List=new
+var/list/Clothes_List=list()
+var/list/Turfs_List=list()
 
-var/list/Aura_List=new
+var/list/Aura_List=list()
 obj/Aura_Icons
 	proc/Aura_Click(mob/A)
 		if(A.IconClicked==0)
@@ -1232,7 +1234,7 @@ obj/Aura_Icons
 		icon_state="7"
 
 
-var/list/Charge_List=new
+var/list/Charge_List=list()
 obj/Charge_Icons
 	proc/Charge_Click(mob/A)
 		if(A.IconClicked==0)
@@ -1272,7 +1274,7 @@ obj/Charge_Icons
 		icon_state="9"
 
 
-var/list/Blast_List=new
+var/list/Blast_List=list()
 obj/Blast_Icons
 	proc/Blast_Click(mob/A)
 		if(A.IconClicked==0)

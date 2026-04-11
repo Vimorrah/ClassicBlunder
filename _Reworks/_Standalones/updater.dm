@@ -5,8 +5,10 @@ essentially check if we are -on update x, if not, update to x, if so, do nothing
 // make it so on world load we make the current version datum and use it for all people
 proc/generateVersionDatum()
 	var/update/updateversion
-	for(var/i in subtypesof(/update/))
+	for(var/i in subtypesof(/update))
+		if(!ispath(i)) continue
 		var/update/check = new i
+		if(!check) continue
 		if(updateversion && check.version > updateversion.version)
 			updateversion = check
 		else if (!updateversion)

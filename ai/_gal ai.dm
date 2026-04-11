@@ -232,16 +232,189 @@ var/list/ai_database
 
 proc/BuildAIDatabase()
 	ai_database = list()
-	ai_database["arcane beast"] = new/ai_sheet("arcane beast", list("hostile_randomize"=1), -1, list('Icons/NPCS/Dragons/Green Dragon.dmi'=list("name"="Arcane Green Dragon"), 'Icons/NPCS/Dragons/Blue Dragon.dmi'=list("name"="Arcane Blue Dragon"), 'Icons/NPCS/Arcane/Crystal1.dmi'=list("name"="Magicite Effigy"), 'Icons/NPCS/Arcane/Crystal2.dmi'=list("name"="Dark Magicite Effigy"), 'Icons/NPCS/Arcane/SpriteCrystal.dmi'=list("name"="Magicite Archons"), 'Icons/NPCS/Arcane/SpriteR.dmi'=list("name"="Arcane Archon"), 'Icons/NPCS/Arcane/SpriteY.dmi'=list("name"="Arcane Archon"), 'Icons/NPCS/Arcane/SpriteC.dmi'=list("name"="Arcane Archon"), 'Icons/NPCS/Arcane/SpriteG.dmi'=list("name"="Arcane Archon"), 'Icons/NPCS/Arcane/Fairy1.dmi'=list("name"="Arcane Fairy"), 'Icons/NPCS/Arcane/Fairy2.dmi'=list("name"="Arcane Fairy"), 'Icons/NPCS/Arcane/Fairy3.dmi'=list("name"="Arcane Fairy")))
-	ai_database["hell beast"] = new/ai_sheet("hell beast", list("hostile_randomize"=2), -1, list('Icons/NPCS/Animals/Snake.dmi'=list("name"="Hellspawn Serpent"), 'Icons/NPCS/Dragons/Red Dragon.dmi'=list("name"="Hellspawn Red Dragon"), 'Icons/NPCS/Dragons/Black Dragon.dmi'=list("name"="Hellspawn Black Dragon"), 'Icons/Characters/Demons/Demon1.dmi'=list("name"="Red Imp"), 'Icons/Characters/Demons/Demon2.dmi'=list("name"="Blue Imp"), 'Icons/Characters/Demons/Demon3.dmi'=list("name"="Stone Imp"), 'Icons/Characters/Demons/Demon4.dmi'=list("name"="Grand Imp"), 'Icons/Characters/Demons/Demon5.dmi'=list("name"="Hell Crawler"), 'Icons/Characters/Special/Undead.dmi'=list("name"="Death Soldier"), 'Icons/NPCS/Horrors/Zombie.dmi'=list("name"="Death Warrior"), 'Icons/NPCS/Horrors/Chaos_Chosen.dmi'=list("name"="Death Knight")))
-	ai_database["wild monster"] = new/ai_sheet("wild monster", list("hostile_randomize"=3), -1, list('Icons/NPCS/Monster/Saibaman.dmi'=list("name"="Saibaman"), 'Icons/NPCS/Monster/WildHound.dmi'=list("name"="Fellhound"), 'Icons/NPCS/Monster/Phoenix.dmi'=list("name"="Avian"), 'Icons/NPCS/Monster/WolfBeast.dmi'=list("name"="Beast"), 'Icons/NPCS/Dragons/Red Dragon.dmi'=list("name"="Red Dragon"), 'Icons/NPCS/Dragons/Black Dragon.dmi'=list("name"="Black Dragon"), 'Icons/NPCS/Dragons/Green Dragon.dmi'=list("name"="Green Dragon"), 'Icons/NPCS/Dragons/Blue Dragon.dmi'=list("name"="Blue Dragon"), 'Icons/NPCS/Aquatics/Aquinian.dmi'=list("name"="Squid Monster"), 'Icons/NPCS/Monster/Kobold.dmi'=list("name"="Kobold"), 'Icons/NPCS/Monster/Komfty Kobold.dmi'=list("name"="Kobold Warrior"), 'Icons/NPCS/Monster/Kobold King.dmi'=list("name"="Kobold Hunter"), 'Icons/NPCS/Monster/Tricera.dmi'=list("name"="Flying Wyvern")))
-	ai_database["wolf"] = new/ai_sheet("wolf", list("icon"='Icons/NPCS/Animals/Wolf.dmi', "name"="Wolf", "BaseMod"=1, "ai_adapting_power"=0, "StrMod"=3, "EndMod"=6, "ForMod"=0.1, "OffMod"=6, "DefMod"=4, "SpdMod"=3, "Potential"=-1, "ai_hostility"=2, "ai_wander"=1, "ai_spammer"=0.5), list("/obj/Skills/AutoHit/RushStrike", "/obj/Skills/AutoHit/Howl", "/obj/Skills/AutoHit/SweepingKick"))
-	ai_database["frog"] = new/ai_sheet("frog", list("icon"='Icons/NPCS/Animals/Frog.dmi', "name"="Frog", "BaseMod"=1.5, "ai_adapting_power"=0, "StrMod"=1.5, "EndMod"=1.5, "ForMod"=1.5, "OffMod"=1.5, "DefMod"=1.5, "SpdMod"=1.5, "Potential"=-1, "ai_hostility"=1, "ai_wander"=1), list("/obj/Skills/AutoHit/RushStrike"))
-	ai_database["xenomorph"] = new/ai_sheet("xenomorph", list("icon"='Icons/NPCS/xenomorphs/xenomorph.dmi', "name"="Xenomorph", "BaseMod"=3, "ai_adapting_power"=0, "StrMod"=4, "EndMod"=2, "ForMod"=1.5, "OffMod"=5, "DefMod"=3, "SpdMod"=4, "Potential"=-1, "ai_hostility"=2, "ai_wander"=0, "ai_alliances"=list("Xenomorph")), list("/obj/Skills/AutoHit/RushStrike"))
-	ai_database["xenomorph ravager"] = new/ai_sheet("xenomorphravager", list("icon"='Icons/NPCS/xenomorphs/runner.dmi', "name"="Xenomorph Ravager", "BaseMod"=7, "ai_adapting_power"=0.5, "StrMod"=6, "EndMod"=5, "ForMod"=1.5, "OffMod"=5, "DefMod"=3, "SpdMod"=3, "Potential"=-1, "ai_hostility"=2, "ai_wander"=1, "ai_alliances"=list("Xenomorph")), list("/obj/Skills/AutoHit/RushStrike"))
-	ai_database["xenomorph runner"] = new/ai_sheet("xenomorphrunner", list("icon"='Icons/NPCS/xenomorphs/runner.dmi', "name"="Xenomorph Runner", "BaseMod"=2.5, "ai_adapting_power"=0.5, "StrMod"=3, "EndMod"=3, "ForMod"=1.5, "OffMod"=6, "DefMod"=3, "SpdMod"=6, "Potential"=-1, "ai_hostility"=2, "ai_wander"=1, "ai_alliances"=list("Xenomorph")), list("/obj/Skills/AutoHit/RushStrike"))
-	ai_database["xenomorph spitter"] = new/ai_sheet("xenomorphspitter", list("icon"='Icons/NPCS/xenomorphs/xenomorph.dmi', "name"="Xenomorph Spitter", "BaseMod"=4, "ai_adapting_power"=0.5, "StrMod"=3, "EndMod"=3, "ForMod"=8, "OffMod"=4, "DefMod"=3, "SpdMod"=5, "Potential"=-1, "ai_hostility"=2, "ai_wander"=1, "ai_alliances"=list("Xenomorph")), list("/obj/Skills/Projectile/Shine_Shot", "/obj/Skills/Projectile/Charge", "/obj/Skills/Projectile/Blast"))
-	ai_database["xenomorph praetorian"] = new/ai_sheet("xenomorphpraetorian", list("icon"='Icons/NPCS/xenomorphs/xenomorph.dmi', "name"="Xenomorph Praetorian", "BaseMod"=10, "ai_adapting_power"=1, "Mythical"=1, "StrMod"=7, "EndMod"=5, "ForMod"=1.5, "OffMod"=5, "DefMod"=1.5, "SpdMod"=4, "Potential"=100, "ai_hostility"=2, "ai_wander"=1, "ai_alliances"=list("Xenomorph")), list("/obj/Skills/AutoHit/RushStrike", "/obj/Skills/AutoHit/PhantomStrike", "/obj/Skills/AutoHit/Knockoff_Wave", "/obj/Skills/Projectile/Shine_Shot", "/obj/Skills/Projectile/Dragon_Buster"))
+
+	// Arcane beast — nested icon list built step by step to avoid BYOND 516 quirks with
+	// complex nested list literals containing file-ref keys at world init time.
+	var/list/arcane_icons = list()
+	arcane_icons['Icons/NPCS/Dragons/Green Dragon.dmi'] = list("name"="Arcane Green Dragon")
+	arcane_icons['Icons/NPCS/Dragons/Blue Dragon.dmi'] = list("name"="Arcane Blue Dragon")
+	arcane_icons['Icons/NPCS/Arcane/Crystal1.dmi'] = list("name"="Magicite Effigy")
+	arcane_icons['Icons/NPCS/Arcane/Crystal2.dmi'] = list("name"="Dark Magicite Effigy")
+	arcane_icons['Icons/NPCS/Arcane/SpriteCrystal.dmi'] = list("name"="Magicite Archons")
+	arcane_icons['Icons/NPCS/Arcane/SpriteR.dmi'] = list("name"="Arcane Archon")
+	arcane_icons['Icons/NPCS/Arcane/SpriteY.dmi'] = list("name"="Arcane Archon")
+	arcane_icons['Icons/NPCS/Arcane/SpriteC.dmi'] = list("name"="Arcane Archon")
+	arcane_icons['Icons/NPCS/Arcane/SpriteG.dmi'] = list("name"="Arcane Archon")
+	arcane_icons['Icons/NPCS/Arcane/Fairy1.dmi'] = list("name"="Arcane Fairy")
+	arcane_icons['Icons/NPCS/Arcane/Fairy2.dmi'] = list("name"="Arcane Fairy")
+	arcane_icons['Icons/NPCS/Arcane/Fairy3.dmi'] = list("name"="Arcane Fairy")
+	ai_database["arcane beast"] = new/ai_sheet("arcane beast", list("hostile_randomize"=1), -1, arcane_icons)
+
+	var/list/hell_icons = list()
+	hell_icons['Icons/NPCS/Animals/Snake.dmi'] = list("name"="Hellspawn Serpent")
+	hell_icons['Icons/NPCS/Dragons/Red Dragon.dmi'] = list("name"="Hellspawn Red Dragon")
+	hell_icons['Icons/NPCS/Dragons/Black Dragon.dmi'] = list("name"="Hellspawn Black Dragon")
+	hell_icons['Icons/Characters/Demons/Demon1.dmi'] = list("name"="Red Imp")
+	hell_icons['Icons/Characters/Demons/Demon2.dmi'] = list("name"="Blue Imp")
+	hell_icons['Icons/Characters/Demons/Demon3.dmi'] = list("name"="Stone Imp")
+	hell_icons['Icons/Characters/Demons/Demon4.dmi'] = list("name"="Grand Imp")
+	hell_icons['Icons/Characters/Demons/Demon5.dmi'] = list("name"="Hell Crawler")
+	hell_icons['Icons/Characters/Special/Undead.dmi'] = list("name"="Death Soldier")
+	hell_icons['Icons/NPCS/Horrors/Zombie.dmi'] = list("name"="Death Warrior")
+	hell_icons['Icons/NPCS/Horrors/Chaos_Chosen.dmi'] = list("name"="Death Knight")
+	ai_database["hell beast"] = new/ai_sheet("hell beast", list("hostile_randomize"=2), -1, hell_icons)
+
+	var/list/wild_icons = list()
+	wild_icons['Icons/NPCS/Monster/Saibaman.dmi'] = list("name"="Saibaman")
+	wild_icons['Icons/NPCS/Monster/WildHound.dmi'] = list("name"="Fellhound")
+	wild_icons['Icons/NPCS/Monster/Phoenix.dmi'] = list("name"="Avian")
+	wild_icons['Icons/NPCS/Monster/WolfBeast.dmi'] = list("name"="Beast")
+	wild_icons['Icons/NPCS/Dragons/Red Dragon.dmi'] = list("name"="Red Dragon")
+	wild_icons['Icons/NPCS/Dragons/Black Dragon.dmi'] = list("name"="Black Dragon")
+	wild_icons['Icons/NPCS/Dragons/Green Dragon.dmi'] = list("name"="Green Dragon")
+	wild_icons['Icons/NPCS/Dragons/Blue Dragon.dmi'] = list("name"="Blue Dragon")
+	wild_icons['Icons/NPCS/Aquatics/Aquinian.dmi'] = list("name"="Squid Monster")
+	wild_icons['Icons/NPCS/Monster/Kobold.dmi'] = list("name"="Kobold")
+	wild_icons['Icons/NPCS/Monster/Komfty Kobold.dmi'] = list("name"="Kobold Warrior")
+	wild_icons['Icons/NPCS/Monster/Kobold King.dmi'] = list("name"="Kobold Hunter")
+	wild_icons['Icons/NPCS/Monster/Tricera.dmi'] = list("name"="Flying Wyvern")
+	ai_database["wild monster"] = new/ai_sheet("wild monster", list("hostile_randomize"=3), -1, wild_icons)
+
+	// Individual critters — step-by-step property list builds for the same reason.
+	var/list/wolf_props = list()
+	wolf_props["icon"] = 'Icons/NPCS/Animals/Wolf.dmi'
+	wolf_props["name"] = "Wolf"
+	wolf_props["BaseMod"] = 1
+	wolf_props["ai_adapting_power"] = 0
+	wolf_props["StrMod"] = 3
+	wolf_props["EndMod"] = 6
+	wolf_props["ForMod"] = 0.1
+	wolf_props["OffMod"] = 6
+	wolf_props["DefMod"] = 4
+	wolf_props["SpdMod"] = 3
+	wolf_props["Potential"] = -1
+	wolf_props["ai_hostility"] = 2
+	wolf_props["ai_wander"] = 1
+	wolf_props["ai_spammer"] = 0.5
+	var/list/wolf_techs = list()
+	wolf_techs += "/obj/Skills/AutoHit/RushStrike"
+	wolf_techs += "/obj/Skills/AutoHit/Howl"
+	wolf_techs += "/obj/Skills/AutoHit/SweepingKick"
+	ai_database["wolf"] = new/ai_sheet("wolf", wolf_props, wolf_techs)
+
+	var/list/frog_props = list()
+	frog_props["icon"] = 'Icons/NPCS/Animals/Frog.dmi'
+	frog_props["name"] = "Frog"
+	frog_props["BaseMod"] = 1.5
+	frog_props["ai_adapting_power"] = 0
+	frog_props["StrMod"] = 1.5
+	frog_props["EndMod"] = 1.5
+	frog_props["ForMod"] = 1.5
+	frog_props["OffMod"] = 1.5
+	frog_props["DefMod"] = 1.5
+	frog_props["SpdMod"] = 1.5
+	frog_props["Potential"] = -1
+	frog_props["ai_hostility"] = 1
+	frog_props["ai_wander"] = 1
+	ai_database["frog"] = new/ai_sheet("frog", frog_props, list("/obj/Skills/AutoHit/RushStrike"))
+
+	var/list/xeno_alliance = list("Xenomorph")
+
+	var/list/xeno_props = list()
+	xeno_props["icon"] = 'Icons/NPCS/xenomorphs/xenomorph.dmi'
+	xeno_props["name"] = "Xenomorph"
+	xeno_props["BaseMod"] = 3
+	xeno_props["ai_adapting_power"] = 0
+	xeno_props["StrMod"] = 4
+	xeno_props["EndMod"] = 2
+	xeno_props["ForMod"] = 1.5
+	xeno_props["OffMod"] = 5
+	xeno_props["DefMod"] = 3
+	xeno_props["SpdMod"] = 4
+	xeno_props["Potential"] = -1
+	xeno_props["ai_hostility"] = 2
+	xeno_props["ai_wander"] = 0
+	xeno_props["ai_alliances"] = xeno_alliance
+	ai_database["xenomorph"] = new/ai_sheet("xenomorph", xeno_props, list("/obj/Skills/AutoHit/RushStrike"))
+
+	var/list/xeno_rav_props = list()
+	xeno_rav_props["icon"] = 'Icons/NPCS/xenomorphs/runner.dmi'
+	xeno_rav_props["name"] = "Xenomorph Ravager"
+	xeno_rav_props["BaseMod"] = 7
+	xeno_rav_props["ai_adapting_power"] = 0.5
+	xeno_rav_props["StrMod"] = 6
+	xeno_rav_props["EndMod"] = 5
+	xeno_rav_props["ForMod"] = 1.5
+	xeno_rav_props["OffMod"] = 5
+	xeno_rav_props["DefMod"] = 3
+	xeno_rav_props["SpdMod"] = 3
+	xeno_rav_props["Potential"] = -1
+	xeno_rav_props["ai_hostility"] = 2
+	xeno_rav_props["ai_wander"] = 1
+	xeno_rav_props["ai_alliances"] = xeno_alliance
+	ai_database["xenomorph ravager"] = new/ai_sheet("xenomorphravager", xeno_rav_props, list("/obj/Skills/AutoHit/RushStrike"))
+
+	var/list/xeno_run_props = list()
+	xeno_run_props["icon"] = 'Icons/NPCS/xenomorphs/runner.dmi'
+	xeno_run_props["name"] = "Xenomorph Runner"
+	xeno_run_props["BaseMod"] = 2.5
+	xeno_run_props["ai_adapting_power"] = 0.5
+	xeno_run_props["StrMod"] = 3
+	xeno_run_props["EndMod"] = 3
+	xeno_run_props["ForMod"] = 1.5
+	xeno_run_props["OffMod"] = 6
+	xeno_run_props["DefMod"] = 3
+	xeno_run_props["SpdMod"] = 6
+	xeno_run_props["Potential"] = -1
+	xeno_run_props["ai_hostility"] = 2
+	xeno_run_props["ai_wander"] = 1
+	xeno_run_props["ai_alliances"] = xeno_alliance
+	ai_database["xenomorph runner"] = new/ai_sheet("xenomorphrunner", xeno_run_props, list("/obj/Skills/AutoHit/RushStrike"))
+
+	var/list/xeno_spit_props = list()
+	xeno_spit_props["icon"] = 'Icons/NPCS/xenomorphs/xenomorph.dmi'
+	xeno_spit_props["name"] = "Xenomorph Spitter"
+	xeno_spit_props["BaseMod"] = 4
+	xeno_spit_props["ai_adapting_power"] = 0.5
+	xeno_spit_props["StrMod"] = 3
+	xeno_spit_props["EndMod"] = 3
+	xeno_spit_props["ForMod"] = 8
+	xeno_spit_props["OffMod"] = 4
+	xeno_spit_props["DefMod"] = 3
+	xeno_spit_props["SpdMod"] = 5
+	xeno_spit_props["Potential"] = -1
+	xeno_spit_props["ai_hostility"] = 2
+	xeno_spit_props["ai_wander"] = 1
+	xeno_spit_props["ai_alliances"] = xeno_alliance
+	var/list/xeno_spit_techs = list()
+	xeno_spit_techs += "/obj/Skills/Projectile/Shine_Shot"
+	xeno_spit_techs += "/obj/Skills/Projectile/Charge"
+	xeno_spit_techs += "/obj/Skills/Projectile/Blast"
+	ai_database["xenomorph spitter"] = new/ai_sheet("xenomorphspitter", xeno_spit_props, xeno_spit_techs)
+
+	var/list/xeno_prae_props = list()
+	xeno_prae_props["icon"] = 'Icons/NPCS/xenomorphs/xenomorph.dmi'
+	xeno_prae_props["name"] = "Xenomorph Praetorian"
+	xeno_prae_props["BaseMod"] = 10
+	xeno_prae_props["ai_adapting_power"] = 1
+	xeno_prae_props["Mythical"] = 1
+	xeno_prae_props["StrMod"] = 7
+	xeno_prae_props["EndMod"] = 5
+	xeno_prae_props["ForMod"] = 1.5
+	xeno_prae_props["OffMod"] = 5
+	xeno_prae_props["DefMod"] = 1.5
+	xeno_prae_props["SpdMod"] = 4
+	xeno_prae_props["Potential"] = 100
+	xeno_prae_props["ai_hostility"] = 2
+	xeno_prae_props["ai_wander"] = 1
+	xeno_prae_props["ai_alliances"] = xeno_alliance
+	var/list/xeno_prae_techs = list()
+	xeno_prae_techs += "/obj/Skills/AutoHit/RushStrike"
+	xeno_prae_techs += "/obj/Skills/AutoHit/PhantomStrike"
+	xeno_prae_techs += "/obj/Skills/AutoHit/Knockoff_Wave"
+	xeno_prae_techs += "/obj/Skills/Projectile/Shine_Shot"
+	xeno_prae_techs += "/obj/Skills/Projectile/Dragon_Buster"
+	ai_database["xenomorph praetorian"] = new/ai_sheet("xenomorphpraetorian", xeno_prae_props, xeno_prae_techs)
 ai_sheet //need to include icon scale
 	parent_type = /datum
 	var

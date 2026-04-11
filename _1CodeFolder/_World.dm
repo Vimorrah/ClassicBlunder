@@ -34,15 +34,20 @@ world
 		spawn(100)GlobalSave()
 
 		spawn(10)
-
 			BootWorld("Load")
-		BuildGeneralMagicDatabase()
-		BuildGeneralWeaponryDatabase()
-		GeneratePlayActionDatabase()
-		updatePassiveInfo();
-		//initRitualDatabase()
 
-		generateSwapMaps()
+		// The database-build and passive-info procs used to run inline here in world/New(),
+		// but they depend on SkillTree / typesof lookups that are only safely available after
+		// BootWorld("Load") has finished populating the global lists. Run them deferred so
+		// they fire AFTER BootWorld (spawn(10)) and AFTER the nested spawn()MakeSkillTreeList()
+		// inside BootWorld. generateSwapMaps() is also deferred because it does savefile I/O
+		// and can race with other world init writes on BYOND 516.
+		spawn(30)
+			BuildGeneralMagicDatabase()
+			BuildGeneralWeaponryDatabase()
+			GeneratePlayActionDatabase()
+			updatePassiveInfo()
+			generateSwapMaps()
 	Del()
 		..()
 

@@ -23,7 +23,7 @@ mob
 		HitEffect(var/atom/movable/m, var/UnarmedAttack, var/SwordAttack, var/SecondStrike, var/ThirdStrike, var/AsuraStrike, var/DisperseX=rand(-8,8), var/DisperseY=rand(-8,8))
 			if(!m) return
 			if(src.AttackQueue&&src.AttackQueue.HitSparkIcon)
-				var/obj/Effects/HE=new(src.AttackQueue.HitSparkIcon, src.AttackQueue.HitSparkX, src.AttackQueue.HitSparkY, src.AttackQueue.HitSparkTurns, src.AttackQueue.HitSparkSize)
+				var/obj/Effects/HE=new(null, src.AttackQueue.HitSparkIcon, src.AttackQueue.HitSparkX, src.AttackQueue.HitSparkY, src.AttackQueue.HitSparkTurns, src.AttackQueue.HitSparkSize)
 				HE.appearance_flags = KEEP_APART | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 				HE.dir=src.dir
 				HE.pixel_z=m.pixel_z
@@ -42,7 +42,7 @@ mob
 				var/icony=src.HitScanHitSparkY
 				while(AMT)
 					AMT--
-					var/obj/Effects/HE=new(icon, iconx, icony, 0, 1, 3)
+					var/obj/Effects/HE=new(null, icon, iconx, icony, 0, 1, 3)
 					HE.appearance_flags = KEEP_APART | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 					HE.dir=src.dir
 					HE?.pixel_z=m?.pixel_z
@@ -65,7 +65,7 @@ mob
 				var/life=src.HitSparkLife
 				while(AMT)
 					AMT--
-					var/obj/Effects/HE=new(icon, iconx, icony, turns, size, life)
+					var/obj/Effects/HE=new(null, icon, iconx, icony, turns, size, life)
 					HE.appearance_flags = KEEP_APART | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 					HE.dir=src.dir
 					HE?.pixel_z=m?.pixel_z
@@ -78,7 +78,7 @@ mob
 					HE.pixel_y+=rand((-1)*dispersion,dispersion)
 					sleep(delay)
 			else if(src.BuffHitSparkIcon)
-				var/obj/Effects/HE=new(src.BuffHitSparkIcon, src.BuffHitSparkX, src.BuffHitSparkY, src.BuffHitSparkTurns, src.BuffHitSparkSize)
+				var/obj/Effects/HE=new(null, src.BuffHitSparkIcon, src.BuffHitSparkX, src.BuffHitSparkY, src.BuffHitSparkTurns, src.BuffHitSparkSize)
 				HE.appearance_flags = KEEP_APART | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 				HE.dir=src.dir
 				HE.pixel_z=m.pixel_z

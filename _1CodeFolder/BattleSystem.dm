@@ -908,7 +908,7 @@ proc/Save_Bodies()
 	var/Amount=0
 	var/E=1
 	var/savefile/F=new("Saves/Bones/File[E]")
-	var/list/Types=new
+	var/list/Types=list()
 	for(var/mob/Body/A in world) if(A.Savable&&A.z)
 		A.buildPreviousX = A.x
 		A.buildPreviousY = A.y
@@ -919,7 +919,7 @@ proc/Save_Bodies()
 			F["Types"]<<Types
 			E++
 			F=new("Saves/Bones/File[E]")
-			Types=new
+			Types=list()
 	if(Amount % 250 != 0)
 		F["Types"]<<Types
 	hacklol
@@ -936,7 +936,7 @@ proc/Load_Bodies()
 	filenum++
 	if(fexists("Saves/Bones/File[filenum]"))
 		var/savefile/F=new("Saves/Bones/File[filenum]")
-		var/list/L=new
+		var/list/L=list()
 		F["Types"]>>L
 		for(var/mob/Body/A in L)
 			amount+=1

@@ -1,4 +1,7 @@
 /proc/InitDemonDatabase()
+	// Build into a local list first to avoid BYOND 516 quirks where assigning to a
+	// global list and immediately indexing it on the next line fails with "bad index".
+	var/list/db = list()
 	// Heqet (Avatar, Lv 13)
 	var/datum/demon_data/_dd0 = new /datum/demon_data()
 	_dd0.demon_name = "Heqet"
@@ -16,7 +19,7 @@
 	_dd0.demon_icon = 'Icons/DevilSummoner/Demons/Heqet.dmi'
 	_dd0.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Heqet128.dmi'
 	_dd0.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Heqet32.dmi'
-	DEMON_DB["Heqet"] = _dd0
+	db["Heqet"] = _dd0
 
 	// Apis (Avatar, Lv 21)
 	var/datum/demon_data/_dd1 = new /datum/demon_data()
@@ -36,7 +39,7 @@
 	_dd1.demon_icon = 'Icons/DevilSummoner/Demons/Apis.dmi'
 	_dd1.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Apis128.dmi'
 	_dd1.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Apis32.dmi'
-	DEMON_DB["Apis"] = _dd1
+	db["Apis"] = _dd1
 
 	// Shiisaa (Avatar, Lv 28)
 	var/datum/demon_data/_dd2 = new /datum/demon_data()
@@ -55,7 +58,7 @@
 	_dd2.demon_icon = 'Icons/DevilSummoner/Demons/Shiisaa.dmi'
 	_dd2.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Shiisaa128.dmi'
 	_dd2.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Shiisaa32.dmi'
-	DEMON_DB["Shiisaa"] = _dd2
+	db["Shiisaa"] = _dd2
 
 	// Kamapua'a (Avatar, Lv 32)
 	var/datum/demon_data/_dd3 = new /datum/demon_data()
@@ -75,7 +78,7 @@
 	_dd3.demon_icon = 'Icons/DevilSummoner/Demons/Kamapuaa.dmi'
 	_dd3.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Kamapuaa128.dmi'
 	_dd3.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Kamapuaa32.dmi'
-	DEMON_DB["Kamapua'a"] = _dd3
+	db["Kamapua'a"] = _dd3
 
 	// Bai Ze (Avatar, Lv 37)
 	var/datum/demon_data/_dd4 = new /datum/demon_data()
@@ -94,7 +97,7 @@
 	_dd4.demon_icon = 'Icons/DevilSummoner/Demons/Bai Ze.dmi'
 	_dd4.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Bai Ze128.dmi'
 	_dd4.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Bai Ze32.dmi'
-	DEMON_DB["Bai Ze"] = _dd4
+	db["Bai Ze"] = _dd4
 
 	// Pabilsag (Avatar, Lv 45)
 	var/datum/demon_data/_dd5 = new /datum/demon_data()
@@ -114,7 +117,7 @@
 	_dd5.demon_icon = 'Icons/DevilSummoner/Demons/Pabilsag.dmi'
 	_dd5.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Pabilsag128.dmi'
 	_dd5.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Pabilsag32.dmi'
-	DEMON_DB["Pabilsag"] = _dd5
+	db["Pabilsag"] = _dd5
 
 	// Baihu (Avatar, Lv 53)
 	var/datum/demon_data/_dd6 = new /datum/demon_data()
@@ -135,7 +138,7 @@
 	_dd6.demon_icon = 'Icons/DevilSummoner/Demons/Baihu.dmi'
 	_dd6.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Baihu128.dmi'
 	_dd6.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Baihu32.dmi'
-	DEMON_DB["Baihu"] = _dd6
+	db["Baihu"] = _dd6
 
 	// Airavata (Avatar, Lv 60)
 	var/datum/demon_data/_dd7 = new /datum/demon_data()
@@ -154,7 +157,7 @@
 	_dd7.demon_icon = 'Icons/DevilSummoner/Demons/Airavata.dmi'
 	_dd7.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Airavata128.dmi'
 	_dd7.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Airavata32.dmi'
-	DEMON_DB["Airavata"] = _dd7
+	db["Airavata"] = _dd7
 
 	// Ukano Mitama (Avatar, Lv 64)
 	var/datum/demon_data/_dd8 = new /datum/demon_data()
@@ -174,7 +177,7 @@
 	_dd8.demon_icon = 'Icons/DevilSummoner/Demons/Ukano Mitama.dmi'
 	_dd8.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Ukano Mitama128.dmi'
 	_dd8.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Ukano Mitama32.dmi'
-	DEMON_DB["Ukano Mitama"] = _dd8
+	db["Ukano Mitama"] = _dd8
 
 	// Barong (Avatar, Lv 68)
 	var/datum/demon_data/_dd9 = new /datum/demon_data()
@@ -194,7 +197,7 @@
 	_dd9.demon_icon = 'Icons/DevilSummoner/Demons/Barong.dmi'
 	_dd9.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Barong128.dmi'
 	_dd9.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Barong32.dmi'
-	DEMON_DB["Barong"] = _dd9
+	db["Barong"] = _dd9
 
 	// Anubis (Avatar, Lv 76)
 	var/datum/demon_data/_dd10 = new /datum/demon_data()
@@ -212,7 +215,7 @@
 	_dd10.demon_icon = 'Icons/DevilSummoner/Demons/Anubis.dmi'
 	_dd10.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Anubis128.dmi'
 	_dd10.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Anubis32.dmi'
-	DEMON_DB["Anubis"] = _dd10
+	db["Anubis"] = _dd10
 
 	// Itsumade (Avian, Lv 8)
 	var/datum/demon_data/_dd11 = new /datum/demon_data()
@@ -232,7 +235,7 @@
 	_dd11.demon_icon = 'Icons/DevilSummoner/Demons/Itsumade.dmi'
 	_dd11.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Itsumade128.dmi'
 	_dd11.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Itsumade32.dmi'
-	DEMON_DB["Itsumade"] = _dd11
+	db["Itsumade"] = _dd11
 
 	// Moh Shuvuu (Avian, Lv 16)
 	var/datum/demon_data/_dd12 = new /datum/demon_data()
@@ -252,7 +255,7 @@
 	_dd12.demon_icon = 'Icons/DevilSummoner/Demons/Moh Shuvuu.dmi'
 	_dd12.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Moh Shuvuu128.dmi'
 	_dd12.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Moh Shuvuu32.dmi'
-	DEMON_DB["Moh Shuvuu"] = _dd12
+	db["Moh Shuvuu"] = _dd12
 
 	// Hamsa (Avian, Lv 24)
 	var/datum/demon_data/_dd13 = new /datum/demon_data()
@@ -271,7 +274,7 @@
 	_dd13.demon_icon = 'Icons/DevilSummoner/Demons/Hamsa.dmi'
 	_dd13.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Hamsa128.dmi'
 	_dd13.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Hamsa32.dmi'
-	DEMON_DB["Hamsa"] = _dd13
+	db["Hamsa"] = _dd13
 
 	// Suparna (Avian, Lv 31)
 	var/datum/demon_data/_dd14 = new /datum/demon_data()
@@ -291,7 +294,7 @@
 	_dd14.demon_icon = 'Icons/DevilSummoner/Demons/Suparna.dmi'
 	_dd14.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Suparna128.dmi'
 	_dd14.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Suparna32.dmi'
-	DEMON_DB["Suparna"] = _dd14
+	db["Suparna"] = _dd14
 
 	// Vidofnir (Avian, Lv 39)
 	var/datum/demon_data/_dd15 = new /datum/demon_data()
@@ -311,7 +314,7 @@
 	_dd15.demon_icon = 'Icons/DevilSummoner/Demons/Vidofnir.dmi'
 	_dd15.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Vidofnir128.dmi'
 	_dd15.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Vidofnir32.dmi'
-	DEMON_DB["Vidofnir"] = _dd15
+	db["Vidofnir"] = _dd15
 
 	// Badb Catha (Avian, Lv 46)
 	var/datum/demon_data/_dd16 = new /datum/demon_data()
@@ -331,7 +334,7 @@
 	_dd16.demon_icon = 'Icons/DevilSummoner/Demons/Badb Catha.dmi'
 	_dd16.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Badb Catha128.dmi'
 	_dd16.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Badb Catha32.dmi'
-	DEMON_DB["Badb Catha"] = _dd16
+	db["Badb Catha"] = _dd16
 
 	// Anzu (Avian, Lv 54)
 	var/datum/demon_data/_dd17 = new /datum/demon_data()
@@ -350,7 +353,7 @@
 	_dd17.demon_icon = 'Icons/DevilSummoner/Demons/Anzu.dmi'
 	_dd17.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Anzu128.dmi'
 	_dd17.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Anzu32.dmi'
-	DEMON_DB["Anzu"] = _dd17
+	db["Anzu"] = _dd17
 
 	// Feng Huang (Avian, Lv 62)
 	var/datum/demon_data/_dd18 = new /datum/demon_data()
@@ -369,7 +372,7 @@
 	_dd18.demon_icon = 'Icons/DevilSummoner/Demons/Feng Huang.dmi'
 	_dd18.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Feng Huang128.dmi'
 	_dd18.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Feng Huang32.dmi'
-	DEMON_DB["Feng Huang"] = _dd18
+	db["Feng Huang"] = _dd18
 
 	// Garuda (Avian, Lv 69)
 	var/datum/demon_data/_dd19 = new /datum/demon_data()
@@ -387,7 +390,7 @@
 	_dd19.demon_icon = 'Icons/DevilSummoner/Demons/Garuda.dmi'
 	_dd19.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Garuda128.dmi'
 	_dd19.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Garuda32.dmi'
-	DEMON_DB["Garuda"] = _dd19
+	db["Garuda"] = _dd19
 
 	// Da Peng (Avian, Lv 77)
 	var/datum/demon_data/_dd20 = new /datum/demon_data()
@@ -406,7 +409,7 @@
 	_dd20.demon_icon = 'Icons/DevilSummoner/Demons/Da Peng.dmi'
 	_dd20.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Da Peng128.dmi'
 	_dd20.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Da Peng32.dmi'
-	DEMON_DB["Da Peng"] = _dd20
+	db["Da Peng"] = _dd20
 
 	// Kabuso (Beast, Lv 2)
 	var/datum/demon_data/_dd21 = new /datum/demon_data()
@@ -425,7 +428,7 @@
 	_dd21.demon_icon = 'Icons/DevilSummoner/Demons/Kabuso.dmi'
 	_dd21.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Kabuso128.dmi'
 	_dd21.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Kabuso32.dmi'
-	DEMON_DB["Kabuso"] = _dd21
+	db["Kabuso"] = _dd21
 
 	// Hairy Jack (Beast, Lv 10)
 	var/datum/demon_data/_dd22 = new /datum/demon_data()
@@ -444,7 +447,7 @@
 	_dd22.demon_icon = 'Icons/DevilSummoner/Demons/Hairy Jack.dmi'
 	_dd22.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Hairy Jack128.dmi'
 	_dd22.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Hairy Jack32.dmi'
-	DEMON_DB["Hairy Jack"] = _dd22
+	db["Hairy Jack"] = _dd22
 
 	// Nekomata (Beast, Lv 19)
 	var/datum/demon_data/_dd23 = new /datum/demon_data()
@@ -465,7 +468,7 @@
 	_dd23.demon_icon = 'Icons/DevilSummoner/Demons/Nekomata.dmi'
 	_dd23.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Nekomata128.dmi'
 	_dd23.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Nekomata32.dmi'
-	DEMON_DB["Nekomata"] = _dd23
+	db["Nekomata"] = _dd23
 
 	// Orthrus (Beast, Lv 27)
 	var/datum/demon_data/_dd24 = new /datum/demon_data()
@@ -485,7 +488,7 @@
 	_dd24.demon_icon = 'Icons/DevilSummoner/Demons/Orthrus.dmi'
 	_dd24.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Orthrus128.dmi'
 	_dd24.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Orthrus32.dmi'
-	DEMON_DB["Orthrus"] = _dd24
+	db["Orthrus"] = _dd24
 
 	// Cait Sith (Beast, Lv 35)
 	var/datum/demon_data/_dd25 = new /datum/demon_data()
@@ -505,7 +508,7 @@
 	_dd25.demon_icon = 'Icons/DevilSummoner/Demons/Cait Sith.dmi'
 	_dd25.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Cait Sith128.dmi'
 	_dd25.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Cait Sith32.dmi'
-	DEMON_DB["Cait Sith"] = _dd25
+	db["Cait Sith"] = _dd25
 
 	// Nue (Beast, Lv 42)
 	var/datum/demon_data/_dd26 = new /datum/demon_data()
@@ -524,7 +527,7 @@
 	_dd26.demon_icon = 'Icons/DevilSummoner/Demons/Nue.dmi'
 	_dd26.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Nue128.dmi'
 	_dd26.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Nue32.dmi'
-	DEMON_DB["Nue"] = _dd26
+	db["Nue"] = _dd26
 
 	// Myrmecolion (Beast, Lv 50)
 	var/datum/demon_data/_dd27 = new /datum/demon_data()
@@ -544,7 +547,7 @@
 	_dd27.demon_icon = 'Icons/DevilSummoner/Demons/Myrmecolion.dmi'
 	_dd27.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Myrmecolion128.dmi'
 	_dd27.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Myrmecolion32.dmi'
-	DEMON_DB["Myrmecolion"] = _dd27
+	db["Myrmecolion"] = _dd27
 
 	// Cerberus (Beast, Lv 58)
 	var/datum/demon_data/_dd28 = new /datum/demon_data()
@@ -563,7 +566,7 @@
 	_dd28.demon_icon = 'Icons/DevilSummoner/Demons/Cerberus.dmi'
 	_dd28.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Cerberus128.dmi'
 	_dd28.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Cerberus32.dmi'
-	DEMON_DB["Cerberus"] = _dd28
+	db["Cerberus"] = _dd28
 
 	// Fenrir (Beast, Lv 66)
 	var/datum/demon_data/_dd29 = new /datum/demon_data()
@@ -583,7 +586,7 @@
 	_dd29.demon_icon = 'Icons/DevilSummoner/Demons/Fenrir.dmi'
 	_dd29.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Fenrir128.dmi'
 	_dd29.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Fenrir32.dmi'
-	DEMON_DB["Fenrir"] = _dd29
+	db["Fenrir"] = _dd29
 
 	// Mahakala (Deity, Lv 22)
 	var/datum/demon_data/_dd30 = new /datum/demon_data()
@@ -603,7 +606,7 @@
 	_dd30.demon_icon = 'Icons/DevilSummoner/Demons/Mahakala.dmi'
 	_dd30.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Mahakala128.dmi'
 	_dd30.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Mahakala32.dmi'
-	DEMON_DB["Mahakala"] = _dd30
+	db["Mahakala"] = _dd30
 
 	// Thor (Deity, Lv 29)
 	var/datum/demon_data/_dd31 = new /datum/demon_data()
@@ -622,7 +625,7 @@
 	_dd31.demon_icon = 'Icons/DevilSummoner/Demons/Thor.dmi'
 	_dd31.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Thor128.dmi'
 	_dd31.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Thor32.dmi'
-	DEMON_DB["Thor"] = _dd31
+	db["Thor"] = _dd31
 
 	// Arahabaki (Deity, Lv 33)
 	var/datum/demon_data/_dd32 = new /datum/demon_data()
@@ -642,7 +645,7 @@
 	_dd32.demon_icon = 'Icons/DevilSummoner/Demons/Arahabaki.dmi'
 	_dd32.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Arahabaki128.dmi'
 	_dd32.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Arahabaki32.dmi'
-	DEMON_DB["Arahabaki"] = _dd32
+	db["Arahabaki"] = _dd32
 
 	// Odin (Deity, Lv 37)
 	var/datum/demon_data/_dd33 = new /datum/demon_data()
@@ -662,7 +665,7 @@
 	_dd33.demon_icon = 'Icons/DevilSummoner/Demons/Odin.dmi'
 	_dd33.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Odin128.dmi'
 	_dd33.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Odin32.dmi'
-	DEMON_DB["Odin"] = _dd33
+	db["Odin"] = _dd33
 
 	// Yama (Deity, Lv 41)
 	var/datum/demon_data/_dd34 = new /datum/demon_data()
@@ -682,7 +685,7 @@
 	_dd34.demon_icon = 'Icons/DevilSummoner/Demons/Yama.dmi'
 	_dd34.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Yama128.dmi'
 	_dd34.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Yama32.dmi'
-	DEMON_DB["Yama"] = _dd34
+	db["Yama"] = _dd34
 
 	// Inti (Deity, Lv 45)
 	var/datum/demon_data/_dd35 = new /datum/demon_data()
@@ -702,7 +705,7 @@
 	_dd35.demon_icon = 'Icons/DevilSummoner/Demons/Inti.dmi'
 	_dd35.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Inti128.dmi'
 	_dd35.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Inti32.dmi'
-	DEMON_DB["Inti"] = _dd35
+	db["Inti"] = _dd35
 
 	// Mithra (Deity, Lv 49)
 	var/datum/demon_data/_dd36 = new /datum/demon_data()
@@ -722,7 +725,7 @@
 	_dd36.demon_icon = 'Icons/DevilSummoner/Demons/Mithra.dmi'
 	_dd36.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Mithra128.dmi'
 	_dd36.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Mithra32.dmi'
-	DEMON_DB["Mithra"] = _dd36
+	db["Mithra"] = _dd36
 
 	// Osiris (Deity, Lv 53)
 	var/datum/demon_data/_dd37 = new /datum/demon_data()
@@ -741,7 +744,7 @@
 	_dd37.demon_icon = 'Icons/DevilSummoner/Demons/Osiris.dmi'
 	_dd37.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Osiris128.dmi'
 	_dd37.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Osiris32.dmi'
-	DEMON_DB["Osiris"] = _dd37
+	db["Osiris"] = _dd37
 
 	// Lugh (Deity, Lv 57)
 	var/datum/demon_data/_dd38 = new /datum/demon_data()
@@ -761,7 +764,7 @@
 	_dd38.demon_icon = 'Icons/DevilSummoner/Demons/Lugh.dmi'
 	_dd38.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Lugh128.dmi'
 	_dd38.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Lugh32.dmi'
-	DEMON_DB["Lugh"] = _dd38
+	db["Lugh"] = _dd38
 
 	// Alilat (Deity, Lv 61)
 	var/datum/demon_data/_dd39 = new /datum/demon_data()
@@ -780,7 +783,7 @@
 	_dd39.demon_icon = 'Icons/DevilSummoner/Demons/Alilat.dmi'
 	_dd39.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Alilat128.dmi'
 	_dd39.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Alilat32.dmi'
-	DEMON_DB["Alilat"] = _dd39
+	db["Alilat"] = _dd39
 
 	// Baal (Deity, Lv 65)
 	var/datum/demon_data/_dd40 = new /datum/demon_data()
@@ -800,7 +803,7 @@
 	_dd40.demon_icon = 'Icons/DevilSummoner/Demons/Baal.dmi'
 	_dd40.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Baal128.dmi'
 	_dd40.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Baal32.dmi'
-	DEMON_DB["Baal"] = _dd40
+	db["Baal"] = _dd40
 
 	// Lord Nan Dou (Deity, Lv 70)
 	var/datum/demon_data/_dd41 = new /datum/demon_data()
@@ -819,7 +822,7 @@
 	_dd41.demon_icon = 'Icons/DevilSummoner/Demons/Lord Nan Dou.dmi'
 	_dd41.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Lord Nan Dou128.dmi'
 	_dd41.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Lord Nan Dou32.dmi'
-	DEMON_DB["Lord Nan Dou"] = _dd41
+	db["Lord Nan Dou"] = _dd41
 
 	// Asura (Deity, Lv 77)
 	var/datum/demon_data/_dd42 = new /datum/demon_data()
@@ -838,7 +841,7 @@
 	_dd42.demon_icon = 'Icons/DevilSummoner/Demons/Asura.dmi'
 	_dd42.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Asura128.dmi'
 	_dd42.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Asura32.dmi'
-	DEMON_DB["Asura"] = _dd42
+	db["Asura"] = _dd42
 
 	// Angel (Divine, Lv 15)
 	var/datum/demon_data/_dd43 = new /datum/demon_data()
@@ -856,7 +859,7 @@
 	_dd43.demon_icon = 'Icons/DevilSummoner/Demons/Angel.dmi'
 	_dd43.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Angel128.dmi'
 	_dd43.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Angel32.dmi'
-	DEMON_DB["Angel"] = _dd43
+	db["Angel"] = _dd43
 
 	// Power (Divine, Lv 24)
 	var/datum/demon_data/_dd44 = new /datum/demon_data()
@@ -875,7 +878,7 @@
 	_dd44.demon_icon = 'Icons/DevilSummoner/Demons/Power.dmi'
 	_dd44.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Power128.dmi'
 	_dd44.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Power32.dmi'
-	DEMON_DB["Power"] = _dd44
+	db["Power"] = _dd44
 
 	// Lailah (Divine, Lv 32)
 	var/datum/demon_data/_dd45 = new /datum/demon_data()
@@ -896,7 +899,7 @@
 	_dd45.demon_icon = 'Icons/DevilSummoner/Demons/Lailah.dmi'
 	_dd45.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Lailah128.dmi'
 	_dd45.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Lailah32.dmi'
-	DEMON_DB["Lailah"] = _dd45
+	db["Lailah"] = _dd45
 
 	// Aniel (Divine, Lv 42)
 	var/datum/demon_data/_dd46 = new /datum/demon_data()
@@ -915,7 +918,7 @@
 	_dd46.demon_icon = 'Icons/DevilSummoner/Demons/Aniel.dmi'
 	_dd46.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Aniel128.dmi'
 	_dd46.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Aniel32.dmi'
-	DEMON_DB["Aniel"] = _dd46
+	db["Aniel"] = _dd46
 
 	// Kazfiel (Divine, Lv 50)
 	var/datum/demon_data/_dd47 = new /datum/demon_data()
@@ -935,7 +938,7 @@
 	_dd47.demon_icon = 'Icons/DevilSummoner/Demons/Kazfiel.dmi'
 	_dd47.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Kazfiel128.dmi'
 	_dd47.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Kazfiel32.dmi'
-	DEMON_DB["Kazfiel"] = _dd47
+	db["Kazfiel"] = _dd47
 
 	// Remiel (Divine, Lv 59)
 	var/datum/demon_data/_dd48 = new /datum/demon_data()
@@ -955,7 +958,7 @@
 	_dd48.demon_icon = 'Icons/DevilSummoner/Demons/Remiel.dmi'
 	_dd48.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Remiel128.dmi'
 	_dd48.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Remiel32.dmi'
-	DEMON_DB["Remiel"] = _dd48
+	db["Remiel"] = _dd48
 
 	// Metatron (Divine, Lv 74)
 	var/datum/demon_data/_dd49 = new /datum/demon_data()
@@ -974,7 +977,7 @@
 	_dd49.demon_icon = 'Icons/DevilSummoner/Demons/Metatron.dmi'
 	_dd49.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Metatron128.dmi'
 	_dd49.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Metatron32.dmi'
-	DEMON_DB["Metatron"] = _dd49
+	db["Metatron"] = _dd49
 
 	// Toubyou (Dragon, Lv 12)
 	var/datum/demon_data/_dd50 = new /datum/demon_data()
@@ -994,7 +997,7 @@
 	_dd50.demon_icon = 'Icons/DevilSummoner/Demons/Toubyou.dmi'
 	_dd50.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Toubyou128.dmi'
 	_dd50.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Toubyou32.dmi'
-	DEMON_DB["Toubyou"] = _dd50
+	db["Toubyou"] = _dd50
 
 	// Bai Suzhen (Dragon, Lv 20)
 	var/datum/demon_data/_dd51 = new /datum/demon_data()
@@ -1014,7 +1017,7 @@
 	_dd51.demon_icon = 'Icons/DevilSummoner/Demons/Bai Suzhen.dmi'
 	_dd51.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Bai Suzhen128.dmi'
 	_dd51.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Bai Suzhen32.dmi'
-	DEMON_DB["Bai Suzhen"] = _dd51
+	db["Bai Suzhen"] = _dd51
 
 	// Basilisk (Dragon, Lv 28)
 	var/datum/demon_data/_dd52 = new /datum/demon_data()
@@ -1035,7 +1038,7 @@
 	_dd52.demon_icon = 'Icons/DevilSummoner/Demons/Basilisk.dmi'
 	_dd52.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Basilisk128.dmi'
 	_dd52.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Basilisk32.dmi'
-	DEMON_DB["Basilisk"] = _dd52
+	db["Basilisk"] = _dd52
 
 	// Asp (Dragon, Lv 36)
 	var/datum/demon_data/_dd53 = new /datum/demon_data()
@@ -1055,7 +1058,7 @@
 	_dd53.demon_icon = 'Icons/DevilSummoner/Demons/Asp.dmi'
 	_dd53.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Asp128.dmi'
 	_dd53.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Asp32.dmi'
-	DEMON_DB["Asp"] = _dd53
+	db["Asp"] = _dd53
 
 	// Ym (Dragon, Lv 44)
 	var/datum/demon_data/_dd54 = new /datum/demon_data()
@@ -1074,7 +1077,7 @@
 	_dd54.demon_icon = 'Icons/DevilSummoner/Demons/Ym.dmi'
 	_dd54.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Ym128.dmi'
 	_dd54.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Ym32.dmi'
-	DEMON_DB["Ym"] = _dd54
+	db["Ym"] = _dd54
 
 	// Python (Dragon, Lv 51)
 	var/datum/demon_data/_dd55 = new /datum/demon_data()
@@ -1092,7 +1095,7 @@
 	_dd55.demon_icon = 'Icons/DevilSummoner/Demons/Python.dmi'
 	_dd55.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Python128.dmi'
 	_dd55.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Python32.dmi'
-	DEMON_DB["Python"] = _dd55
+	db["Python"] = _dd55
 
 	// Culebre (Dragon, Lv 58)
 	var/datum/demon_data/_dd56 = new /datum/demon_data()
@@ -1112,7 +1115,7 @@
 	_dd56.demon_icon = 'Icons/DevilSummoner/Demons/Culebre.dmi'
 	_dd56.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Culebre128.dmi'
 	_dd56.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Culebre32.dmi'
-	DEMON_DB["Culebre"] = _dd56
+	db["Culebre"] = _dd56
 
 	// Vritra (Dragon, Lv 65)
 	var/datum/demon_data/_dd57 = new /datum/demon_data()
@@ -1131,7 +1134,7 @@
 	_dd57.demon_icon = 'Icons/DevilSummoner/Demons/Vritra.dmi'
 	_dd57.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Vritra128.dmi'
 	_dd57.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Vritra32.dmi'
-	DEMON_DB["Vritra"] = _dd57
+	db["Vritra"] = _dd57
 
 	// Vasuki (Dragon, Lv 73)
 	var/datum/demon_data/_dd58 = new /datum/demon_data()
@@ -1149,7 +1152,7 @@
 	_dd58.demon_icon = 'Icons/DevilSummoner/Demons/Vasuki.dmi'
 	_dd58.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Vasuki128.dmi'
 	_dd58.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Vasuki32.dmi'
-	DEMON_DB["Vasuki"] = _dd58
+	db["Vasuki"] = _dd58
 
 	// Erthys (Element, Lv 7)
 	var/datum/demon_data/_dd59 = new /datum/demon_data()
@@ -1168,7 +1171,7 @@
 	_dd59.demon_icon = 'Icons/DevilSummoner/Demons/Erthys.dmi'
 	_dd59.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Erthys128.dmi'
 	_dd59.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Erthys32.dmi'
-	DEMON_DB["Erthys"] = _dd59
+	db["Erthys"] = _dd59
 
 	// Aeros (Element, Lv 12)
 	var/datum/demon_data/_dd60 = new /datum/demon_data()
@@ -1186,7 +1189,7 @@
 	_dd60.demon_icon = 'Icons/DevilSummoner/Demons/Aeros.dmi'
 	_dd60.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Aeros128.dmi'
 	_dd60.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Aeros32.dmi'
-	DEMON_DB["Aeros"] = _dd60
+	db["Aeros"] = _dd60
 
 	// Aquans (Element, Lv 17)
 	var/datum/demon_data/_dd61 = new /datum/demon_data()
@@ -1204,7 +1207,7 @@
 	_dd61.demon_icon = 'Icons/DevilSummoner/Demons/Aquans.dmi'
 	_dd61.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Aquans128.dmi'
 	_dd61.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Aquans32.dmi'
-	DEMON_DB["Aquans"] = _dd61
+	db["Aquans"] = _dd61
 
 	// Flaemis (Element, Lv 22)
 	var/datum/demon_data/_dd62 = new /datum/demon_data()
@@ -1222,7 +1225,7 @@
 	_dd62.demon_icon = 'Icons/DevilSummoner/Demons/Flaemis.dmi'
 	_dd62.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Flaemis128.dmi'
 	_dd62.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Flaemis32.dmi'
-	DEMON_DB["Flaemis"] = _dd62
+	db["Flaemis"] = _dd62
 
 	// Pixie (Fairy, Lv 2)
 	var/datum/demon_data/_dd63 = new /datum/demon_data()
@@ -1241,7 +1244,7 @@
 	_dd63.demon_icon = 'Icons/DevilSummoner/Demons/Pixie.dmi'
 	_dd63.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Pixie128.dmi'
 	_dd63.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Pixie32.dmi'
-	DEMON_DB["Pixie"] = _dd63
+	db["Pixie"] = _dd63
 
 	// Knocker (Fairy, Lv 7)
 	var/datum/demon_data/_dd64 = new /datum/demon_data()
@@ -1261,7 +1264,7 @@
 	_dd64.demon_icon = 'Icons/DevilSummoner/Demons/Knocker.dmi'
 	_dd64.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Knocker128.dmi'
 	_dd64.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Knocker32.dmi'
-	DEMON_DB["Knocker"] = _dd64
+	db["Knocker"] = _dd64
 
 	// Kijimuna (Fairy, Lv 14)
 	var/datum/demon_data/_dd65 = new /datum/demon_data()
@@ -1281,7 +1284,7 @@
 	_dd65.demon_icon = 'Icons/DevilSummoner/Demons/Kijimuna.dmi'
 	_dd65.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Kijimuna128.dmi'
 	_dd65.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Kijimuna32.dmi'
-	DEMON_DB["Kijimuna"] = _dd65
+	db["Kijimuna"] = _dd65
 
 	// Jack Frost (Fairy, Lv 21)
 	var/datum/demon_data/_dd66 = new /datum/demon_data()
@@ -1301,7 +1304,7 @@
 	_dd66.demon_icon = 'Icons/DevilSummoner/Demons/Jack Frost.dmi'
 	_dd66.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Jack Frost128.dmi'
 	_dd66.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Jack Frost32.dmi'
-	DEMON_DB["Jack Frost"] = _dd66
+	db["Jack Frost"] = _dd66
 
 	// Pyro Jack (Fairy, Lv 29)
 	var/datum/demon_data/_dd67 = new /datum/demon_data()
@@ -1321,7 +1324,7 @@
 	_dd67.demon_icon = 'Icons/DevilSummoner/Demons/Pyro Jack.dmi'
 	_dd67.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Pyro Jack128.dmi'
 	_dd67.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Pyro Jack32.dmi'
-	DEMON_DB["Pyro Jack"] = _dd67
+	db["Pyro Jack"] = _dd67
 
 	// Lorelei (Fairy, Lv 37)
 	var/datum/demon_data/_dd68 = new /datum/demon_data()
@@ -1341,7 +1344,7 @@
 	_dd68.demon_icon = 'Icons/DevilSummoner/Demons/Lorelei.dmi'
 	_dd68.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Lorelei128.dmi'
 	_dd68.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Lorelei32.dmi'
-	DEMON_DB["Lorelei"] = _dd68
+	db["Lorelei"] = _dd68
 
 	// Silky (Fairy, Lv 44)
 	var/datum/demon_data/_dd69 = new /datum/demon_data()
@@ -1359,7 +1362,7 @@
 	_dd69.demon_icon = 'Icons/DevilSummoner/Demons/Silky.dmi'
 	_dd69.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Silky128.dmi'
 	_dd69.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Silky32.dmi'
-	DEMON_DB["Silky"] = _dd69
+	db["Silky"] = _dd69
 
 	// Vivian (Fairy, Lv 52)
 	var/datum/demon_data/_dd70 = new /datum/demon_data()
@@ -1378,7 +1381,7 @@
 	_dd70.demon_icon = 'Icons/DevilSummoner/Demons/Vivian.dmi'
 	_dd70.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Vivian128.dmi'
 	_dd70.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Vivian32.dmi'
-	DEMON_DB["Vivian"] = _dd70
+	db["Vivian"] = _dd70
 
 	// Titania (Fairy, Lv 58)
 	var/datum/demon_data/_dd71 = new /datum/demon_data()
@@ -1397,7 +1400,7 @@
 	_dd71.demon_icon = 'Icons/DevilSummoner/Demons/Titania.dmi'
 	_dd71.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Titania128.dmi'
 	_dd71.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Titania32.dmi'
-	DEMON_DB["Titania"] = _dd71
+	db["Titania"] = _dd71
 
 	// Oberon (Fairy, Lv 62)
 	var/datum/demon_data/_dd72 = new /datum/demon_data()
@@ -1417,7 +1420,7 @@
 	_dd72.demon_icon = 'Icons/DevilSummoner/Demons/Oberon.dmi'
 	_dd72.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Oberon128.dmi'
 	_dd72.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Oberon32.dmi'
-	DEMON_DB["Oberon"] = _dd72
+	db["Oberon"] = _dd72
 
 	// Gagyson (Fallen, Lv 11)
 	var/datum/demon_data/_dd73 = new /datum/demon_data()
@@ -1437,7 +1440,7 @@
 	_dd73.demon_icon = 'Icons/DevilSummoner/Demons/Gagyson.dmi'
 	_dd73.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Gagyson128.dmi'
 	_dd73.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Gagyson32.dmi'
-	DEMON_DB["Gagyson"] = _dd73
+	db["Gagyson"] = _dd73
 
 	// Abraxas (Fallen, Lv 19)
 	var/datum/demon_data/_dd74 = new /datum/demon_data()
@@ -1456,7 +1459,7 @@
 	_dd74.demon_icon = 'Icons/DevilSummoner/Demons/Abraxas.dmi'
 	_dd74.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Abraxas128.dmi'
 	_dd74.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Abraxas32.dmi'
-	DEMON_DB["Abraxas"] = _dd74
+	db["Abraxas"] = _dd74
 
 	// Flauros (Fallen, Lv 26)
 	var/datum/demon_data/_dd75 = new /datum/demon_data()
@@ -1475,7 +1478,7 @@
 	_dd75.demon_icon = 'Icons/DevilSummoner/Demons/Flauros.dmi'
 	_dd75.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Flauros128.dmi'
 	_dd75.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Flauros32.dmi'
-	DEMON_DB["Flauros"] = _dd75
+	db["Flauros"] = _dd75
 
 	// Barbatos (Fallen, Lv 33)
 	var/datum/demon_data/_dd76 = new /datum/demon_data()
@@ -1496,7 +1499,7 @@
 	_dd76.demon_icon = 'Icons/DevilSummoner/Demons/Barbatos.dmi'
 	_dd76.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Barbatos128.dmi'
 	_dd76.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Barbatos32.dmi'
-	DEMON_DB["Barbatos"] = _dd76
+	db["Barbatos"] = _dd76
 
 	// Botis (Fallen, Lv 37)
 	var/datum/demon_data/_dd77 = new /datum/demon_data()
@@ -1515,7 +1518,7 @@
 	_dd77.demon_icon = 'Icons/DevilSummoner/Demons/Botis.dmi'
 	_dd77.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Botis128.dmi'
 	_dd77.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Botis32.dmi'
-	DEMON_DB["Botis"] = _dd77
+	db["Botis"] = _dd77
 
 	// Nisroc (Fallen, Lv 41)
 	var/datum/demon_data/_dd78 = new /datum/demon_data()
@@ -1535,7 +1538,7 @@
 	_dd78.demon_icon = 'Icons/DevilSummoner/Demons/Nisroc.dmi'
 	_dd78.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Nisroc128.dmi'
 	_dd78.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Nisroc32.dmi'
-	DEMON_DB["Nisroc"] = _dd78
+	db["Nisroc"] = _dd78
 
 	// Bifrons (Fallen, Lv 45)
 	var/datum/demon_data/_dd79 = new /datum/demon_data()
@@ -1554,7 +1557,7 @@
 	_dd79.demon_icon = 'Icons/DevilSummoner/Demons/Bifrons.dmi'
 	_dd79.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Bifrons128.dmi'
 	_dd79.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Bifrons32.dmi'
-	DEMON_DB["Bifrons"] = _dd79
+	db["Bifrons"] = _dd79
 
 	// Orobas (Fallen, Lv 49)
 	var/datum/demon_data/_dd80 = new /datum/demon_data()
@@ -1574,7 +1577,7 @@
 	_dd80.demon_icon = 'Icons/DevilSummoner/Demons/Orobas.dmi'
 	_dd80.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Orobas128.dmi'
 	_dd80.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Orobas32.dmi'
-	DEMON_DB["Orobas"] = _dd80
+	db["Orobas"] = _dd80
 
 	// Decarabia (Fallen, Lv 56)
 	var/datum/demon_data/_dd81 = new /datum/demon_data()
@@ -1593,7 +1596,7 @@
 	_dd81.demon_icon = 'Icons/DevilSummoner/Demons/Decarabia.dmi'
 	_dd81.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Decarabia128.dmi'
 	_dd81.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Decarabia32.dmi'
-	DEMON_DB["Decarabia"] = _dd81
+	db["Decarabia"] = _dd81
 
 	// Murmur (Fallen, Lv 64)
 	var/datum/demon_data/_dd82 = new /datum/demon_data()
@@ -1612,7 +1615,7 @@
 	_dd82.demon_icon = 'Icons/DevilSummoner/Demons/Murmur.dmi'
 	_dd82.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Murmur128.dmi'
 	_dd82.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Murmur32.dmi'
-	DEMON_DB["Murmur"] = _dd82
+	db["Murmur"] = _dd82
 
 	// Agares (Fallen, Lv 71)
 	var/datum/demon_data/_dd83 = new /datum/demon_data()
@@ -1631,7 +1634,7 @@
 	_dd83.demon_icon = 'Icons/DevilSummoner/Demons/Agares.dmi'
 	_dd83.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Agares128.dmi'
 	_dd83.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Agares32.dmi'
-	DEMON_DB["Agares"] = _dd83
+	db["Agares"] = _dd83
 
 	// Nebiros (Fallen, Lv 86)
 	var/datum/demon_data/_dd84 = new /datum/demon_data()
@@ -1649,7 +1652,7 @@
 	_dd84.demon_icon = 'Icons/DevilSummoner/Demons/Nebiros.dmi'
 	_dd84.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Nebiros128.dmi'
 	_dd84.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Nebiros32.dmi'
-	DEMON_DB["Nebiros"] = _dd84
+	db["Nebiros"] = _dd84
 
 	// Satan (Fallen, Lv 99)
 	var/datum/demon_data/_dd85 = new /datum/demon_data()
@@ -1668,7 +1671,7 @@
 	_dd85.demon_icon = 'Icons/DevilSummoner/Demons/Satan.dmi'
 	_dd85.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Satan128.dmi'
 	_dd85.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Satan32.dmi'
-	DEMON_DB["Satan"] = _dd85
+	db["Satan"] = _dd85
 
 	// Kikimora (Femme, Lv 9)
 	var/datum/demon_data/_dd86 = new /datum/demon_data()
@@ -1688,7 +1691,7 @@
 	_dd86.demon_icon = 'Icons/DevilSummoner/Demons/Kikimora.dmi'
 	_dd86.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Kikimora128.dmi'
 	_dd86.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Kikimora32.dmi'
-	DEMON_DB["Kikimora"] = _dd86
+	db["Kikimora"] = _dd86
 
 	// Lilim (Femme, Lv 18)
 	var/datum/demon_data/_dd87 = new /datum/demon_data()
@@ -1707,7 +1710,7 @@
 	_dd87.demon_icon = 'Icons/DevilSummoner/Demons/Lilim.dmi'
 	_dd87.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Lilim128.dmi'
 	_dd87.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Lilim32.dmi'
-	DEMON_DB["Lilim"] = _dd87
+	db["Lilim"] = _dd87
 
 	// Leanan Sidhe (Femme, Lv 26)
 	var/datum/demon_data/_dd88 = new /datum/demon_data()
@@ -1726,7 +1729,7 @@
 	_dd88.demon_icon = 'Icons/DevilSummoner/Demons/Leanan Sidhe.dmi'
 	_dd88.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Leanan Sidhe128.dmi'
 	_dd88.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Leanan Sidhe32.dmi'
-	DEMON_DB["Leanan Sidhe"] = _dd88
+	db["Leanan Sidhe"] = _dd88
 
 	// Yuki Jyorou (Femme, Lv 34)
 	var/datum/demon_data/_dd89 = new /datum/demon_data()
@@ -1746,7 +1749,7 @@
 	_dd89.demon_icon = 'Icons/DevilSummoner/Demons/Yuki Jyorou.dmi'
 	_dd89.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Yuki Jyorou128.dmi'
 	_dd89.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Yuki Jyorou32.dmi'
-	DEMON_DB["Yuki Jyorou"] = _dd89
+	db["Yuki Jyorou"] = _dd89
 
 	// Peri (Femme, Lv 38)
 	var/datum/demon_data/_dd90 = new /datum/demon_data()
@@ -1766,7 +1769,7 @@
 	_dd90.demon_icon = 'Icons/DevilSummoner/Demons/Peri.dmi'
 	_dd90.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Peri128.dmi'
 	_dd90.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Peri32.dmi'
-	DEMON_DB["Peri"] = _dd90
+	db["Peri"] = _dd90
 
 	// Ixtab (Femme, Lv 42)
 	var/datum/demon_data/_dd91 = new /datum/demon_data()
@@ -1786,7 +1789,7 @@
 	_dd91.demon_icon = 'Icons/DevilSummoner/Demons/Ixtab.dmi'
 	_dd91.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Ixtab128.dmi'
 	_dd91.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Ixtab32.dmi'
-	DEMON_DB["Ixtab"] = _dd91
+	db["Ixtab"] = _dd91
 
 	// Hariti (Femme, Lv 46)
 	var/datum/demon_data/_dd92 = new /datum/demon_data()
@@ -1806,7 +1809,7 @@
 	_dd92.demon_icon = 'Icons/DevilSummoner/Demons/Hariti.dmi'
 	_dd92.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Hariti128.dmi'
 	_dd92.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Hariti32.dmi'
-	DEMON_DB["Hariti"] = _dd92
+	db["Hariti"] = _dd92
 
 	// Dzelarhons (Femme, Lv 50)
 	var/datum/demon_data/_dd93 = new /datum/demon_data()
@@ -1826,7 +1829,7 @@
 	_dd93.demon_icon = 'Icons/DevilSummoner/Demons/Dzelarhons.dmi'
 	_dd93.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Dzelarhons128.dmi'
 	_dd93.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Dzelarhons32.dmi'
-	DEMON_DB["Dzelarhons"] = _dd93
+	db["Dzelarhons"] = _dd93
 
 	// Rangda (Femme, Lv 58)
 	var/datum/demon_data/_dd94 = new /datum/demon_data()
@@ -1845,7 +1848,7 @@
 	_dd94.demon_icon = 'Icons/DevilSummoner/Demons/Rangda.dmi'
 	_dd94.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Rangda128.dmi'
 	_dd94.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Rangda32.dmi'
-	DEMON_DB["Rangda"] = _dd94
+	db["Rangda"] = _dd94
 
 	// Anat (Femme, Lv 66)
 	var/datum/demon_data/_dd95 = new /datum/demon_data()
@@ -1863,7 +1866,7 @@
 	_dd95.demon_icon = 'Icons/DevilSummoner/Demons/Anat.dmi'
 	_dd95.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Anat128.dmi'
 	_dd95.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Anat32.dmi'
-	DEMON_DB["Anat"] = _dd95
+	db["Anat"] = _dd95
 
 	// Kali (Femme, Lv 74)
 	var/datum/demon_data/_dd96 = new /datum/demon_data()
@@ -1882,7 +1885,7 @@
 	_dd96.demon_icon = 'Icons/DevilSummoner/Demons/Kali.dmi'
 	_dd96.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Kali128.dmi'
 	_dd96.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Kali32.dmi'
-	DEMON_DB["Kali"] = _dd96
+	db["Kali"] = _dd96
 
 	// Lilith (Femme, Lv 83)
 	var/datum/demon_data/_dd97 = new /datum/demon_data()
@@ -1901,7 +1904,7 @@
 	_dd97.demon_icon = 'Icons/DevilSummoner/Demons/Lilith.dmi'
 	_dd97.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Lilith128.dmi'
 	_dd97.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Lilith32.dmi'
-	DEMON_DB["Lilith"] = _dd97
+	db["Lilith"] = _dd97
 
 	// Ghost Q (Fiend, Lv 26)
 	var/datum/demon_data/_dd98 = new /datum/demon_data()
@@ -1919,7 +1922,7 @@
 	_dd98.demon_icon = 'Icons/DevilSummoner/Demon Units (unused)/Ghost Q.dmi'
 	_dd98.demon_portrait = 'Icons/DevilSummoner/Demon Units (unused)/Ghost Q.dmi'
 	_dd98.demon_portrait2 = 'Icons/DevilSummoner/Demon Units (unused)/Ghost Q.dmi'
-	DEMON_DB["Ghost Q"] = _dd98
+	db["Ghost Q"] = _dd98
 
 	// Sage of Time (Fiend, Lv 41)
 	var/datum/demon_data/_dd99 = new /datum/demon_data()
@@ -1937,7 +1940,7 @@
 	_dd99.demon_icon = 'Icons/DevilSummoner/Demon Units (unused)/Sage of Time.dmi'
 	_dd99.demon_portrait = 'Icons/DevilSummoner/Demon Units (unused)/Sage of Time.dmi'
 	_dd99.demon_portrait2 = 'Icons/DevilSummoner/Demon Units (unused)/Sage of Time.dmi'
-	DEMON_DB["Sage of Time"] = _dd99
+	db["Sage of Time"] = _dd99
 
 	// Billiken (Fiend, Lv 50)
 	var/datum/demon_data/_dd100 = new /datum/demon_data()
@@ -1956,7 +1959,7 @@
 	_dd100.demon_icon = 'Icons/DevilSummoner/Demon Units (unused)/Billiken.dmi'
 	_dd100.demon_portrait = 'Icons/DevilSummoner/Demon Units (unused)/Billiken.dmi'
 	_dd100.demon_portrait2 = 'Icons/DevilSummoner/Demon Units (unused)/Billiken.dmi'
-	DEMON_DB["Billiken"] = _dd100
+	db["Billiken"] = _dd100
 
 	// Trumpeter (Fiend, Lv 63)
 	var/datum/demon_data/_dd101 = new /datum/demon_data()
@@ -1977,7 +1980,7 @@
 	_dd101.demon_icon = 'Icons/DevilSummoner/Demon Units (unused)/Trumpeter.dmi'
 	_dd101.demon_portrait = 'Icons/DevilSummoner/Demon Units (unused)/Trumpeter.dmi'
 	_dd101.demon_portrait2 = 'Icons/DevilSummoner/Demon Units (unused)/Trumpeter.dmi'
-	DEMON_DB["Trumpeter"] = _dd101
+	db["Trumpeter"] = _dd101
 
 	// Alice (Fiend, Lv 88)
 	var/datum/demon_data/_dd102 = new /datum/demon_data()
@@ -1996,7 +1999,7 @@
 	_dd102.demon_icon = 'Icons/DevilSummoner/Demon Units (unused)/Alice.dmi'
 	_dd102.demon_portrait = 'Icons/DevilSummoner/Demon Units (unused)/Alice.dmi'
 	_dd102.demon_portrait2 = 'Icons/DevilSummoner/Demon Units (unused)/Alice.dmi'
-	DEMON_DB["Alice"] = _dd102
+	db["Alice"] = _dd102
 
 	// Tam Lin (Genma, Lv 6)
 	var/datum/demon_data/_dd103 = new /datum/demon_data()
@@ -2016,7 +2019,7 @@
 	_dd103.demon_icon = 'Icons/DevilSummoner/Demons/Tam Lin.dmi'
 	_dd103.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Tam Lin128.dmi'
 	_dd103.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Tam Lin32.dmi'
-	DEMON_DB["Tam Lin"] = _dd103
+	db["Tam Lin"] = _dd103
 
 	// Jambavan (Genma, Lv 13)
 	var/datum/demon_data/_dd104 = new /datum/demon_data()
@@ -2036,7 +2039,7 @@
 	_dd104.demon_icon = 'Icons/DevilSummoner/Demons/Jambavan.dmi'
 	_dd104.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Jambavan128.dmi'
 	_dd104.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Jambavan32.dmi'
-	DEMON_DB["Jambavan"] = _dd104
+	db["Jambavan"] = _dd104
 
 	// Ictinike (Genma, Lv 21)
 	var/datum/demon_data/_dd105 = new /datum/demon_data()
@@ -2056,7 +2059,7 @@
 	_dd105.demon_icon = 'Icons/DevilSummoner/Demons/Ictinike.dmi'
 	_dd105.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Ictinike128.dmi'
 	_dd105.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Ictinike32.dmi'
-	DEMON_DB["Ictinike"] = _dd105
+	db["Ictinike"] = _dd105
 
 	// Tlaloc (Genma, Lv 28)
 	var/datum/demon_data/_dd106 = new /datum/demon_data()
@@ -2075,7 +2078,7 @@
 	_dd106.demon_icon = 'Icons/DevilSummoner/Demons/Tlaloc.dmi'
 	_dd106.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Tlaloc128.dmi'
 	_dd106.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Tlaloc32.dmi'
-	DEMON_DB["Tlaloc"] = _dd106
+	db["Tlaloc"] = _dd106
 
 	// Hanuman (Genma, Lv 33)
 	var/datum/demon_data/_dd107 = new /datum/demon_data()
@@ -2095,7 +2098,7 @@
 	_dd107.demon_icon = 'Icons/DevilSummoner/Demons/Hanuman.dmi'
 	_dd107.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Hanuman128.dmi'
 	_dd107.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Hanuman32.dmi'
-	DEMON_DB["Hanuman"] = _dd107
+	db["Hanuman"] = _dd107
 
 	// Cu Chulainn (Genma, Lv 37)
 	var/datum/demon_data/_dd108 = new /datum/demon_data()
@@ -2115,7 +2118,7 @@
 	_dd108.demon_icon = 'Icons/DevilSummoner/Demons/Cu Chulainn.dmi'
 	_dd108.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Cu Chulainn128.dmi'
 	_dd108.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Cu Chulainn32.dmi'
-	DEMON_DB["Cu Chulainn"] = _dd108
+	db["Cu Chulainn"] = _dd108
 
 	// Kama (Genma, Lv 42)
 	var/datum/demon_data/_dd109 = new /datum/demon_data()
@@ -2135,7 +2138,7 @@
 	_dd109.demon_icon = 'Icons/DevilSummoner/Demons/Kama.dmi'
 	_dd109.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Kama128.dmi'
 	_dd109.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Kama32.dmi'
-	DEMON_DB["Kama"] = _dd109
+	db["Kama"] = _dd109
 
 	// Kresnik (Genma, Lv 46)
 	var/datum/demon_data/_dd110 = new /datum/demon_data()
@@ -2155,7 +2158,7 @@
 	_dd110.demon_icon = 'Icons/DevilSummoner/Demons/Kresnik.dmi'
 	_dd110.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Kresnik128.dmi'
 	_dd110.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Kresnik32.dmi'
-	DEMON_DB["Kresnik"] = _dd110
+	db["Kresnik"] = _dd110
 
 	// Kangiten (Genma, Lv 54)
 	var/datum/demon_data/_dd111 = new /datum/demon_data()
@@ -2175,7 +2178,7 @@
 	_dd111.demon_icon = 'Icons/DevilSummoner/Demons/Kangiten.dmi'
 	_dd111.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Kangiten128.dmi'
 	_dd111.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Kangiten32.dmi'
-	DEMON_DB["Kangiten"] = _dd111
+	db["Kangiten"] = _dd111
 
 	// Ganesha (Genma, Lv 61)
 	var/datum/demon_data/_dd112 = new /datum/demon_data()
@@ -2196,7 +2199,7 @@
 	_dd112.demon_icon = 'Icons/DevilSummoner/Demons/Ganesha.dmi'
 	_dd112.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Ganesha128.dmi'
 	_dd112.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Ganesha32.dmi'
-	DEMON_DB["Ganesha"] = _dd112
+	db["Ganesha"] = _dd112
 
 	// Jarilo (Genma, Lv 68)
 	var/datum/demon_data/_dd113 = new /datum/demon_data()
@@ -2215,7 +2218,7 @@
 	_dd113.demon_icon = 'Icons/DevilSummoner/Demons/Jarilo.dmi'
 	_dd113.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Jarilo128.dmi'
 	_dd113.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Jarilo32.dmi'
-	DEMON_DB["Jarilo"] = _dd113
+	db["Jarilo"] = _dd113
 
 	// Heimdall (Genma, Lv 75)
 	var/datum/demon_data/_dd114 = new /datum/demon_data()
@@ -2234,7 +2237,7 @@
 	_dd114.demon_icon = 'Icons/DevilSummoner/Demons/Heimdall.dmi'
 	_dd114.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Heimdall128.dmi'
 	_dd114.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Heimdall32.dmi'
-	DEMON_DB["Heimdall"] = _dd114
+	db["Heimdall"] = _dd114
 
 	// Poltergeist (Ghost, Lv 1)
 	var/datum/demon_data/_dd115 = new /datum/demon_data()
@@ -2252,7 +2255,7 @@
 	_dd115.demon_icon = 'Icons/DevilSummoner/Demons/Poltergeist.dmi'
 	_dd115.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Poltergeist128.dmi'
 	_dd115.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Poltergeist32.dmi'
-	DEMON_DB["Poltergeist"] = _dd115
+	db["Poltergeist"] = _dd115
 
 	// Agathion (Ghost, Lv 6)
 	var/datum/demon_data/_dd116 = new /datum/demon_data()
@@ -2271,7 +2274,7 @@
 	_dd116.demon_icon = 'Icons/DevilSummoner/Demons/Agathion.dmi'
 	_dd116.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Agathion128.dmi'
 	_dd116.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Agathion32.dmi'
-	DEMON_DB["Agathion"] = _dd116
+	db["Agathion"] = _dd116
 
 	// Tenong Cut (Ghost, Lv 16)
 	var/datum/demon_data/_dd117 = new /datum/demon_data()
@@ -2291,7 +2294,7 @@
 	_dd117.demon_icon = 'Icons/DevilSummoner/Demons/Tenong Cut.dmi'
 	_dd117.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Tenong Cut128.dmi'
 	_dd117.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Tenong Cut32.dmi'
-	DEMON_DB["Tenong Cut"] = _dd117
+	db["Tenong Cut"] = _dd117
 
 	// Kumbhanda (Ghost, Lv 25)
 	var/datum/demon_data/_dd118 = new /datum/demon_data()
@@ -2311,7 +2314,7 @@
 	_dd118.demon_icon = 'Icons/DevilSummoner/Demons/Kumbhanda.dmi'
 	_dd118.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Kumbhanda128.dmi'
 	_dd118.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Kumbhanda32.dmi'
-	DEMON_DB["Kumbhanda"] = _dd118
+	db["Kumbhanda"] = _dd118
 
 	// Loa (Ghost, Lv 34)
 	var/datum/demon_data/_dd119 = new /datum/demon_data()
@@ -2331,7 +2334,7 @@
 	_dd119.demon_icon = 'Icons/DevilSummoner/Demons/Loa.dmi'
 	_dd119.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Loa128.dmi'
 	_dd119.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Loa32.dmi'
-	DEMON_DB["Loa"] = _dd119
+	db["Loa"] = _dd119
 
 	// Pisaca (Ghost, Lv 41)
 	var/datum/demon_data/_dd120 = new /datum/demon_data()
@@ -2350,7 +2353,7 @@
 	_dd120.demon_icon = 'Icons/DevilSummoner/Demons/Pisaca.dmi'
 	_dd120.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Pisaca128.dmi'
 	_dd120.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Pisaca32.dmi'
-	DEMON_DB["Pisaca"] = _dd120
+	db["Pisaca"] = _dd120
 
 	// Kudlak (Ghost, Lv 50)
 	var/datum/demon_data/_dd121 = new /datum/demon_data()
@@ -2369,7 +2372,7 @@
 	_dd121.demon_icon = 'Icons/DevilSummoner/Demons/Kudlak.dmi'
 	_dd121.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Kudlak128.dmi'
 	_dd121.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Kudlak32.dmi'
-	DEMON_DB["Kudlak"] = _dd121
+	db["Kudlak"] = _dd121
 
 	// Purple Mirror (Ghost, Lv 61)
 	var/datum/demon_data/_dd122 = new /datum/demon_data()
@@ -2388,7 +2391,7 @@
 	_dd122.demon_icon = 'Icons/DevilSummoner/Demons/Purple Mirror.dmi'
 	_dd122.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Purple Mirror128.dmi'
 	_dd122.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Purple Mirror32.dmi'
-	DEMON_DB["Purple Mirror"] = _dd122
+	db["Purple Mirror"] = _dd122
 
 	// Neko Shogun (Hero, Lv 31)
 	var/datum/demon_data/_dd123 = new /datum/demon_data()
@@ -2408,7 +2411,7 @@
 	_dd123.demon_icon = 'Icons/DevilSummoner/Demons/Neko Shogun.dmi'
 	_dd123.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Neko Shogun128.dmi'
 	_dd123.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Neko Shogun32.dmi'
-	DEMON_DB["Neko Shogun"] = _dd123
+	db["Neko Shogun"] = _dd123
 
 	// Hagen (Hero, Lv 39)
 	var/datum/demon_data/_dd124 = new /datum/demon_data()
@@ -2428,7 +2431,7 @@
 	_dd124.demon_icon = 'Icons/DevilSummoner/Demons/Hagen.dmi'
 	_dd124.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Hagen128.dmi'
 	_dd124.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Hagen32.dmi'
-	DEMON_DB["Hagen"] = _dd124
+	db["Hagen"] = _dd124
 
 	// Jeanne D'Arc (Hero, Lv 50)
 	var/datum/demon_data/_dd125 = new /datum/demon_data()
@@ -2448,7 +2451,7 @@
 	_dd125.demon_icon = 'Icons/DevilSummoner/Demons/Jeanne DArc.dmi'
 	_dd125.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Jeanne DArc128.dmi'
 	_dd125.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Jeanne DArc32.dmi'
-	DEMON_DB["Jeanne D'Arc"] = _dd125
+	db["Jeanne D'Arc"] = _dd125
 
 	// Yoshitsune (Hero, Lv 57)
 	var/datum/demon_data/_dd126 = new /datum/demon_data()
@@ -2467,7 +2470,7 @@
 	_dd126.demon_icon = 'Icons/DevilSummoner/Demons/Yoshitsune.dmi'
 	_dd126.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Yoshitsune128.dmi'
 	_dd126.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Yoshitsune32.dmi'
-	DEMON_DB["Yoshitsune"] = _dd126
+	db["Yoshitsune"] = _dd126
 
 	// Guan Yu (Hero, Lv 70)
 	var/datum/demon_data/_dd127 = new /datum/demon_data()
@@ -2486,7 +2489,7 @@
 	_dd127.demon_icon = 'Icons/DevilSummoner/Demons/Guan Yu.dmi'
 	_dd127.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Guan Yu128.dmi'
 	_dd127.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Guan Yu32.dmi'
-	DEMON_DB["Guan Yu"] = _dd127
+	db["Guan Yu"] = _dd127
 
 	// Masakado (Hero, Lv 82)
 	var/datum/demon_data/_dd128 = new /datum/demon_data()
@@ -2505,7 +2508,7 @@
 	_dd128.demon_icon = 'Icons/DevilSummoner/Demons/Masakado.dmi'
 	_dd128.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Masakado128.dmi'
 	_dd128.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Masakado32.dmi'
-	DEMON_DB["Masakado"] = _dd128
+	db["Masakado"] = _dd128
 
 	// Obariyon (Jaki, Lv 3)
 	var/datum/demon_data/_dd129 = new /datum/demon_data()
@@ -2523,7 +2526,7 @@
 	_dd129.demon_icon = 'Icons/DevilSummoner/Demons/Obariyon.dmi'
 	_dd129.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Obariyon128.dmi'
 	_dd129.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Obariyon32.dmi'
-	DEMON_DB["Obariyon"] = _dd129
+	db["Obariyon"] = _dd129
 
 	// Ogre (Jaki, Lv 8)
 	var/datum/demon_data/_dd130 = new /datum/demon_data()
@@ -2544,7 +2547,7 @@
 	_dd130.demon_icon = 'Icons/DevilSummoner/Demons/Ogre.dmi'
 	_dd130.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Ogre128.dmi'
 	_dd130.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Ogre32.dmi'
-	DEMON_DB["Ogre"] = _dd130
+	db["Ogre"] = _dd130
 
 	// Mokoi (Jaki, Lv 15)
 	var/datum/demon_data/_dd131 = new /datum/demon_data()
@@ -2563,7 +2566,7 @@
 	_dd131.demon_icon = 'Icons/DevilSummoner/Demons/Mokoi.dmi'
 	_dd131.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Mokoi128.dmi'
 	_dd131.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Mokoi32.dmi'
-	DEMON_DB["Mokoi"] = _dd131
+	db["Mokoi"] = _dd131
 
 	// Ogun (Jaki, Lv 23)
 	var/datum/demon_data/_dd132 = new /datum/demon_data()
@@ -2584,7 +2587,7 @@
 	_dd132.demon_icon = 'Icons/DevilSummoner/Demons/Ogun.dmi'
 	_dd132.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Ogun128.dmi'
 	_dd132.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Ogun32.dmi'
-	DEMON_DB["Ogun"] = _dd132
+	db["Ogun"] = _dd132
 
 	// Wendigo (Jaki, Lv 31)
 	var/datum/demon_data/_dd133 = new /datum/demon_data()
@@ -2604,7 +2607,7 @@
 	_dd133.demon_icon = 'Icons/DevilSummoner/Demons/Wendigo.dmi'
 	_dd133.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Wendigo128.dmi'
 	_dd133.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Wendigo32.dmi'
-	DEMON_DB["Wendigo"] = _dd133
+	db["Wendigo"] = _dd133
 
 	// Legion (Jaki, Lv 39)
 	var/datum/demon_data/_dd134 = new /datum/demon_data()
@@ -2624,7 +2627,7 @@
 	_dd134.demon_icon = 'Icons/DevilSummoner/Demons/Legion.dmi'
 	_dd134.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Legion128.dmi'
 	_dd134.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Legion32.dmi'
-	DEMON_DB["Legion"] = _dd134
+	db["Legion"] = _dd134
 
 	// Girimehkala (Jaki, Lv 47)
 	var/datum/demon_data/_dd135 = new /datum/demon_data()
@@ -2644,7 +2647,7 @@
 	_dd135.demon_icon = 'Icons/DevilSummoner/Demons/Girimehkala.dmi'
 	_dd135.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Girimehkala128.dmi'
 	_dd135.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Girimehkala32.dmi'
-	DEMON_DB["Girimehkala"] = _dd135
+	db["Girimehkala"] = _dd135
 
 	// Rakshasa (Jaki, Lv 55)
 	var/datum/demon_data/_dd136 = new /datum/demon_data()
@@ -2664,7 +2667,7 @@
 	_dd136.demon_icon = 'Icons/DevilSummoner/Demons/Rakshasa.dmi'
 	_dd136.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Rakshasa128.dmi'
 	_dd136.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Rakshasa32.dmi'
-	DEMON_DB["Rakshasa"] = _dd136
+	db["Rakshasa"] = _dd136
 
 	// Grendel (Jaki, Lv 64)
 	var/datum/demon_data/_dd137 = new /datum/demon_data()
@@ -2683,7 +2686,7 @@
 	_dd137.demon_icon = 'Icons/DevilSummoner/Demons/Grendel.dmi'
 	_dd137.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Grendel128.dmi'
 	_dd137.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Grendel32.dmi'
-	DEMON_DB["Grendel"] = _dd137
+	db["Grendel"] = _dd137
 
 	// Black Frost (Jaki, Lv 80)
 	var/datum/demon_data/_dd138 = new /datum/demon_data()
@@ -2702,7 +2705,7 @@
 	_dd138.demon_icon = 'Icons/DevilSummoner/Demons/Black Frost.dmi'
 	_dd138.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Black Frost128.dmi'
 	_dd138.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Black Frost32.dmi'
-	DEMON_DB["Black Frost"] = _dd138
+	db["Black Frost"] = _dd138
 
 	// Ubelluris (Kishin, Lv 20)
 	var/datum/demon_data/_dd139 = new /datum/demon_data()
@@ -2721,7 +2724,7 @@
 	_dd139.demon_icon = 'Icons/DevilSummoner/Demons/Ubelluris.dmi'
 	_dd139.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Ubelluris128.dmi'
 	_dd139.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Ubelluris32.dmi'
-	DEMON_DB["Ubelluris"] = _dd139
+	db["Ubelluris"] = _dd139
 
 	// Nalagiri (Kishin, Lv 28)
 	var/datum/demon_data/_dd140 = new /datum/demon_data()
@@ -2741,7 +2744,7 @@
 	_dd140.demon_icon = 'Icons/DevilSummoner/Demons/Nalagiri.dmi'
 	_dd140.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Nalagiri128.dmi'
 	_dd140.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Nalagiri32.dmi'
-	DEMON_DB["Nalagiri"] = _dd140
+	db["Nalagiri"] = _dd140
 
 	// Hitokotonusi (Kishin, Lv 36)
 	var/datum/demon_data/_dd141 = new /datum/demon_data()
@@ -2760,7 +2763,7 @@
 	_dd141.demon_icon = 'Icons/DevilSummoner/Demons/Hitokotonusi.dmi'
 	_dd141.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Hitokotonusi128.dmi'
 	_dd141.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Hitokotonusi32.dmi'
-	DEMON_DB["Hitokotonusi"] = _dd141
+	db["Hitokotonusi"] = _dd141
 
 	// Take-Mikazuchi (Kishin, Lv 43)
 	var/datum/demon_data/_dd142 = new /datum/demon_data()
@@ -2780,7 +2783,7 @@
 	_dd142.demon_icon = 'Icons/DevilSummoner/Demons/Take-Mikazuchi.dmi'
 	_dd142.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Take-Mikazuchi128.dmi'
 	_dd142.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Take-Mikazuchi32.dmi'
-	DEMON_DB["Take-Mikazuchi"] = _dd142
+	db["Take-Mikazuchi"] = _dd142
 
 	// Zouchouten (Kishin, Lv 50)
 	var/datum/demon_data/_dd143 = new /datum/demon_data()
@@ -2799,7 +2802,7 @@
 	_dd143.demon_icon = 'Icons/DevilSummoner/Demons/Zouchouten.dmi'
 	_dd143.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Zouchouten128.dmi'
 	_dd143.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Zouchouten32.dmi'
-	DEMON_DB["Zouchouten"] = _dd143
+	db["Zouchouten"] = _dd143
 
 	// Jikokuten (Kishin, Lv 57)
 	var/datum/demon_data/_dd144 = new /datum/demon_data()
@@ -2818,7 +2821,7 @@
 	_dd144.demon_icon = 'Icons/DevilSummoner/Demons/Jikokuten.dmi'
 	_dd144.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Jikokuten128.dmi'
 	_dd144.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Jikokuten32.dmi'
-	DEMON_DB["Jikokuten"] = _dd144
+	db["Jikokuten"] = _dd144
 
 	// Koumoukuten (Kishin, Lv 64)
 	var/datum/demon_data/_dd145 = new /datum/demon_data()
@@ -2838,7 +2841,7 @@
 	_dd145.demon_icon = 'Icons/DevilSummoner/Demons/Koumoukuten.dmi'
 	_dd145.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Koumoukuten128.dmi'
 	_dd145.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Koumoukuten32.dmi'
-	DEMON_DB["Koumoukuten"] = _dd145
+	db["Koumoukuten"] = _dd145
 
 	// Bishamonten (Kishin, Lv 71)
 	var/datum/demon_data/_dd146 = new /datum/demon_data()
@@ -2857,7 +2860,7 @@
 	_dd146.demon_icon = 'Icons/DevilSummoner/Demons/Bishamonten.dmi'
 	_dd146.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Bishamonten128.dmi'
 	_dd146.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Bishamonten32.dmi'
-	DEMON_DB["Bishamonten"] = _dd146
+	db["Bishamonten"] = _dd146
 
 	// Ometeotl (Kishin, Lv 75)
 	var/datum/demon_data/_dd147 = new /datum/demon_data()
@@ -2876,7 +2879,7 @@
 	_dd147.demon_icon = 'Icons/DevilSummoner/Demons/Ometeotl.dmi'
 	_dd147.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Ometeotl128.dmi'
 	_dd147.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Ometeotl32.dmi'
-	DEMON_DB["Ometeotl"] = _dd147
+	db["Ometeotl"] = _dd147
 
 	// Zaou-Gongen (Kishin, Lv 93)
 	var/datum/demon_data/_dd148 = new /datum/demon_data()
@@ -2894,7 +2897,7 @@
 	_dd148.demon_icon = 'Icons/DevilSummoner/Demons/Zaou-Gongen.dmi'
 	_dd148.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Zaou-Gongen128.dmi'
 	_dd148.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Zaou-Gongen32.dmi'
-	DEMON_DB["Zaou-Gongen"] = _dd148
+	db["Zaou-Gongen"] = _dd148
 
 	// Sarasvati (Megami, Lv 19)
 	var/datum/demon_data/_dd149 = new /datum/demon_data()
@@ -2914,7 +2917,7 @@
 	_dd149.demon_icon = 'Icons/DevilSummoner/Demons/Sarasvati.dmi'
 	_dd149.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Sarasvati128.dmi'
 	_dd149.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Sarasvati32.dmi'
-	DEMON_DB["Sarasvati"] = _dd149
+	db["Sarasvati"] = _dd149
 
 	// Kikuri-Hime (Megami, Lv 27)
 	var/datum/demon_data/_dd150 = new /datum/demon_data()
@@ -2933,7 +2936,7 @@
 	_dd150.demon_icon = 'Icons/DevilSummoner/Demons/Kikuri-Hime.dmi'
 	_dd150.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Kikuri-Hime128.dmi'
 	_dd150.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Kikuri-Hime32.dmi'
-	DEMON_DB["Kikuri-Hime"] = _dd150
+	db["Kikuri-Hime"] = _dd150
 
 	// Hathor (Megami, Lv 31)
 	var/datum/demon_data/_dd151 = new /datum/demon_data()
@@ -2952,7 +2955,7 @@
 	_dd151.demon_icon = 'Icons/DevilSummoner/Demons/Hathor.dmi'
 	_dd151.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Hathor128.dmi'
 	_dd151.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Hathor32.dmi'
-	DEMON_DB["Hathor"] = _dd151
+	db["Hathor"] = _dd151
 
 	// Brigid (Megami, Lv 35)
 	var/datum/demon_data/_dd152 = new /datum/demon_data()
@@ -2971,7 +2974,7 @@
 	_dd152.demon_icon = 'Icons/DevilSummoner/Demons/Brigid.dmi'
 	_dd152.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Brigid128.dmi'
 	_dd152.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Brigid32.dmi'
-	DEMON_DB["Brigid"] = _dd152
+	db["Brigid"] = _dd152
 
 	// Scathach (Megami, Lv 43)
 	var/datum/demon_data/_dd153 = new /datum/demon_data()
@@ -2991,7 +2994,7 @@
 	_dd153.demon_icon = 'Icons/DevilSummoner/Demons/Scathach.dmi'
 	_dd153.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Scathach128.dmi'
 	_dd153.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Scathach32.dmi'
-	DEMON_DB["Scathach"] = _dd153
+	db["Scathach"] = _dd153
 
 	// Laksmi (Megami, Lv 51)
 	var/datum/demon_data/_dd154 = new /datum/demon_data()
@@ -3010,7 +3013,7 @@
 	_dd154.demon_icon = 'Icons/DevilSummoner/Demons/Laksmi.dmi'
 	_dd154.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Laksmi128.dmi'
 	_dd154.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Laksmi32.dmi'
-	DEMON_DB["Laksmi"] = _dd154
+	db["Laksmi"] = _dd154
 
 	// Isis (Megami, Lv 55)
 	var/datum/demon_data/_dd155 = new /datum/demon_data()
@@ -3029,7 +3032,7 @@
 	_dd155.demon_icon = 'Icons/DevilSummoner/Demons/Isis.dmi'
 	_dd155.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Isis128.dmi'
 	_dd155.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Isis32.dmi'
-	DEMON_DB["Isis"] = _dd155
+	db["Isis"] = _dd155
 
 	// Parvati (Megami, Lv 59)
 	var/datum/demon_data/_dd156 = new /datum/demon_data()
@@ -3047,7 +3050,7 @@
 	_dd156.demon_icon = 'Icons/DevilSummoner/Demons/Parvati.dmi'
 	_dd156.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Parvati128.dmi'
 	_dd156.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Parvati32.dmi'
-	DEMON_DB["Parvati"] = _dd156
+	db["Parvati"] = _dd156
 
 	// Norn (Megami, Lv 64)
 	var/datum/demon_data/_dd157 = new /datum/demon_data()
@@ -3067,7 +3070,7 @@
 	_dd157.demon_icon = 'Icons/DevilSummoner/Demons/Norn.dmi'
 	_dd157.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Norn128.dmi'
 	_dd157.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Norn32.dmi'
-	DEMON_DB["Norn"] = _dd157
+	db["Norn"] = _dd157
 
 	// Pallas Athena (Megami, Lv 69)
 	var/datum/demon_data/_dd158 = new /datum/demon_data()
@@ -3087,7 +3090,7 @@
 	_dd158.demon_icon = 'Icons/DevilSummoner/Demons/Pallas Athena.dmi'
 	_dd158.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Pallas Athena128.dmi'
 	_dd158.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Pallas Athena32.dmi'
-	DEMON_DB["Pallas Athena"] = _dd158
+	db["Pallas Athena"] = _dd158
 
 	// Amaterasu (Megami, Lv 77)
 	var/datum/demon_data/_dd159 = new /datum/demon_data()
@@ -3106,7 +3109,7 @@
 	_dd159.demon_icon = 'Icons/DevilSummoner/Demons/Amaterasu.dmi'
 	_dd159.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Amaterasu128.dmi'
 	_dd159.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Amaterasu32.dmi'
-	DEMON_DB["Amaterasu"] = _dd159
+	db["Amaterasu"] = _dd159
 
 	// Saki Mitama (Mitama, Lv 35)
 	var/datum/demon_data/_dd160 = new /datum/demon_data()
@@ -3124,7 +3127,7 @@
 	_dd160.demon_icon = 'Icons/DevilSummoner/Demons/Saki Mitama.dmi'
 	_dd160.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Saki Mitama128.dmi'
 	_dd160.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Saki Mitama32.dmi'
-	DEMON_DB["Saki Mitama"] = _dd160
+	db["Saki Mitama"] = _dd160
 
 	// Kusi Mitama (Mitama, Lv 40)
 	var/datum/demon_data/_dd161 = new /datum/demon_data()
@@ -3142,7 +3145,7 @@
 	_dd161.demon_icon = 'Icons/DevilSummoner/Demons/Kusi Mitama.dmi'
 	_dd161.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Kusi Mitama128.dmi'
 	_dd161.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Kusi Mitama32.dmi'
-	DEMON_DB["Kusi Mitama"] = _dd161
+	db["Kusi Mitama"] = _dd161
 
 	// Ara Mitama (Mitama, Lv 45)
 	var/datum/demon_data/_dd162 = new /datum/demon_data()
@@ -3160,7 +3163,7 @@
 	_dd162.demon_icon = 'Icons/DevilSummoner/Demons/Ara Mitama.dmi'
 	_dd162.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Ara Mitama128.dmi'
 	_dd162.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Ara Mitama32.dmi'
-	DEMON_DB["Ara Mitama"] = _dd162
+	db["Ara Mitama"] = _dd162
 
 	// Nigi Mitama (Mitama, Lv 49)
 	var/datum/demon_data/_dd163 = new /datum/demon_data()
@@ -3178,7 +3181,7 @@
 	_dd163.demon_icon = 'Icons/DevilSummoner/Demons/Nigi Mitama.dmi'
 	_dd163.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Nigi Mitama128.dmi'
 	_dd163.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Nigi Mitama32.dmi'
-	DEMON_DB["Nigi Mitama"] = _dd163
+	db["Nigi Mitama"] = _dd163
 
 	// Tonatiuh (Omega, Lv 34)
 	var/datum/demon_data/_dd164 = new /datum/demon_data()
@@ -3197,7 +3200,7 @@
 	_dd164.demon_icon = 'Icons/DevilSummoner/Demons/Tonatiuh.dmi'
 	_dd164.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Tonatiuh128.dmi'
 	_dd164.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Tonatiuh32.dmi'
-	DEMON_DB["Tonatiuh"] = _dd164
+	db["Tonatiuh"] = _dd164
 
 	// Chernobog (Omega, Lv 43)
 	var/datum/demon_data/_dd165 = new /datum/demon_data()
@@ -3216,7 +3219,7 @@
 	_dd165.demon_icon = 'Icons/DevilSummoner/Demons/Chernobog.dmi'
 	_dd165.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Chernobog128.dmi'
 	_dd165.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Chernobog32.dmi'
-	DEMON_DB["Chernobog"] = _dd165
+	db["Chernobog"] = _dd165
 
 	// Wu Kong (Omega, Lv 52)
 	var/datum/demon_data/_dd166 = new /datum/demon_data()
@@ -3235,7 +3238,7 @@
 	_dd166.demon_icon = 'Icons/DevilSummoner/Demons/Wu Kong.dmi'
 	_dd166.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Wu Kong128.dmi'
 	_dd166.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Wu Kong32.dmi'
-	DEMON_DB["Wu Kong"] = _dd166
+	db["Wu Kong"] = _dd166
 
 	// Kartikeya (Omega, Lv 56)
 	var/datum/demon_data/_dd167 = new /datum/demon_data()
@@ -3255,7 +3258,7 @@
 	_dd167.demon_icon = 'Icons/DevilSummoner/Demons/Kartikeya.dmi'
 	_dd167.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Kartikeya128.dmi'
 	_dd167.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Kartikeya32.dmi'
-	DEMON_DB["Kartikeya"] = _dd167
+	db["Kartikeya"] = _dd167
 
 	// Susano-o (Omega, Lv 60)
 	var/datum/demon_data/_dd168 = new /datum/demon_data()
@@ -3275,7 +3278,7 @@
 	_dd168.demon_icon = 'Icons/DevilSummoner/Demons/Susano-o.dmi'
 	_dd168.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Susano-o128.dmi'
 	_dd168.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Susano-o32.dmi'
-	DEMON_DB["Susano-o"] = _dd168
+	db["Susano-o"] = _dd168
 
 	// Beiji-Weng (Omega, Lv 70)
 	var/datum/demon_data/_dd169 = new /datum/demon_data()
@@ -3294,7 +3297,7 @@
 	_dd169.demon_icon = 'Icons/DevilSummoner/Demons/Beiji-Weng.dmi'
 	_dd169.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Beiji-Weng128.dmi'
 	_dd169.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Beiji-Weng32.dmi'
-	DEMON_DB["Beiji-Weng"] = _dd169
+	db["Beiji-Weng"] = _dd169
 
 	// Shiva (Omega, Lv 76)
 	var/datum/demon_data/_dd170 = new /datum/demon_data()
@@ -3313,7 +3316,7 @@
 	_dd170.demon_icon = 'Icons/DevilSummoner/Demons/Shiva.dmi'
 	_dd170.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Shiva128.dmi'
 	_dd170.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Shiva32.dmi'
-	DEMON_DB["Shiva"] = _dd170
+	db["Shiva"] = _dd170
 
 	// Makara (Snake, Lv 14)
 	var/datum/demon_data/_dd171 = new /datum/demon_data()
@@ -3333,7 +3336,7 @@
 	_dd171.demon_icon = 'Icons/DevilSummoner/Demons/Makara.dmi'
 	_dd171.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Makara128.dmi'
 	_dd171.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Makara32.dmi'
-	DEMON_DB["Makara"] = _dd171
+	db["Makara"] = _dd171
 
 	// Nozuchi (Snake, Lv 23)
 	var/datum/demon_data/_dd172 = new /datum/demon_data()
@@ -3352,7 +3355,7 @@
 	_dd172.demon_icon = 'Icons/DevilSummoner/Demons/Nozuchi.dmi'
 	_dd172.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Nozuchi128.dmi'
 	_dd172.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Nozuchi32.dmi'
-	DEMON_DB["Nozuchi"] = _dd172
+	db["Nozuchi"] = _dd172
 
 	// Pendragon (Snake, Lv 30)
 	var/datum/demon_data/_dd173 = new /datum/demon_data()
@@ -3372,7 +3375,7 @@
 	_dd173.demon_icon = 'Icons/DevilSummoner/Demons/Pendragon.dmi'
 	_dd173.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Pendragon128.dmi'
 	_dd173.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Pendragon32.dmi'
-	DEMON_DB["Pendragon"] = _dd173
+	db["Pendragon"] = _dd173
 
 	// Gui Xian (Snake, Lv 38)
 	var/datum/demon_data/_dd174 = new /datum/demon_data()
@@ -3391,7 +3394,7 @@
 	_dd174.demon_icon = 'Icons/DevilSummoner/Demons/Gui Xian.dmi'
 	_dd174.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Gui Xian128.dmi'
 	_dd174.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Gui Xian32.dmi'
-	DEMON_DB["Gui Xian"] = _dd174
+	db["Gui Xian"] = _dd174
 
 	// Quetzalcoatl (Snake, Lv 44)
 	var/datum/demon_data/_dd175 = new /datum/demon_data()
@@ -3411,7 +3414,7 @@
 	_dd175.demon_icon = 'Icons/DevilSummoner/Demons/Quetzalcoatl.dmi'
 	_dd175.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Quetzalcoatl128.dmi'
 	_dd175.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Quetzalcoatl32.dmi'
-	DEMON_DB["Quetzalcoatl"] = _dd175
+	db["Quetzalcoatl"] = _dd175
 
 	// Seiryuu (Snake, Lv 51)
 	var/datum/demon_data/_dd176 = new /datum/demon_data()
@@ -3431,7 +3434,7 @@
 	_dd176.demon_icon = 'Icons/DevilSummoner/Demons/Seiryuu.dmi'
 	_dd176.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Seiryuu128.dmi'
 	_dd176.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Seiryuu32.dmi'
-	DEMON_DB["Seiryuu"] = _dd176
+	db["Seiryuu"] = _dd176
 
 	// Gucumatz (Snake, Lv 58)
 	var/datum/demon_data/_dd177 = new /datum/demon_data()
@@ -3450,7 +3453,7 @@
 	_dd177.demon_icon = 'Icons/DevilSummoner/Demons/Gucumatz.dmi'
 	_dd177.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Gucumatz128.dmi'
 	_dd177.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Gucumatz32.dmi'
-	DEMON_DB["Gucumatz"] = _dd177
+	db["Gucumatz"] = _dd177
 
 	// Orochi (Snake, Lv 66)
 	var/datum/demon_data/_dd178 = new /datum/demon_data()
@@ -3470,7 +3473,7 @@
 	_dd178.demon_icon = 'Icons/DevilSummoner/Demons/Orochi.dmi'
 	_dd178.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Orochi128.dmi'
 	_dd178.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Orochi32.dmi'
-	DEMON_DB["Orochi"] = _dd178
+	db["Orochi"] = _dd178
 
 	// Ananta (Snake, Lv 72)
 	var/datum/demon_data/_dd179 = new /datum/demon_data()
@@ -3489,7 +3492,7 @@
 	_dd179.demon_icon = 'Icons/DevilSummoner/Demons/Ananta.dmi'
 	_dd179.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Ananta128.dmi'
 	_dd179.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Ananta32.dmi'
-	DEMON_DB["Ananta"] = _dd179
+	db["Ananta"] = _dd179
 
 	// Hoyau Kamui (Snake, Lv 80)
 	var/datum/demon_data/_dd180 = new /datum/demon_data()
@@ -3508,7 +3511,7 @@
 	_dd180.demon_icon = 'Icons/DevilSummoner/Demons/Hoyau Kamui.dmi'
 	_dd180.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Hoyau Kamui128.dmi'
 	_dd180.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Hoyau Kamui32.dmi'
-	DEMON_DB["Hoyau Kamui"] = _dd180
+	db["Hoyau Kamui"] = _dd180
 
 	// Kobold (Touki, Lv 3)
 	var/datum/demon_data/_dd181 = new /datum/demon_data()
@@ -3528,7 +3531,7 @@
 	_dd181.demon_icon = 'Icons/DevilSummoner/Demons/Kobold.dmi'
 	_dd181.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Kobold128.dmi'
 	_dd181.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Kobold32.dmi'
-	DEMON_DB["Kobold"] = _dd181
+	db["Kobold"] = _dd181
 
 	// Bilwis (Touki, Lv 10)
 	var/datum/demon_data/_dd182 = new /datum/demon_data()
@@ -3549,7 +3552,7 @@
 	_dd182.demon_icon = 'Icons/DevilSummoner/Demons/Bilwis.dmi'
 	_dd182.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Bilwis128.dmi'
 	_dd182.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Bilwis32.dmi'
-	DEMON_DB["Bilwis"] = _dd182
+	db["Bilwis"] = _dd182
 
 	// Gozuki (Touki, Lv 18)
 	var/datum/demon_data/_dd183 = new /datum/demon_data()
@@ -3569,7 +3572,7 @@
 	_dd183.demon_icon = 'Icons/DevilSummoner/Demons/Gozuki.dmi'
 	_dd183.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Gozuki128.dmi'
 	_dd183.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Gozuki32.dmi'
-	DEMON_DB["Gozuki"] = _dd183
+	db["Gozuki"] = _dd183
 
 	// Mezuki (Touki, Lv 25)
 	var/datum/demon_data/_dd184 = new /datum/demon_data()
@@ -3590,7 +3593,7 @@
 	_dd184.demon_icon = 'Icons/DevilSummoner/Demons/Mezuki.dmi'
 	_dd184.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Mezuki128.dmi'
 	_dd184.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Mezuki32.dmi'
-	DEMON_DB["Mezuki"] = _dd184
+	db["Mezuki"] = _dd184
 
 	// Ikusa (Touki, Lv 33)
 	var/datum/demon_data/_dd185 = new /datum/demon_data()
@@ -3610,7 +3613,7 @@
 	_dd185.demon_icon = 'Icons/DevilSummoner/Demons/Ikusa.dmi'
 	_dd185.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Ikusa128.dmi'
 	_dd185.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Ikusa32.dmi'
-	DEMON_DB["Ikusa"] = _dd185
+	db["Ikusa"] = _dd185
 
 	// Berserker (Touki, Lv 38)
 	var/datum/demon_data/_dd186 = new /datum/demon_data()
@@ -3630,7 +3633,7 @@
 	_dd186.demon_icon = 'Icons/DevilSummoner/Demons/Berserker.dmi'
 	_dd186.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Berserker128.dmi'
 	_dd186.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Berserker32.dmi'
-	DEMON_DB["Berserker"] = _dd186
+	db["Berserker"] = _dd186
 
 	// Lham Dearg (Touki, Lv 43)
 	var/datum/demon_data/_dd187 = new /datum/demon_data()
@@ -3649,7 +3652,7 @@
 	_dd187.demon_icon = 'Icons/DevilSummoner/Demons/Lham Dearg.dmi'
 	_dd187.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Lham Dearg128.dmi'
 	_dd187.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Lham Dearg32.dmi'
-	DEMON_DB["Lham Dearg"] = _dd187
+	db["Lham Dearg"] = _dd187
 
 	// Yaksa (Touki, Lv 51)
 	var/datum/demon_data/_dd188 = new /datum/demon_data()
@@ -3669,7 +3672,7 @@
 	_dd188.demon_icon = 'Icons/DevilSummoner/Demons/Yaksa.dmi'
 	_dd188.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Yaksa128.dmi'
 	_dd188.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Yaksa32.dmi'
-	DEMON_DB["Yaksa"] = _dd188
+	db["Yaksa"] = _dd188
 
 	// Nata Taishi (Touki, Lv 59)
 	var/datum/demon_data/_dd189 = new /datum/demon_data()
@@ -3689,7 +3692,7 @@
 	_dd189.demon_icon = 'Icons/DevilSummoner/Demons/Nata Taishi.dmi'
 	_dd189.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Nata Taishi128.dmi'
 	_dd189.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Nata Taishi32.dmi'
-	DEMON_DB["Nata Taishi"] = _dd189
+	db["Nata Taishi"] = _dd189
 
 	// Oumitsunu (Touki, Lv 67)
 	var/datum/demon_data/_dd190 = new /datum/demon_data()
@@ -3708,7 +3711,7 @@
 	_dd190.demon_icon = 'Icons/DevilSummoner/Demons/Oumitsunu.dmi'
 	_dd190.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Oumitsunu128.dmi'
 	_dd190.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Oumitsunu32.dmi'
-	DEMON_DB["Oumitsunu"] = _dd190
+	db["Oumitsunu"] = _dd190
 
 	// King Frost (Tyrant, Lv 26)
 	var/datum/demon_data/_dd191 = new /datum/demon_data()
@@ -3727,7 +3730,7 @@
 	_dd191.demon_icon = 'Icons/DevilSummoner/Demons/King Frost.dmi'
 	_dd191.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/King Frost128.dmi'
 	_dd191.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/King Frost32.dmi'
-	DEMON_DB["King Frost"] = _dd191
+	db["King Frost"] = _dd191
 
 	// Moloch (Tyrant, Lv 33)
 	var/datum/demon_data/_dd192 = new /datum/demon_data()
@@ -3747,7 +3750,7 @@
 	_dd192.demon_icon = 'Icons/DevilSummoner/Demons/Moloch.dmi'
 	_dd192.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Moloch128.dmi'
 	_dd192.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Moloch32.dmi'
-	DEMON_DB["Moloch"] = _dd192
+	db["Moloch"] = _dd192
 
 	// Balor (Tyrant, Lv 40)
 	var/datum/demon_data/_dd193 = new /datum/demon_data()
@@ -3768,7 +3771,7 @@
 	_dd193.demon_icon = 'Icons/DevilSummoner/Demons/Balor.dmi'
 	_dd193.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Balor128.dmi'
 	_dd193.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Balor32.dmi'
-	DEMON_DB["Balor"] = _dd193
+	db["Balor"] = _dd193
 
 	// Hecate (Tyrant, Lv 47)
 	var/datum/demon_data/_dd194 = new /datum/demon_data()
@@ -3788,7 +3791,7 @@
 	_dd194.demon_icon = 'Icons/DevilSummoner/Demons/Hecate.dmi'
 	_dd194.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Hecate128.dmi'
 	_dd194.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Hecate32.dmi'
-	DEMON_DB["Hecate"] = _dd194
+	db["Hecate"] = _dd194
 
 	// Tzitzimitl (Tyrant, Lv 54)
 	var/datum/demon_data/_dd195 = new /datum/demon_data()
@@ -3807,7 +3810,7 @@
 	_dd195.demon_icon = 'Icons/DevilSummoner/Demons/Tzitzimitl.dmi'
 	_dd195.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Tzitzimitl128.dmi'
 	_dd195.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Tzitzimitl32.dmi'
-	DEMON_DB["Tzitzimitl"] = _dd195
+	db["Tzitzimitl"] = _dd195
 
 	// Loki (Tyrant, Lv 61)
 	var/datum/demon_data/_dd196 = new /datum/demon_data()
@@ -3827,7 +3830,7 @@
 	_dd196.demon_icon = 'Icons/DevilSummoner/Demons/Loki.dmi'
 	_dd196.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Loki128.dmi'
 	_dd196.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Loki32.dmi'
-	DEMON_DB["Loki"] = _dd196
+	db["Loki"] = _dd196
 
 	// Mot (Tyrant, Lv 68)
 	var/datum/demon_data/_dd197 = new /datum/demon_data()
@@ -3847,7 +3850,7 @@
 	_dd197.demon_icon = 'Icons/DevilSummoner/Demons/Mot.dmi'
 	_dd197.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Mot128.dmi'
 	_dd197.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Mot32.dmi'
-	DEMON_DB["Mot"] = _dd197
+	db["Mot"] = _dd197
 
 	// Astaroth (Tyrant, Lv 75)
 	var/datum/demon_data/_dd198 = new /datum/demon_data()
@@ -3866,7 +3869,7 @@
 	_dd198.demon_icon = 'Icons/DevilSummoner/Demons/Astaroth.dmi'
 	_dd198.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Astaroth128.dmi'
 	_dd198.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Astaroth32.dmi'
-	DEMON_DB["Astaroth"] = _dd198
+	db["Astaroth"] = _dd198
 
 	// Nergal (Tyrant, Lv 81)
 	var/datum/demon_data/_dd199 = new /datum/demon_data()
@@ -3885,7 +3888,7 @@
 	_dd199.demon_icon = 'Icons/DevilSummoner/Demons/Nergal.dmi'
 	_dd199.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Nergal128.dmi'
 	_dd199.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Nergal32.dmi'
-	DEMON_DB["Nergal"] = _dd199
+	db["Nergal"] = _dd199
 
 	// Belial (Tyrant, Lv 86)
 	var/datum/demon_data/_dd200 = new /datum/demon_data()
@@ -3903,7 +3906,7 @@
 	_dd200.demon_icon = 'Icons/DevilSummoner/Demons/Belial.dmi'
 	_dd200.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Belial128.dmi'
 	_dd200.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Belial32.dmi'
-	DEMON_DB["Belial"] = _dd200
+	db["Belial"] = _dd200
 
 	// Beelzebub (Tyrant, Lv 91)
 	var/datum/demon_data/_dd201 = new /datum/demon_data()
@@ -3922,7 +3925,7 @@
 	_dd201.demon_icon = 'Icons/DevilSummoner/Demons/Beelzebub.dmi'
 	_dd201.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Beelzebub128.dmi'
 	_dd201.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Beelzebub32.dmi'
-	DEMON_DB["Beelzebub"] = _dd201
+	db["Beelzebub"] = _dd201
 
 	// Lucifer (Tyrant, Lv 99)
 	var/datum/demon_data/_dd202 = new /datum/demon_data()
@@ -3940,7 +3943,7 @@
 	_dd202.demon_icon = 'Icons/DevilSummoner/Demons/Lucifer.dmi'
 	_dd202.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Lucifer128.dmi'
 	_dd202.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Lucifer32.dmi'
-	DEMON_DB["Lucifer"] = _dd202
+	db["Lucifer"] = _dd202
 
 	// Orcus (Vile, Lv 23)
 	var/datum/demon_data/_dd203 = new /datum/demon_data()
@@ -3958,7 +3961,7 @@
 	_dd203.demon_icon = 'Icons/DevilSummoner/Demons/Orcus.dmi'
 	_dd203.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Orcus128.dmi'
 	_dd203.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Orcus32.dmi'
-	DEMON_DB["Orcus"] = _dd203
+	db["Orcus"] = _dd203
 
 	// Baphomet (Vile, Lv 32)
 	var/datum/demon_data/_dd204 = new /datum/demon_data()
@@ -3977,7 +3980,7 @@
 	_dd204.demon_icon = 'Icons/DevilSummoner/Demons/Baphomet.dmi'
 	_dd204.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Baphomet128.dmi'
 	_dd204.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Baphomet32.dmi'
-	DEMON_DB["Baphomet"] = _dd204
+	db["Baphomet"] = _dd204
 
 	// Pazuzu (Vile, Lv 40)
 	var/datum/demon_data/_dd205 = new /datum/demon_data()
@@ -3997,7 +4000,7 @@
 	_dd205.demon_icon = 'Icons/DevilSummoner/Demons/Pazuzu.dmi'
 	_dd205.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Pazuzu128.dmi'
 	_dd205.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Pazuzu32.dmi'
-	DEMON_DB["Pazuzu"] = _dd205
+	db["Pazuzu"] = _dd205
 
 	// Abaddon (Vile, Lv 48)
 	var/datum/demon_data/_dd206 = new /datum/demon_data()
@@ -4016,7 +4019,7 @@
 	_dd206.demon_icon = 'Icons/DevilSummoner/Demons/Abaddon.dmi'
 	_dd206.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Abaddon128.dmi'
 	_dd206.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Abaddon32.dmi'
-	DEMON_DB["Abaddon"] = _dd206
+	db["Abaddon"] = _dd206
 
 	// Arioch (Vile, Lv 56)
 	var/datum/demon_data/_dd207 = new /datum/demon_data()
@@ -4035,7 +4038,7 @@
 	_dd207.demon_icon = 'Icons/DevilSummoner/Demons/Arioch.dmi'
 	_dd207.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Arioch128.dmi'
 	_dd207.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Arioch32.dmi'
-	DEMON_DB["Arioch"] = _dd207
+	db["Arioch"] = _dd207
 
 	// Tao Tie (Vile, Lv 62)
 	var/datum/demon_data/_dd208 = new /datum/demon_data()
@@ -4054,7 +4057,7 @@
 	_dd208.demon_icon = 'Icons/DevilSummoner/Demons/Tao Tie.dmi'
 	_dd208.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Tao Tie128.dmi'
 	_dd208.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Tao Tie32.dmi'
-	DEMON_DB["Tao Tie"] = _dd208
+	db["Tao Tie"] = _dd208
 
 	// Tezcatlipoca (Vile, Lv 68)
 	var/datum/demon_data/_dd209 = new /datum/demon_data()
@@ -4074,7 +4077,7 @@
 	_dd209.demon_icon = 'Icons/DevilSummoner/Demons/Tezcatlipoca.dmi'
 	_dd209.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Tezcatlipoca128.dmi'
 	_dd209.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Tezcatlipoca32.dmi'
-	DEMON_DB["Tezcatlipoca"] = _dd209
+	db["Tezcatlipoca"] = _dd209
 
 	// Nyarlathotep (Vile, Lv 80)
 	var/datum/demon_data/_dd210 = new /datum/demon_data()
@@ -4093,7 +4096,7 @@
 	_dd210.demon_icon = 'Icons/DevilSummoner/Demons/Nyarlathotep.dmi'
 	_dd210.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Nyarlathotep128.dmi'
 	_dd210.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Nyarlathotep32.dmi'
-	DEMON_DB["Nyarlathotep"] = _dd210
+	db["Nyarlathotep"] = _dd210
 
 	// Hare of Inaba (Wilder, Lv 9)
 	var/datum/demon_data/_dd211 = new /datum/demon_data()
@@ -4113,7 +4116,7 @@
 	_dd211.demon_icon = 'Icons/DevilSummoner/Demons/Hare of Inaba.dmi'
 	_dd211.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Hare of Inaba128.dmi'
 	_dd211.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Hare of Inaba32.dmi'
-	DEMON_DB["Hare of Inaba"] = _dd211
+	db["Hare of Inaba"] = _dd211
 
 	// Waira (Wilder, Lv 17)
 	var/datum/demon_data/_dd212 = new /datum/demon_data()
@@ -4134,7 +4137,7 @@
 	_dd212.demon_icon = 'Icons/DevilSummoner/Demons/Waira.dmi'
 	_dd212.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Waira128.dmi'
 	_dd212.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Waira32.dmi'
-	DEMON_DB["Waira"] = _dd212
+	db["Waira"] = _dd212
 
 	// Garm (Wilder, Lv 25)
 	var/datum/demon_data/_dd213 = new /datum/demon_data()
@@ -4154,7 +4157,7 @@
 	_dd213.demon_icon = 'Icons/DevilSummoner/Demons/Garm.dmi'
 	_dd213.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Garm128.dmi'
 	_dd213.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Garm32.dmi'
-	DEMON_DB["Garm"] = _dd213
+	db["Garm"] = _dd213
 
 	// Afanc (Wilder, Lv 33)
 	var/datum/demon_data/_dd214 = new /datum/demon_data()
@@ -4173,7 +4176,7 @@
 	_dd214.demon_icon = 'Icons/DevilSummoner/Demons/Afanc.dmi'
 	_dd214.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Afanc128.dmi'
 	_dd214.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Afanc32.dmi'
-	DEMON_DB["Afanc"] = _dd214
+	db["Afanc"] = _dd214
 
 	// Xiezhai (Wilder, Lv 37)
 	var/datum/demon_data/_dd215 = new /datum/demon_data()
@@ -4193,7 +4196,7 @@
 	_dd215.demon_icon = 'Icons/DevilSummoner/Demons/Xiezhai.dmi'
 	_dd215.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Xiezhai128.dmi'
 	_dd215.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Xiezhai32.dmi'
-	DEMON_DB["Xiezhai"] = _dd215
+	db["Xiezhai"] = _dd215
 
 	// Mothman (Wilder, Lv 43)
 	var/datum/demon_data/_dd216 = new /datum/demon_data()
@@ -4213,7 +4216,7 @@
 	_dd216.demon_icon = 'Icons/DevilSummoner/Demons/Mothman.dmi'
 	_dd216.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Mothman128.dmi'
 	_dd216.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Mothman32.dmi'
-	DEMON_DB["Mothman"] = _dd216
+	db["Mothman"] = _dd216
 
 	// Taown (Wilder, Lv 50)
 	var/datum/demon_data/_dd217 = new /datum/demon_data()
@@ -4233,7 +4236,7 @@
 	_dd217.demon_icon = 'Icons/DevilSummoner/Demons/Taown.dmi'
 	_dd217.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Taown128.dmi'
 	_dd217.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Taown32.dmi'
-	DEMON_DB["Taown"] = _dd217
+	db["Taown"] = _dd217
 
 	// Sleipnir (Wilder, Lv 57)
 	var/datum/demon_data/_dd218 = new /datum/demon_data()
@@ -4253,7 +4256,7 @@
 	_dd218.demon_icon = 'Icons/DevilSummoner/Demons/Sleipnir.dmi'
 	_dd218.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Sleipnir128.dmi'
 	_dd218.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Sleipnir32.dmi'
-	DEMON_DB["Sleipnir"] = _dd218
+	db["Sleipnir"] = _dd218
 
 	// Behemoth (Wilder, Lv 65)
 	var/datum/demon_data/_dd219 = new /datum/demon_data()
@@ -4272,7 +4275,7 @@
 	_dd219.demon_icon = 'Icons/DevilSummoner/Demons/Behemoth.dmi'
 	_dd219.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Behemoth128.dmi'
 	_dd219.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Behemoth32.dmi'
-	DEMON_DB["Behemoth"] = _dd219
+	db["Behemoth"] = _dd219
 
 	// Ammut (Wilder, Lv 73)
 	var/datum/demon_data/_dd220 = new /datum/demon_data()
@@ -4290,4 +4293,6 @@
 	_dd220.demon_icon = 'Icons/DevilSummoner/Demons/Ammut.dmi'
 	_dd220.demon_portrait = 'Icons/DevilSummoner/DemonPortraits128/Ammut128.dmi'
 	_dd220.demon_portrait2 = 'Icons/DevilSummoner/DemonPortraits32/Ammut32.dmi'
-	DEMON_DB["Ammut"] = _dd220
+	db["Ammut"] = _dd220
+
+	DEMON_DB = db
