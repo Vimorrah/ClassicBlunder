@@ -58,6 +58,7 @@ obj
 				ABuffNeeded
 				SBuffNeeded
 				GateNeeded
+				NeedsHealth//Cant use the technique before youre below x health.
 
 				//AllOutAttack//Don't care about the drain, FINISHING MOVE...
 				//HealthCost
@@ -4838,6 +4839,10 @@ mob
 								src << "You don't have enough Corruption to activate [Z]"
 								return FALSE
 
+			if(Z.NeedsHealth)
+				if(src.Health > Z.NeedsHealth*(1-src.HealthCut))
+					src << "You can't use [Z] before you're below [Z.NeedsHealth*(1-src.HealthCut)]% health!"
+					return
 			if(Z.NeedsSword)
 				if(passive_handler.Get("Disarmed")&& !src.HasBladeFisting())
 					Z.DamageMult = (Z.DamageMult / 2)

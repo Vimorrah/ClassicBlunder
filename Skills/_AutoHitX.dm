@@ -6677,6 +6677,8 @@ obj
 				if(src.FixedDamage)
 					m.LoseHealth(src.FixedDamage)
 					damageDealt = src.FixedDamage
+					if(m.Health <= 0 && !m.KO)
+						m.Unconscious(src.Owner)
 				else
 					damageDealt = src.Owner.DoDamage(m, FinalDmg, src.UnarmedTech, src.SwordTech, Destructive=src.Destructive, innateLifeSteal = LifeSteal, Autohit = TRUE)
 				DEBUGMSG("FINAL TOTAL DAMAGE DEALT! [damageDealt]")
