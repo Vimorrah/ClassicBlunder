@@ -426,6 +426,10 @@
 			src << "That fusion is not possible."
 		return
 
+	if(DEMON_SPECIAL_FUSIONS && (result_name in DEMON_SPECIAL_FUSIONS) && SagaLevel < 7)
+		src << "<font color='#ff6666'>Special fusion requires <b>Tier 7</b>.</font>"
+		return
+
 	if(DemonTooHighLevel(result_name))
 		var/datum/demon_data/rdd = DEMON_DB[result_name]
 		var/need = rdd ? rdd.demon_lvl : 0
@@ -567,6 +571,9 @@
 // Element fusion path
 /mob/proc/ExecuteElementFusion(name_a, name_b, encoded_result)
 	if(DevilSummonerBlocked()) return
+	if(SagaLevel < 6)
+		src << "<font color='#ff6666'>Element fusion requires <b>Tier 6</b>.</font>"
+		return
 	var/parts = splittext(encoded_result, "_")
 	var/element_race = parts[3]
 	var/shift_up = (element_race == "Aquans" || element_race == "Aeros")

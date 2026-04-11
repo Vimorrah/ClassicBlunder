@@ -116,9 +116,10 @@
 			var/datum/party_demon/pd_b = demon_party[b]
 			var/result = GetFusionResultByLevel(pd_a.demon_name, pd_a.party_level,
 			                                    pd_b.demon_name, pd_b.party_level)
-			// Check if result is element fusion
+			// Check if result is element or special fusion
 			var/is_element = result && copytext(result, 1, 9) == "_ELEMENT_"
-			var/valid = result && !is_element
+			var/is_special = result && !is_element && DEMON_SPECIAL_FUSIONS && (result in DEMON_SPECIAL_FUSIONS)
+			var/valid = result && !is_element && (!is_special || SagaLevel >= 7)
 			if(is_element && SagaLevel >= 6) valid = TRUE
 
 			var/too_high = FALSE

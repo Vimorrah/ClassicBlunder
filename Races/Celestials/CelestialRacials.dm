@@ -52,24 +52,24 @@ mob/proc/ReclaimCelestialWeapon(path)
 
 mob/proc/ChooseCelestialWeapon()
 	var/list/AllWeapons = list(\
-		"Light Celestial Blade I" = /obj/Items/Sword/Celestial/Light/Light_Celestial_Blade_I,\
-		"Light Celestial Blade II" = /obj/Items/Sword/Celestial/Light/Light_Celestial_Blade_II,\
-		"Light Celestial Blade III" = /obj/Items/Sword/Celestial/Light/Light_Celestial_Blade_III,\
-		"Medium Celestial Blade I" = /obj/Items/Sword/Celestial/Medium/Medium_Celestial_Blade_I,\
-		"Medium Celestial Blade II" = /obj/Items/Sword/Celestial/Medium/Medium_Celestial_Blade_II,\
-		"Medium Celestial Blade III" = /obj/Items/Sword/Celestial/Medium/Medium_Celestial_Blade_III,\
-		"Heavy Celestial Blade I" = /obj/Items/Sword/Celestial/Heavy/Heavy_Celestial_Blade_I,\
-		"Heavy Celestial Blade II" = /obj/Items/Sword/Celestial/Heavy/Heavy_Celestial_Blade_II,\
-		"Heavy Celestial Blade III" = /obj/Items/Sword/Celestial/Heavy/Heavy_Celestial_Blade_III,\
-		"Celestial Wand I" = /obj/Items/Enchantment/Staff/Celestial/Wand/Celestial_Wand_I,\
-		"Celestial Wand II" = /obj/Items/Enchantment/Staff/Celestial/Wand/Celestial_Wand_II,\
-		"Celestial Wand III" = /obj/Items/Enchantment/Staff/Celestial/Wand/Celestial_Wand_III,\
-		"Celestial Rod I" = /obj/Items/Enchantment/Staff/Celestial/Rod/Celestial_Rod_I,\
-		"Celestial Rod II" = /obj/Items/Enchantment/Staff/Celestial/Rod/Celestial_Rod_II,\
-		"Celestial Rod III" = /obj/Items/Enchantment/Staff/Celestial/Rod/Celestial_Rod_III,\
-		"Celestial Staff I" = /obj/Items/Enchantment/Staff/Celestial/Staff_Class/Celestial_Staff_I,\
-		"Celestial Staff II" = /obj/Items/Enchantment/Staff/Celestial/Staff_Class/Celestial_Staff_II,\
-		"Celestial Staff III" = /obj/Items/Enchantment/Staff/Celestial/Staff_Class/Celestial_Staff_III)
+		"Zephyr's Edge" = /obj/Items/Sword/Celestial/Light/Light_Celestial_Blade_I,\
+		"Aurelius" = /obj/Items/Sword/Celestial/Light/Light_Celestial_Blade_II,\
+		"Gemini Fang" = /obj/Items/Sword/Celestial/Light/Light_Celestial_Blade_III,\
+		"Throne's Answer" = /obj/Items/Sword/Celestial/Medium/Medium_Celestial_Blade_I,\
+		"Soulkeeper" = /obj/Items/Sword/Celestial/Medium/Medium_Celestial_Blade_II,\
+		"Pillar of Dawn" = /obj/Items/Sword/Celestial/Medium/Medium_Celestial_Blade_III,\
+		"Dawnbreaker" = /obj/Items/Sword/Celestial/Heavy/Heavy_Celestial_Blade_I,\
+		"Longarm of Heaven" = /obj/Items/Sword/Celestial/Heavy/Heavy_Celestial_Blade_II,\
+		"Wrath Incarnate" = /obj/Items/Sword/Celestial/Heavy/Heavy_Celestial_Blade_III,\
+		"Starling's Quill" = /obj/Items/Enchantment/Staff/Celestial/Wand/Celestial_Wand_I,\
+		"Wellspring Rod" = /obj/Items/Enchantment/Staff/Celestial/Wand/Celestial_Wand_II,\
+		"Ember of Elysium" = /obj/Items/Enchantment/Staff/Celestial/Wand/Celestial_Wand_III,\
+		"The Undercurrent" = /obj/Items/Enchantment/Staff/Celestial/Rod/Celestial_Rod_I,\
+		"Siphon of Aethon" = /obj/Items/Enchantment/Staff/Celestial/Rod/Celestial_Rod_II,\
+		"The Pale Axis" = /obj/Items/Enchantment/Staff/Celestial/Rod/Celestial_Rod_III,\
+		"Voice of the Storm" = /obj/Items/Enchantment/Staff/Celestial/Staff_Class/Celestial_Staff_I,\
+		"Rime Throne" = /obj/Items/Enchantment/Staff/Celestial/Staff_Class/Celestial_Staff_II,\
+		"Pact of the Exalted" = /obj/Items/Enchantment/Staff/Celestial/Staff_Class/Celestial_Staff_III)
 	while(src && src.client)
 		var/list/available = list()
 		for(var/wname in AllWeapons)
@@ -147,9 +147,9 @@ obj/Skills/Utility/Recall_Celestial_Armaments
 // =============================================
 	Light
 		Light_Celestial_Blade_I
-			name = "Light Celestial Blade I"
-			desc = "A swift celestial sword. (Placeholder)"
-			icon = 'LightSword.dmi'
+			name = "Zephyr's Edge"
+			desc = "A blade so light that its blade is almost impossible to keep up with."
+			icon = 'Lol_Sword_reg.dmi'
 			Class = "Light"
 			passives = list("Godspeed" = 1)
 			DamageEffectiveness = 1.025
@@ -159,9 +159,9 @@ obj/Skills/Utility/Recall_Celestial_Armaments
 				src.passives = list("Godspeed" = (User.Potential / 10))
 				..()
 		Light_Celestial_Blade_II
-			name = "Light Celestial Blade II"
-			desc = "A swift celestial sword. (Placeholder)"
-			icon = 'LightSword.dmi'
+			name = "Aurelius"
+			desc = "Forged for the dance of single combat; never a blow wasted."
+			icon = 'Lol_Sword_Red.dmi'
 			Class = "Light"
 			passives = list("Duelist" = 1)
 			DamageEffectiveness = 1.025
@@ -172,9 +172,9 @@ obj/Skills/Utility/Recall_Celestial_Armaments
 				..()
 
 		Light_Celestial_Blade_III
-			name = "Light Celestial Blade III"
-			desc = "A swift celestial sword. (Placeholder)"
-			icon = 'LightSword.dmi'
+			name = "Gemini Fang"
+			desc = "Twin strikes flow from its edge as naturally as breath."
+			icon = 'willKnifev2.dmi'
 			Class = "Light"
 			passives = list("DoubleStrike" = 1)
 			DamageEffectiveness = 1.025
@@ -189,9 +189,9 @@ obj/Skills/Utility/Recall_Celestial_Armaments
 // =============================================
 	Medium
 		Medium_Celestial_Blade_I
-			name = "Medium Celestial Blade I"
-			desc = "A balanced celestial sword. (Placeholder)"
-			icon = 'MediumSword.dmi'
+			name = "Throne's Answer"
+			desc = "A blade as reliable as judgment from on high."
+			icon = 'Bone-Ish_Blade.dmi'
 			Class = "Medium"
 			passives = list("Half-Sword" = 1)
 			DamageEffectiveness = 1.05
@@ -201,9 +201,9 @@ obj/Skills/Utility/Recall_Celestial_Armaments
 				src.passives = list("Half-Sword" = 1 + (User.Potential / 50))
 				..()
 		Medium_Celestial_Blade_II
-			name = "Medium Celestial Blade II"
-			desc = "A balanced celestial sword. (Placeholder)"
-			icon = 'MediumSword.dmi'
+			name = "Soulkeeper"
+			desc = "The spirit of its wielder flows through every strike."
+			icon = 'Aestus_Estus.dmi'
 			Class = "Medium"
 			passives = list("SpiritSword" = 1)
 			DamageEffectiveness = 1.05
@@ -213,9 +213,9 @@ obj/Skills/Utility/Recall_Celestial_Armaments
 				src.passives = list("SpiritSword" = (User.Potential / 50))
 				..()
 		Medium_Celestial_Blade_III
-			name = "Medium Celestial Blade III"
-			desc = "A balanced celestial sword. (Placeholder)"
-			icon = 'MediumSword.dmi'
+			name = "Pillar of Dawn"
+			desc = "Unyielding as heaven's will, steady as the morning sun."
+			icon = 'Fanta-sword.dmi'
 			Class = "Medium"
 			passives = list("Steady" = 1)
 			DamageEffectiveness = 1.05
@@ -230,18 +230,18 @@ obj/Skills/Utility/Recall_Celestial_Armaments
 // =============================================
 	Heavy
 		Heavy_Celestial_Blade_I
-			name = "Heavy Celestial Blade I"
-			desc = "A powerful celestial sword. (Placeholder)"
-			icon = 'Sheath Taco In Sword.dmi'
+			name = "Dawnbreaker"
+			desc = "Its sweeping arc clears the field like the sun burns away shadow."
+			icon = 'MONADO.dmi'
 			Class = "Heavy"
 			passives = list("SweepingStrike" = 1)
 			DamageEffectiveness = 1.1
 			AccuracyEffectiveness = 0.8
 			SpeedEffectiveness = 0.8
 		Heavy_Celestial_Blade_II
-			name = "Heavy Celestial Blade II"
-			desc = "A powerful celestial sword. (Placeholder)"
-			icon = 'Sheath Taco In Sword.dmi'
+			name = "Longarm of Heaven"
+			desc = "Its reach extends Heaven's judgment."
+			icon = 'Vile Hammer Vortigern.dmi'
 			Class = "Heavy"
 			passives = list("Extend" = 1)
 			DamageEffectiveness = 1.1
@@ -251,9 +251,9 @@ obj/Skills/Utility/Recall_Celestial_Armaments
 				src.passives = list("Extend" = 1 + (User.Potential / 50))
 				..()
 		Heavy_Celestial_Blade_III
-			name = "Heavy Celestial Blade III"
-			desc = "A powerful celestial sword. (Placeholder)"
-			icon = 'Sheath Taco In Sword.dmi'
+			name = "Wrath Incarnate"
+			desc = "Heaven's fury given an edge; mercy is not its purpose."
+			icon = 'Ragnarok Blade Forme.dmi'
 			Class = "Heavy"
 			passives = list("Brutalize" = 1)
 			DamageEffectiveness = 1.1
@@ -301,9 +301,9 @@ obj/Skills/Utility/Recall_Celestial_Armaments
 // =============================================
 	Wand
 		Celestial_Wand_I
-			name = "Celestial Wand I"
-			desc = "A nimble celestial focus. (Placeholder)"
-			icon = 'MageStaff.dmi'
+			name = "Starling Blade"
+			desc = "Spells leave it before the thought has finished forming."
+			icon = 'Slaughter Demon LH.dmi'
 			Class = "Wand"
 			passives = list("QuickCast" = 1)
 			DamageEffectiveness = 0.95
@@ -313,9 +313,9 @@ obj/Skills/Utility/Recall_Celestial_Armaments
 				src.passives = list("QuickCast" = (User.Potential / 25))
 				..()
 		Celestial_Wand_II
-			name = "Celestial Wand II"
-			desc = "A nimble celestial focus. (Placeholder)"
-			icon = 'MageStaff.dmi'
+			name = "Wellspring"
+			desc = "Draws deeply from the divine current that flows through all things."
+			icon = 'Playful Cloud.dmi'
 			Class = "Wand"
 			passives = list("ManaStats" = 1)
 			DamageEffectiveness = 0.95
@@ -325,9 +325,9 @@ obj/Skills/Utility/Recall_Celestial_Armaments
 				src.passives = list("ManaStats" = (User.Potential / 10))
 				..()
 		Celestial_Wand_III
-			name = "Celestial Wand III"
-			desc = "A nimble celestial focus. (Placeholder)"
-			icon = 'MageStaff.dmi'
+			name = "Ember of Elysium"
+			desc = "Burns with a sacred flame that consumes the unworthy."
+			icon = 'Straw Doll - Hammer.dmi'
 			Class = "Wand"
 			passives = list("SoulFire" = 1)
 			DamageEffectiveness = 0.95
@@ -343,9 +343,9 @@ obj/Skills/Utility/Recall_Celestial_Armaments
 // =============================================
 	Rod
 		Celestial_Rod_I
-			name = "Celestial Rod I"
-			desc = "A versatile celestial focus. (Placeholder)"
-			icon = 'MageStaff.dmi'
+			name = "The Undercurrent"
+			desc = "Channels spiritual energies with effortless, flowing precision."
+			icon = 'Gae Bolg.dmi'
 			Class = "Rod"
 			passives = list("SpiritFlow" = 1)
 			DamageEffectiveness = 1
@@ -355,9 +355,9 @@ obj/Skills/Utility/Recall_Celestial_Armaments
 				src.passives = list("SpiritFlow" = 1 + (User.Potential / 25))
 				..()
 		Celestial_Rod_II
-			name = "Celestial Rod II"
-			desc = "A versatile celestial focus. (Placeholder)"
-			icon = 'MageStaff.dmi'
+			name = "Siphon of Aethon"
+			desc = "Drinks the enemy's power and makes it your own."
+			icon = 'Gungir Type.dmi'
 			Class = "Rod"
 			passives = list("ManaSteal" = 5)
 			DamageEffectiveness = 1
@@ -367,9 +367,9 @@ obj/Skills/Utility/Recall_Celestial_Armaments
 				src.passives = list("ManaSteal" = 5 + (User.Potential / 4))
 				..()
 		Celestial_Rod_III
-			name = "Celestial Rod III"
-			desc = "A versatile celestial focus. (Placeholder)"
-			icon = 'MageStaff.dmi'
+			name = "The Pale Axis"
+			desc = "Bends the space around it, forming a field of null energy."
+			icon = 'Murakumogiri .dmi'
 			Class = "Rod"
 			passives = list("VoidField" = 1)
 			DamageEffectiveness = 1
@@ -384,27 +384,27 @@ obj/Skills/Utility/Recall_Celestial_Armaments
 // =============================================
 	Staff_Class
 		Celestial_Staff_I
-			name = "Celestial Staff I"
-			desc = "A mighty celestial focus. (Placeholder)"
-			icon = 'MageStaff.dmi'
+			name = "Voice of the Storm"
+			desc = "Those struck by its power hear thunder long after the blow."
+			icon = 'Spirit Sword.dmi'
 			Class = "Staff"
 			passives = list("ThunderHerald" = 1)
 			DamageEffectiveness = 1.1
 			AccuracyEffectiveness = 0.85
 			SpeedEffectiveness = 0.65
 		Celestial_Staff_II
-			name = "Celestial Staff II"
-			desc = "A mighty celestial focus. (Placeholder)"
-			icon = 'MageStaff.dmi'
+			name = "Rime Throne"
+			desc = "Carries the cold stillness of heaven's highest peaks."
+			icon = 'MHLS.dmi'
 			Class = "Staff"
 			passives = list("IceHerald" = 1)
 			DamageEffectiveness = 1.1
 			AccuracyEffectiveness = 0.85
 			SpeedEffectiveness = 0.65
 		Celestial_Staff_III
-			name = "Celestial Staff III"
-			desc = "A mighty celestial focus. (Placeholder)"
-			icon = 'MageStaff.dmi'
+			name = "Pact of the Exalted"
+			desc = "Forged where divine power meets the abyss; dangerous to all."
+			icon = 'Yoru.dmi'
 			Class = "Staff"
 			passives = list("DemonicInfusion" = 1)
 			DamageEffectiveness = 1.1

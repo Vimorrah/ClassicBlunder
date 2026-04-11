@@ -61,7 +61,6 @@
 			demon_party_cap = 10
 
 			src << "Party capacity increased to <b>10 demons</b>."
-			src << "Rare entities once thought inaccessible now answer your summons. <b>Fusion-exclusive demons</b> may be obtained through specific fusions."
 
 		// Element fusion
 		if(6)
