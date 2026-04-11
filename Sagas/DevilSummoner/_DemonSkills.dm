@@ -116,6 +116,12 @@ var/global/list/DEMON_SKILL_VFX = list()
 	// ===== STATUS =====
 	DEMON_SKILL_VFX["Marin Karin"]  = new /datum/demon_skill_vfx('Icons/Effects/HitsparkStar.dmi', "", 0, 0, 1, 5)
 	DEMON_SKILL_VFX["Gigajama"]     = new /datum/demon_skill_vfx('Icons/Effects/Hit Effect Dark.dmi', "", 0, 0, 1.5, 5)
+	DEMON_SKILL_VFX["Sexy Gaze"]    = new /datum/demon_skill_vfx('Icons/Effects/HitsparkStar.dmi', "", 0, 0, 1, 5)
+	DEMON_SKILL_VFX["Paral Eyes"]   = new /datum/demon_skill_vfx('Icons/Effects/HitsparkStar.dmi', "", 0, 0, 1, 5)
+	DEMON_SKILL_VFX["Petra Eyes"]   = new /datum/demon_skill_vfx('Icons/Effects/Hit Effect.dmi', "", 0, 0, 1, 5)
+	DEMON_SKILL_VFX["Weak Kill"]    = new /datum/demon_skill_vfx('Icons/Effects/Hit Effect Dark.dmi', "", 0, 0, 1.5, 5)
+	DEMON_SKILL_VFX["Snipe"]        = new /datum/demon_skill_vfx('Icons/Effects/Hit Effect.dmi', "", 0, 0, 1.5, 4)
+	DEMON_SKILL_VFX["Multi-Hit"]    = new /datum/demon_skill_vfx('Icons/Effects/Hit Effect.dmi', "", 0, 0, 1, 4)
 
 /mob/Player/AI/Demon
 
@@ -338,6 +344,18 @@ var/global/list/DEMON_SKILL_VFX = list()
 				return DemonMarinKarin(target)
 			if("Gigajama")
 				return DemonGigajama(target)
+			if("Sexy Gaze")
+				return DemonMarinKarin(target)
+			if("Paral Eyes")
+				return DemonParalyze(target)
+			if("Petra Eyes")
+				return DemonStone(target)
+			if("Weak Kill")
+				return DemonWeakKill(target)
+			if("Snipe")
+				return DemonPhysDamage(target, StrMod * 0.5)
+			if("Multi-Hit")
+				return DemonPhysMultiHit(target, StrMod * 0.12, 2, 4)
 		return FALSE
 
 	proc/DemonValidTarget(mob/target)
@@ -744,4 +762,34 @@ var/global/list/DEMON_SKILL_VFX = list()
 				s.TimerLimit = 5
 				s.Trigger(t, TRUE)
 			DemonSpawnVFX(t)
+		return TRUE
+
+	proc/DemonParalyze(mob/target)
+		if(!DemonValidTarget(target)) return FALSE
+		target.AddShock(15, src)
+		DemonSpawnVFX(target)
+		if(ai_owner) ai_owner << "<font color='#ffff66'>[name] paralyzes [target]!</font>"
+		return TRUE
+
+	proc/DemonStone(mob/target)
+		if(!DemonValidTarget(target)) return FALSE
+		var/dmg = max(1, round(StrMod * 0.3))
+		target.DoDamage(src, TrueDamage(dmg))
+		target.AddSlow(20, src)
+		DemonSpawnVFX(target)
+		if(ai_owner) ai_owner << "<font color='#888899'>[name] petrifies [target]!</font>"
+		return TRUE
+
+	proc/DemonWeakKill(mob/target)
+		if(!DemonValidTarget(target)) return FALSE
+		var/debuff_count = 0
+		if(target.Burn > 0) debuff_count++
+		if(target.Slow > 0) debuff_count++
+		if(target.Shock > 0) debuff_count++
+		if(target.Shatter > 0) debuff_count++
+		if(target.Poison > 0) debuff_count++
+		var/dmg = max(1, round(ForMod * 0.4 * (1 + debuff_count * 0.5)))
+		target.DoDamage(src, TrueDamage(dmg))
+		DemonFlash(target, "Almighty")
+		DemonSpawnVFX(target)
 		return TRUE

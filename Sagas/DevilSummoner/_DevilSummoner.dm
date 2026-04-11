@@ -26,11 +26,17 @@
 
 			src.verbs += /mob/proc/verb_RecordDemon
 			src.verbs += /mob/proc/verb_OpenCompendium
+			src.verbs += /mob/proc/verb_SenseDemons
 
 			src << "Party capacity increased to <b>4 demons</b>."
 			src << "<b>Compendium</b> unlocked: use <b>Record Demon</b> to store a demon's data, then withdraw them later via <b>Compendium</b>."
 			src << "Withdrawing at a demon costs Mana Bits."
-			GrantStarterDemons(2)
+			src << "For every <b>5 Potential Levels</b> you possess, you can retrieve a demon from beyond this reality. While meditating, use <b>Sense Demons</b> to choose. If your party is full, the demon is recorded in your compendium instead."
+
+			// Retroactive: grant picks for all 5-level milestones already obtained
+			DevilSummonerCheckPickThreshold(silent = TRUE)
+			if(demon_pending_picks > 0)
+				src << "<font color='#c8a8ff'>You have <b>[demon_pending_picks]</b> demon pick(s) waiting. Meditate and use <b>Sense Demons</b> to claim them.</font>"
 
 		// fusion unlocked
 		if(3)
@@ -41,7 +47,7 @@
 			src << "Party capacity increased to <b>6 demons</b>."
 			src << "<b>Demon Fusion</b> unlocked: combine two demons to create a stronger one."
 			src << "The fused demon is determined by the races and levels of the two ingredients. Both ingredients are consumed."
-			GrantStarterDemons(3)
+			src << "Demons whose level exceeds your current <b>Potential Level</b> cannot yet be commanded; they will appear as silhouettes in the fusion list until you grow stronger."
 
 		// racial bonuses while demon is summoned
 		if(4)

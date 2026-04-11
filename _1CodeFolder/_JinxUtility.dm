@@ -96,6 +96,20 @@ mob
 			#endif
 			val = newDoDamage(defender, val, UnarmedAttack, SwordAttack, SecondStrike, ThirdStrike, AsuraStrike, TrueMult, SpiritAttack, Destructive, Autohit)
 			DEBUGMSG("val after newDoDamage [val]")
+			// Devil Summoner: Knight/Paladin/Hero Soul redirects part of the damage to the active demon
+			if(defender && defender.demon_active && defender.demon_soul_dmg_pct > 0 && istype(defender.demon_active, /mob/Player/AI/Demon))
+				var/mob/Player/AI/Demon/_ds_d = defender.demon_active
+				if(_ds_d && _ds_d.demon_hp > 0 && src != _ds_d)
+					var/orig_val = val
+					val = round(val * (1 - defender.demon_soul_dmg_pct))
+					var/demon_takes = max(1, round(orig_val * defender.demon_soul_transfer_pct))
+					_ds_d.demon_hp = max(0, _ds_d.demon_hp - demon_takes)
+					var/datum/party_demon/_ds_pd = _ds_d.DemonGetPartyDemon()
+					if(_ds_pd) _ds_pd.current_hp = _ds_d.demon_hp
+					if(defender.client)
+						defender << "<font color='#aaccff'>[_ds_d.name] absorbs [demon_takes] damage in your stead!</font>"
+					if(_ds_d.demon_hp <= 0)
+						_ds_d.DemonDespawn()
 			if(src.HasPurity())//If damager is pure
 				var/found=0//Assume you haven't found a proper target
 				if(defender.IsEvil()||src.HasBeyondPurity())

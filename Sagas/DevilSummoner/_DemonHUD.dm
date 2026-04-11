@@ -88,6 +88,7 @@
 
 	Click(location, control, params)
 		if(!hud_owner || !skill_name) return
+		if(hud_owner.KO || hud_owner.Dead) return
 		if(!hud_owner.demon_active) return
 		var/mob/Player/AI/Demon/d = hud_owner.demon_active
 		if(!d) return

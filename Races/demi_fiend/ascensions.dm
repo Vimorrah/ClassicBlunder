@@ -9,6 +9,25 @@ ascension
 	demi_fiend
 		postAscension(mob/owner)
 			owner.refreshMagatama()
+			if(owner.passive_handler?.Get("Musubi"))
+				owner.StrAscension  += strength
+				owner.EndAscension  += endurance
+				owner.ForAscension  += force
+				owner.OffAscension  += offense
+				owner.DefAscension  += defense
+				owner.SpdAscension  += speed
+				owner.RecovAscension += recovery
+			..()
+
+		revertAscension(mob/owner)
+			if(owner.passive_handler?.Get("Musubi"))
+				owner.StrAscension  -= strength
+				owner.EndAscension  -= endurance
+				owner.ForAscension  -= force
+				owner.OffAscension  -= offense
+				owner.DefAscension  -= defense
+				owner.SpdAscension  -= speed
+				owner.RecovAscension -= recovery
 			..()
 		one
 			unlock_potential = ASCENSION_ONE_POTENTIAL

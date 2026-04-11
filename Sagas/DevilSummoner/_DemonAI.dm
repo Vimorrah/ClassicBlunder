@@ -29,6 +29,9 @@
 		ai_alliances = list("[owner.ckey]")
 		owner.ai_followers += src
 
+		// Ensure passive_handler exists so demon passives that increment it work
+		if(!passive_handler) passive_handler = new()
+
 		var/scale = max(1, owner.Potential) / 100
 		StrMod = max(1, round(dd.demon_str * scale, 0.01))
 		ForMod = max(1, round(dd.demon_for * scale, 0.01))
@@ -47,6 +50,9 @@
 		else if(dd.demon_skills && dd.demon_skills.len)
 			active_skills = dd.demon_skills.Copy()
 
+		// Apply DS2 passives
+		ApplyDemonPassives()
+
 		aiGain()
 		spawn() DemonLoop()
 
@@ -54,6 +60,9 @@
 		set waitfor = FALSE
 		while(src && ai_owner)
 			if(!ai_owner || !ai_owner.client)
+				DemonDespawn()
+				return
+			if(ai_owner.KO || ai_owner.Dead)
 				DemonDespawn()
 				return
 			DemonUpdate()
@@ -116,11 +125,32 @@
 		if(next_attack_multiplier > 1)
 			if(ai_owner) ai_owner << "<font color='#ffaa00'>[name]'s charged attack connects!</font>"
 			next_attack_multiplier = 1
+		// Crit chance / damage from passive_handler (CriticalChance / CriticalDamage)
+		var/crit_chance = 5 + DemonPassiveCritBonus()
+		if(prob(crit_chance))
+			dmg = round(dmg * DemonPassiveCritDmgMult())
 		target.DoDamage(src, TrueDamage(dmg))
+		DemonPassiveAddAilments(target)
 		Bump(target)
+		// Double Strike: hit twice
+		if(passive_double_strike)
+			spawn(2)
+				if(src && target && target.client)
+					target.DoDamage(src, TrueDamage(dmg))
+					Bump(target)
+		// Attack All: also hit nearby enemies
+		if(passive_attack_all)
+			for(var/mob/m in oview(1, src))
+				if(m == src || m == target || !m.client) continue
+				if(ai_owner && m == ai_owner) continue
+				if(ai_owner && "[ai_owner.ckey]" in m.ai_alliances) continue
+				if(ai_owner && ai_owner.party && ai_owner.party.members && (m in ai_owner.party.members)) continue
+				m.DoDamage(src, TrueDamage(round(dmg * 0.6)))
+				DemonPassiveAddAilments(m)
 
 	proc/DemonDespawn()
 		DemonRemoveReflectOverlays()
+		RemoveDemonPassives()
 		if(ai_owner)
 			if(ai_owner.SagaLevel >= 4)
 				ai_owner.RemoveDemonRacialPassive()
@@ -136,18 +166,31 @@
 		if(ai_owner && istype(attacker, /mob))
 			if(attacker == ai_owner) return
 			if(ai_owner.party && ai_owner.party.members && (attacker in ai_owner.party.members)) return
-		if(demon_reflect_until > world.time && istype(attacker, /mob))
-			var/reflect_dmg = max(1, round(ForMod * 0.3))
-			demon_reflect_until = 0
-			DemonRemoveReflectOverlays()
-			if(ai_owner) ai_owner << "<font color='#88ddff'>[name]'s barrier reflects the attack!</font>"
-			attacker.DoDamage(src, TrueDamage(reflect_dmg))
-			return
 		// Demons use their own HP system - apply damage directly to demon_hp
 		var/raw_dmg = 0
 		if(isnum(damage))
 			raw_dmg = max(1, round(damage))
 		if(raw_dmg <= 0) return
+		// Phys is the default element for demon-on-demon / mob hits; element-typed damage paths
+		// can call DemonGetResistMult/DemonHasRepel/DemonHasDrain themselves
+		var/resist = DemonGetResistMult("Phys")
+		if(resist == 0)
+			if(ai_owner) ai_owner << "<font color='#88ddff'>[name] nullified the attack!</font>"
+			return
+		// Repel: take 25% damage, reflect 25% back to attacker
+		if(DemonHasRepel("Phys"))
+			var/repel_back = max(1, round(raw_dmg * 0.25))
+			raw_dmg = max(1, round(raw_dmg * 0.25))
+			if(istype(attacker, /mob)) attacker.DoDamage(src, TrueDamage(repel_back))
+			if(ai_owner) ai_owner << "<font color='#aaccff'>[name] repels part of the attack!</font>"
+		// Drain: heal 25% of incoming damage, take 25%
+		else if(DemonHasDrain("Phys"))
+			var/heal_amt = max(1, round(raw_dmg * 0.25))
+			raw_dmg = max(1, round(raw_dmg * 0.25))
+			demon_hp = min(100, demon_hp + heal_amt)
+			if(ai_owner) ai_owner << "<font color='#88ffaa'>[name] drains [heal_amt] HP from the attack!</font>"
+		// Apply standard resist multiplier to the (possibly already-reduced) value
+		raw_dmg = max(1, round(raw_dmg * resist))
 		demon_hp = max(0, demon_hp - raw_dmg)
 		if(!ai_owner) return
 		for(var/datum/party_demon/pd in ai_owner.demon_party)

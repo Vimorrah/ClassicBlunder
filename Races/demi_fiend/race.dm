@@ -20,4 +20,8 @@ race
 			user.AddItem(M)
 			M.equipMagatama(user)
 			user.verbs += /mob/proc/CraftMagatama
+			// Demi-fiends automatically begin as Devil Summoners (Tier 1)
+			user.Saga = "Devil Summoner"
+			user.SagaLevel = 1
+			user.tierUpSaga("Devil Summoner")
 			..()

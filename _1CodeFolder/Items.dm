@@ -1010,7 +1010,7 @@ obj/Items/Sword
 
 			Ea
 				name = "Ea"
-				icon='Soul_Eater.dmi'
+				icon='Better_Ea.dmi'
 				pixel_x = -16
 				pixel_y = -16
 				Ascended = 6
