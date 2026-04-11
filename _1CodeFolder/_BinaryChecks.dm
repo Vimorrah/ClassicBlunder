@@ -2209,7 +2209,7 @@ mob
 		GetAsuraStrike()
 			var/anotherOne = passive_handler.Get("AsuraStrike");
 			return anotherOne ? (100 / glob.ASURA_STRIKE_MAX * anotherOne) : 0;
-		
+
 		HasDebuffReversal()
 			if(passive_handler.Get("DebuffReversal"))
 				return 1
@@ -3443,8 +3443,6 @@ atom
 				if(src:HasSpiritPower())
 					SP=1
 			if(src.z == glob.DEATH_LOCATION[3] && !dead_use && !SP)
-				return 1
-			else if(src.z == 1)
 				return 1
 			else if(src.z == global.ArcaneRealmZ && !arc_use)
 				return 1

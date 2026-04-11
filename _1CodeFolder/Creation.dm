@@ -186,7 +186,8 @@ mob/Players
 			if(ispath(updateversion))
 				updateVersion = new updateversion
 		if(RPPSpendable + RPPSpent > RPPCurrent)
-			AdminMessage("[src] has more rpp than they should.")
+			if(!src.PotentialHeadStart)
+				AdminMessage("[src] has more rpp than they should.")
 
 		if(isRace(DEMON) || (isRace(CELESTIAL) && CelestialAscension == "Demon") || isRace(MAKAIOSHIN))
 			for(var/obj/Skills/Buffs/SlotlessBuffs/DemonMagic/s in src)

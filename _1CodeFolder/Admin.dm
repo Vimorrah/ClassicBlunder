@@ -1313,7 +1313,8 @@ mob/Admin2/verb
 		M.PotentialHeadStart=input(src, "What potential do you want to set [M] to?", "Set Head Start Potential") as num
 		M.Potential=M.PotentialHeadStart
 		M.RPPHeadStart=input(src, "What RPP cap do you want to set [M] to?", "Set Head RPP ") as num
-		M.RPPSpendable=M.RPPHeadStart
+		M.RPPHeadStart*=src.RPPMult
+		M.RPPCurrent=M.RPPHeadStart
 		if(M.isRace(/race/demi_fiend))
 			M.refreshMagatama()
 		Log("Admin", "[ExtractInfo(src)] triggered [ExtractInfo(M)]'s event character setup!")

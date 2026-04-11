@@ -228,8 +228,8 @@ var/game_loop/mainLoop = new(0, "newGainLoop")
 			calmcounter=5
 			if(Anger)
 				Calm()
-		if(MeditateTime == 15)
-			src << "If any skills reset on Meditate, they've been reset."
+	//	if(MeditateTime == 15)
+	//		src << "If any skills reset on Meditate, they've been reset."
 		if(CheckSpecial("Jinchuuriki") || CheckSpecial("Vaizard Mask"))
 			if(SpecialBuff.Mastery <= 1)
 				SpecialBuff.Trigger(src, Override=1)
