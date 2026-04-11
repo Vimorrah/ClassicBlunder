@@ -58,6 +58,7 @@ mob/Players
 		winset(usr, null, "browser-options=find")
 		client.perspective=MOB_PERSPECTIVE
 		players += usr
+		OverwatchNotifyLogin(usr, "logged in")
 		usr.density=1
 		usr.client.view=8
 		if(in_tmp_map)
@@ -463,6 +464,7 @@ mob/Players
 		return
 	Logout()
 		DevilSummonerLogout()
+		OverwatchNotifyLogin(src, "logged out")
 		players -= src
 		if(dancing) transform=dancing
 		last_online = world.realtime
