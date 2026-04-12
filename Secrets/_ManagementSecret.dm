@@ -5,7 +5,7 @@
 #define MADNESS_ADD_PER_TIER 25
 
 #define VALID_SECRET_LIST list("Jagan Eye", "Haki", "Hamon", "Vampire", "Werewolf", "Heavenly Restriction", "Senjutsu", "Shin",\
-"Ultra Instinct", "Zombie", "Necromancy", "Eldritch", "Eldritch (Shrouded)", "Eldritch (Reflected)", "Black Flash")
+"Ultra Instinct", "Zombie", "Necromancy", "Eldritch", "Eldritch (Shrouded)", "Eldritch (Reflected)", "Black Flash", "Spiral")
 
 //thank you hadoje
 /mob/var/SecretInformation/secretDatum = new()
@@ -551,6 +551,73 @@ SecretInformation
 					nextTierUp=999
 					p << "You have mastered the art of Senjutsu!"
 
+	Spiral
+		name = "Spiral"
+		givenSkills = list("/obj/Skills/Buffs/SlotlessBuffs/Spiral/Evolution_Power")
+		maxTier = 6
+		applySecret(mob/p)
+			switch(currentTier)
+				if(1) // Unlocks Spiral and get your first buff
+					p << "Your fighting spirit soars throughout you. Unknown to you, this is the beginning of Spiral Energy."
+					giveSkills(p)
+					p.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/Spiral/Clobber)
+				if(2) // Get your main attack
+					p << "You hone your fighting spirit, fueled by the urge to make your dreams real."
+					p.AddSkill(new/obj/Skills/AutoHit/Giga_Drill_Breaker)
+					nextTierUp = 2
+					if(p.passive_handler.Get("SpiralEngine")) // If you're an Android who has installed a Spiral Engine, you get ascension stats so that Evolution Power can buff you
+						p.StrAscension+= 0.1
+						p.EndAscension+= 0.1
+						p.ForAscension+= 0.1
+						p.SpdAscension+= 0.1
+						p.OffAscension+= 0.1
+						p.DefAscension+= 0.1
+						p << "Your synthetic body evolved!"
+				if(3) // Gives you your second buff
+					p << "Your body surges with Spiral Energy, the power of evolution driving you forward."
+					p.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/Spiral/InspiredEvo)
+					nextTierUp = 2
+					if(p.passive_handler.Get("SpiralEngine"))
+						p.StrAscension+= 0.15
+						p.EndAscension+= 0.15
+						p.ForAscension+= 0.15
+						p.SpdAscension+= 0.15
+						p.OffAscension+= 0.15
+						p.DefAscension+= 0.15
+						p << "Your synthetic body evolved!"
+				if(4)
+					p << "Your soul burns with Spiral Hope. You refuse to be oppressed by the limitations of others."
+					nextTierUp = 4
+					if(p.passive_handler.Get("SpiralEngine"))
+						p.StrAscension+= 0.15
+						p.EndAscension+= 0.15
+						p.ForAscension+= 0.15
+						p.SpdAscension+= 0.15
+						p.OffAscension+= 0.15
+						p.DefAscension+= 0.15
+						p << "Your synthetic body evolved!"
+				if(5)
+					p << "Your very DNA resonates with Spiral Power. You climb upwards toward the ceiling of your cage."
+					nextTierUp = 4
+					if(p.passive_handler.Get("SpiralEngine"))
+						p.StrAscension+= 0.2
+						p.EndAscension+= 0.2
+						p.ForAscension+= 0.2
+						p.SpdAscension+= 0.2
+						p.OffAscension+= 0.2
+						p.DefAscension+= 0.2
+						p << "Your synthetic body evolved!"
+				if(6)
+					p << "You have gone beyond your full potential. You have evolved beyond the person you were before. You are free."
+					if(p.passive_handler.Get("SpiralEngine"))
+						p.StrAscension+= 0.3
+						p.EndAscension+= 0.3
+						p.ForAscension+= 0.3
+						p.SpdAscension+= 0.3
+						p.OffAscension+= 0.3
+						p.DefAscension+= 0.3
+						p << "Your synthetic body evolved!"
+
 	Shin
 		name = "Shin"
 		givenSkills = list("/obj/Skills/Buffs/SlotlessBuffs/Shin_Radiance")
@@ -639,7 +706,7 @@ mob/Admin3/verb
 	SecretManagement(var/mob/P in players)
 		set category="Admin"
 		if(!P.client) return
-		var/list/Secrets=list("Spirits of The World","Jagan Eye", "Hamon of the Sun", "Werewolf", "Vampire", "Sage Arts", "Haki", "Eldritch", "Heavenly Restriction", "Shin", "Black Flash")
+		var/list/Secrets=list("Spirits of The World","Jagan Eye", "Hamon of the Sun", "Werewolf", "Vampire", "Sage Arts", "Haki", "Eldritch", "Heavenly Restriction", "Shin", "Black Flash", "Spiral")
 		var/Selection=input(src, "Which aspect of power does [P] awaken to?", "Secret Management") in Secrets
 		if(P.Secret)
 			src << "They already have a secret."
@@ -697,6 +764,9 @@ mob/Admin3/verb
 				if("Black Flash")
 					P.Secret="Black Flash"
 					P.giveSecret("BlackFlash")
+				if("Spiral")
+					P.Secret="Spiral"
+					P.giveSecret("Spiral")
 mob
 	proc
 		AddHaki(var/Type)

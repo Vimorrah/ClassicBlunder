@@ -270,3 +270,18 @@
             var/SecretInformation/BlackFlash/bf = p.secretDatum
             bf.BlackFlashChance = bf.BlackFlashBaseChance
             admins << "Queue'd a Black Flash, reset the chance to [bf.BlackFlashChance]"
+
+//SPIRAL
+/obj/Skills/Queue/Secret_Heavy_Strike/
+    Spiral_Drill
+        DamageMult=2
+        AccuracyMult=3
+        KBMult=0.1
+        Shattering=30
+        Cooldown=15
+        HitSparkIcon='Spiral_Hitspark.dmi'
+        HitSparkX=-32
+        HitSparkY=-32
+        HitSparkTurns=1
+        HitSparkSize=1
+        HitMessage="smashes into the wall standing in their way!";

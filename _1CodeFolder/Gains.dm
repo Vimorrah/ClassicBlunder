@@ -776,6 +776,11 @@ mob
 						src << "You focus your instincts perfectly on the chosen target, ready to leap any second!"
 					src.PoseTime++
 					if(src.PoseTime>=glob.POSE_TIME_NEEDED)
+						if(Secret=="Spiral")
+							icon_state = ""
+							PoseTime = 0
+							for(var/obj/Skills/Buffs/SlotlessBuffs/Spiral/Evolution_Power/fmf in src)
+								fmf.Trigger(src)
 						if(Secret=="Eldritch")
 							icon_state = ""
 							PoseTime = 0

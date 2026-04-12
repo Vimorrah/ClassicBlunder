@@ -783,6 +783,7 @@
 #include "Secrets\Nox\skills.dm"
 #include "Secrets\Shin\buffs.dm"
 #include "Secrets\Shin\skills.dm"
+#include "Secrets\Spiral\SpiralWarrior.dm"
 #include "Secrets\Starwalker\Starwalker.dm"
 #include "Secrets\Ultra Instinct\DivineStrain.dm"
 #include "Secrets\Ultra Instinct\MentorSystem.dm"

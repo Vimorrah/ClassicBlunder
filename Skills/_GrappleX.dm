@@ -110,6 +110,15 @@ obj/Skills/Grapple
 					ThrowMult = max(1, usr.secretDatum?:getBoon(usr, "Throw") / 2)
 					ThrowSpeed = 2.5/usr.secretDatum?:getBoon(usr, "Throw")
 					DashAfter = TRUE
+				else if(usr.Secret=="Spiral")
+					Effect = "Shockwave"
+					var/secretLevel = usr.getSecretLevel()
+					EffectMult = 1
+					DamageMult = 3 * secretLevel
+					ThrowAdd = 2 + secretLevel
+					ThrowMult = 2
+					ThrowSpeed = 2
+					TriggerMessage = "launches"
 				else
 					resetValues()
 				src.Activate(usr)
