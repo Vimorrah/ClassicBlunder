@@ -11062,8 +11062,8 @@ NEW VARIABLES
 						spdAdd = 0.075 * asc
 						ElementalOffense = "Dark"
 						ElementalDefense = "Dark"
-						passives = list("PhysPleroma" = asc/2, "AbyssMod" = asc/2, \
-							"HellPower" = asc/6, "HellRisen" = asc/4, "Shadowbringer" = 1, "FrenzyCarrier" = 1)
+						passives = list("PhysPleroma" = asc/4, "AbyssMod" = asc/2, \
+							"HellPower" = asc/8, "HellRisen" = asc/5, "Shadowbringer" = 1, "FrenzyCarrier" = 1)
 					Trigger(mob/User, Override = FALSE)
 						if(!User.BuffOn(src))
 							adjust(User)
