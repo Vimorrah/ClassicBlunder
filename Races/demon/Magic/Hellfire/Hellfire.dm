@@ -112,7 +112,7 @@
     BuffName = "Hellraiser"
     Slotless = 1
     TimerLimit = 30
-    TopOverlayLock = 'DarkShock.dmi'
+    TopOverlayLock = 'Icons/Effects/Evil_Electric_Aura.dmi'
 
     proc/stackBuff(mob/p)
         if(SlotlessOn)

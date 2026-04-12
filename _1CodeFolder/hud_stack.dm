@@ -147,6 +147,8 @@ client/proc/remove_hud(id)
 		barbg.screen_loc = "1:[_x],1:[_y-7]"
 		if(linked_var == "Grit")
 			barbg.maptext = "[CHAT_STYLE][client.mob.passive_handler["[linked_var]"]]"
+		else if(linked_var == "Fury")
+			barbg.maptext = "[CHAT_STYLE][client.mob.FuryAccumulated]"
 		else
 			barbg.maptext = "[CHAT_STYLE][client.mob.vars["[linked_var]"]]"
 		barbg.maptext_y = 16
@@ -174,6 +176,8 @@ client/proc/remove_hud(id)
 
 		if(linked_var == "Grit")
 			val = client.mob.passive_handler.Get("Grit")
+		else if(linked_var == "Fury")
+			val = client.mob.FuryAccumulated
 		else
 			val = client.mob.vars["[linked_var]"]
 		if(val > 0)

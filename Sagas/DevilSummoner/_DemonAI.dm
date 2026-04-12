@@ -32,15 +32,16 @@
 		// Ensure passive_handler exists so demon passives that increment it work
 		if(!passive_handler) passive_handler = new()
 
-		var/scale = max(1, owner.Potential) / 100
+		// Scaling
+		var/scale = 1 + (max(0, owner.Potential) / 100)
 		StrMod = max(1, round(dd.demon_str * scale, 0.01))
 		ForMod = max(1, round(dd.demon_for * scale, 0.01))
 		EndMod = max(1, round(dd.demon_end * scale, 0.01))
 		SpdMod = max(1, round(dd.demon_spd * scale, 0.01))
 		OffMod = max(1, round(dd.demon_off * scale, 0.01))
 		DefMod = max(1, round(dd.demon_def * scale, 0.01))
-		Potential = owner.Potential * 0.5
-		potential_power_mult = owner.potential_power_mult * 0.5
+		Potential = owner.Potential
+		potential_power_mult = owner.potential_power_mult
 
 		demon_melee_rate = max(8, 30 - round(dd.demon_spd * 0.7))
 
@@ -77,11 +78,7 @@
 
 		var/mob/target = ai_owner.Target
 
-		if(target == ai_owner)
-			FollowOwner()
-			return
-
-		if(!target)
+		if(!target || target == ai_owner || target == src)
 			FollowOwner()
 			return
 
@@ -118,9 +115,11 @@
 
 	proc/DemonMeleeAttack(mob/target)
 		if(!target) return
+		if(!ai_owner || ai_owner.Target != target) return  // only attack owner's current target
 		if(target == ai_owner) return
-		if(ai_owner && istype(target, /mob/Player) && "[ai_owner.ckey]" in target.ai_alliances) return
-		if(ai_owner && ai_owner.party && ai_owner.party.members && (target in ai_owner.party.members)) return
+		if(target == src) return
+		if(istype(target, /mob/Player) && "[ai_owner.ckey]" in target.ai_alliances) return
+		if(ai_owner.party && ai_owner.party.members && (target in ai_owner.party.members)) return
 		var/dmg = max(1, round(StrMod * 0.1 * next_attack_multiplier))
 		if(next_attack_multiplier > 1)
 			if(ai_owner) ai_owner << "<font color='#ffaa00'>[name]'s charged attack connects!</font>"

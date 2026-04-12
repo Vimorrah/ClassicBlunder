@@ -5157,7 +5157,7 @@ mob
 						if(s.Using)
 							s.Trigger(Target, Override = 1)
 					OMsg(Target, "[Target]'s counterspell nullified [Z]")
-					Z.Cooldown()
+					Z.Cooldown(1, null, src)
 					return
 				if(Z.type == /obj/Skills/AutoHit/I_Want_To_Be_Like_You)
 					if(src.Target == src)
@@ -5319,7 +5319,7 @@ mob
 						if(s.Using)
 							s.Trigger(Target, Override = 1)
 					OMsg(Target, "[Target]'s counterspell nullified [Z]")
-					Z.Cooldown()
+					Z.Cooldown(1, null, src)
 					return
 			if(Z.CustomCharge)
 				OMsg(src, "[Z.CustomCharge]")
@@ -5330,9 +5330,9 @@ mob
 						for(var/mob/E in hearers(12,src))
 							E << output("<font color=[src.Text_Color]>[src.name]: <b>GOD FUCKING DAMN IIIIIIIIIIIIIIIIT!</b></font>", "output")
 			if(src.TomeSpell(Z))
-				Z.Cooldown()
+				Z.Cooldown(1, null, src)
 			else
-				Z.Cooldown()
+				Z.Cooldown(1, null, src)
 			if(Z.Copyable)
 				var/copy = Z.Copyable
 				spawn() for(var/mob/m in view(40, src))

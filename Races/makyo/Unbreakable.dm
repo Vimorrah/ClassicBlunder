@@ -26,7 +26,7 @@
 		user.unbreakable_tracking = 1
 		user.unbroken_absorbed    = 0
 
-		var/obj/Effects/BloodShieldAura/shield = new(user.loc)
+		var/obj/Effects/BloodShieldAura/shield = new()
 		shield.transform = user.transform
 		user.vis_contents += shield
 
@@ -50,10 +50,13 @@
 		user.unbreakable_tracking = 0
 		user.unbroken_absorbed    = 0
 
+		if(src.SlotlessOn)
+			src.Trigger(user, 1)
+
 		var/ampBonus = min(stored / 2, 20)
 
 		var/obj/Skills/AutoHit/Unbreakable_Release/atk = new()
-		atk.DamageMult = ampBonus
+		atk.DamageMult = max(ampBonus, 1)
 		user.Activate(atk)
 
 		KenShockwave(user, icon='KenShockwaveBloodlust.dmi', Size=1, Time=8)

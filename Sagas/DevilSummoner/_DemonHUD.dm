@@ -38,35 +38,38 @@
 		name_bar.pixel_w = 0
 		name_bar.pixel_z = 0
 
+		// Scale icon 2x
+		transform = matrix() * 2
+
 		var/align = "center"
 		switch(index)
-			if(1) // Top slot
+			if(1) // Top slot — name bar sits above icon; top edge shifts +6px
 				name_bar.pixel_w = -10
-				name_bar.pixel_z = 12
+				name_bar.pixel_z = 18
 				name_bar.maptext_x = 0
 				name_bar.maptext_y = 9
 				name_bar.maptext_width = 32
 				name_bar.maptext_height = 14
 				align = "center"
-			if(2) // Left slot
-				name_bar.pixel_w = -32
+			if(2) // Left slot — name bar sits left of icon; left edge shifts -6px
+				name_bar.pixel_w = -38
 				name_bar.pixel_z = -10
 				name_bar.maptext_x = 0
 				name_bar.maptext_y = 9
 				name_bar.maptext_width = 32
 				name_bar.maptext_height = 14
 				align = "center"
-			if(3) // Right slot
-				name_bar.pixel_w = 12
+			if(3) // Right slot — name bar sits right of icon; right edge shifts +6px
+				name_bar.pixel_w = 18
 				name_bar.pixel_z = -10
 				name_bar.maptext_x = 0
 				name_bar.maptext_y = 9
 				name_bar.maptext_width = 32
 				name_bar.maptext_height = 14
 				align = "center"
-			if(4) // Bottom slot
+			if(4) // Bottom slot — name bar sits below icon; bottom edge shifts -6px
 				name_bar.pixel_w = -10
-				name_bar.pixel_z = -32
+				name_bar.pixel_z = -38
 				name_bar.maptext_x = 0
 				name_bar.maptext_y = 9
 				name_bar.maptext_width = 32
@@ -75,7 +78,7 @@
 		name_bar.maptext = "<span style='font-size:6pt;color:#c8b8ff;font-family:Arial;text-align:[align];'>[sname]</span>"
 		vis_contents += name_bar
 
-		// Cooldown overlay
+		// Cooldown overlay — must match the slot's scale
 		cooldown_overlay = new /obj()
 		cooldown_overlay.icon = icon
 		cooldown_overlay.icon_state = icon_state
@@ -84,6 +87,7 @@
 		cooldown_overlay.plane = plane
 		cooldown_overlay.layer = layer + 0.1
 		cooldown_overlay.mouse_opacity = 0
+		cooldown_overlay.transform = matrix() * 2
 		vis_contents += cooldown_overlay
 
 	Click(location, control, params)

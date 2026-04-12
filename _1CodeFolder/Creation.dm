@@ -349,7 +349,7 @@ mob/Players
 		// mainLoop += src
 	//	ticking_generic.Add(src)
 		gain_loop.Add(src)
-		if(isRace(DEMON) || isRace(MAKAIOSHIN))
+		if(isRace(DEMON) || isRace(MAKAIOSHIN) || (isRace(CELESTIAL) && CelestialAscension == "Demon"))
 			client.updateCorruption()
 		var/list/lol=list("butt3","butt4")
 		for(var/x in lol)
