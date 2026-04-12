@@ -253,7 +253,7 @@ mob/proc/Void(override, zombie, forceVoid, extraChance = 0, extraRolls = 0)
 			else
 				src<<"You sustain the injuries detailed in your death -- as the pain fades, you awaken in the afterlife. Alone, but not for long."
 				src.loc=locate(glob.DEATH_LOCATION[1], glob.DEATH_LOCATION[2], glob.DEATH_LOCATION[3])
-				if(src.isRace(DEMON)||src.isRace(ELDRITCH)||src.Damned||src.Secret=="Eldritch")
+				if(src.isRace(DEMON)||src.isRace(ELDRITCH)||src.Damned||hasEldritchPower())
 					src.Damned=0
 					src.loc=locate(198, 238, 8)
 				if(istype(src, /mob/Players/))
@@ -302,7 +302,7 @@ mob/proc/Void(override, zombie, forceVoid, extraChance = 0, extraRolls = 0)
 			else
 				src<<"You sustain the injuries detailed in your death -- as the pain fades, you awaken in the afterlife. Alone, but not for long."
 				src.loc=locate(glob.DEATH_LOCATION[1], glob.DEATH_LOCATION[2], glob.DEATH_LOCATION[3])
-				if(src.isRace(DEMON)||src.isRace(ELDRITCH)||src.Damned||src.Secret=="Eldritch")
+				if(src.isRace(DEMON)||src.isRace(ELDRITCH)||src.Damned||hasEldritchPower())
 					src.Damned=0
 					src.loc=locate(198, 238, 8)
 				if(istype(src, /mob/Players/))

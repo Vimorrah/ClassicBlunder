@@ -418,8 +418,9 @@ mob/proc/SkillX(var/Wut,var/obj/Skills/Z,var/bypass=0)
 						Z.Cooldown(1.5)
 					else if(src.Secret=="Werewolf")
 						Z.Cooldown(0.5)
-					else if(src.Secret=="Eldritch" && CheckSlotless("True Form"))
-						src.Activate(new/obj/Skills/AutoHit/Attractive_Force)
+					else if(hasEldritchPower())
+						var/obj/Skills/AutoHit/a = findOrAddSkill(/obj/Skills/AutoHit/Attractive_Force);
+						src.Activate(a);
 						Z.Cooldown()
 					else
 						if(!src.HasDashMaster())
@@ -460,8 +461,9 @@ mob/proc/SkillX(var/Wut,var/obj/Skills/Z,var/bypass=0)
 				else if(src.Secret=="Werewolf")
 					src.Activate(new/obj/Skills/AutoHit/Rabid_Retaliation)
 					Z.Cooldown(2)
-				else if(src.Secret=="Eldritch" && CheckSlotless("True Form"))
-					src.Activate(new/obj/Skills/AutoHit/Attractive_Force)
+				else if(hasEldritchPower())
+					var/obj/Skills/AutoHit/a = findOrAddSkill(/obj/Skills/AutoHit/Attractive_Force);
+					src.Activate(a);
 					Z.Cooldown()
 				else
 					if(!src.HasDashMaster())

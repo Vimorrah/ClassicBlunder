@@ -179,7 +179,7 @@
 			usr << "You don't have enough capacity to revive an otherworldly entity!  It takes [Cost] sacrifices to revive someone."
 			src.Using=0
 			return
-		if(A.isRace(DEMON, ELDRITCH)||A.Secret=="Eldritch")
+		if(A.isRace(DEMON, ELDRITCH)||A.hasEldritchPower())
 			A.loc=locate(usr.x, usr.y-1, usr.z)
 			A.Revive()
 			src.BloodSacrifice-=3

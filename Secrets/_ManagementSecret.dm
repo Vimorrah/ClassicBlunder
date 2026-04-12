@@ -12,11 +12,13 @@
 
 /mob/proc/
 	hasSecret(secretName)
-		if(Secret && !(secretName in VALID_SECRET_LIST))
+		if(!secretName) return 0;
+		if(!Secret) return 0;
+		if(!(secretName in VALID_SECRET_LIST))
 			liveDebugMsg("[src] called hasSecret proc with the argument [secretName]. That's not a valid secret!");
 			src << "[secretName] is not a valid secret name for the hasSecret proc. Admins have been notified of the error, but you can throw it in the Discord bug channel too.";
 			return 0;
-		if(Secret && !(Secret in VALID_SECRET_LIST))
+		if(!(Secret in VALID_SECRET_LIST))
 			admins << "<font size=+1><b>DEBUG:</b></font size> [src] called hasSecret proc when their own Secret variable was marked as [Secret]. That's not a valid secret!";
 			src << "Your current Secret variable, [Secret], is not in the valid secret list. Admins have been notified of the error, but you can admin help over it.";
 		if(secretName != Secret) return 0;//if secretName (argument) does not match Secret (mob variable) then say Nope.

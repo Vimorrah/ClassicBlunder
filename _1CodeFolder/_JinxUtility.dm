@@ -529,12 +529,12 @@ mob
 				Update_Stat_Labels()
 			//END WEREWOLF HUNGER MECHANIC
 
-			if(src.Secret == "Eldritch")
+			if(hasSecret("Eldritch"))
 				var/SecretInformation/Eldritch/s = src.secretDatum
 				s.addMadness(src,val*(s.getMadnessLimit(src)/100))
 				Update_Stat_Labels()
 
-			if(defender.Secret == "Eldritch")
+			if(defender.hasSecret("Eldritch"))
 				var/SecretInformation/Eldritch/s = defender.secretDatum
 				s.addMadness(defender,val*(s.getMadnessLimit(defender)/100))
 				defender.Update_Stat_Labels()
@@ -814,10 +814,9 @@ mob
 					woundTaken *= (1 - defender.GetInjuryImmune());
 				defender.TotalInjury += woundTaken;
 
-				if(!src.isLunaticMode())
-					if(src.Secret == "Eldritch" && !FromSelf)//Attacker gains blood stock from wounds dealt
-						var/SecretInformation/Eldritch/e = src.secretDatum;
-						e.addBloodStock(src, woundTaken);
+				if(!isLunaticMode() && hasSecret("Eldritch") && !FromSelf)//Attacker gains blood stock from wounds dealt
+					var/SecretInformation/Eldritch/e = src.secretDatum;
+					e.addBloodStock(src, woundTaken);
 
 			if(defender.TotalInjury>=99)
 				defender.TotalInjury=99
@@ -2711,7 +2710,7 @@ mob
 				evil = 1
 			if(istype(src, /mob/Player/AI))
 				evil = 1
-			if(src.NoDeath && src.Class!="Eldritch")
+			if(src.NoDeath && !hasEldritchPower())
 				evil = 1
 			if(passive_handler.Get("Illusion"))
 				if(good)
@@ -3493,7 +3492,7 @@ mob
 				src.Activate(new/obj/Skills/AutoHit/Howl)
 				Z.Cooldown(3)
 				return
-			if(src.Secret=="Eldritch" && CheckSlotless("True Form"))
+			if(hasEldritchPower())
 				src.Activate(new/obj/Skills/AutoHit/Shadow_Tendril_Strike(p = src))
 				Z.Cooldown()
 				return

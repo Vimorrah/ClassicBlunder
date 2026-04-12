@@ -743,7 +743,7 @@ mob/proc/Death(mob/P,var/text,var/SuperDead=0, var/NoRemains=0, var/Zombie, extr
 				src.loc=locate(0, 0, 0)
 
 		src.loc=locate(glob.DEATH_LOCATION[1], glob.DEATH_LOCATION[2], glob.DEATH_LOCATION[3])
-		if(src.isRace(DEMON, ELDRITCH)||src.Damned||src.Secret=="Eldritch")
+		if(src.isRace(DEMON, ELDRITCH)||src.Damned||(hasEldritchPower()))
 			src.Damned=0
 			src.loc=locate(198, 238, 8)
 			return

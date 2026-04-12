@@ -872,12 +872,10 @@ mob
 				return 1
 			return
 		HasNull()
-			if(passive_handler.Get("Null"))
-				if(src.isRace(ELDRITCH) && src.AscensionsAcquired==6 && src.Secret=="Eldritch")
-					return 1;
+			if(passive_handler.Get("Null")) return 1;
 			return 0;
 		HasNullTarget()
-			if(Target) if(Target.HasNull() &&!src.HasMaouKi()) return 1;
+			if(Target) if(Target.HasNull() && !HasMaouKi()) return 1;
 			return 0;
 		HasBleedHit()
 			if(passive_handler.Get("BleedHit"))
@@ -2335,9 +2333,8 @@ mob
 			return 0
 		GetAngerThreshold()
 			var/Extra=0;
-			if(src.Secret=="Eldritch")
-				if(src.isLunaticMode())
-					Extra += (src.LunacyDrank / 100)
+			if(isLunaticMode())
+				Extra += (src.LunacyDrank / 100)
 			return (passive_handler.Get("AngerThreshold") + Extra)
 		HasWeaponBreaker()
 			if(passive_handler.Get("WeaponBreakerQOL"))
