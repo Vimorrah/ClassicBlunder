@@ -1,3 +1,7 @@
+#define INORGANIC_RACES list(ANDROID)
+#define CURSED_RACES list(CELESTIAL, ELF, MAJIN, POPO)
+#define STAGNANT_RACES list(ANGEL, DEMON, ELDRITCH, MAKAIOSHIN, SHINJIN)
+
 mob/proc
 	UpdateTechnologyWindow()
 		for(var/obj/Money/M in usr)
@@ -3725,6 +3729,7 @@ obj/Items/Gear
 				usr<<"You are already a Demon!"
 				return
 			usr<<"to be completed"
+
 		verb/Become_Demon()
 			set category = "Demonic"
 			if(usr.isRace(DEMON))
@@ -3753,6 +3758,47 @@ obj/Items/Gear
 			usr.setRace(DEMON,FALSE,TRUE)
 			usr.stat_redo()
 		//	del src
+
+	Spiral_Engine
+		TechType="MilitaryEngineering"
+		SubType="Rebellion"
+		desc="Ancient Fourth Fate technology created by Araki Ishikawa. It can awaken Spiral Energy within members of the Spiral Races... or allow a Synthetic Lifeform to generate their own."
+		Cost=900000
+		Health=1000000000000
+		InfiniteUses=0
+		verb/Awaken_Spiral()
+			set category = "Spiral"
+			if(usr.race.type in STAGNANT_RACES)
+				usr<<"You are a supernatural creature. You cannot harness Spiral Power. You will stay the same forever."
+				return
+			if(usr.race.type in CURSED_RACES)
+				usr<<"Your biology is warped by supernatural powers. You cannot harness Spiral Power."
+				return
+			if(usr.Secret)
+				usr<<"You already have a Secret!"
+				return
+			if(usr.race.type in INORGANIC_RACES)
+				usr.passive_handler.Increase("SpiralEngine", 1)
+				usr.Secret="Spiral"
+				usr.giveSecret("Spiral")
+				usr.StrAscension+= 0.1
+				usr.EndAscension+= 0.1
+				usr.ForAscension+= 0.1
+				usr.SpdAscension+= 0.1
+				usr.OffAscension+= 0.1
+				usr.DefAscension+= 0.1
+				usr<<"You have installed a Spiral Engine into yourself!"
+				usr<<"You begin to generate your own Spiral Energy. This is... the power to evolve."
+				del src
+				return
+			else
+				usr.Secret="Spiral"
+				usr.giveSecret("Spiral")
+				usr<<"You feel your fighting spirit rise out of you. This is... the power to evolve."
+				usr<<"The Spiral Engine crumbles before your eyes, leaving a core drill in your hand."
+				del src
+				return
+
 	Mobile_Suit
 		var/Drive = "None"
 		var/Augment = "None"

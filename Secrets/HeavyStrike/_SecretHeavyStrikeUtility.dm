@@ -12,6 +12,7 @@
         if(hasZombieStrike()) return findOrAddSkill(/obj/Skills/Queue/Secret_Heavy_Strike/Death_Grasp);
         if(hasHeavenlyRestrictionStrike()) return findOrAddSkill(/obj/Skills/Queue/Secret_Heavy_Strike/Heavenly_Strike);
         if(hasShinStrike()) return getShinStrike();
+        if(hasSpiralStrike()) return findOrAddSkill(/obj/Skills/Queue/Secret_Heavy_Strike/Spiral_Drill);
         if(hasNecromancyStrike()) return 0;
         if(hasJaganStrike()) return 0;
         if(hasUltraInstinctStrike()) return 0;
@@ -44,6 +45,9 @@
         return 0;
     hasJaganStrike()
         if(hasSecret("Jagan Eye")) return 1;
+        return 0;
+    hasSpiralStrike()
+        if(hasSecret("Spiral")) return 1;
         return 0;
     hasNecromancyStrike()
         if(hasSecret("Necromancy")) return 1;

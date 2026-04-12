@@ -2407,9 +2407,10 @@ mob
 				return 1
 			return 0
 		HasPridefulRage()
-			if(passive_handler.Get("PridefulRage"))
-				return 1
-			return 0
+			. = 0;
+			. += passive_handler.Get("PridefulRage");
+			if(AttackQueue) . += AttackQueue.PridefulRage 
+			. = clamp(., 0, 2);
 		HasSpiritHand()//Str*(For**1/2)
 			if(passive_handler.Get("SpiritHand"))
 				return 1
@@ -2581,10 +2582,6 @@ mob
 			return 0
 		UsingBladeCharge()
 			if(src.CheckKeybladeStyle("Blade Charge"))
-				return 1
-			return 0
-		UsingPridefulRage()
-			if(src.HasPridefulRage())
 				return 1
 			return 0
 		UsingSpiritHand()

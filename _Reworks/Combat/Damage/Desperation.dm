@@ -4,7 +4,7 @@
 		// they are able to get the bonus
 		bonus += Saga == "King of Braves" ? 0.35 : 0
 		bonus += Saga == "Kamui" ? 0.35 : 0
-		bonus += Saga == "Spiral" ? 0.35 : 0
+		bonus += Secret == "Spiral" ? 0.35 : 0
 		bonus += isRace(HUMAN) ? 0.35 : 0
 		bonus += isRace(HALFSAIYAN) ? 0.35 : 0
 		bonus += passive_handler.Get("Determination(Orange)") ? (ManaAmount/250) : 0

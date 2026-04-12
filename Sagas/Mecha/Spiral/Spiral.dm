@@ -1,4 +1,4 @@
-sagaTierUpMessages/Spiral
+/*sagaTierUpMessages/Spiral
 	messages = list("You gained the ability to let out the power of your evolution!", \
 	"You feel like you have evolved as a being!", \
 	"GIGA DRILL BREAKER is possible!", \
@@ -54,7 +54,7 @@ mob/tierUpSaga(path)
 		if(usr.CheckSpecial("Spiral"))
 			usr.SetQueue(src)
 		else
-			usr << "<font color='green'><b>You must resort to your evolution to use this skill!</b></font>"
+			usr << "<font color='green'><b>You must resort to your evolution to use this skill!</b></font>"*/
 
 /obj/Skills/AutoHit/Giga_Drill_Breaker
 	Area="Circle"
@@ -81,20 +81,23 @@ mob/tierUpSaga(path)
 	ChargeTech = 1
 	ActiveMessage="yells: GIGA DRILL BREAKEEEEEERRRRR!!!!"
 	adjust(mob/p)
-		if(p.Saga == "King of Braves" || p.Saga == "Spiral")
+		if(p.Saga == "King of Braves" || p.Secret == "Spiral")
 			var/sl = p.SagaLevel
-			ControlledRush = 5 + sl
-			AdaptRate = 1.1 + (0.15 * sl)
-			Size = 1 + sl
+			var/sp = p.secretDatum.currentTier
+			var/dr = sl + sp
+			ControlledRush = 5 + dr
+			AdaptRate = 1.1 + (0.15 * sl) + (0.2 * sp)
+			Size = 1 + dr
 			TurfStrike = Size
-			WindUp = 0.1 + (0.15 * sl)
-			DamageMult = (0.65 + (round(sl/3))) * max(0.15 + WindUp, 1)
-			Rounds = 18 - (sl * 2)
-			PullIn = max(0, sl - 4)
-			Primordial = round(sl/4)
-			Executor = max(sl, 3)
-			EnergyCost = 7 + (3 * sl)
+			WindUp = 0.1 + (0.15 * sl) + (0.1 * sp)
+			DamageMult = (0.5 + (round(dr/3)) * max(0.15 + WindUp, 1))
+			Rounds = 25 - (dr * 2)
+			PullIn = max(0, dr - 4)
+			Primordial = round(dr/4)
+			Executor = max(dr, 3)
+			EnergyCost = 7 + (3 * dr)
 	verb/Giga_Drill_Break()
 		set category="Skills"
 		adjust(usr)
 		usr.Activate(src)
+

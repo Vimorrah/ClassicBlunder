@@ -305,11 +305,9 @@
 				log2text("DamageMod", damage, "damageDebugs.txt", "[ckey]/[name]")
 				#endif
 
-				if(HasPridefulRage()) // this used to set endurance to 1, not it reduces the enemy endurance by 50%, 2 ticks will reduce it to 1
-					if(passive_handler.Get("PridefulRage") >= 2)
-						def = 1
-					else
-						def = clamp(enemy.GetEnd()/2, 1, enemy.GetEnd())
+				var/pride = HasPridefulRage();
+				if(pride) def = clamp(enemy.GetEnd()/2, 1, enemy.GetEnd())
+				if(pride >= 2) def = 1
 
 				#if DEBUG_MELEE
 				log2text("atk/def stats", "[atk]/[def]", "damageDebugs.txt", "[ckey]/[name]")

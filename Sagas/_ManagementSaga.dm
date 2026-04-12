@@ -103,7 +103,7 @@ mob/Admin3/verb
 	SagaManagement(mob/Players/P in players)
 		set category="Admin"
 		var/Level7=0
-		var/list/SagaList=list("Cancel","Ansatsuken","Devil Summoner","Eight Gates","Cosmo","Spiral","King of Courage", "Hero","Hiten Mitsurugi-Ryuu","Kamui","Keyblade","King of Braves","Path of a Hero: Rebirth","Sharingan","Weapon Soul", "Unlimited Blade Works","Force")
+		var/list/SagaList=list("Cancel","Ansatsuken","Devil Summoner","Eight Gates","Cosmo","King of Courage", "Hero","Hiten Mitsurugi-Ryuu","Kamui","Keyblade","King of Braves","Path of a Hero: Rebirth","Sharingan","Weapon Soul", "Unlimited Blade Works","Force")
 		if(P.Saga)
 			if(P.Saga=="Keyblade"||P.Saga=="Weapon Soul"||P.Saga=="Cosmo"||P.Saga=="King of Braves"||P.Saga=="Hiten Mitsurugi-Ryuu")
 				Level7=1
@@ -149,11 +149,6 @@ mob/Admin3/verb
 					var/obj/Skills/Buffs/ActiveBuffs/Hero/h = new path
 					P.AddSkill(h)
 					tierUpSaga("Hero")
-				if("Spiral")
-					P.Saga="Spiral"
-					P.SagaLevel=1
-					P.AddSkill(new/obj/Skills/Buffs/SpecialBuff/Spiral)
-					tierUpSaga("Spiral")
 				if("King of Courage")
 					P.Saga="King of Courage"
 					P.SagaLevel=1
@@ -1019,8 +1014,6 @@ mob
 								src<< "You have become a Fighter of Legend; Glory to the Crownless King."
 				if("Cosmo")
 					tierUpSaga("Cosmo")
-				if("Spiral")
-					tierUpSaga("Spiral")
 				if("Weapon Soul")
 					tierUpSaga("Weapon Soul")
 
@@ -1776,7 +1769,7 @@ mob/Admin3/verb
 		set category="Admin"
 		var/Choice=input(usr, "Are you sure you want to remove [P]'s saga?", "Saga Decision") in list("Yes", "No")
 		if(Choice=="No") return
-		var/list/obj/Skills/SagaSkills = list("/obj/Skills/Buffs/SpecialBuff/Spiral","/obj/Skills/Buffs/SpecialBuff/King_Of_Courage",\
+		var/list/obj/Skills/SagaSkills = list("/obj/Skills/Buffs/SpecialBuff/King_Of_Courage",\
 "/obj/Skills/AutoHit/Pegasus_Meteor_Fist","/obj/Skills/Queue/Rising_Dragon_Fist",\
 "/obj/Skills/Projectile/Diamond_Dust","/obj/Skills/Projectile/Nebula_Stream",\
 "/obj/Skills/Queue/Phoenix_Demon_Illusion_Strike","/obj/Skills/AutoHit/Unicorn_Gallop",\

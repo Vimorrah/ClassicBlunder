@@ -1002,6 +1002,8 @@ mob/Players/verb
 				OMsg(src, "[src] grows completely still!")
 			else if(Secret == "Eldritch"&&!CheckSlotless("True Form"))
 				OMsg(src, "[src]'s body starts unraveling...!")
+			else if(Secret == "Spiral")
+				OMsg(src, "[src] clenches their fists!")
 			else if(src.Secret=="Haki")
 				if(src.CheckSlotless("Haki Armament"))
 					for(var/obj/Skills/Buffs/SlotlessBuffs/Haki/Haki_Armament/H in src)
@@ -1028,7 +1030,7 @@ mob/Players/verb
 			src.icon_state=""
 			if(!src.PoseEnhancement)
 				if(!src.CheckSlotless("Half Moon Form")&&!src.CheckSlotless("Full Moon Form"))
-					if(src.PoseTime>=5&&(src.RippleActive()||src.Secret=="Vampire"||src.Secret=="Senjutsu"&&src.CheckSlotless("Senjutsu Focus"))||Secret=="Eldritch")
+					if(src.PoseTime>=5&&(src.RippleActive()||src.Secret=="Vampire"||src.Secret=="Senjutsu"&&src.CheckSlotless("Senjutsu Focus"))||Secret=="Eldritch"||Secret=="Spiral")
 						src.PoseTime=0
 						if(src.RippleActive())
 							for(var/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Ripple_Enhancement/H in src)

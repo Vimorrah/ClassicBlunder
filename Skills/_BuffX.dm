@@ -869,7 +869,7 @@ NEW VARIABLES
 				OffMessage="burns out the fusion cell in their mecha..."
 				proc/init(obj/Items/Gear/Mobile_Suit/mecha, mob/player)
 					PowerMult = 1.25 + (mecha.Level * 0.25) + (player.AngerMax / (8 - mecha.Level))
-					if(player.Saga == "King of Braves")
+					if(player.Saga == "King of Braves" || player.Secret == "Spiral")
 						passives["SpecialBuffLock"] = 0
 						SpecialBuffLock = 0
 				Trigger(mob/User, Override)
@@ -9674,6 +9674,33 @@ NEW VARIABLES
 					else
 						usr << "You are not a werewolf!"
 
+		Spiral
+			Evolution_Power
+				TimerLimit= 10
+				Cooldown= 61
+				HealthThreshold=0.1
+				adjust(mob/p)
+					if(!altered)
+						var/currentPot = p.Potential
+						var/secretLevel = p.secretDatum.currentTier
+						PowerMult=1+(0.05*secretLevel*secretLevel)
+						strAdd=p.StrAscension*secretLevel
+						endAdd=p.EndAscension*secretLevel
+						forAdd=p.ForAscension*secretLevel
+						spdAdd=p.SpdAscension*secretLevel
+						offAdd=p.OffAscension*secretLevel
+						defAdd=p.DefAscension*secretLevel
+						TimerLimit= (2 * currentPot) + (20 * (p.transUnlocked ? p.transUnlocked : p.AscensionsAcquired))
+						Cooldown = 61 - ((5 * p.AscensionsAcquired) + (5 * secretLevel))
+				KenWave = 2
+				KenWaveIcon='SparkleGreen.dmi'
+				HitSpark='Spiral_Hitspark.dmi'
+				TopOverlayLock = 'SpiralAura.dmi'
+				TopOverlayX = -32
+				ActiveMessage="glows with raw willpower, driving forward no matter what!"
+				OffMessage="lives to see another day."
+				TextColor="green"
+
 		Eldritch
 			True_Form
 				adjust(mob/p)
@@ -12617,11 +12644,11 @@ mob
 				else
 					src.ActiveBuff.OverlayTransLock=0
 
-				if(src.Saga=="Spiral")
+/*				if(src.Saga=="Spiral")
 					src.ActiveBuff.ActiveMessage="channels their evolution with full strength!!!"
 					src.ActiveBuff.OffMessage="calms their evolution..."
 					src.ActiveBuff.OverlayTransLock=1
-					src.ActiveBuff.AuraLock=1
+					src.ActiveBuff.AuraLock=1*/
 				if(src.isRace(MAKYO))
 					src.ActiveBuff.IconReplace=1
 					src.ActiveBuff.icon=src.ExpandBase

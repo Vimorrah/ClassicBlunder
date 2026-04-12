@@ -6018,11 +6018,9 @@ obj
 						if(Owner.passive_handler["Atomizer"])
 							EndRate = clamp(EndRate - (EndRate * (Owner.passive_handler["Atomizer"] * glob.ATOMIZERRATE)), 0.0001, 2)
 						var/def = a:getEndStat(1) * EndRate
-						if(src.Owner.UsingPridefulRage())
-							if(Owner.passive_handler.Get("PridefulRage") >= 2)
-								def = 1
-							else
-								def = clamp(a:GetEnd(EndRate)/2, 1, a:GetEnd(EndRate))
+						var/pride = Owner.HasPridefulRage();
+						if(pride) def = clamp(a:GetEnd(EndRate)/2, 1, a:GetEnd(EndRate));
+						if(pride >= 2) def = 1;
 						if(force)
 							atk += force
 						if(str)
