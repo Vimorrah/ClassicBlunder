@@ -6368,18 +6368,10 @@ obj
 				var/def = m.getEndStat(1) * EndRes
 				if(def<0)
 					def=0.01
-				if(m.HasPridefulRage())
-					if(m.isRace(SAIYAN))
-						if(Owner.passive_handler.Get("PridefulRage") >= 2)
-							def = 1
-						else
-							def = clamp(def/2, 1, def)
-
-				if(Owner.HasPridefulRage())
-					if(Owner.passive_handler.Get("PridefulRage") >= 2)
-						def = 1
-					else
-						def = clamp(def/2, 1, def)
+				var/pride = Owner.HasPridefulRage();
+				if(pride) def = clamp(def/2, 1, def);
+				if(pride >= 2) def = 1;
+				
 				#if DEBUG_AUTOHIT
 				Owner.log2text("def - Auto Hit", def, "damageDebugs.txt", "[Owner.ckey]/[Owner.name]")
 				#endif

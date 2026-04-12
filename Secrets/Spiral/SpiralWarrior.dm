@@ -1,7 +1,4 @@
 #define DARWIN_POKEDEX list("Spiral", "Inorganic", "Cursed", "Stagnant")
-#define INORGANIC_RACES list(ANDROID)
-#define CURSED_RACES list(CELESTIAL, ELF, MAJIN, POPO)
-#define STAGNANT_RACES list(ANGEL, DEMON, ELDRITCH, MAKAIOSHIN, SHINJIN)
 
 obj/Skills/Buffs/SlotlessBuffs/Spiral/ClobberApply
 	StrMult=1.25

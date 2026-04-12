@@ -1,3 +1,7 @@
+#define INORGANIC_RACES list(ANDROID)
+#define CURSED_RACES list(CELESTIAL, ELF, MAJIN, POPO)
+#define STAGNANT_RACES list(ANGEL, DEMON, ELDRITCH, MAKAIOSHIN, SHINJIN)
+
 mob/proc
 	UpdateTechnologyWindow()
 		for(var/obj/Money/M in usr)
@@ -3707,6 +3711,7 @@ obj/Items/Gear
 				usr<<"You are already a Demon!"
 				return
 			usr<<"to be completed"
+
 		verb/Become_Demon()
 			set category = "Demonic"
 			if(usr.isRace(DEMON))
@@ -3735,10 +3740,6 @@ obj/Items/Gear
 			usr.setRace(DEMON,FALSE,TRUE)
 			usr.stat_redo()
 		//	del src
-
-#define INORGANIC_RACES list(ANDROID)
-#define CURSED_RACES list(CELESTIAL, ELF, MAJIN, POPO)
-#define STAGNANT_RACES list(ANGEL, DEMON, ELDRITCH, MAKAIOSHIN, SHINJIN)
 
 	Spiral_Engine
 		TechType="MilitaryEngineering"

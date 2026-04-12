@@ -651,11 +651,9 @@ obj/Skills/Grapple
 				User.log2text("Grapple Item Damage", itemDmg, "damageDebugs.txt", User.ckey)
 				#endif
 				var/endFactor = Trg.getEndStat(EndRate)
-				if(User.HasPridefulRage())
-					if(User.passive_handler.Get("PridefulRage") >= 2)
-						endFactor = 1
-					else
-						endFactor = clamp(Trg.getEndStat(1)/2, 1, Trg.getEndStat(1))
+				var/pride = User.HasPridefulRage();
+				if(pride) endFactor = clamp(Trg.getEndStat(1)/2, 1, Trg.getEndStat(1));
+				if(pride >= 2) endFactor = 1;
 				#if DEBUG_GRAPPLE
 				User.log2text("Grapple End Factor", endFactor, "damageDebugs.txt", User.ckey)
 				#endif
