@@ -1,4 +1,5 @@
 /obj/Skills/AutoHit/Unbreakable_Release
+	DamageMult = 1
 	Area     = "Circle"
 	Distance = 3
 	ActiveMessage = "remains unbroken by your efforts."
