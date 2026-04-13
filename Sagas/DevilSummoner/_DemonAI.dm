@@ -121,7 +121,7 @@
 		if(target == src) return
 		if(istype(target, /mob/Player) && "[ai_owner.ckey]" in target.ai_alliances) return
 		if(ai_owner.party && ai_owner.party.members && (target in ai_owner.party.members)) return
-		var/dmg = max(1, round(StrMod * 0.1 * next_attack_multiplier))
+		var/dmg = max(1, round(StrMod * 0.1 * next_attack_multiplier * DevilSummonerDemonDamageMod))
 		if(next_attack_multiplier > 1)
 			if(ai_owner) ai_owner << "<font color='#ffaa00'>[name]'s charged attack connects!</font>"
 			next_attack_multiplier = 1
