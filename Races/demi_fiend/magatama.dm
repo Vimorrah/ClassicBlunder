@@ -362,8 +362,8 @@ obj/Items/Magatama/Kamudo
 obj/Items/Magatama/Narukami
 	name = "Narukami"
 	desc = "A Magatama crackling with divine lightning. It carries the wrath of the thunder god, striking with the fury of the storm."
-	base_passives = list("ShockResist" = 1, "Shocking" = 2, "CriticalChance" = 15)
-	passive_scaling = list("ShockResist" = 0.02, "Shocking" = 0.5, "CriticalChance" = 0.2)
+	base_passives = list("ShockResist" = 1, "Shocking" = 2, "CriticalChance" = 15, "CriticalDamage" = 0.1)
+	passive_scaling = list("ShockResist" = 0.02, "Shocking" = 0.5, "CriticalChance" = 0.2, "CriticalDamage" = 0.005)
 	ascension_passives = list("1" = list("ThunderHerald" = 1))
 	magatama_skills = list(/obj/Skills/AutoHit/DemiFiend/Thunder_Breath)
 	ascension_skills = list("1" = list(/obj/Skills/AutoHit/DemiFiend/Shock))
