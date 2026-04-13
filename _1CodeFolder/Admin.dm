@@ -2774,10 +2774,9 @@ proc/DetermineVarType(variable)
 	if(isnull(variable)) return "(Null)"
 	return "(Unknown)"
 
-// Old-style right-click admin teleport verbs
-// These appear on right-click menus for mobs and objects in view
+// Right-click admin teleport verbs — only added to admin mobs via typesof() in the admin grant proc
 
-atom/verb/Admin_Jump_To()
+mob/Admin1/verb/Admin_Jump_To()
 	set src in oview()
 	set name = "Admin: Jump To"
 	set category = null
@@ -2791,7 +2790,7 @@ atom/verb/Admin_Jump_To()
 	admin << "Jumped to [src]."
 	Log("Admin", "[ExtractInfo(admin)] jumped to [src].")
 
-mob/verb/Admin_Summon_Here()
+mob/Admin1/verb/Admin_Summon_Here()
 	set src in oview()
 	set name = "Admin: Summon"
 	set category = null
@@ -2806,7 +2805,7 @@ mob/verb/Admin_Summon_Here()
 	admin << "Summoned [target] to you."
 	Log("Admin", "[ExtractInfo(admin)] summoned [ExtractInfo(target)].")
 
-mob/verb/Admin_Send_Back()
+mob/Admin1/verb/Admin_Send_Back()
 	set src in oview()
 	set name = "Admin: Send Back"
 	set category = null
@@ -2827,7 +2826,7 @@ mob/verb/Admin_Send_Back()
 	target << "You have been returned to your previous location."
 	Log("Admin", "[ExtractInfo(admin)] sent [ExtractInfo(target)] back.")
 
-mob/verb/Admin_Send_To_Spawn()
+mob/Admin1/verb/Admin_Send_To_Spawn()
 	set src in oview()
 	set name = "Admin: Send to Spawn"
 	set category = null
