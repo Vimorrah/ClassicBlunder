@@ -294,7 +294,7 @@
 		// No pending learns - allow browsing all party demons via input
 		var/list/options = list()
 		for(var/datum/party_demon/pd in demon_party)
-			options["[pd.demon_name] (Lv[pd.party_level])"] = pd.demon_name
+			options["[pd.demon_name] (Lv[max(pd.party_level, pd.demon_potential)])"] = pd.demon_name
 		var/choice = input(src, "Pick a demon to view their skills:", "Demon Skills") as null|anything in options
 		if(!choice) return
 		var/picked = options[choice]
@@ -791,16 +791,14 @@
 	for(var/datum/party_demon/pd in demon_party)
 		var/datum/demon_data/dd = DEMON_DB[pd.demon_name]
 		if(!dd) continue
-		var/scaled = max(pd.party_level, Potential)
-		if(scaled < 1) scaled = 1
-		if(scaled > 99) scaled = 99
-		if(scaled > pd.highest_scaled_lvl) pd.highest_scaled_lvl = scaled
+		var/demon_lvl = clamp(max(pd.party_level, pd.demon_potential), 1, 100)
+		if(demon_lvl > pd.highest_scaled_lvl) pd.highest_scaled_lvl = demon_lvl
 
 		// Check active learn list
 		if(dd.demon_skill_learn)
 			for(var/skill_name in dd.demon_skill_learn)
 				var/learn_lvl = dd.demon_skill_learn[skill_name]
-				if(scaled < learn_lvl) continue
+				if(demon_lvl < learn_lvl) continue
 				if(skill_name in pd.demon_skills) continue
 				if(pd.pending_skills && (skill_name in pd.pending_skills)) continue
 				if(!pd.pending_skills) pd.pending_skills = list()
@@ -811,7 +809,7 @@
 		if(dd.demon_passive_learn)
 			for(var/p_name in dd.demon_passive_learn)
 				var/learn_lvl = dd.demon_passive_learn[p_name]
-				if(scaled < learn_lvl) continue
+				if(demon_lvl < learn_lvl) continue
 				if(pd.passives && (p_name in pd.passives)) continue
 				if(pd.pending_passives && (p_name in pd.pending_passives)) continue
 				if(!pd.pending_passives) pd.pending_passives = list()

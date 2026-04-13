@@ -342,8 +342,7 @@
 	var/list/pending_skills = pd.pending_skills ? pd.pending_skills.Copy() : list()
 	var/list/pending_passives = pd.pending_passives ? pd.pending_passives.Copy() : list()
 
-	var/scaled = max(pd.party_level, Potential)
-	if(scaled > 99) scaled = 99
+	var/demon_lvl = clamp(max(pd.party_level, pd.demon_potential), 1, 100)
 
 	var/html = "<html><head><style>"
 	html += "body {[DS_STYLE] margin:8px;}"
@@ -361,7 +360,7 @@
 
 	html += "<div class='header'>[pd.demon_name] -- Skills</div>"
 	html += DemonPortraitHTML(dd, 32, src)
-	html += "<div class='meta'>[dd.demon_race] | Base Lv [dd.demon_lvl] | Scaled Lv [scaled]</div>"
+	html += "<div class='meta'>[dd.demon_race] | Base Lv [dd.demon_lvl] | Lv [demon_lvl]</div>"
 
 	html += "<div class='section'><b style='color:#8888cc;'>Active Skills ([cur_skills.len]/4):</b><br>"
 	if(cur_skills.len)
@@ -543,7 +542,7 @@
 		html += "<a class='card' href='byond://?src=\ref[world];demon_record=[pd.demon_name]' style='text-decoration:none;display:block;'>"
 		html += DemonPortraitHTML(dd, 32, player)
 		html += "<div class='dname'>[pd.demon_name]</div>"
-		html += "<div class='dinfo'>[dd.demon_race] Lv[pd.party_level]</div>"
+		html += "<div class='dinfo'>[dd.demon_race] Lv[max(pd.party_level, pd.demon_potential)]</div>"
 		if(pd.demon_skills && pd.demon_skills.len)
 			html += "<div class='skills'>[pd.demon_skills.len] skill(s)</div>"
 		html += "</a>"

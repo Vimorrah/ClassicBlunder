@@ -33,15 +33,15 @@
 		// Ensure passive_handler exists so demon passives that increment it work
 		if(!passive_handler) passive_handler = new()
 
-		// Scaling
-		var/scale = max(1, owner.Potential) / 100
+		// Demon's own Potential = earned level (starts at base, grows via kills)
+		Potential = max(pd.party_level, pd.demon_potential)
+		var/scale = max(1, Potential) / 100
 		StrMod = max(1, round(dd.demon_str * scale, 0.01))
 		ForMod = max(1, round(dd.demon_for * scale, 0.01))
 		EndMod = max(1, round(dd.demon_end * scale, 0.01))
 		SpdMod = max(1, round(dd.demon_spd * scale, 0.01))
 		OffMod = max(1, round(dd.demon_off * scale, 0.01))
 		DefMod = max(1, round(dd.demon_def * scale, 0.01))
-		Potential = max(pd.party_level, pd.demon_potential)
 		potential_power_mult = owner.potential_power_mult
 
 		demon_melee_rate = max(8, 30 - round(dd.demon_spd * 0.7))
