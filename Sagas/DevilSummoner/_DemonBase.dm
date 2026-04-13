@@ -3,6 +3,9 @@ var/global/list/DEMON_DB = list()
 var/global/list/DEMON_FUSION_CHART = list()
 var/global/list/DEMON_SPECIAL_FUSIONS = list()
 
+// Multiplier applied to demon normal attack damage (not skills). 1 = 100%
+var/global/DevilSummonerDemonDamageMod = 1
+
 // Potential divisor for stat scaling
 #define DEMON_POTENTIAL_DIVISOR 100
 
