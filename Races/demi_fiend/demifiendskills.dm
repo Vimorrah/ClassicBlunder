@@ -480,9 +480,12 @@ obj/Skills/Buffs/SlotlessBuffs/DemiFiend/Focus
 	Shocking=50
 	Paralyzing=10
 	ObjIcon=1
-	Icon='Icons/Effects/LightningBreath.dmi'
+	Icon='LightningBreath.dmi'
 	IconX=-16
 	IconY=-16
+	Size=1.5
+	Rounds=8
+	DelayTime=2
 	WindUp=0.5
 	WindupMessage="crackles with electricity..."
 	ActiveMessage="lets loose an enormous breath infused with lightning!"
@@ -512,7 +515,7 @@ obj/Skills/Buffs/SlotlessBuffs/DemiFiend/Focus
 	Distance=1
 	Wander=10
 	ObjIcon=1
-	Icon='Icons/Effects/LightningBreath.dmi'
+	Icon='LightningBreath.dmi'
 	IconX=-16
 	IconY=-16
 	Cooldown=75
