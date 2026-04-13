@@ -38,10 +38,14 @@ obj/Skills/AutoHit/Desperation
 		WindupIcon='SparkleRed.dmi'
 		WindupIconY=32
 		WindupColor=rgb(255, 100, 180)
+		DamageMult=1
 		FixedDamage=6.5
 		NeedsHealth=20
+		StrOffense=1
+		BuffSelf="/obj/Skills/Buffs/SlotlessBuffs/Autonomous/QueueBuff/Finisher/Void_Drain"
+		BuffSelfDelay=30
 		Cooldown=300
-		EnergyCost=20
+		EnergyCost=10
 		Instinct=1
 		MortalBlow=1
 		HitSparkIcon='SparkleRed.dmi'

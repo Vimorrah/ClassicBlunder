@@ -10,6 +10,7 @@
 		StyleEnd = 1
 		StyleDef = 1
 		StyleSpd = 1
+		var/EffectivePotential=p.Potential
 		switch(EffectivePotential)
 			if(1 to 24)
 				tier = 1
@@ -45,6 +46,7 @@
 		StyleStr = 1
 		StyleSpd = 1
 		StyleOff = 1
+		var/EffectivePotential=p.Potential
 		switch(EffectivePotential)
 			if(1 to 24)
 				tier = 1
@@ -80,6 +82,7 @@
 		StyleStr = 1
 		StyleSpd = 1
 		StyleOff = 1
+		var/EffectivePotential=p.Potential
 		switch(EffectivePotential)
 			if(1 to 24)
 				tier = 1
@@ -115,6 +118,7 @@
 		StyleStr = 1
 		StyleEnd = 1
 		StyleDef = 1
+		var/EffectivePotential=p.Potential
 		switch(EffectivePotential)
 			if(1 to 24)
 				tier = 1
@@ -150,6 +154,7 @@
 		StyleStr = 1
 		StyleFor = 1
 		StyleOff = 1
+		var/EffectivePotential=p.Potential
 		switch(EffectivePotential)
 			if(1 to 24)
 				tier = 1
@@ -185,6 +190,7 @@
 		StyleEnd = 1
 		StyleSpd = 1
 		StyleDef = 1
+		var/EffectivePotential=p.Potential
 		switch(EffectivePotential)
 			if(1 to 24)
 				tier = 1
@@ -220,6 +226,7 @@
 		StyleStr = 1
 		StyleEnd = 1
 		StyleOff = 1
+		var/EffectivePotential=p.Potential
 		switch(EffectivePotential)
 			if(1 to 24)
 				tier = 1
@@ -255,6 +262,7 @@
 		StyleStr = 1
 		StyleEnd = 1
 		StyleDef = 1
+		var/EffectivePotential=p.Potential
 		switch(EffectivePotential)
 			if(1 to 24)
 				tier = 1

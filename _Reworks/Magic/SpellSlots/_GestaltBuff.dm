@@ -52,6 +52,7 @@
 		StrMult = 1
 		SpdMult = 1
 		OffMult = 1
+		var/EffectivePotential=p.Potential
 		switch(EffectivePotential)
 			if(1 to 24)
 				tier = 1
@@ -90,6 +91,7 @@
 		StrMult = 1
 		SpdMult = 1
 		OffMult = 1
+		var/EffectivePotential=p.Potential
 		switch(EffectivePotential)
 			if(1 to 24)
 				tier = 1
@@ -128,6 +130,7 @@
 		StrMult = 1
 		EndMult = 1
 		DefMult = 1
+		var/EffectivePotential=p.Potential
 		switch(EffectivePotential)
 			if(1 to 24)
 				tier = 1
@@ -166,6 +169,7 @@
 		StrMult = 1
 		ForMult = 1
 		OffMult = 1
+		var/EffectivePotential=p.Potential
 		switch(EffectivePotential)
 			if(1 to 24)
 				tier = 1
@@ -204,6 +208,7 @@
 		EndMult = 1
 		SpdMult = 1
 		DefMult = 1
+		var/EffectivePotential=p.Potential
 		switch(EffectivePotential)
 			if(1 to 24)
 				tier = 1
@@ -242,6 +247,7 @@
 		StrMult = 1
 		EndMult = 1
 		OffMult = 1
+		var/EffectivePotential=p.Potential
 		switch(EffectivePotential)
 			if(1 to 24)
 				tier = 1
@@ -280,6 +286,7 @@
 		StrMult = 1
 		EndMult = 1
 		DefMult = 1
+		var/EffectivePotential=p.Potential
 		switch(EffectivePotential)
 			if(1 to 24)
 				tier = 1
