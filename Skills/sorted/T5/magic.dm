@@ -31,8 +31,11 @@
 	Explode=2
 	Hover=1
 	ActiveMessage="invokes: <font size=+1>METEORA!</font size>"
+	adjust(mob/p)
+		DamageMult = initial(DamageMult)
 	verb/Meteor_Swarm()
 		set category="Skills"
+		adjust(usr)
 		usr.UseProjectile(src)
 /obj/Skills/Projectile/Magic/Call_Calamity
 	ElementalClass="Fire"
@@ -64,4 +67,6 @@
 	Variation=0
 	Explode=2
 	Hover=1
+	adjust(mob/p)
+		DamageMult = initial(DamageMult)
     // lol, i will never finish this

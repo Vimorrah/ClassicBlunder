@@ -3657,8 +3657,11 @@ obj
 					Cooldown=45
 					IconLock='Fireball.dmi'
 					ActiveMessage="invokes: <font size=+1>FIRA!</font size>"
+					adjust(mob/p)
+						DamageMult = initial(DamageMult)
 					verb/Fira()
 						set category="Skills"
+						adjust(usr)
 						usr.UseProjectile(src)
 				Firaga
 					ElementalClass="Fire"
@@ -3679,8 +3682,11 @@ obj
 					Cooldown=45
 					IconLock='Fireball.dmi'
 					ActiveMessage="invokes: <font size=+1>FIRAGA!</font size>"
+					adjust(mob/p)
+						DamageMult = initial(DamageMult)
 					verb/Firaga()
 						set category="Skills"
+						adjust(usr)
 						usr.UseProjectile(src)
 
 
@@ -3829,8 +3835,11 @@ obj
 						IconLock='LightStrike.dmi'
 						LockX=-19
 						LockY=-17
+						adjust(mob/p)
+							DamageMult = initial(DamageMult)
 						verb/Titan_Slayer()
 							set category="Skills"
+							adjust(usr)
 							usr.UseProjectile(src)
 					Sunlight_Spear//Holy
 						ElementalClass="Wind"
@@ -3850,8 +3859,11 @@ obj
 						LockY=-17
 						PiercingBang=1
 						ExplodeIcon='Icons/Effects/Electric.dmi'
+						adjust(mob/p)
+							DamageMult = initial(DamageMult)
 						verb/Sunlight_Spear()
 							set category="Skills"
+							adjust(usr)
 							usr.UseProjectile(src)
 					Hellfire_Nova
 						ElementalClass="Fire"
@@ -3874,8 +3886,11 @@ obj
 						IconSize=0.01
 						IconSizeGrowTo=0.2
 						Variation=0
+						adjust(mob/p)
+							DamageMult = initial(DamageMult)
 						verb/Hellfire_Nova()
 							set category="Skills"
+							adjust(usr)
 							usr.UseProjectile(src)
 
 
@@ -4833,6 +4848,7 @@ mob
 				if(!HeroPresent)
 					src<<"You lack the required party member to use this."
 					return
+			var/disarmed_cut = FALSE
 			if(Z.MagicNeeded&&!src.HasLimitlessMagic())
 				// find people in a zone, if the person in the zone has counterspell up and is not in the party, then return and go on cooldown
 				for(var/mob/x in orange(5, src))
@@ -4851,8 +4867,8 @@ mob
 					src << "Your mana circuits are too damaged to use magic! (until [time2text(src.MagicTaken, "DDD MMM DD hh:mm:ss")])"
 					return;
 				if(Z.Copyable>=3||!Z.Copyable)
-					if(passive_handler.Get("Disarmed")&& !src.HasLimitlessMagic() || !src.HasBladeFisting())
-						Z.DamageMult = (Z.DamageMult / 2)
+					if(passive_handler.Get("Disarmed") && !src.HasLimitlessMagic() && !src.HasBladeFisting())
+						disarmed_cut = TRUE
 					if(!src.HasSpellFocus(Z))
 						src << "You need a spell focus to use [Z]."
 						return 0
@@ -4871,6 +4887,8 @@ mob
 							usr << "Your [Z] is out of power!"
 							return 0
 			Z.SpellSlotModification();
+			if(disarmed_cut)
+				Z.DamageMult = (Z.DamageMult / 2)
 			if(!Z.Charging)//Only beams get this exception
 				if(!src.CanAttack(3)&&!Z.AttackReplace)
 					return 0
