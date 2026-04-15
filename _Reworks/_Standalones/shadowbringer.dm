@@ -48,13 +48,7 @@ mob/Players/proc/Shadowbringer_RefreshShadowOverlay()
 		Shadowbringer_ClearShadowOverlay()
 		return
 	Shadowbringer_ClearShadowOverlay()
-	var/mutable_appearance/MA = new()
-	MA.icon = icon
-	MA.icon_state = icon_state
-	MA.dir = dir
-	for(var/mutable_appearance/O in overlays)
-		if(!(O.appearance_flags & (KEEP_APART | RESET_COLOR)))
-			MA.overlays += O
+	var/mutable_appearance/MA = new(src)
 	var/matrix/T = matrix()
 	T.Scale(1, -1)
 	MA.transform = T
@@ -64,7 +58,8 @@ mob/Players/proc/Shadowbringer_RefreshShadowOverlay()
 	var/bottom_gap = shadowbringer_cached_bottom_gap
 	MA.pixel_x = 0
 	MA.pixel_y = -h + (2 * bottom_gap)
-	MA.color = list(0,0,0, 0,0,0, 0,0,0, 0.15, 0.15, 0.15)
+	MA.appearance_flags |= KEEP_TOGETHER
+	MA.color = rgb(8, 8, 10)
 	MA.alpha = 150
 	MA.layer = MOB_LAYER - 0.01
 	ShadowbringerShadowAppearance = MA
