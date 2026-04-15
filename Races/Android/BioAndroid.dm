@@ -41,7 +41,7 @@ var/global/list/BIO_SAMPLE_DEFS = list(
 	"Namekian"     = list("t1_passives"=list("TechniqueMastery" = 2, "Duelist" = 1), "t1_skills"=list(), "t2_passives"=list("TechniqueMastery" = 3, "Duelist" = 2), "t2_skills"=list()),
 	"Majin"        = list("t1_passives"=list("ManaCapMult" = 0.5, "ManaGeneration" = 2), "t1_skills"=list(), "t2_passives"=list("Extend" = 1, "Gum Gum" = 1), "t2_skills"=list()),
 	"Demon"        = list("t1_passives"=list("PureDamage" = 2, "AbyssMod" = 2), "t1_skills"=list(), "t2_passives"=list("PureDamage" = 3, "AbyssMod" = 5), "t2_skills"=list()),
-	"Angel"        = list("t1_passives"=list("PureReduction" = 2, "HolyMod" = 2), "t1_skills"=list(), "t2_passives"=list("PureReduction" = 3", HolyMod" = 5), "t2_skills"=list()),
+	"Angel"        = list("t1_passives"=list("PureReduction" = 2, "HolyMod" = 2), "t1_skills"=list(), "t2_passives"=list("PureReduction" = 3, "HolyMod" = 5), "t2_skills"=list()),
 	"Celestial"    = list("t1_passives"=list("MartialMagic" = 1), "t1_skills"=list(), "t2_passives"=list("BladeFisting" = 1), "t2_skills"=list()),
 	"Dragon"       = list("t1_passives"=list("AngerAdaptiveForce" = 0.25, "BlurringStrikes" = 0.5, , "LikeWater" = 1, "Flow" = 1, "Instinct" = 1), "t1_skills"=list(), "t2_passives"=list("AngerAdaptiveForce" = 0.5, "BlurringStrikes" = 2 , "LikeWater" = 2, "Flow" = 2, "Instinct" = 2), "t2_skills"=list()),
 	"Beastkin"     = list("t1_passives"=list("Fury" = 0.5, "Harden" = 0.5, "Momentum" = 0.5), "t1_skills"=list(), "t2_passives"=list("Fury" = 2, "Harden" = 2, "Momentum" = 2), "t2_skills"=list()),
