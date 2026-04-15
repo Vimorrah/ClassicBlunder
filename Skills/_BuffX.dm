@@ -916,7 +916,28 @@ NEW VARIABLES
 						if(player.PilotingProwess >= 7)
 							passives["NoDodge"] = 0
 						..()
-
+/*			Sentai_Uniform_Engage
+				passives = list("PULock" = 1)
+				MakesArmor=1
+				ArmorClass="Light"
+				ArmorIcon='BLANK.dmi'
+				ActiveMessage="activates their sentai uniform!"
+				OffMessage="disengages their uniform."
+				Power
+				Force
+				Tank
+				Speed
+				verb/Sentai_Uniform_Engage()
+					set category="Skills"
+					src.Trigger(usr)
+			Sentai_Helmet_Engage
+				passives = list("PULock" = 1)
+				HairLock='BLANK.dmi'
+				ActiveMessage="activates their sentai helmet!"
+				OffMessage="disengages their helmet."
+				verb/Sentai_Helmet_Engage()
+					set category="Skills"
+					src.Trigger(usr)*/
 
 
 
