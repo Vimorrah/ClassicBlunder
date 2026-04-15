@@ -48,11 +48,13 @@ mob/Players/proc/Shadowbringer_RefreshShadowOverlay()
 		Shadowbringer_ClearShadowOverlay()
 		return
 	Shadowbringer_ClearShadowOverlay()
-	// hopefully this fixes colors bleeding through
 	var/mutable_appearance/MA = new()
 	MA.icon = icon
 	MA.icon_state = icon_state
 	MA.dir = dir
+	for(var/mutable_appearance/O in overlays)
+		if(!(O.appearance_flags & (KEEP_APART | RESET_COLOR)))
+			MA.overlays += O
 	var/matrix/T = matrix()
 	T.Scale(1, -1)
 	MA.transform = T
