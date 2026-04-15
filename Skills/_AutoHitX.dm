@@ -1220,6 +1220,9 @@ obj
 				Launcher=2
 				Instinct=1
 				ActiveMessage="delivers a series of flowing kicks!"
+				TurfStrike=1
+				TurfShift='Dirt1.dmi'
+				TurfShiftDuration=3
 				adjust(mob/p)
 				verb/Lightning_Kicks()
 					set category="Skills"
@@ -1287,6 +1290,9 @@ obj
 				Cooldown=75
 				EnergyCost=4
 				ActiveMessage="goes flying through the air to deliver a graceful kick!"
+				TurfStrike=1
+				TurfShift='Dirt1.dmi'
+				TurfShiftDuration=3
 				verb/Flying_Kick()
 					set category="Skills"
 					usr.Activate(src)
@@ -1332,6 +1338,9 @@ obj
 				EnergyCost=2.5
 				Instinct=1
 				ActiveMessage="spins like a top, crushing anyone caught in their range!"
+				TurfStrike=1
+				TurfShift='Dirt1.dmi'
+				TurfShiftDuration=3
 				adjust(mob/p)
 					if(p.isInnovative(HUMAN, "Unarmed") && !isInnovationDisable(p))
 						Rounds= 10 + (p.Potential/10)
@@ -1400,6 +1409,9 @@ obj
 				Size=1
 				EnergyCost=1
 				ActiveMessage="charges forward, plowing through everyone in their path!"
+				TurfStrike=1
+				TurfShift='Dirt1.dmi'
+				TurfShiftDuration=3
 				verb/Bullrush()
 					set category="Skills"
 					usr.Activate(src)
@@ -1420,6 +1432,9 @@ obj
 				WindUp=0.1
 				WindupMessage="crouches into a starting position..."
 				ActiveMessage="blasts forward with a super-sonic dash!"
+				TurfStrike=1
+				TurfShift='Dirt1.dmi'
+				TurfShiftDuration=3
 				Cooldown=60
 				adjust(mob/p)
 					if(p.isInnovative(HUMAN, "Unarmed") && !isInnovationDisable(p))
@@ -1544,6 +1559,9 @@ obj
 				WindUp=0.25
 				WindupMessage="leaps into the air!"
 				ActiveMessage="crashes into their opponent with a dropkick!"
+				TurfStrike=1
+				TurfShift='Dirt1.dmi'
+				TurfShiftDuration=3
 				Cooldown=60
 				verb/Dropkick_Surprise()
 					set category="Skills"
@@ -6493,7 +6511,7 @@ obj
 				var/pride = Owner.HasPridefulRage();
 				if(pride) def = clamp(def/2, 1, def);
 				if(pride >= 2) def = 1;
-				
+
 				#if DEBUG_AUTOHIT
 				Owner.log2text("def - Auto Hit", def, "damageDebugs.txt", "[Owner.ckey]/[Owner.name]")
 				#endif

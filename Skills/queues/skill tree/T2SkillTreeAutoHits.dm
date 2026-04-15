@@ -31,6 +31,9 @@ obj
 			Instinct=1
 			WindupMessage="focuses their chi..."
 			ActiveMessage="sends a wave of force with a single palm thrust!"
+			TurfStrike=1
+			TurfShift='Dirt1.dmi'
+			TurfShiftDuration=3
 			verb/Force_Palm()
 				set category="Skills"
 				usr.Activate(src)
@@ -57,6 +60,9 @@ obj
 			BuffAffected=/obj/Skills/Buffs/SlotlessBuffs/Autonomous/AchillesHeel/Disgruntled
 			Earthshaking=15
 			ActiveMessage="lifts their leg before performing a tremor-inducing stomp!"
+			TurfStrike=1
+			TurfShift='Dirt1.dmi'
+			TurfShiftDuration=3
 			verb/Force_Stomp()
 				set category="Skills"
 				usr.Activate(src)
@@ -77,6 +83,9 @@ obj
 			Knockback=2
 			Distance=4
 			ActiveMessage="vanishes with a burst of speed to strike at their foe!"
+			TurfStrike=1
+			TurfShift='Dirt1.dmi'
+			TurfShiftDuration=3
 			Cooldown=45
 			EnergyCost=6
 			Instinct=1
@@ -115,6 +124,9 @@ obj
 			Cooldown=45
 			EnergyCost=5
 			ActiveMessage="rushes forward to deliver a flurry of strikes!"
+			TurfStrike=1
+			TurfShift='Dirt1.dmi'
+			TurfShiftDuration=3
 			verb/Dragon_Rush()
 				set category="Skills"
 				usr.Activate(src)
@@ -158,6 +170,9 @@ obj
 			EnergyCost=3
 			CanBeDodged=1
 			ActiveMessage="sweeps the legs from under their opponent!"
+			TurfStrike=1
+			TurfShift='Dirt1.dmi'
+			TurfShiftDuration=3
 			verb/Leg_Sweep()
 				set category="Skills"
 				usr.Activate(src)
@@ -179,6 +194,9 @@ obj
 			FlickSpin=1
 			EnergyCost=2
 			ActiveMessage="throws their body into a handstand while delivering numerous spin kick!"
+			TurfStrike=1
+			TurfShift='Dirt1.dmi'
+			TurfShiftDuration=3
 			verb/Helicopter_Kick()
 				set category="Skills"
 				usr.Activate(src)
