@@ -4,7 +4,7 @@ ascension
 			unlock_potential = ASCENSION_ONE_POTENTIAL
 			intimidation = 20
 			onAscension(mob/owner)
-				switch(owner.Class)//These are jsut concepts right now. Numbers will be adjusted by staff before implimented..
+				switch(owner.Class)//These are jsut concepts right now. Numbers will be adjusted by staff before implimented.
 
 					if("Pixie")
 						var/newpassives = list("Flow" = 1, "DualCast" = 1, "Adrenaline" = 1, "Siphon" = 1)
@@ -37,6 +37,7 @@ ascension
 						force = 0.35
 						speed = 0.35
 						offense = 0.35
+				..()
 
 
 		three

@@ -26,7 +26,8 @@
 		icon_state = dd.demon_icon_state
 		ai_follow  = TRUE
 		ai_focus_owner_target = TRUE
-		density    = FALSE
+		density    = TRUE
+		ai_hostility = 0  // demons never auto-aggro
 		ai_alliances = list("[owner.ckey]")
 		owner.ai_followers += src
 
@@ -201,25 +202,14 @@
 				var/datum/party_demon/pd = DemonGetPartyDemon()
 				if(pd) pd.current_hp = demon_hp
 
-	DoDamage(mob/other, damage)
-		// If the outgoing flag is set, we're dealing damage outward, route to parent
-		if(_outgoing_damage)
-			_outgoing_damage = FALSE
-			..(other, damage)
-			return
-		// Otherwise this is incoming damage to the demon
-		var/mob/attacker = other
+	// Core incoming-damage handler
+	proc/DemonTakeDamage(var/raw_val, mob/attacker)
 		if(ai_owner && ai_owner.PureRPMode) return
 		if(ai_owner && istype(attacker, /mob))
 			if(attacker == ai_owner) return
 			if(ai_owner.party && ai_owner.party.members && (attacker in ai_owner.party.members)) return
-		// Demons use their own HP system - apply damage directly to demon_hp
-		var/raw_dmg = 0
-		if(isnum(damage))
-			raw_dmg = max(1, round(damage * glob.DevilSummonerDemonDamageTakenMod))
+		var/raw_dmg = max(1, round(raw_val * glob.DevilSummonerDemonDamageTakenMod))
 		if(raw_dmg <= 0) return
-		// Phys is the default element for demon-on-demon / mob hits; element-typed damage paths
-		// can call DemonGetResistMult/DemonHasRepel/DemonHasDrain themselves
 		var/resist = DemonGetResistMult("Phys")
 		if(resist == 0)
 			if(ai_owner) ai_owner << "<font color='#88ddff'>[name] nullified the attack!</font>"
@@ -237,7 +227,7 @@
 			raw_dmg = max(1, round(raw_dmg * 0.25))
 			demon_hp = min(100, demon_hp + heal_amt)
 			if(ai_owner) ai_owner << "<font color='#88ffaa'>[name] drains [heal_amt] HP from the attack!</font>"
-		// Apply standard resist multiplier to the (possibly already-reduced) value
+		// Apply standard resist multiplier
 		raw_dmg = max(1, round(raw_dmg * resist))
 		// LifeGeneration for demons
 		if(passive_handler)
@@ -253,3 +243,15 @@
 				if(demon_hp <= 0)
 					DemonDespawn()
 				return
+
+	LoseHealth(var/val)
+		if(!isnum(val) || val <= 0) return
+		DemonTakeDamage(val, null)
+
+	DoDamage(mob/other, damage)
+		if(_outgoing_damage)
+			_outgoing_damage = FALSE
+			..(other, damage)
+			return
+		if(isnum(damage) && damage > 0)
+			DemonTakeDamage(damage, other)

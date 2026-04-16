@@ -916,7 +916,28 @@ NEW VARIABLES
 						if(player.PilotingProwess >= 7)
 							passives["NoDodge"] = 0
 						..()
-
+/*			Sentai_Uniform_Engage
+				passives = list("PULock" = 1)
+				MakesArmor=1
+				ArmorClass="Light"
+				ArmorIcon='BLANK.dmi'
+				ActiveMessage="activates their sentai uniform!"
+				OffMessage="disengages their uniform."
+				Power
+				Force
+				Tank
+				Speed
+				verb/Sentai_Uniform_Engage()
+					set category="Skills"
+					src.Trigger(usr)
+			Sentai_Helmet_Engage
+				passives = list("PULock" = 1)
+				HairLock='BLANK.dmi'
+				ActiveMessage="activates their sentai helmet!"
+				OffMessage="disengages their helmet."
+				verb/Sentai_Helmet_Engage()
+					set category="Skills"
+					src.Trigger(usr)*/
 
 
 
@@ -3000,9 +3021,8 @@ NEW VARIABLES
 					ForMult = 1.2 + totalPot/100
 					StrMult = 1.2 + totalPot/100
 					DefMult = 0.6 + clamp(totalPot/150, 0.1, 0.4)
-					var/reducedPot = totalPot/10
 					passives = list("ManaLeak" = 1 - totalPot/200, "MovementMastery" = 3+round(totalPot/20,1), \
-					"Deicide" = 5* round(totalPot/25,1), "SpiritSword" = 0.5*round(totalPot/4,1), "SpiritHand" = 0.5*round(totalPot/4,1))
+					"Deicide" = 5* round(totalPot/25,1), "SpiritSword" = 0.5+round(totalPot/200,1), "SpiritHand" = 0.5+round(totalPot/200,1))
 
 				verb/Hilbert_Effect()
 					set category="Skills"
@@ -7207,6 +7227,37 @@ NEW VARIABLES
 				adjust(usr)
 				src.Trigger(usr)
 
+		Mark_of_the_Crone
+			SignatureTechnique=3
+			SpecialSlot=1
+			AutoAnger=1
+			AngerThreshold=2
+			IconLock='CroneMajinSparks.gif'
+			LockX=0
+			LockY=0
+			EndTaxDrain=0.0075
+			SpdTaxDrain=0.0075
+			StrTaxDrain=0.0075
+			RecovTaxDrain=0.0075
+			SagaSignature=1
+			AngerMult=1.5
+			ManaDrain=0.1
+			ManaThreshold = 10
+			FlashChange=1
+			KenWave=2
+			KenWaveIcon='KenShockwaveBloodlust.dmi'
+			KenWaveSize=0.2
+			KenWaveTime=5
+			KenWaveBlend=2
+			Cooldown=-1
+			ActiveMessage="taps into powers from beyond, the symbol of black wings forming on their forehead."
+			OffMessage = "'s Symbol of the Crow vanishes, its' power retreating to its' source."
+			verb/Mark_of_the_Crone()
+				set category="Skills"
+				if(!usr.BuffOn(src))
+					passives = list("Brutalize" = 5, "PureDamage" = 5, "PureReduction" = 5, "Pursuer" = 2, "HellPower" = 1, "Gum Gum" = 2, "Extend" = 2, "PowerReplacement" = glob.progress.totalPotentialToDate+5)
+				src.Trigger(usr)
+
 		God_Ki
 			SignatureTechnique=4
 			Cooldown=10
@@ -7576,8 +7627,8 @@ NEW VARIABLES
 			AutoAnger=1
 			AngerThreshold=2
 			IconLock='DarknessGlow.dmi'
-			LockX=-32
-			LockY=-32
+			LockX=0
+			LockY=0
 			FlashChange=1
 			KenWave=2
 			KenWaveIcon='KenShockwaveBloodlust.dmi'
@@ -11101,8 +11152,8 @@ NEW VARIABLES
 						spdAdd = 0.15 * asc
 						ElementalOffense = "Wind"
 						ElementalDefense = "Wind"
-						passives = list("DoubleStrike" = asc/2, "TripleStrike" = asc/3, \
-							"Pursuer" = 1 + (asc/2), "Flicker" = 1 + (asc/2), "EnergySteal" = asc*10, \
+						passives = list("DoubleStrike" = asc/2, "TripleStrike" = asc/3, "ThunderHerald" = 1, \
+							"Pursuer" = 1 + (asc/2), "Flicker" = 1 + (asc/2), "CriticalDamage" = asc*0.05, "CriticalChance" = asc*5, \
 							"Shocking" = (clamp(asc*0.5, 1, 3)))
 					Trigger(mob/User, Override = FALSE)
 						if(!User.BuffOn(src))

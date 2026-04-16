@@ -25,7 +25,7 @@ race
 					passives["Flow"] = 1
 					passives["ManaGeneration"] = 1
 					passives["QuickCast"] = 1
-				if("Goblin") //Playable Raccoons with a need for speed...
+				if("Goblin") //Playable Raccoons with a need for speed.
 					skills = list(/obj/Skills/Buffs/SlotlessBuffs/Autonomous/FaeBuffs/Fury_of_the_Small) //Give them Pack Tactics once its coded.
 					passives["Instinct"] = 1
 					passives["ManaSteal"] = 1

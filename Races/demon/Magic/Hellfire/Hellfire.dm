@@ -43,7 +43,7 @@
 
 /obj/Skills/Buffs/SlotlessBuffs/Magic/HellFire/Hellstorm
     ElementalClass="Fire"
-    scalingValues = list("Damage" = list(0.55,0.77,0.88,1.21,1.32,1.43), "Distance" = list(4,6,6,6,8,10), \
+    scalingValues = list("Damage" = list(0.2,0.2,0.3,0.3,0.35,0.35), "Distance" = list(4,6,6,6,8,10), \
     "DarknessFlame" = list(6,12,15,20,25,25), "Slow" = list(0,0,0,0,0,0), "Burning" = list(10,15,20,25,25,30), "Duration" = list(100,150,150,175,200,300), \
     "Adapt" = list(1,1,1,1,1), "CorruptionGain" = list(1,1,1,1,1) )
     makSpace = new/spaceMaker/HellFire

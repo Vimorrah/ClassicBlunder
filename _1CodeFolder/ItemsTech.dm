@@ -2913,6 +2913,8 @@ obj/Items/Tech
 
 obj/Items/Gear
 	Unwieldy=1
+	var/SentaiSuitIcon
+	var/SentaiHelmetIcon
 	var
 		Integrateable=0//If this is flagged it can be jammed in a prosthetic
 		Uses=0
@@ -3153,7 +3155,153 @@ obj/Items/Gear
 		Cost=2
 		Uses=3
 		Integrateable=1
-
+/*
+	Sentai_Watch
+		name="Powered Exoskeleton"
+		TechType="MilitaryEngineering"
+		SubType="Any"
+		icon='Ironman.dmi'
+		UniformType = "None"
+		Techniques=list()
+		desc="A prototype powered exo-suit that enables your body to transcend its limits!"
+		Cost=100
+		IntegratedUses=100
+		IntegratedMaxUses=100
+		Uses=1
+		verb/Enhance_Sentai_Uniform()
+			set category=null
+			set src in usr
+			if(src.suffix=="*Equipped*")
+				usr << "Take off your uniform before you try to upgrade it!"
+				return
+			if(src.Techniques.len<=1)
+				usr << "This armor doesn't have any gear integrated!"
+				return
+			if(src.Using)
+				usr << "You cannot unintegrate and integrate gear at the same time!"
+				return
+			src.Using=1
+			switch(input("Are you sure you wish to unintegrate? This will destroy any integration this armor currently has!") in list("Yes","No"))
+				if("Yes")
+					Techniques=list("/obj/Skills/Buffs/ActiveBuffs/Gear/Sentai_Uniform_Engage")
+					desc="A prototype powered exo-suit that enables your body to transcend its limits."
+					usr << "You've successfully removed all integrations from this gear."
+			src.Using=0
+		verb/Engage_Sentai_Uniform()
+			set category=null
+			set src in usr
+			if(src.suffix=="*Equipped*")
+				usr << "Take off your uniform before you try to upgrade it!"
+				return
+			if(src.Techniques.len<=1)
+				usr << "This armor doesn't have any gear integrated!"
+				return
+			if(src.Using)
+				usr << "You cannot unintegrate and integrate gear at the same time!"
+				return
+			setup(usr)
+			Techniques = list()
+			if(UniformType == "None")
+				var/result = input(usr, "What type?") in list("Power","Force","Tank","Speed")
+				UniformType = result
+				Techniques = list("/obj/Skills/Buffs/ActiveBuffs/Gear/Sentai_Uniform_Engage/[UniformType]")
+				Techniques += "/obj/Skills/Buffs/ActiveBuffs/Gear/Sentai_Helmet_Engage"
+		verb/Unintegrate()
+			set category=null
+			set src in usr
+			if(src.suffix=="*Equipped*")
+				usr << "Take off your armor before you try to jam a gear in it!"
+				return
+			if(src.Techniques.len<=1)
+				usr << "This armor doesn't have any gear integrated!"
+				return
+			if(src.Using)
+				usr << "You cannot unintegrate and integrate gear at the same time!"
+				return
+			src.Using=1
+			switch(input("Are you sure you wish to unintegrate? This will destroy any integration this armor currently has!") in list("Yes","No"))
+				if("Yes")
+					Techniques=list("/obj/Skills/Buffs/ActiveBuffs/Gear/Sentai_Uniform_Engage")
+					desc="A prototype powered exo-suit that enables your body to transcend its limits."
+					usr << "You've successfully removed all integrations from this gear."
+			src.Using=0
+		verb/Integrate()
+			set category=null
+			set src in usr
+			if(src.suffix=="*Equipped*")
+				usr << "Take off your armor before you try to jam a gear in it!"
+				return
+			if(src.Techniques.len>1)
+				usr << "This armor already has a gear integrated!"
+				return
+			if(src.Using)
+				usr << "You're already putting something in this armor!"
+				return
+			src.Using=1
+			var/obj/Items/Gear/Choice
+			var/list/obj/Items/Gear/IG=list("Cancel")
+			for(var/obj/Items/Gear/g in usr)
+				if(istype(g, /obj/Items/Gear/Prosthetic_Limb))
+					continue
+				if(!g.Integrateable)
+					continue
+				IG.Add(g)
+			if(IG.len<2)
+				usr << "You don't have any gear capable of being integrated into your suit."
+				src.Using=0
+				return
+			Choice=input(usr, "What gear do you want to integrate into your suit?", "Integrate") in IG
+			if(Choice=="Cancel")
+				src.Using=0
+				return
+			switch(Choice.type)
+				if(/obj/Items/Gear/Deflector_Shield)
+					src.Techniques.Add("/obj/Skills/Buffs/SlotlessBuffs/Gear/Integrated/Integrated_Deflector_Shield")
+				if(/obj/Items/Gear/Bubble_Shield)
+					src.Techniques.Add("/obj/Skills/Buffs/SlotlessBuffs/Gear/Integrated/Integrated_Bubble_Shield")
+				if(/obj/Items/Gear/Jet_Boots)
+					src.Techniques.Add("/obj/Skills/Buffs/SlotlessBuffs/Gear/Integrated/Integrated_Jet_Boots")
+				if(/obj/Items/Gear/Jet_Pack)
+					src.Techniques.Add("/obj/Skills/Buffs/SlotlessBuffs/Gear/Integrated/Integrated_Jet_Pack")
+				if(/obj/Items/Gear/Plasma_Blaster)
+					src.Techniques.Add("/obj/Skills/Projectile/Gear/Integrated/Integrated_Plasma_Blaster")
+				if(/obj/Items/Gear/Plasma_Rifle)
+					src.Techniques.Add("/obj/Skills/Projectile/Gear/Integrated/Integrated_Plasma_Rifle")
+				if(/obj/Items/Gear/Plasma_Gatling)
+					src.Techniques.Add("/obj/Skills/Projectile/Gear/Integrated/Integrated_Plasma_Gatling")
+				if(/obj/Items/Gear/Missile_Launcher)
+					src.Techniques.Add("/obj/Skills/Projectile/Gear/Integrated/Integrated_Missile_Launcher")
+				if(/obj/Items/Gear/Chemical_Mortar)
+					src.Techniques.Add("/obj/Skills/Projectile/Gear/Integrated/Integrated_Chemical_Mortar")
+				if(/obj/Items/Gear/Progressive_Blade)
+					src.Techniques.Add("/obj/Skills/Buffs/SlotlessBuffs/Gear/Integrated/Integrated_Progressive_Blade")
+				if(/obj/Items/Gear/Lightsaber)
+					src.Techniques.Add("/obj/Skills/Buffs/SlotlessBuffs/Gear/Integrated/Integrated_Lightsaber")
+				if(/obj/Items/Gear/Incinerator)
+					src.Techniques.Add("/obj/Skills/AutoHit/Gear/Integrated/Integrated_Incinerator")
+				if(/obj/Items/Gear/Freeze_Ray)
+					src.Techniques.Add("/obj/Skills/AutoHit/Gear/Integrated/Integrated_Freeze_Ray")
+				if(/obj/Items/Gear/Pile_Bunker)
+					src.Techniques.Add("/obj/Skills/Queue/Gear/Integrated/Integrated_Pile_Bunker")
+				if(/obj/Items/Gear/Power_Fist)
+					src.Techniques.Add("/obj/Skills/Queue/Gear/Integrated/Integrated_Power_Fist")
+				if(/obj/Items/Gear/Blast_Fist)
+					src.Techniques.Add("/obj/Skills/Buffs/SlotlessBuffs/Gear/Integrated/Integrated_Blast_Fist")
+				if(/obj/Items/Gear/Chainsaw)
+					src.Techniques.Add("/obj/Skills/Buffs/SlotlessBuffs/Gear/Integrated/Integrated_Chainsaw")
+				if(/obj/Items/Gear/Power_Claw)
+					src.Techniques.Add("/obj/Skills/Queue/Gear/Integrated/Integrated_Power_Claw")
+				if(/obj/Items/Gear/Hook_Grip_Claw)
+					src.Techniques.Add("/obj/Skills/Queue/Gear/Integrated/Integrated_Hook_Grip_Claw")
+				else
+					usr << "Ruh roh.  Something went wrong.  Yell at Yan."
+					src.Using=0
+					return
+			usr << "You've integrated [Choice] into your armor!"
+			src.desc="A prototype powered exo-suit that enables your body to transcend its limits! A [Choice] gear has been integrated with it."
+			del Choice
+			src.Using=0
+*/
 	Power_Armor
 		name="Powered Exoskeleton"
 		TechType="MilitaryEngineering"
