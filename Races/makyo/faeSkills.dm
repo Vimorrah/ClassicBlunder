@@ -93,6 +93,7 @@
 	ActiveMessage = "expands their size, becoming a hulking mass of muscle!"
 	OffMessage    = "releases their expanded form."
 
+	var/tmp/expandSelecting = 0
 	var/ExpandLevel         = 1
 	var/matrix/expandBaseTransform = null
 
@@ -127,17 +128,25 @@
 		. = ..()
 		if(!SlotlessOn) return
 
-		expandBaseTransform = user.transform
+		var/skipVisualSize = FALSE
+		for(var/obj/Skills/Utility/ExpandSizeToggle/t in user)
+			if(t.SuppressExpandVisualSize)
+				skipVisualSize = TRUE
+				break
 
-		var/targetScale = 1.0
-		switch(ExpandLevel)
-			if(2) targetScale = 1.25
-			if(3) targetScale = 1.5
-			if(4) targetScale = 1.75
-			if(5) targetScale = 2.0
+		expandBaseTransform = null
+		if(!skipVisualSize)
+			expandBaseTransform = user.transform
 
-		if(targetScale > 1.0)
-			animate(user, transform=expandBaseTransform * targetScale, time=20, easing=SINE_EASING)
+			var/targetScale = 1.0
+			switch(ExpandLevel)
+				if(2) targetScale = 1.25
+				if(3) targetScale = 1.5
+				if(4) targetScale = 1.75
+				if(5) targetScale = 2.0
+
+			if(targetScale > 1.0)
+				animate(user, transform=expandBaseTransform * targetScale, time=20, easing=SINE_EASING)
 
 	proc/deactivate(mob/user)
 		if(expandBaseTransform)
@@ -150,8 +159,22 @@
 		if(usr.BuffOn(src))
 			deactivate(usr)
 		else
-			adjust(usr)
+			if(src.expandSelecting)
+				return
+			src.expandSelecting = 1
 			src.Trigger(usr)
+			src.expandSelecting = 0
+
+/obj/Skills/Utility/ExpandSizeToggle
+	desc = "Toggles whether Expand enlarges your sprite. Combat effects of Expand are unchanged."
+	// When set, Expand skips the transform scale animation (default 0 = larger sprite while expanded).
+	var/SuppressExpandVisualSize = 0
+
+	verb/ExpandSizeToggle()
+		set category = "Skills"
+		set name = "Expand Size Toggle"
+		SuppressExpandVisualSize = !SuppressExpandVisualSize
+		usr << "Expand size visuals are now [SuppressExpandVisualSize ? "<b>off</b> — you stay normal-sized while expanded." : "<b>on</b> — you grow with Expand (default)."]"
 
 /obj/Skills/Buffs/SlotlessBuffs/Makyo/Fall/Shedding_Leaves
 	EndMult=0.6

@@ -1199,6 +1199,7 @@ obj
 				NewCopyable = 4
 				SkillCost=80
 				Copyable=3
+				AlwaysAnnounceCooldown = 1
 				UnarmedOnly=1
 				Area="Arc"
 				StrOffense=1
@@ -1323,6 +1324,7 @@ obj
 				Size = 4
 				SkillCost=TIER_4_COST
 				Copyable=5
+				AlwaysAnnounceCooldown = 1
 				UnarmedOnly=1
 				Area="Circle"
 				ComboMaster=1
@@ -1418,6 +1420,7 @@ obj
 			Hyper_Crash
 				SkillCost=TIER_4_COST
 				Copyable=5
+				AlwaysAnnounceCooldown = 1
 				Area="Wide Wave"
 				UnarmedOnly = 1
 				StrOffense=1
@@ -3445,6 +3448,7 @@ obj
 			Jet_Slice
 				SkillCost=TIER_4_COST
 				Copyable=5
+				AlwaysAnnounceCooldown = 1
 				NeedsSword=1
 				Area="Target"
 				GuardBreak=1

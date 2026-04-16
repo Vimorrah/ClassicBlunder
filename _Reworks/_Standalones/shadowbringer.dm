@@ -36,10 +36,9 @@ mob/Players/proc/Shadowbringer_UpdateIconCache()
 	shadowbringer_cached_height = I.Height()
 	shadowbringer_cached_bottom_gap = 0
 	var/w = I.Width()
-	var/list/sample_x = list(max(1, round(w * 0.25)), max(1, round(w * 0.5)), max(1, round(w * 0.75)))
 	for(var/y = 1 to shadowbringer_cached_height)
-		for(var/sx in sample_x)
-			if(I.GetPixel(sx, y))
+		for(var/x = 1 to w)
+			if(I.GetPixel(x, y))
 				shadowbringer_cached_bottom_gap = y - 1
 				return
 

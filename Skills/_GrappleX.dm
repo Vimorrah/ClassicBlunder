@@ -302,6 +302,7 @@ obj/Skills/Grapple
 		NewCopyable = 3
 		SkillCost=120
 		Copyable=4
+		AlwaysAnnounceCooldown = 1
 		DamageMult=5.5
 		Stunner=3
 		StrRate=1
@@ -521,7 +522,7 @@ obj/Skills/Grapple
 			Stunner=3
 			Effect="Shockwave"
 			EffectMult=1
-			Cooldown=60
+			Cooldown=45
 			TriggerMessage="tries to commit double suicide with "
 		Dark_Binding
 			Copyable = 0
@@ -532,7 +533,7 @@ obj/Skills/Grapple
 			EnergyDamage=1
 			Effect="DarkSuplex"
 			EffectMult=1
-			Cooldown=60
+			Cooldown=45
 			TriggerMessage="binds with dark energy and slams "
 		Form_Ataru
 			Copyable=4

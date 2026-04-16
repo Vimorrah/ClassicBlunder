@@ -89,7 +89,7 @@ obj/Skills/proc/Cooldown(var/modify=1, var/Time, mob/p, var/announce_cd=1)
 				return
 			cooldown_start = world.realtime
 			var/start_time = world.realtime
-			if(announce_cd && m.cooldownAnnounce && Time/10 > 5)
+			if(announce_cd && m.cooldownAnnounce && Time/10 > 0 && (AlwaysAnnounceCooldown || Time/10 > 5))
 				m << "[src] has gone on Cooldown ([Time/10] Seconds)"
 			spawn(Time)
 				if(cooldown_start != start_time) return //This instance of the CD was canceled.

@@ -204,6 +204,7 @@ obj
 		Three_Thousand_Worlds
 			SkillCost= TIER_2_COST
 			Copyable=3
+			AlwaysAnnounceCooldown = 1
 			NeedsSword=1
 			Area="Circle"
 			DamageMult=2.5
@@ -318,6 +319,7 @@ obj
 		Drill_Spin
 			SkillCost= TIER_2_COST
 			Copyable=3
+			AlwaysAnnounceCooldown = 1
 			NeedsSword=1
 			Area="Circle"
 			Shearing=1

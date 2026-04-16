@@ -24,6 +24,8 @@ obj/Skills
 	var/CyberSignature=0 //lets cybernetic mainframes keep the signature
 
 	var/Cooldown
+	/// When set, Cooldown() always prints the on-cooldown line (if announce_cd and cooldownAnnounce), even for short timers.
+	var/AlwaysAnnounceCooldown = 0
 	var/CooldownStatic=0
 	var/CooldownScaling=0
 	var/CooldownScalingCounter=0

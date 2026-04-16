@@ -3,6 +3,7 @@ obj
 		Sword_Pressure
 			SkillCost= TIER_1_COST
 			Copyable=2
+			AlwaysAnnounceCooldown = 1
 			NeedsSword=1
 			Area="Wave"
 			Distance=6
@@ -289,6 +290,7 @@ obj
 		Cross_Slash
 			SkillCost= TIER_1_COST
 			Copyable=2
+			AlwaysAnnounceCooldown = 1
 			NeedsSword=1
 			Area="Circle"
 			Distance=3
@@ -379,6 +381,7 @@ obj
 		Cross_Slash_Inno_Follow
 			name = "Parting Seas"
 			Copyable=0
+			AlwaysAnnounceCooldown = 1
 			NeedsSword=1
 			Area="Circle"
 			Distance=3
@@ -408,6 +411,7 @@ obj
 		Cross_Slash_Demon_Follow
 			name = "Infernal Divide"
 			Copyable=0
+			AlwaysAnnounceCooldown = 1
 			NeedsSword=1
 			Area="Circle"
 			Distance=3

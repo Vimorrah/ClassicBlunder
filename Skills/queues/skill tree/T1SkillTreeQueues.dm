@@ -103,6 +103,7 @@ obj
 			Kinshasa
 				SkillCost=TIER_1_COST
 				Copyable=2
+				AlwaysAnnounceCooldown = 1
 				name="Kinshasa"//Skill name displayed in message.
 				HitMessage="builds up speed and knees their target in the face!!"
 				DamageMult=2.5
