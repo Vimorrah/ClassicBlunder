@@ -3353,6 +3353,7 @@ obj
 					IconSize = 1.25
 					Dodgeable=0
 					Cooldown = 150
+					ManaCost = 25
 					adjust(mob/p)
 						Charge=1.5
 						Distance = 20
