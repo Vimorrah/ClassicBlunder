@@ -1285,7 +1285,7 @@ mob
 			if(isRace(ANDROID)||CyberneticMainframe)
 				enhance = vars["Enhanced[statName]"] * 0.6
 			if(Target && ismob(Target))
-				if(Target.passive_handler["Rusting"])
+				if(Target.passive_handler["Rusting"]&&Poison>=1)
 					enhance *= (Poison * (glob.RUSTING_RATE * passive_handler["Rusting"])) / 100
 			return enhance
 		BaseStr()
