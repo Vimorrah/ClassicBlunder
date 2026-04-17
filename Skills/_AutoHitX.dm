@@ -4543,6 +4543,7 @@ obj
 				IconX=-32
 				IconY=-32
 				Cooldown=150
+				ManaCost = 25
 				Size=2
 				Rush=3
 				ControlledRush=3
