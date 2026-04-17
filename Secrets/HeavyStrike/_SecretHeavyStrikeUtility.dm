@@ -69,7 +69,6 @@
             src << "Your character has called getBlackFlashStrike() while not having a defined secret datum. Admins have been notified, but you can drop a bug report in the Discord as well.";
             return 0;
         var/usedChance = getBlackFlashChance();
-        admins << "used [usedChance] for the chance to try blackflash";
         if(prob(usedChance)) return findOrAddSkill(/obj/Skills/Queue/Secret_Heavy_Strike/Black_Flash/Black_Flash_Strike);
         return findOrAddSkill(/obj/Skills/Queue/Secret_Heavy_Strike/Black_Flash/Divergent_Fist);
     getHakiStrike()
