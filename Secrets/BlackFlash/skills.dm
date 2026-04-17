@@ -65,5 +65,4 @@
 		if(force) return force;
 		else
 			bf.BlackFlashChance += 5
-			admins << "upping BlackFlashChance to [bf.BlackFlashChance]"
 			return clamp(bf.BlackFlashChance-5, bf.BlackFlashBaseChance, 90);
