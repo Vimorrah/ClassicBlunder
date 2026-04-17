@@ -745,7 +745,7 @@ NEW VARIABLES
 							DefMult=0.8
 					src.Trigger(usr)
 			Power_Armor_Burst
-				PowerMult=1.3
+				PowerMult=1.5
 				StrMult=1.2
 				ForMult=1.3
 				OffMult=1.2
@@ -778,13 +778,13 @@ NEW VARIABLES
 							DefMult=0.8
 					src.Trigger(usr)
 			Power_Armor_Burly
-				PowerMult=1.3
+				PowerMult=1.5
 				StrMult=1.2
 				EndMult=1.4
 				DefMult=0.7
 				RecovMult=0.5
 				MakesArmor=1
-				passives = list("Mechanized" = 1, "PULock" = 1)
+				passives = list("Mechanized" = 1, "PULock" = 1, "CallousedHands" = 0.15)
 				ArmorAscension = 1
 				ArmorClass="Heavy"
 				ArmorIcon='BLANK.dmi'
@@ -813,7 +813,7 @@ NEW VARIABLES
 							DefMult=0.8
 					src.Trigger(usr)
 			Power_Armor_Blitz
-				PowerMult=1.3
+				PowerMult=1.5
 				EndMult=0.7
 				DefMult=1.2
 				OffMult=1.2
@@ -823,7 +823,7 @@ NEW VARIABLES
 				MakesArmor=1
 				passives = list("Mechanized" = 1, "PULock" = 1, "BlurringStrikes" = 1)
 				ArmorAscension = 1
-				ArmorClass="Heavy"
+				ArmorClass="Light"
 				ArmorIcon='BLANK.dmi'
 				HairLock='BLANK.dmi'
 				ActiveMessage="powers up their speedy armor!"
@@ -7235,10 +7235,10 @@ NEW VARIABLES
 			IconLock='CroneMajinSparks.gif'
 			LockX=0
 			LockY=0
-			EndTaxDrain=0.0075
-			SpdTaxDrain=0.0075
-			StrTaxDrain=0.0075
-			RecovTaxDrain=0.0075
+			EndTaxDrain=0.0030
+			SpdTaxDrain=0.0030
+			StrTaxDrain=0.0030
+			RecovTaxDrain=0.0030
 			SagaSignature=1
 			AngerMult=1.5
 			ManaDrain=0.1
