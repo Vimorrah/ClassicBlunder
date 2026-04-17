@@ -78,14 +78,13 @@ obj
 			Area="Target"
 			GuardBreak=1
 			PassThrough=1
-			Stunner=1
-			MortalBlow=0.5
+			MortalBlow=1
 			HitSparkIcon='Slash - Zan.dmi'
 			HitSparkX=-16
 			HitSparkY=-16
 			HitSparkTurns=1
 			HitSparkSize=3
-			Cooldown=60
+			Cooldown=45
 			EnergyCost=15
 			Instinct=1
 			verb/Slashing_Hand_Chop()
