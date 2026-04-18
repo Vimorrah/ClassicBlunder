@@ -42,7 +42,7 @@ globalTracker
 mob/var/update/updateVersion
 
 update
-	var/version = 1
+	var/version = 2
 
 	proc/updateMob(mob/p)
 		if(version>1) p << "You have been updated to version [version]"
@@ -52,6 +52,13 @@ update
 		version = 1;
 		updateMob(mob/p)
 			. = ..()//left alone for easy copy pasting
+	version2
+		version = 2;
+		updateMob(mob/p)
+			. = ..()//left alone for easy copy pasting
+			if(p.isRace(ELDRITCH))
+				p.race.transformations += new /transformation/eldritch/partial_manifestation()
+				p.race.transformations += new /transformation/eldritch/full_manifestation()
 
 /globalTracker/var/COOL_GAJA_PLAYERS = list("Thorgigamax", "Gemenilove" )
 /globalTracker/var/GAJA_PER_ASC_CONVERSION = 0.25

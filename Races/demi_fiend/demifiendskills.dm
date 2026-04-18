@@ -1225,3 +1225,350 @@ obj/Skills/Buffs/SlotlessBuffs/DemiFiend/Makajamon
 			StrOffense = 2 + (0.5 * usr.AscensionsAcquired)
 			ForOffense = 1 + (0.25 * usr.AscensionsAcquired)
 		usr.Activate(src)
+
+// =========================================================================
+// Kamurogi skills
+// =========================================================================
+
+/obj/Skills/AutoHit/DemiFiend/Oni_Kagura
+	Area="Wave"
+	Distance=7
+	Rush=6
+	ControlledRush=1
+	DamageMult=18
+	StrOffense=3
+	SpecialAttack=1
+	GuardBreak=1
+	ObjIcon=1
+	Icon='Slash - Ragna.dmi'
+	IconX=-16
+	IconY=-16
+	Size=2
+	Rounds=10
+	DelayTime=2
+	HitSparkIcon='Hit Effect Wind.dmi'
+	HitSparkX=-32
+	HitSparkY=-32
+	HitSparkTurns=1
+	HitSparkSize=1.5
+	HitSparkDispersion=1
+	TurfStrike=1
+	Cooldown=75
+	WindUp=0.4
+	WindupMessage="moves into the stance of the dread dance..."
+	ActiveMessage="unleashes the dread dance of Oni Kagura!"
+	verb/Oni_Kagura()
+		set category="Skills"
+		if(!altered)
+			DamageMult = 12 + (3 * usr.AscensionsAcquired)
+			Distance = 7 + (2 * usr.AscensionsAcquired)
+			Rush = 6 + (1 * usr.AscensionsAcquired)
+			StrOffense = 3 + (0.5 * usr.AscensionsAcquired)
+		usr.Activate(src)
+
+// =========================================================================
+// Satan skills
+// =========================================================================
+
+/obj/Skills/AutoHit/DemiFiend/Gaea_Rage
+	ElementalClass="Ultima"
+	Area="Circle"
+	Distance=1
+	Wander=12
+	DamageMult=20
+	StrOffense=2
+	ForOffense=2
+	SpecialAttack=1
+	GuardBreak=1
+	NoLock=1
+	NoAttackLock=1
+	ObjIcon=1
+	Icon='fevExplosion - Hellfire.dmi'
+	IconX=-16
+	IconY=-16
+	Size=2.5
+	Rounds=12
+	DelayTime=2
+	HitSparkIcon='BLANK.dmi'
+	HitSparkX=0
+	HitSparkY=0
+	Cooldown=120
+	WindUp=1
+	WindupMessage="channels the abyssal fury of the earth..."
+	ActiveMessage="erupts in a world-splitting Gaea Rage!"
+	verb/Gaea_Rage()
+		set category="Skills"
+		if(!altered)
+			DamageMult = 15 + (3 * usr.AscensionsAcquired)
+			Wander = 10 + (2 * usr.AscensionsAcquired)
+			StrOffense = 2 + (0.5 * usr.AscensionsAcquired)
+			ForOffense = 2 + (0.5 * usr.AscensionsAcquired)
+		usr.Activate(src)
+
+// =========================================================================
+// Adama skills
+// =========================================================================
+
+obj/Skills/Buffs/SlotlessBuffs/DemiFiend/LusterCandyApply
+	StrMult=1.35
+	ForMult=1.35
+	EndMult=1.35
+	SpdMult=1.35
+	OffMult=1.35
+	DefMult=1.35
+	TimerLimit=30
+	ActiveMessage="is enveloped in an all-enhancing aura!"
+	OffMessage="the all-enhancing aura fades."
+	MagicNeeded=0
+
+obj/Skills/Buffs/SlotlessBuffs/DemiFiend/Luster_Candy
+	EndYourself=1
+	Cooldown=240
+	KenWave=1
+	KenWaveIcon='SparkleYellow.dmi'
+	KenWaveSize=5
+	KenWaveX=105
+	KenWaveY=105
+	ActiveMessage="invokes an all-enhancing aura upon their party!"
+	OffMessage="finishes casting Luster Candy."
+	verb/Luster_Candy()
+		set category="Skills"
+		var/mob/User = usr
+		if(src.cooldown_remaining > 0)
+			User << "[src] is on cooldown."
+			return
+		if(!altered)
+			adjust(User)
+		if(User.party && User.party.members && User.party.members.len)
+			for(var/mob/m in User.party.members)
+				if(!m || !ismob(m)) continue
+				var/obj/Skills/Buffs/SlotlessBuffs/DemiFiend/LusterCandyApply/applyBuff = new
+				applyBuff.Trigger(m, 1)
+		else
+			var/obj/Skills/Buffs/SlotlessBuffs/DemiFiend/LusterCandyApply/applyBuff = new
+			applyBuff.Trigger(User, 1)
+		User.OMessage(1, null, "[User] invokes Luster Candy, enhancing every aspect of their allies!")
+		src.Cooldown(1, null, User)
+
+// =========================================================================
+// Vimana skills
+// =========================================================================
+
+/obj/Skills/AutoHit/DemiFiend/Deadly_Wind
+	ElementalClass="Wind"
+	SpellElement="Air"
+	Area="Wave"
+	Distance=10
+	DamageMult=14
+	StrOffense=1
+	ForOffense=2
+	SpecialAttack=1
+	GuardBreak=1
+	Shearing=50
+	ObjIcon=1
+	Icon='Tornado.dmi'
+	IconX=-16
+	IconY=-16
+	Size=2
+	Rounds=10
+	DelayTime=2
+	HitSparkIcon='Hit Effect Wind.dmi'
+	HitSparkX=-32
+	HitSparkY=-32
+	HitSparkTurns=1
+	HitSparkSize=1
+	HitSparkDispersion=1
+	Launcher=2
+	Cooldown=75
+	WindUp=0.4
+	WindupMessage="summons a screaming gale..."
+	ActiveMessage="unleashes the cutting fury of Deadly Wind!"
+	verb/Deadly_Wind()
+		set category="Skills"
+		if(!altered)
+			DamageMult = 10 + (2 * usr.AscensionsAcquired)
+			Distance = 10 + (2 * usr.AscensionsAcquired)
+			ForOffense = 2 + (0.25 * usr.AscensionsAcquired)
+			StrOffense = 1 + (0.25 * usr.AscensionsAcquired)
+		usr.Activate(src)
+
+// =========================================================================
+// Gundari skills
+// =========================================================================
+
+obj/Skills/Projectile/DemiFiend/Hamaon
+	name = "Hamaon"
+	ElementalClass = "Light"
+	SpellElement = "Light"
+	IconLock = 'AvalonLight.dmi'
+	IconSize = 1
+	LockX = -16
+	LockY = -16
+	Speed = 0.3
+	Distance = 22
+	DamageMult = 6
+	ForRate = 1
+	Homing = 1
+	Cooldown = 30
+	verb/Hamaon()
+		set category = "Skills"
+		if(!altered)
+			DamageMult = 6 + (1.5 * usr.AscensionsAcquired)
+			Distance = 22 + (2 * usr.AscensionsAcquired)
+		usr.UseProjectile(src)
+
+/obj/Skills/AutoHit/DemiFiend/Mahamaon
+	ElementalClass="Light"
+	SpellElement="Light"
+	Area="Circle"
+	Distance=1
+	Wander=10
+	DamageMult=14
+	ForOffense=2
+	SpecialAttack=1
+	NoLock=1
+	NoAttackLock=1
+	ObjIcon=1
+	Icon='AvalonLight.dmi'
+	IconX=-16
+	IconY=-16
+	Size=2
+	Rounds=10
+	DelayTime=2
+	HitSparkIcon='BLANK.dmi'
+	HitSparkX=0
+	HitSparkY=0
+	Cooldown=120
+	WindUp=0.6
+	WindupMessage="calls down an unblinking radiance..."
+	ActiveMessage="unleashes the banishing light of Mahamaon!"
+	verb/Mahamaon()
+		set category="Skills"
+		if(!altered)
+			DamageMult = 10 + (2 * usr.AscensionsAcquired)
+			Wander = 8 + (2 * usr.AscensionsAcquired)
+			ForOffense = 2 + (0.25 * usr.AscensionsAcquired)
+		usr.Activate(src)
+
+// =========================================================================
+// Sophia skills
+// =========================================================================
+
+obj/Skills/Buffs/SlotlessBuffs/DemiFiend/MediarahanApply
+	StableHeal=1
+	HealthHeal=150
+	TimerLimit=5
+	ActiveMessage="is flooded with overwhelming restorative light!"
+	OffMessage="the flood of healing recedes."
+	MagicNeeded=0
+
+obj/Skills/Buffs/SlotlessBuffs/DemiFiend/Mediarahan
+	ElementalClass="Light"
+	EndYourself=1
+	Cooldown=480
+	KenWave=1
+	KenWaveIcon='SparkleYellow.dmi'
+	KenWaveSize=6
+	KenWaveX=105
+	KenWaveY=105
+	ActiveMessage="invokes an overwhelming flood of restorative light upon their party!"
+	OffMessage="finishes casting Mediarahan."
+	verb/Mediarahan()
+		set category="Skills"
+		var/mob/User = usr
+		if(!User.party || !User.party.members || User.party.members.len == 0)
+			User << "You need to be in a party to use Mediarahan."
+			return
+		if(src.cooldown_remaining > 0)
+			User << "[src] is on cooldown."
+			return
+		if(!altered)
+			adjust(User)
+		for(var/mob/m in User.party.members)
+			if(!m || !ismob(m)) continue
+			var/obj/Skills/Buffs/SlotlessBuffs/DemiFiend/MediarahanApply/applyBuff = new
+			applyBuff.HealthHeal = 150
+			applyBuff.StableHeal = 1
+			applyBuff.TimerLimit = 5
+			applyBuff.Trigger(m, 1)
+		User.OMessage(1, null, "[User] invokes a flood of overwhelming restorative light upon their party!")
+		src.Cooldown(1, null, User)
+
+// =========================================================================
+// Gaea skills
+// =========================================================================
+
+/obj/Skills/AutoHit/DemiFiend/Hassohappa
+	Area="Wave"
+	Distance=8
+	Rush=6
+	ControlledRush=1
+	DamageMult=16
+	StrOffense=2
+	SpecialAttack=1
+	GuardBreak=1
+	ObjIcon=1
+	Icon='Slash - Ragna.dmi'
+	IconX=-16
+	IconY=-16
+	Size=1.5
+	Rounds=12
+	DelayTime=2
+	HitSparkIcon='Hit Effect Wind.dmi'
+	HitSparkX=-32
+	HitSparkY=-32
+	HitSparkTurns=1
+	HitSparkSize=1
+	HitSparkDispersion=1
+	TurfStrike=1
+	Cooldown=75
+	WindUp=0.4
+	WindupMessage="draws upon the weight of the continents..."
+	ActiveMessage="unleashes a cascade of mountain-shattering blows!"
+	verb/Hassohappa()
+		set category="Skills"
+		if(!altered)
+			DamageMult = 12 + (2 * usr.AscensionsAcquired)
+			Distance = 8 + (2 * usr.AscensionsAcquired)
+			Rush = 6 + (1 * usr.AscensionsAcquired)
+			StrOffense = 2 + (0.5 * usr.AscensionsAcquired)
+		usr.Activate(src)
+
+// =========================================================================
+// Kailash skills
+// =========================================================================
+
+/obj/Skills/AutoHit/DemiFiend/Thunder_Reign
+	ElementalClass="Wind"
+	SpellElement="Air"
+	Area="Circle"
+	Distance=1
+	Wander=12
+	DamageMult=18
+	ForOffense=2
+	SpecialAttack=1
+	Shocking=100
+	Paralyzing=25
+	NoLock=1
+	NoAttackLock=1
+	ObjIcon=1
+	Icon='LightningBreath.dmi'
+	IconX=-16
+	IconY=-16
+	Size=2
+	Rounds=14
+	DelayTime=2
+	HitSparkIcon='BLANK.dmi'
+	HitSparkX=0
+	HitSparkY=0
+	Cooldown=120
+	WindUp=0.6
+	WindupMessage="draws down the thunder of the sacred peak..."
+	ActiveMessage="calls forth the reign of Kailash's thunder!"
+	verb/Thunder_Reign()
+		set category="Skills"
+		if(!altered)
+			DamageMult = 14 + (2 * usr.AscensionsAcquired)
+			Wander = 10 + (2 * usr.AscensionsAcquired)
+			ForOffense = 2 + (0.5 * usr.AscensionsAcquired)
+		usr.Activate(src)

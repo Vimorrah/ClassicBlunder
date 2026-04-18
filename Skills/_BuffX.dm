@@ -164,6 +164,7 @@ NEW VARIABLES
 	var/DefTax
 	var/RegenTax
 	var/RecovTax
+	var/PostBuffEff//Add a post-buff effect like a temp debuff
 	//These variables will accumulate at [this value] per second
 	var/StrTaxDrain
 	var/StrCutDrain
@@ -7667,7 +7668,7 @@ NEW VARIABLES
 				src.Trigger(usr)
 
 		Spirit_Bow
-			SignatureTechnique=2
+			SignatureTechnique=1
 			MakesStaff=1
 			FlashDraw=1
 			StaffName="Spirit Bow"
@@ -7704,6 +7705,7 @@ NEW VARIABLES
 		Spirit_Sword//t2
 			MakesSword=3
 			FlashDraw=1
+			SignatureTechnique=1
 			SwordName="Spirit Sword"
 			SwordIcon='Aether Blade.dmi'
 			SwordX=-32
@@ -14544,7 +14546,8 @@ mob
 				B.InstantAffected=0
 			if(B.BuffName=="Kyoukaken")
 				src.Kyoukaken("Off")
-
+			if(B.PostBuffEff)
+				buffSelf(B.PostBuffEff)
 			if(B.KillSword&&src.EquippedSword())
 				var/obj/Items/Sword/s=src.EquippedSword()
 				src.SwordShatter(s)
