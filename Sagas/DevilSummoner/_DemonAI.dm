@@ -122,15 +122,15 @@
 		if(target == src) return
 		if(istype(target, /mob/Player) && "[ai_owner.ckey]" in target.ai_alliances) return
 		if(ai_owner.party && ai_owner.party.members && (target in ai_owner.party.members)) return
-		var/dmg = round(StrMod * 0.1 * next_attack_multiplier * glob.DevilSummonerDemonDamageMod)
+		var/dmg = StrMod * 0.1 * next_attack_multiplier * glob.DevilSummonerDemonDamageMod
 		if(next_attack_multiplier > 1)
 			if(ai_owner) ai_owner << "<font color='#ffaa00'>[name]'s charged attack connects!</font>"
 			next_attack_multiplier = 1
-		if(dmg <= 0) return 
+		if(dmg <= 0) return
 		// Crit chance / damage from passive_handler (CriticalChance / CriticalDamage)
 		var/crit_chance = 5 + DemonPassiveCritBonus()
 		if(prob(crit_chance))
-			dmg = round(dmg * DemonPassiveCritDmgMult())
+			dmg = dmg * DemonPassiveCritDmgMult()
 		DemonDealDamage(target, TrueDamage(dmg))
 		DemonHitVisual(target)
 		DemonPassiveAddAilments(target)
@@ -144,7 +144,7 @@
 					Bump(target)
 		// Attack All: also hit nearby enemies
 		if(passive_attack_all)
-			var/aoe_dmg = round(dmg * 0.6)
+			var/aoe_dmg = dmg * 0.6
 			if(aoe_dmg > 0)
 				for(var/mob/m in oview(1, src))
 					if(m == src || m == target) continue

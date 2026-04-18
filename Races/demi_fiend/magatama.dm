@@ -368,3 +368,97 @@ obj/Items/Magatama/Narukami
 	magatama_skills = list(/obj/Skills/AutoHit/DemiFiend/Thunder_Breath)
 	ascension_skills = list("1" = list(/obj/Skills/AutoHit/DemiFiend/Shock))
 	craft_cost = 5000
+
+obj/Items/Magatama/Anathema
+	name = "Anathema"
+	desc = "A Magatama cast from the curse of the excommunicated. Those who ingest it siphon power from the anguish of the damned and return the gift as unblinking judgment."
+	base_passives = list("DarkSpellDamage" = 0.15, "EvilResist" = 1, "Terrifying" = 2)
+	passive_scaling = list("DarkSpellDamage" = 0.01, "EvilResist" = 0.02, "Terrifying" = 0.2, "EnergyGeneration" = 0.05)
+	ascension_passives = list("1" = list("EnergyGeneration" = 1))
+	magatama_skills = list(/obj/Skills/Projectile/DemiFiend/Mamudo)
+	ascension_skills = list("1" = list(/obj/Skills/Buffs/SlotlessBuffs/DemiFiend/Evil_Gaze), "2" = list(/obj/Skills/AutoHit/DemiFiend/Mamudoon))
+	craft_cost = 5000
+	craft_ascension = 3
+
+obj/Items/Magatama/Miasma
+	name = "Miasma"
+	desc = "A Magatama exhaled by a dying god of winter. Its frigid breath chokes the living and drinks the ice that flows from the wounds it opens."
+	base_passives = list("WaterSpellDamage" = 0.15, "ChillResist" = 1, "Chilling" = 3, "Freezing" = 3)
+	passive_scaling = list("WaterSpellDamage" = 0.01, "ChillResist" = 0.02, "Chilling" = 0.2, "Freezing" = 0.1)
+	ascension_passives = list("1" = list("LifeGeneration" = 0.5))
+	magatama_skills = list(/obj/Skills/Projectile/DemiFiend/Glacial_Blast)
+	ascension_skills = list("1" = list(/obj/Skills/AutoHit/DemiFiend/Wild_Dance))
+	craft_cost = 5000
+	craft_ascension = 3
+	mastery_required_type = /obj/Items/Magatama/Wadatsumi
+	mastery_required_amount = 100
+
+obj/Items/Magatama/Nirvana
+	name = "Nirvana"
+	desc = "A Magatama that embodies the boundless calm of enlightenment. Its radiance pierces all illusion and grants the bearer perfect poise against every darkness."
+	base_passives = list("LightSpellDamage" = 0.15, "GoodResist" = 1, "CriticalChance" = 10, "ControlResist" = 1)
+	passive_scaling = list("LightSpellDamage" = 0.01, "GoodResist" = 0.02, "CriticalChance" = 0.2, "ControlResist" = 0.02)
+	ascension_passives = list("1" = list("CriticalDamage" = 0.1))
+	magatama_skills = list(/obj/Skills/Projectile/DemiFiend/Divine_Shot)
+	ascension_skills = list("1" = list(/obj/Skills/AutoHit/DemiFiend/Violet_Flash))
+	craft_cost = 5000
+	craft_ascension = 3
+
+obj/Items/Magatama/Murakumo
+	name = "Murakumo"
+	desc = "The famed cloud-gathering blade, reborn as a Magatama. Legends say it cleaves through any illusion, curse, or chain that binds the soul."
+	base_passives = list("MeleeResist" = 1, "ControlResist" = 2, "CrippleResist" = 2, "ShearResist" = 2)
+	passive_scaling = list("MeleeResist" = 0.02, "ControlResist" = 0.05, "CrippleResist" = 0.05, "ShearResist" = 0.05)
+	ascension_passives = list("1" = list("EvilResist" = 1))
+	magatama_skills = list(/obj/Skills/AutoHit/DemiFiend/Chaos_Blade)
+	ascension_skills = list()
+	craft_cost = 5000
+	craft_ascension = 3
+
+obj/Items/Magatama/Geis
+	name = "Geis"
+	desc = "A Magatama of inviolable vow. Its oath binds death, ward, and wound alike, shielding its bearer within the weave of sacred geometries."
+	base_passives = list("AngelicInfusion" = 2, "LifeGeneration" = 0.5, "ManaGeneration" = 0.5, "GoodResist" = 1)
+	passive_scaling = list("AngelicInfusion" = 0.05, "LifeGeneration" = 0.02, "ManaGeneration" = 0.02, "GoodResist" = 0.02)
+	ascension_passives = list("1" = list("EnergyGeneration" = 0.5))
+	magatama_skills = list(/obj/Skills/Buffs/SlotlessBuffs/DemiFiend/Diarama, /obj/Skills/Buffs/SlotlessBuffs/DemiFiend/Tetraja)
+	ascension_skills = list("1" = list(/obj/Skills/Buffs/SlotlessBuffs/DemiFiend/Mediarama), "2" = list(/obj/Skills/Buffs/SlotlessBuffs/DemiFiend/Diarahan))
+	craft_cost = 5000
+	craft_ascension = 3
+	mastery_required_type = /obj/Items/Magatama/Ankh
+	mastery_required_amount = 100
+
+obj/Items/Magatama/Djed
+	name = "Djed"
+	desc = "A Magatama shaped like the pillar of stability. Sacred to Osiris, it bears the unshakable spine of order that holds the soul's many bodies aloft."
+	base_passives = list("Harden" = 1, "Steady" = 1, "EvilResist" = 1, "GoodResist" = 1)
+	passive_scaling = list("Harden" = 0.05, "Steady" = 0.05, "EvilResist" = 0.02, "GoodResist" = 0.02)
+	ascension_passives = list("1" = list("ControlResist" = 1))
+	magatama_skills = list(/obj/Skills/Buffs/SlotlessBuffs/DemiFiend/Tarukaja, /obj/Skills/Buffs/SlotlessBuffs/DemiFiend/Rakukaja)
+	ascension_skills = list("1" = list(/obj/Skills/Buffs/SlotlessBuffs/DemiFiend/Sukukaja, /obj/Skills/Buffs/SlotlessBuffs/DemiFiend/Makakaja), "2" = list(/obj/Skills/Buffs/SlotlessBuffs/DemiFiend/Dekaja))
+	craft_cost = 5000
+	craft_ascension = 3
+
+obj/Items/Magatama/Muspell
+	name = "Muspell"
+	desc = "A Magatama of the burning south. Its howl unmakes minds, sears tongues silent, and crushes the still-standing underfoot."
+	base_passives = list("Brutalize" = 1, "Confusing" = 3, "Pacifying" = 3, "Harden" = 1)
+	passive_scaling = list("Brutalize" = 0.05, "Confusing" = 0.2, "Pacifying" = 0.2, "Harden" = 0.05)
+	ascension_passives = list("1" = list("ControlResist" = 1))
+	magatama_skills = list(/obj/Skills/Buffs/SlotlessBuffs/DemiFiend/Tentarafoo)
+	ascension_skills = list("1" = list(/obj/Skills/Buffs/SlotlessBuffs/DemiFiend/Makajamon), "2" = list(/obj/Skills/AutoHit/DemiFiend/Xeros_Beat))
+	craft_cost = 5000
+	craft_ascension = 3
+
+obj/Items/Magatama/Gehenna
+	name = "Gehenna"
+	desc = "A Magatama drawn from the valley of infernal judgment. Its flame is older than mercy, and it drinks deep from what it consumes."
+	base_passives = list("FireSpellDamage" = 0.25, "BurnResist" = 1, "Scorching" = 3, "Combustion" = 75, "FireHerald" = 1)
+	passive_scaling = list("FireSpellDamage" = 0.015, "BurnResist" = 0.02, "Scorching" = 0.2, "Combustion" = 0.75)
+	ascension_passives = list("1" = list("LifeGeneration" = 0.5, "ManaGeneration" = 0.5))
+	magatama_skills = list(/obj/Skills/AutoHit/DemiFiend/Hellfire)
+	ascension_skills = list("1" = list(/obj/Skills/AutoHit/DemiFiend/Magma_Axis))
+	craft_cost = 5000
+	craft_ascension = 3
+	mastery_required_type = /obj/Items/Magatama/Shiranui
+	mastery_required_amount = 100

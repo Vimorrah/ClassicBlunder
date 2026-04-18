@@ -421,7 +421,7 @@ var/global/list/DEMON_SKILL_VFX = list()
 
 	proc/DemonSingleDamage(mob/target, dmg, element, debuff_val)
 		if(!DemonValidTarget(target)) return FALSE
-		var/final_dmg = round(dmg * glob.DevilSummonerDemonSkillMod)
+		var/final_dmg = dmg * glob.DevilSummonerDemonSkillMod
 		DemonDealDamage(target, TrueDamage(final_dmg))
 		DemonHitVisual(target)
 		DemonApplyDebuff(target, element, debuff_val)
@@ -432,7 +432,7 @@ var/global/list/DEMON_SKILL_VFX = list()
 	proc/DemonAoeDamage(mob/target, radius, dmg, element, debuff_val)
 		if(!DemonValidTarget(target)) return FALSE
 		var/list/targets = DemonGetAoeTargets(target, radius)
-		var/final_dmg = round(dmg * glob.DevilSummonerDemonSkillMod)
+		var/final_dmg = dmg * glob.DevilSummonerDemonSkillMod
 		for(var/mob/t in targets)
 			DemonDealDamage(t, TrueDamage(final_dmg))
 			DemonHitVisual(t)
@@ -444,7 +444,7 @@ var/global/list/DEMON_SKILL_VFX = list()
 	proc/DemonDanceSkill(mob/target, dmg_per, element, debuff_per, min_hits, max_hits)
 		if(!DemonValidTarget(target)) return FALSE
 		var/hits = rand(min_hits, max_hits)
-		var/final_dmg = round(dmg_per * glob.DevilSummonerDemonSkillMod)
+		var/final_dmg = dmg_per * glob.DevilSummonerDemonSkillMod
 		spawn()
 			for(var/i = 1, i <= hits, i++)
 				if(!src || !target || !ai_owner) return
@@ -459,7 +459,7 @@ var/global/list/DEMON_SKILL_VFX = list()
 
 	proc/DemonPhysDamage(mob/target, dmg)
 		if(!DemonValidTarget(target)) return FALSE
-		var/final_dmg = round(dmg * glob.DevilSummonerDemonSkillMod)
+		var/final_dmg = dmg * glob.DevilSummonerDemonSkillMod
 		DemonDealDamage(target, TrueDamage(final_dmg))
 		DemonHitVisual(target)
 		Bump(target)
@@ -469,7 +469,7 @@ var/global/list/DEMON_SKILL_VFX = list()
 	proc/DemonPhysMultiHit(mob/target, dmg_per, min_hits, max_hits)
 		if(!DemonValidTarget(target)) return FALSE
 		var/hits = rand(min_hits, max_hits)
-		var/final_dmg = round(dmg_per * glob.DevilSummonerDemonSkillMod)
+		var/final_dmg = dmg_per * glob.DevilSummonerDemonSkillMod
 		spawn()
 			for(var/i = 1, i <= hits, i++)
 				if(!src || !target || !ai_owner) return
@@ -484,7 +484,7 @@ var/global/list/DEMON_SKILL_VFX = list()
 	proc/DemonPhysAoe(mob/target, radius, dmg)
 		if(!DemonValidTarget(target)) return FALSE
 		var/list/targets = DemonGetAoeTargets(target, radius)
-		var/final_dmg = round(dmg * glob.DevilSummonerDemonSkillMod)
+		var/final_dmg = dmg * glob.DevilSummonerDemonSkillMod
 		for(var/mob/t in targets)
 			DemonDealDamage(t, TrueDamage(final_dmg))
 			DemonHitVisual(t)
@@ -495,7 +495,7 @@ var/global/list/DEMON_SKILL_VFX = list()
 		if(!DemonValidTarget(target)) return FALSE
 		var/list/targets = DemonGetAoeTargets(target, radius)
 		var/hits = rand(min_hits, max_hits)
-		var/final_dmg = round(dmg_per * glob.DevilSummonerDemonSkillMod)
+		var/final_dmg = dmg_per * glob.DevilSummonerDemonSkillMod
 		spawn()
 			for(var/i = 1, i <= hits, i++)
 				if(!src || !ai_owner) return
@@ -512,7 +512,7 @@ var/global/list/DEMON_SKILL_VFX = list()
 		if(!ai_owner) return FALSE
 		var/max_est = max(100, ai_owner.Potential * 5)
 		var/missing_ratio = clamp(1 - (ai_owner.Health / max_est), 0, 1)
-		var/dmg = round(StrMod * 0.5 * (1 + missing_ratio * 3) * glob.DevilSummonerDemonSkillMod)
+		var/dmg = StrMod * 0.5 * (1 + missing_ratio * 3) * glob.DevilSummonerDemonSkillMod
 		DemonDealDamage(target, TrueDamage(dmg))
 		DemonHitVisual(target)
 		Bump(target)
@@ -528,7 +528,7 @@ var/global/list/DEMON_SKILL_VFX = list()
 
 	proc/DemonDrain(mob/target, dmg, steal_energy)
 		if(!DemonValidTarget(target)) return FALSE
-		var/final_dmg = round(dmg * glob.DevilSummonerDemonSkillMod)
+		var/final_dmg = dmg * glob.DevilSummonerDemonSkillMod
 		DemonDealDamage(target, TrueDamage(final_dmg))
 		DemonHitVisual(target)
 		demon_hp = min(100, demon_hp + final_dmg)
@@ -676,7 +676,8 @@ var/global/list/DEMON_SKILL_VFX = list()
 				StrMod /= 1.5
 				EndMod /= 0.7
 				DefMod /= 0.7
-		var/dmg = max(1, round(StrMod * 0.5))
+		var/dmg = StrMod * 0.5
+		if(dmg <= 0) return TRUE
 		target.DoDamage(src, TrueDamage(dmg))
 		Bump(target)
 		DemonSpawnVFX(target)
@@ -790,8 +791,8 @@ var/global/list/DEMON_SKILL_VFX = list()
 
 	proc/DemonStone(mob/target)
 		if(!DemonValidTarget(target)) return FALSE
-		var/dmg = max(1, round(StrMod * 0.3))
-		target.DoDamage(src, TrueDamage(dmg))
+		var/dmg = StrMod * 0.3
+		if(dmg > 0) target.DoDamage(src, TrueDamage(dmg))
 		target.AddSlow(20, src)
 		DemonSpawnVFX(target)
 		if(ai_owner) ai_owner << "<font color='#888899'>[name] petrifies [target]!</font>"
@@ -805,7 +806,8 @@ var/global/list/DEMON_SKILL_VFX = list()
 		if(target.Shock > 0) debuff_count++
 		if(target.Shatter > 0) debuff_count++
 		if(target.Poison > 0) debuff_count++
-		var/dmg = max(1, round(ForMod * 0.4 * (1 + debuff_count * 0.5)))
+		var/dmg = ForMod * 0.4 * (1 + debuff_count * 0.5)
+		if(dmg <= 0) return TRUE
 		target.DoDamage(src, TrueDamage(dmg))
 		DemonFlash(target, "Almighty")
 		DemonSpawnVFX(target)
