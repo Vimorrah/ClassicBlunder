@@ -1172,7 +1172,7 @@ mob
 			Return += GetMangLevel()
 			if(passive_handler.Get("Compassion")&&Health<=50)
 				if(Target.Health>Health)
-					Return += 3*clamp((proportionalHealth("Lower")/10),1,10)
+					Return += 5*clamp((proportionalHealth("Lower")/10),1,4)
 			return Return
 		HasPureReduction()
 			var/Return=0
@@ -1202,7 +1202,7 @@ mob
 				Return += h
 			if(passive_handler.Get("Compassion")&&Health>51)
 				if(Target.Health>Health)
-					Return += 3*clamp((proportionalHealth("Lower")/10),1,10)
+					Return += 3*clamp((proportionalHealth("Lower")/10),1,4)
 			return Return
 		Hustling()
 			if(passive_handler.Get("Hustle") || HasMythical() > 0.25 || (passive_handler["Rage"] && Health <= 25))
