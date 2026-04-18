@@ -122,7 +122,6 @@
 		if(target == src) return
 		if(istype(target, /mob/Player) && "[ai_owner.ckey]" in target.ai_alliances) return
 		if(ai_owner.party && ai_owner.party.members && (target in ai_owner.party.members)) return
-		// Basic melee now uses the player damage kernel with StrMod as atk
 		var/dmg = DemonComputeKernelDamage(target, StrMod) * next_attack_multiplier * glob.DevilSummonerDemonDamageMod
 		if(next_attack_multiplier > 1)
 			if(ai_owner) ai_owner << "<font color='#ffaa00'>[name]'s charged attack connects!</font>"
@@ -169,20 +168,14 @@
 			ai_owner << "<b>[name] has been defeated and returned.</b> Meditate to restore them."
 		del(src)
 
-	// Core damage kernel ported from player Melee1 (Melee.dm line 320).
-	// Produces a raw damage value using the same curve shape players use:
-	//   damage = powerDif^a * (C + effectiveness)^-(def^b / atk^c)
-	// Demon's Potential substitutes for player Power when computing powerDif.
-	// Callers supply an atk stat (StrMod for basics, StrMod*coeff for skills).
 	proc/DemonComputeKernelDamage(mob/target, atk_val)
 		if(!target || !isnum(atk_val) || atk_val <= 0) return 0
-		// Demons mirror their owner's Power (they have no independent growth path)
-		var/my_power = 1
-		if(ai_owner && isnum(ai_owner.Power) && ai_owner.Power > 0)
-			my_power = ai_owner.Power
+		var/my_power = max(1, Potential)
 		var/target_power = 1
 		if(isnum(target.Power) && target.Power > 0)
 			target_power = target.Power
+		else if(isnum(target.Potential) && target.Potential > 0)
+			target_power = target.Potential
 		var/powerDif = my_power / target_power
 		if(glob.CLAMP_POWER)
 			powerDif = clamp(powerDif, glob.MIN_POWER_DIFF, glob.MAX_POWER_DIFF)
