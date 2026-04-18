@@ -6,7 +6,7 @@ ascension
 				switch(owner.Class)//These are jsut concepts right now. Numbers will be adjusted by staff before implimented.
 
 					if("Pixie")
-						var/newpassives = list("DualCast" = 1, "Adrenaline" = 1, "Siphon" = 1)
+						var/newpassives = list("SpiritFlow" = 1, "Adrenaline" = 1, "Siphon" = 1)
 						passives+= newpassives
 						speed = 0.25
 						force = 0.5
@@ -39,7 +39,7 @@ ascension
 						offense = 0.15
 						endurance = 0.15
 					if("Goblin")
-						var/newpassives = list("BlurringStrikes" = 1, "ManaSteal" = 1, "Godspeed" = 1)
+						var/newpassives = list("Fury" = 1, "ManaSteal" = 1, "Godspeed" = 1)
 						passives+= newpassives
 						force = 0.35
 						speed = 0.35
@@ -55,7 +55,7 @@ ascension
 			onAscension(mob/owner)
 				switch(owner.Class)
 					if("Pixie")
-						var/newpassives = list("DualCast" = 1, "Adrenaline" = 1, "Siphon" = 1)
+						var/newpassives = list("SpiritStrike" = 1, "Adrenaline" = 1, "Siphon" = 1)
 						passives+= newpassives
 						speed = 0.25
 						force = 0.25
@@ -87,7 +87,7 @@ ascension
 						offense = 0.15
 						endurance = 0.15
 					if("Goblin")
-						var/newpassives = list("BlurringStrikes" = 1, "ManaSteal" = 1, "Godspeed" = 1)
+						var/newpassives = list("Fury" = 1, "ManaSteal" = 1, "Godspeed" = 1)
 						passives+= newpassives
 						force = 0.35
 						speed = 0.35
@@ -101,7 +101,7 @@ ascension
 			onAscension(mob/owner)
 				switch(owner.Class)
 					if("Pixie")
-						var/newpassives = list("DualCast" = 1, "Adrenaline" = 1, "Siphon" = 1)
+						var/newpassives = list("MovingCast" = 1, "Adrenaline" = 1, "Siphon" = 1)
 						passives+= newpassives
 						speed = 0.25
 						force = 0.25
@@ -133,7 +133,7 @@ ascension
 						offense = 0.25
 						endurance = 0.25
 					if("Goblin")
-						var/newpassives = list("BlurringStrikes" = 1, "ManaSteal" = 1, "Godspeed" = 1)
+						var/newpassives = list("Fury" = 1, "ManaSteal" = 1, "Godspeed" = 1)
 						passives+= newpassives
 						force = 0.5
 						speed = 0.5

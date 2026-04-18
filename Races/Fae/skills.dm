@@ -19,7 +19,7 @@
 				var/asc = p.AscensionsAcquired
 				spdAdd = 0.15 * asc
 				ManaDrain = 0.01
-				passives = list("ManaStats" = (1+(asc/2)), "Innovation" = 1, "Fury" = (1+(asc/2)), "Brutalize" = (0.5*(asc+1)),\
+				passives = list("ManaStats" = (1+(asc/2)), "Innovation" = 1, "BlurringStrikes" = (0.5+(asc/4)), "Brutalize" = (0.5*(asc+1)),\
 								"SpiritHand" = (0.5*(asc+1)), "SpiritSword" = (0.5*(asc+1)), "ManaLeak" = (4-(0.5*asc)))
 			Trigger(mob/User, Override = FALSE)
 				if(!User.BuffOn(src))
@@ -37,8 +37,8 @@
 				var/asc = p.AscensionsAcquired
 				forAdd = 0.15 * asc
 				ManaDrain = 0.01
-				passives = list("ManaStats" = (1+(asc/2)), "Innovation" = 1, "DebuffResistance" = (0.5*(asc+1)), "Reversal" = (0.5*(asc+1)),\
-								"TurningCharge" = 1, "MovingCharge" = 1, "ManaLeak" = (4-(0.5*asc))) //Does Moving Charge make Turning Charge irrelevant? I have NO IDEA.
+				passives = list("ManaStats" = (1+(asc/2)), "Innovation" = 1, "DebuffResistance" = (0.2*(asc+1)), "Reversal" = (0.5*(asc+1)),\
+								"Flow" = (1+(0.75*asc)), "ManaLeak" = (4-(0.5*asc))) //Pixies are supposed to be annoying to put down once they go into Mania.
 			Trigger(mob/User, Override = FALSE)
 				if(!User.BuffOn(src))
 					adjust(User)
