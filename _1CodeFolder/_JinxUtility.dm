@@ -1552,7 +1552,7 @@ mob
 			Str+=EldritchMod
 			var/EffectiveAsc=src.StrAscension
 			if(passive_handler.Get("Half Manifestation"))
-				EffectiveAsc=src.HandleManifestation("Str")
+				EffectiveAsc+=src.HandleManifestation("Str")
 			Str+=EffectiveAsc
 			//stat ascensions gained through racial or saga improvements
 			var/enhanced = getEnhanced("Strength")
@@ -1746,7 +1746,7 @@ mob
 			For+=EldritchMod
 			var/EffectiveAsc=src.ForAscension
 			if(passive_handler.Get("Half Manifestation"))
-				EffectiveAsc=src.HandleManifestation("For")
+				EffectiveAsc+=src.HandleManifestation("For")
 			For+=EffectiveAsc
 			var/enhanced = getEnhanced("Force")
 			For+=src.EnhancedForce ? enhanced : 0
@@ -1936,7 +1936,7 @@ mob
 			End+=EldritchMod
 			var/EffectiveAsc=src.EndAscension
 			if(passive_handler.Get("Half Manifestation"))
-				EffectiveAsc=src.HandleManifestation("End")
+				EffectiveAsc+=src.HandleManifestation("End")
 			End+=EffectiveAsc
 			var/enhanced = getEnhanced("Endurance")
 			End+=EnhancedEndurance ? enhanced : 0
@@ -2091,7 +2091,7 @@ mob
 			Spd+=EldritchMod
 			var/EffectiveAsc=src.SpdAscension
 			if(passive_handler.Get("Half Manifestation"))
-				EffectiveAsc=src.HandleManifestation("Spd")
+				EffectiveAsc+=src.HandleManifestation("Spd")
 			Spd+=EffectiveAsc
 			var/enhanced = getEnhanced("Speed")
 			Spd+=EnhancedSpeed ? enhanced : 0
@@ -2243,7 +2243,7 @@ mob
 			Off+=EldritchMod
 			var/EffectiveAsc=src.OffAscension
 			if(passive_handler.Get("Half Manifestation"))
-				EffectiveAsc=src.HandleManifestation("Off")
+				EffectiveAsc+=src.HandleManifestation("Off")
 			Off+=EffectiveAsc
 			var/enhanced = getEnhanced("Aggression")
 			Off+=EnhancedAggression ? enhanced : 0
@@ -2359,7 +2359,7 @@ mob
 			Def+=EldritchMod
 			var/EffectiveAsc=src.DefAscension
 			if(passive_handler.Get("Half Manifestation"))
-				EffectiveAsc=src.HandleManifestation("Def")
+				EffectiveAsc+=src.HandleManifestation("Def")
 			Def+=EffectiveAsc
 			var/enhanced = getEnhanced("Reflexes")
 			Def+=EnhancedReflexes ? enhanced : 0

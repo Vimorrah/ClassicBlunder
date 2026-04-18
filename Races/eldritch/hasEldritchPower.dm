@@ -25,9 +25,6 @@
     if(isEnlightenedReflected()) return 1;
     return 0;
 
-/mob/proc/getTrueFormPassiveAmt()
-
-
 /mob/proc/isEldritchTrueForm()
     if(hasSecret("Eldritch") && CheckSlotless("True Form")) return 1;
     return 0;
