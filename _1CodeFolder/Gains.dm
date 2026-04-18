@@ -903,6 +903,12 @@ mob
 					client.hud_ids["Fury"]?:Update()
 				if(FuryAccumulated<0)
 					FuryAccumulated=0
+			if(cursedSheathValue)
+				cursedSheathValue -= 0.5/SagaLevel
+				cursedSheathValue = clamp(0, cursedSheathValue, SagaLevel*50)
+				if(client && hudIsLive("CursedSheath", /obj/Bar))
+					client.hud_ids["CursedSheath"]?:Update()
+			
 
 			if(src.SureHitTimerLimit)
 				if(!src.SureHit)
@@ -1448,11 +1454,6 @@ mob
 								if(b.Timer>=b.TimerLimit)
 									b.Trigger(src, Override=1) // BUFF END //
 									continue
-
-
-			if(cursedSheathValue)
-				cursedSheathValue -= 0.5/SagaLevel //TODO: ADD A HUD
-				cursedSheathValue = clamp(0, cursedSheathValue, SagaLevel*50)
 
 			for(var/obj/Skills/Buffs/SlotlessBuffs/Implants/Internal_Explosive/B in src.Buffs)
 				if(B.Using)
