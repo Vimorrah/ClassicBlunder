@@ -21,6 +21,8 @@ race
 
 		onFinalization(mob/user)
 			..()
+			var/obj/Skills/Buffs/regen = user.findOrAddSkill(/obj/Skills/Buffs/SlotlessBuffs/Regeneration)
+			regen.RegenerateLimbs = 1;
 			if(!user.majinPassive)
 				user.majinPassive = new(user)
 			if(!user.majinAbsorb)
