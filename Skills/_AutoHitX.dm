@@ -37,6 +37,7 @@ obj
 				Cleansing = 0
 				ManaDrain = 0
 				HitSelf = 0
+				CriticalChance=0
 				Snaring
 				SnaringOverlay
 				NoPierce=0//If this is flagged it will make a technique terminate after hitting something.
@@ -6085,6 +6086,8 @@ obj
 			Shocking
 			Poisoning
 			FrenzyDebuff
+			CriticalChance = 0
+			Combustion = 0
 
 			grabNerf = 0
 			BuffAffected = 0
@@ -6336,6 +6339,10 @@ obj
 				src.Crippling+=Z.Crippling
 			if(Z.FrenzyDebuff)
 				src.FrenzyDebuff = Z.FrenzyDebuff
+			if(Z.CriticalChance)
+				src.CriticalChance = Z.CriticalChance
+			if(Z.Combustion)
+				src.Combustion = Z.Combustion
 			if(Z.DirectWounds)
 				src.DirectWounds=Z.DirectWounds;
 			if(Z.ObjIcon)
@@ -6890,7 +6897,18 @@ obj
 					if(m.Health <= 0 && !m.KO)
 						m.Unconscious(src.Owner)
 				else
+					var/_skillCritDmg = src.CriticalChance * 0.01
+					if(src.CriticalChance)
+						src.Owner.passive_handler.Increase("CriticalChance", src.CriticalChance)
+						src.Owner.passive_handler.Increase("CriticalDamage", _skillCritDmg)
+					if(src.Combustion)
+						src.Owner.passive_handler.Increase("Combustion", src.Combustion)
 					damageDealt = src.Owner.DoDamage(m, FinalDmg, src.UnarmedTech, src.SwordTech, Destructive=src.Destructive, innateLifeSteal = LifeSteal, Autohit = TRUE)
+					if(src.CriticalChance)
+						src.Owner.passive_handler.Decrease("CriticalChance", src.CriticalChance)
+						src.Owner.passive_handler.Decrease("CriticalDamage", _skillCritDmg)
+					if(src.Combustion)
+						src.Owner.passive_handler.Decrease("Combustion", src.Combustion)
 				DEBUGMSG("FINAL TOTAL DAMAGE DEALT! [damageDealt]")
 				if(!damageDealt)
 					damageDealt = 0
