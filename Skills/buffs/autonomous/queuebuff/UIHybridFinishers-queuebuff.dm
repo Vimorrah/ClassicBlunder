@@ -18,7 +18,7 @@
 		EndMult = 1.2
 		DefMult = 1.15
 		SpdMult = 1.15
-		passives = list("LikeWater" = 2, "Momentum" = 2, "Reversal" = 2, "CounterMaster" = 1, "Iron Grip" = 1, "Grippy" = 1, "Flow" = 2, "TensionLock" = 1)
+		passives = list("LikeWater" = 2, "Momentum" = 2, "Reversal" = 2, "CounterMaster" = 1, "Grippy" = 1, "Flow" = 2, "TensionLock" = 1)
 		ActiveMessage = "moves with seamless instinct, every motion flowing into the next."
 		OffMessage = "lets the rhythm of combat fade from their senses."
 

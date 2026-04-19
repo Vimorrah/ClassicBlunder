@@ -395,12 +395,11 @@ obj/Skills/Utility
 
 	Refresh
 		desc="Cleanse the accumulated stat taxes from yourself or a pacted ally."
-		Cooldown=30
+		Cooldown=5
 		verb/Refresh()
 			set category="Utility"
 			if(src.Using)
 				return
-			src.Using=1
 			if(!usr.hasSecret("Eldritch (Reflected)"))
 				usr << "Only a Reflected Eldritch can use Refresh."
 				src.Using=0
@@ -434,9 +433,7 @@ obj/Skills/Utility
 				Target << "[usr] cleanses the strain from your body."
 				usr << "You cleanse [Target]'s accumulated stat taxes."
 			OMsg(usr, "[usr] radiates a brief pulse of eldritch energy, refreshing [Target == usr ? "themselves" : "[Target]"].")
-			// 30 second cooldown
-			spawn(300)
-				src.Using=0
+			Cooldown();
 
 	Eldritch_Domain
 		desc="Manifest a domain of eldritch influence, empowering yourself and nearby pacted allies."
@@ -546,9 +543,7 @@ obj/Skills/Utility
 				Target.loc = usr.loc
 				OMsg(usr, "[Target] materializes beside [usr] in a shimmer of otherworldly light.")
 				Target << "You are pulled to [usr]'s side."
-			// 60 second cooldown
-			spawn(600)
-				src.Using=0
+			Cooldown();
 
 	With_You_In_Darkness
 		desc="Enshroud a pacted ally in eldritch protection, granting them passive defenses."

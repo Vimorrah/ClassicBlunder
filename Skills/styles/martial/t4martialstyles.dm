@@ -36,7 +36,7 @@
 		StyleStr = 2
 		Finisher="/obj/Skills/Queue/Finisher/Stone_Cold_Stunner"
 		passives = list("Heavy Strike" = "Wrestling", "Muscle Power" =8, "Grippy" = 7, \
-		"Scoop" = 5, "Iron Grip" = 1, "DeathField" = 5, "Gum Gum" = 3, "Harden" = 4, \
+		"Scoop" = 5, "DeathField" = 5, "Gum Gum" = 3, "Harden" = 4, \
 		"Momentum" = 4, "CallousedHands"=0.15)
 		verb/Giga_Galaxy_Wrestling()
 			set hidden=1

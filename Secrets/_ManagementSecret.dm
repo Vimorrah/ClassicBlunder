@@ -314,6 +314,33 @@ SecretInformation
 	EldritchReflected
 		name = "Eldritch (Reflected)"
 		givenSkills = list("/obj/Skills/Utility/Offer_Pact", "/obj/Skills/Utility/Revoke_Pact");
+		applySecret(mob/p)
+			p << "You reflect a greater portion of your True Essence! [currentTier] Shards have been collected..."
+			switch(currentTier)
+				if(2)
+					p.findOrAddSkill(/obj/Skills/Utility/Refresh);
+					p << "You remember how to Refresh someone and ignore the time their body is taxed! (Refresh)"
+					p.findOrAddSkill(/obj/Skills/Utility/Eldritch_Domain);
+					p << "You remember how to expand your Eldritch Domain and empower yourself and your Coven! (Eldritch Domain)";
+				if(3)
+					p.findOrAddSkill(/obj/Skills/Utility/Altered_Nature);
+					p << "You remember how to weave the threads of Fate between your Coven! (Altered Nature)"
+					p.findOrAddSkill(/obj/Skills/Utility/Bared_Souls);
+					p << "You remember how to bare your true nature to a Coven member! (Bared Souls)"
+				if(4)
+					p.findOrAddSkill(/obj/Skills/Utility/Glimpse_Inside);
+					p << "You remember how to reach inside a Coven member and bestow Eldritch secrets upon them! (Glimpse Inside)"
+					p.findOrAddSkill(/obj/Skills/Utility/Shared_Dreaming);
+					p << "You remember how to instantly teleport to a member of your Coven! (Shared Dreaming)";
+				if(5)
+					p.findOrAddSkill(/obj/Skills/Utility/With_You_In_Darkness);
+					p << "You remember how to bestow your dark protection upon a Coven member! (With You in Darkness)"
+					p.findOrAddSkill(/obj/Skills/Utility/Observe);
+					p << "...you can observe."
+				if(6)
+					p.findOrAddSkill(/obj/Skills/Utility/Reclamation)
+					p << "You remember how to take it all away, stealing your threads back to yourself for your own gain! (Reclamation)"
+					
 	Eldritch
 		name = "Eldritch"
 		secretVariable = list("Madness" = 0, "Madness Active" = 0, "Lunatic Mode" = 0, "Power From Blood" = 0, "Blood Stock" = 0, "Resource Stock" = 0)

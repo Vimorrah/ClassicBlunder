@@ -37,7 +37,7 @@
         StyleEnd=1.5
         StyleStr=1.5
         passives = list("Heavy Strike" = "Wrestling", "Muscle Power" = 6, "Grippy" = 5, \
-                        "Scoop" = 3, "Iron Grip" = 1, "DeathField" = 5, "Gum Gum" = 2, "Harden" = 2, \
+                        "Scoop" = 3, "DeathField" = 5, "Gum Gum" = 2, "Harden" = 2, \
                         "Momentum" = 2)
         StyleActive="All Star Wrestling"
         Finisher="/obj/Skills/Queue/Finisher/Big_Boot"

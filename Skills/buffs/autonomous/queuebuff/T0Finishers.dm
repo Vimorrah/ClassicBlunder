@@ -13,7 +13,7 @@
         StyleNeeded="Lucha Libre"
         StrMult=1.25
         EndMult=1.25
-        passives = list("Iron Grip" = 1, "Scoop" = 1, "Muscle Power" = 2,"TensionLock" = 1)
+        passives = list("Grippy"=1, "Scoop" = 1, "Muscle Power" = 2,"TensionLock" = 1)
         ActiveMessage = "awakens the Anger of The Beast!"
         OffMessage="'s inner beast calms down..."
 

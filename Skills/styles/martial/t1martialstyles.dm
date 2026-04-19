@@ -5,7 +5,7 @@
 		StyleComboUnlock=list("/obj/Skills/Buffs/NuStyle/UnarmedStyle/Black_Leg_Style"="/obj/Skills/Buffs/NuStyle/UnarmedStyle/Ubermensch_Style")
 		StyleStr=1.15
 		StyleEnd=1.3
-		passives = list("Muscle Power" = 1, "Grippy" = 4, "Scoop" = 2, "Iron Grip" = 1)
+		passives = list("Muscle Power" = 1, "Grippy" = 4, "Scoop" = 2)
 		StyleActive="Red Cyclone"
 		Finisher="/obj/Skills/Queue/Finisher/Leg_Grab"
 	Wushu_Style

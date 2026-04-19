@@ -2079,9 +2079,7 @@ mob/proc/Grab_Mob(var/mob/P, var/Forced=0)
 				aa.SetTarget(src)
 				aa.ai_state = "Chase"
 				aa.last_activity = world.time
-	if(Secret == "Vampire")
-		Forced = 1
-	if(passive_handler.Get("Iron Grip"))
+	if(passive_handler.Get("Grippy"))
 		Forced = 1
 	if(Secret == "Heavenly Restriction" && secretDatum?:hasImprovement("Grab"))
 		Forced = 1
@@ -2094,7 +2092,7 @@ mob/proc/Grab_Mob(var/mob/P, var/Forced=0)
 			src.Grab_Update()
 			src.Grab_Effects(P)
 			return
-		if((P.passive_handler.Get("Fishman")||P.HasGiantForm()||P.HasMythical()>=1)&&!P.KO&&P.icon_state!="Meditate")
+		if(!P.canBeGrabbed())
 			src.OMessage(10,"[src] fails to get a firm hold on [P]!","[src]([src.key]) fails to grab [ExtractInfo(P)]")
 			return
 	src.Grab=P
@@ -2104,6 +2102,14 @@ mob/proc/Grab_Mob(var/mob/P, var/Forced=0)
 	src.Grab_Update()
 	src.Grab_Effects(P)
 
+/mob/proc/canBeGrabbed()
+	if(KO) return 1;
+	if(icon_state=="Meditate") return 1;
+	if(HasGiantForm()) return 0;
+	if(HasMythical()>=1) return 0;
+	if(passive_handler.Get("Fishman")) return 0;
+	if(hasEldritchRacial()) return 0;
+	return 1;
 
 
 /mob/var/tmp/mob/Player/grabbed = null

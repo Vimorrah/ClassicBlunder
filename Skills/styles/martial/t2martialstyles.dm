@@ -4,7 +4,7 @@
 		Copyable=0
 		StyleEnd=1.3
 		StyleStr=1.3
-		passives = list("Muscle Power" = 4, "Grippy" = 5, "Scoop" = 2, "Iron Grip" = 1, "DeathField" = 3)
+		passives = list("Muscle Power" = 4, "Grippy" = 5, "Scoop" = 2, "DeathField" = 3)
 		StyleActive="Ubermensch"
 		Finisher="/obj/Skills/Queue/Finisher/Command_Grab"
 		verb/Ubermensch_Style()
