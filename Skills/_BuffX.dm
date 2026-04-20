@@ -9166,6 +9166,8 @@ NEW VARIABLES
 			var/tmp/effected = list()
 			var/range = 10
 			var/identifier = null
+			var/demonName = null
+			var/icon/customTurfIcon = null
 			Cooldown = -1
 			ActiveMessage="releases their Domain!"
 			OffMessage="conceals their Domain...."
@@ -9183,21 +9185,18 @@ NEW VARIABLES
 					spawn()animate(M, color = null, time = 3)
 			verb/Domain_Expansion_Target()
 				set category = "Skills"
-				if(usr.Target==usr || !usr.Target)
-					usr << "Can't target [usr.Target == usr ? " yourself" : " not have a target"]."
-					return
 				src.Trigger(usr)
-				if(usr.BuffOn(src)) // this means it worked and its on
-					animation(usr)
-					usr.DomainExpansion(identifier, 0, 1)
+				if(usr.BuffOn(src))
+					animation(usr, range)
+					usr.DomainExpansion(src)
 				else
 					usr.stopDomainExapansion()
 			verb/Domain_Expansion_Wide()
 				set category = "Skills"
 				src.Trigger(usr)
-				if(usr.BuffOn(src)) // this means it worked and its on
+				if(usr.BuffOn(src))
 					animation(usr, range)
-					usr.DomainExpansion(identifier, range, 0)
+					usr.DomainExpansion(src)
 				else
 					usr.stopDomainExapansion()
 		Dividing_Driver
