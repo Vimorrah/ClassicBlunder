@@ -115,6 +115,7 @@ update
 			if(p.isRace(HUMAN))
 				if(p.Class=="Underdog")
 					p.AngerMax=2
+					p.RPPMult = 1.35
 				
 					
 
