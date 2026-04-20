@@ -309,9 +309,14 @@ mob
 				return 1
 			return 0
 		GetSwordAscension()
+			var/SwordAsc=passive_handler.Get("SwordAscension")
 			if(passive_handler.Get("The Way"))
 				return glob.MAX_SWORD_ASCENSION
-			return passive_handler.Get("SwordAscension")
+			if(passive_handler.Get("VoidBlade"))
+				SwordAsc+=round((100-src.Health)/25,1)
+			if(SwordAsc>glob.MAX_SWORD_ASCENSION)
+				SwordAsc=glob.MAX_SWORD_ASCENSION
+			return SwordAsc
 		HasSwordDamageBuff()
 			if(passive_handler.Get("SwordDamage"))
 				return 1
