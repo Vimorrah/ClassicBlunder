@@ -156,6 +156,31 @@ obj/Magic_Circle
 
 obj/Items/Enchantment
 
+	Limited_Rank_Up_Magic
+		name = "Limited Rank-Up Magic"
+		desc = "A mere fraction of the true potential of Rank-Up Magic. Only a Demon can make use of it."
+		Cost = 2000
+		Grabbable = 1
+		EnchType = "BasicEnchantment"
+		SubType = "Any"
+		icon = 'Lab.dmi'
+		icon_state = "KeloPill"
+		verb/Use()
+			set src in usr
+			if(!usr.Move_Requirements())
+				return
+			if(!usr.isRace(DEMON))
+				usr << "The magic within churns violently and rejects you. Only a Demon can withstand Limited Rank-Up."
+				return
+			if(usr.passive_handler && usr.passive_handler.Get("Limited Rank-Up"))
+				usr << "You already bear the magic of Limited Rank-Up."
+				return
+			if(!usr.passive_handler)
+				return
+			usr.passive_handler.Set("Limited Rank-Up", 1)
+			usr << "Crimson conqueror who unifies chaos, release the eternal seal, and in one flash blow away the darkness!"
+			del src
+
 	Cauldron
 		Cost=80
 		Grabbable=0

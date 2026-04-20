@@ -5215,18 +5215,19 @@ mob
 					Z.Cooldown(1, null, src)
 					return
 				if(Z.type == /obj/Skills/AutoHit/I_Want_To_Be_Like_You)
+					var/iwtl_cd = src.passive_handler && src.passive_handler.Get("Limited Rank-Up") ? 30 : 45
 					if(src.Target == src)
 						src << "You have nothing to be envious of."
-						Z.Cooldown(45)
+						Z.Cooldown(iwtl_cd)
 						return FALSE
 					var/last_used = src.Target.last_autohit_used
 					if(!last_used || last_used == /obj/Skills/AutoHit/I_Want_To_Be_Like_You)
 						src << "You have nothing to be envious of."
-						Z.Cooldown(45)
+						Z.Cooldown(iwtl_cd)
 						return FALSE
 					var/obj/Skills/AutoHit/copied = new last_used
 					src.Activate(copied, TRUE)
-					Z.Cooldown(45)
+					Z.Cooldown(iwtl_cd)
 					return FALSE
 			if(Z.NeedsHealth)
 				if(src.Health>Z.NeedsHealth*(1-src.HealthCut))

@@ -1346,6 +1346,10 @@ mob
 
 			var/mult = 0
 			var/pride_bonus = 0
+			var/lustPart = 0
+			var/greedPart = 0
+			var/sinDmgPart = 0
+			var/slothPart = 0
 
 			// EnvyFactor
 			if(passive_handler && passive_handler.Get("EnvyFactor"))
@@ -1357,7 +1361,7 @@ mob
 			if(passive_handler && passive_handler.Get("LustFactor"))
 				var/targets = getTargetingMeCount()
 				if(targets > 0)
-					mult += 0.02 * passive_handler.Get("LustFactor") * targets
+					lustPart = 0.02 * passive_handler.Get("LustFactor") * targets
 
 			// GreedFactor
 			if(passive_handler && passive_handler.Get("GreedFactor"))
@@ -1365,31 +1369,38 @@ mob
 				for(var/obj/Money/m in src.contents)
 					money = m.Level
 				if(money > 0)
-					var/greed_bonus = max(0, money / glob.racials.GOLD_DRAGON_FORMULA) * passive_handler.Get("GreedFactor")
-					mult += greed_bonus
+					greedPart = max(0, money / glob.racials.GOLD_DRAGON_FORMULA) * passive_handler.Get("GreedFactor")
 
-			// Sadist / Masochist
+			// Sadist / Masochist / GluttonyFactor (feast -> DevilTriggerSinDamageBonus)
 			if(DevilTriggerSinDamageBonus > 0)
-				mult += DevilTriggerSinDamageBonus
+				sinDmgPart = DevilTriggerSinDamageBonus
 
 			// SlothFactor
 			if(DevilTriggerSlothBonus > 0)
-				mult += DevilTriggerSlothBonus
+				slothPart = DevilTriggerSlothBonus
 
-			// PrideFactor (uncapped; other sin bonuses stay capped at 3)
+			// PrideFactor (uncapped; other sin bonuses stay capped at 3 unless Limited Rank-Up)
 			if(passive_handler && passive_handler.Get("PrideFactor") && Target && istype(Target, /mob/Players))
 				var/healthDiff = Health - Target:Health
 				if(healthDiff > 0)
 					var/steps = round(healthDiff / 10)
 					if(steps > 0)
 						pride_bonus = 0.25 * steps * passive_handler.Get("PrideFactor")
+						if(passive_handler.Get("Limited Rank-Up"))
+							pride_bonus *= 3
 
 			//these aren't actually multipliers btw teehee, they are additive. They started out as multiplicative but I changed my mind after the fact
+			if(passive_handler && passive_handler.Get("Limited Rank-Up"))
+				mult = lustPart + greedPart + sinDmgPart + slothPart
+			else
+				mult = lustPart + greedPart + sinDmgPart + slothPart
+				if(mult < 0)
+					mult = 0
+				if(mult > 3)
+					mult = 3
+
 			if(mult < 0)
 				mult = 0
-
-			if(mult > 3)
-				mult = 3
 
 			mult += pride_bonus
 

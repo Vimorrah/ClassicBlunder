@@ -939,7 +939,10 @@ mob/proc/
 							var/missing = max(0, 100 - Health)
 							var/steps = round(missing / 10)
 							if(steps > 0)
-								a += 0.2 * steps * src.passive_handler.Get("WrathFactor")
+								var/wrathAnger = 0.2 * steps * src.passive_handler.Get("WrathFactor")
+								if(src.passive_handler.Get("Limited Rank-Up"))
+									wrathAnger *= 2
+								a += wrathAnger
 					if(src.CyberCancel>0 && !isRace(ANDROID))
 						var/ang=a-1//Usable anger.
 						var/cancel=ang*src.CyberCancel//1 Cyber Cancel = all of usable anger.
@@ -966,10 +969,8 @@ mob/proc/
 			if(passive_handler.Get("SSJRose"))
 				Ratio*=1.60 //this will be Different but i'm leaving it like this now
 
-			/*if(src.Target)
-				if(ismob(src.Target))
-					if(src.HasMirrorStats()&&!src.Target.HasMirrorStats()&&!src.Target.CheckSlotless("Saiyan Soul"))
-						Ratio=src.Target.Power/src.Target.GetPowerUpRatio()*/
+			if(src.Target && ismob(src.Target) && passive_handler.Get("Limited Rank-Up") && passive_handler.Get("EnvyFactor") && src.HasMirrorStats() && src.Target != src && !src.Target.HasMirrorStats() && istype(src.Target, /mob/Players) && !src.Target.passive_handler.Get("To Govern Strength"))
+				Ratio = src.Target.Power / src.Target.GetPowerUpRatio()
 
 		if(passive_handler["Rebel Heart"])
 			var/h = ((missingHealth()/glob.REBELHEARTMOD) * passive_handler["Rebel Heart"])/5
