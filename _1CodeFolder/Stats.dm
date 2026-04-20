@@ -102,12 +102,12 @@ mob/proc/GetAssess()
 	<tr><td>Real BP:</td><td>[Commas(src.potential_power_mult)]</td></tr>
 	<tr><td>Energy:</td><td>[Commas(round(src.EnergyMax))] (1)</td></tr>
 	<tr><td>Buffed Stat/True Stat (Mod)</td></tr>
-	<tr><td>Strength:</td><td> [round(src.GetStr(), 0.01)] ([src.BaseStr()])</td></tr>
-	<tr><td>Endurance:</td><td> [round(src.GetEnd(), 0.01)] ([src.BaseEnd()])</td></tr>
-	<tr><td>Speed:</td><td> [round(src.GetSpd(), 0.01)] ([src.BaseSpd()])</td></tr>
-	<tr><td>Force:</td><td> [round(src.GetFor(), 0.01)] ([src.BaseFor()])</td></tr>
-	<tr><td>Offense:</td><td> [round(src.GetOff(), 0.01)] ([src.BaseOff()])</td></tr>
-	<tr><td>Defense:</td><td> [round(src.GetDef(), 0.01)] ([src.BaseDef()])</td></tr>
+	<tr><td>Strength:</td><td> [round(src.GetStr(), 0.01)] ([round(src.BaseStr() + src.GetEquippedWeaponStrAdd(), 0.01)])</td></tr>
+	<tr><td>Endurance:</td><td> [round(src.GetEnd(), 0.01)] ([round(src.BaseEnd() + src.GetEquippedWeaponEndAdd(), 0.01)])</td></tr>
+	<tr><td>Speed:</td><td> [round(src.GetSpd(), 0.01)] ([round(src.BaseSpd() + src.GetEquippedWeaponSpdAdd(), 0.01)])</td></tr>
+	<tr><td>Force:</td><td> [round(src.GetFor(), 0.01)] ([round(src.BaseFor() + src.GetEquippedWeaponForAdd(), 0.01)])</td></tr>
+	<tr><td>Offense:</td><td> [round(src.GetOff(), 0.01)] ([round(src.BaseOff() + src.GetEquippedWeaponOffAdd(), 0.01)])</td></tr>
+	<tr><td>Defense:</td><td> [round(src.GetDef(), 0.01)] ([round(src.BaseDef() + src.GetEquippedWeaponDefAdd(), 0.01)])</td></tr>
 	<tr><td>Recovery:</td><td> [round(src.GetRecov(), 0.01)] ([src.BaseRecov()])</td></tr>
 	<tr><td>Anger:</td><td>[(src.AngerMax+src.AngerAdd)*100]%</td></tr>
 	<tr><td>Power Mult:</td><td>[round(src.potential_power_mult, 0.05) + src.PowerBoost]%</td></tr>
@@ -203,29 +203,29 @@ mob/Players/Stat()
 				stat("Maims: ", "[src.Maimed]")
 
 			if(!src.StrTax&&!src.StrCut)
-				stat("Strength","[src.BaseStr()]")
+				stat("Strength","[round(src.BaseStr() + src.GetEquippedWeaponStrAdd(), 0.01)]")
 			else
-				stat("Strength","[src.BaseStr()] (Tax: [round((src.StrTax+src.StrCut)*100)]%)")
+				stat("Strength","[round(src.BaseStr() + src.GetEquippedWeaponStrAdd(), 0.01)] (Tax: [round((src.StrTax+src.StrCut)*100)]%)")
 			if(!src.EndTax&&!src.EndCut)
-				stat("Endurance","[src.BaseEnd()]")
+				stat("Endurance","[round(src.BaseEnd() + src.GetEquippedWeaponEndAdd(), 0.01)]")
 			else
-				stat("Endurance","[src.BaseEnd()] (Tax: [round((src.EndTax+src.EndCut)*100)]%)")
+				stat("Endurance","[round(src.BaseEnd() + src.GetEquippedWeaponEndAdd(), 0.01)] (Tax: [round((src.EndTax+src.EndCut)*100)]%)")
 			if(!src.SpdTax&&!src.SpdCut)
-				stat("Speed","[src.BaseSpd()]")
+				stat("Speed","[round(src.BaseSpd() + src.GetEquippedWeaponSpdAdd(), 0.01)]")
 			else
-				stat("Speed","[src.BaseSpd()] (Tax: [round((src.SpdTax+src.SpdCut)*100)]%)")
+				stat("Speed","[round(src.BaseSpd() + src.GetEquippedWeaponSpdAdd(), 0.01)] (Tax: [round((src.SpdTax+src.SpdCut)*100)]%)")
 			if(!src.ForTax&&!src.ForCut)
-				stat("Force","[src.BaseFor()]")
+				stat("Force","[round(src.BaseFor() + src.GetEquippedWeaponForAdd(), 0.01)]")
 			else
-				stat("Force","[src.BaseFor()] (Tax: [round((src.ForTax+src.ForCut)*100)]%)")
+				stat("Force","[round(src.BaseFor() + src.GetEquippedWeaponForAdd(), 0.01)] (Tax: [round((src.ForTax+src.ForCut)*100)]%)")
 			if(!src.OffTax&&!src.OffCut)
-				stat("Offense","[src.BaseOff()]")
+				stat("Offense","[round(src.BaseOff() + src.GetEquippedWeaponOffAdd(), 0.01)]")
 			else
-				stat("Offense","[src.BaseOff()] (Tax: [round((src.OffTax+src.OffCut)*100)]%)")
+				stat("Offense","[round(src.BaseOff() + src.GetEquippedWeaponOffAdd(), 0.01)] (Tax: [round((src.OffTax+src.OffCut)*100)]%)")
 			if(!src.DefTax&&!src.DefCut)
-				stat("Defense","[src.BaseDef()]")
+				stat("Defense","[round(src.BaseDef() + src.GetEquippedWeaponDefAdd(), 0.01)]")
 			else
-				stat("Defense","[src.BaseDef()] (Tax: [round((src.DefTax+src.DefCut)*100)]%)")
+				stat("Defense","[round(src.BaseDef() + src.GetEquippedWeaponDefAdd(), 0.01)] (Tax: [round((src.DefTax+src.DefCut)*100)]%)")
 			if(!src.RecovTax&&!src.RecovCut)
 				stat("Recovery","[round(src.BaseRecov(), 0.05)]")
 			else

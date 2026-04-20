@@ -1569,6 +1569,7 @@ mob
 				Str=StrReplace
 			//when you want to ignore all of the above for some reason
 			Str+=StrAdded
+			Str+=src.GetEquippedWeaponStatAdd("Str")
 			if(src.HasManaStats())
 				Str += getManaStatsBoon()
 			if(HasShonenPower())
@@ -1756,6 +1757,7 @@ mob
 			if(src.ForReplace)
 				For=ForReplace
 			For+=ForAdded
+			For+=src.GetEquippedWeaponStatAdd("For")
 			if(UsingHotnCold())
 				if(StyleBuff?:hotCold>0)
 					For+=StyleBuff?:hotCold/glob.HOTNCOLD_STAT_DIVISOR
@@ -1956,6 +1958,7 @@ mob
 			if(CheckSlotless("The Grit") && (Anger||HasCalmAnger()))
 				End += End * (glob.DEMONIC_DURA_BASE)
 			End+=EndAdded
+			End+=src.GetEquippedWeaponStatAdd("End")
 			if(UsingHotnCold())
 				if(StyleBuff?:hotCold<0)
 					End+=abs(StyleBuff?:hotCold)/glob.HOTNCOLD_STAT_DIVISOR
@@ -2104,6 +2107,7 @@ mob
 			if(passive_handler.Get("Piloting")&&findMecha())
 				Spd = getMechStat(findMecha(), Spd)
 			Spd+=SpdAdded
+			Spd+=src.GetEquippedWeaponStatAdd("Spd")
 			if(UsingHotnCold())
 				if(StyleBuff?:hotCold<0)
 					Spd-=abs(StyleBuff?:hotCold)/glob.HOTNCOLD_STAT_DIVISOR
@@ -2253,6 +2257,7 @@ mob
 			if(passive_handler.Get("Piloting")&&findMecha())
 				Off = getMechStat(findMecha(), Off)
 			Off+=OffAdded
+			Off+=src.GetEquippedWeaponStatAdd("Off")
 			var/Mod=1
 			Mod+=(src.OffMultTotal-1)
 			// if(src.isRace(HUMAN))
@@ -2374,6 +2379,7 @@ mob
 
 
 			Def+=DefAdded
+			Def+=src.GetEquippedWeaponStatAdd("Def")
 			var/Mod=1
 			Mod+=(src.DefMultTotal-1)
 			// if(src.isRace(HUMAN))

@@ -148,40 +148,46 @@ obj/Skills/Utility/Recall_Celestial_Armaments
 	Light
 		Light_Celestial_Blade_I
 			name = "Zephyr's Edge"
-			desc = "A blade so light that its blade is almost impossible to keep up with."
+			desc = "A sword so light that its blade is almost impossible to keep up with."
 			icon = 'Lol_Sword_reg.dmi'
 			Class = "Light"
-			passives = list("Godspeed" = 1)
+			passives = list("Warping" = 1, "BlurringStrikes" = 1)
+			spdAdd=1
+			strAdd=1
 			DamageEffectiveness = 1.025
 			AccuracyEffectiveness = 0.9
 			SpeedEffectiveness = 1.25
 			ObjectUse(mob/Players/User=usr)
-				src.passives = list("Godspeed" = (User.Potential / 10))
+				src.passives = list("Warping" = (User.Potential / 25), "BlurringStrikes" = 1 + (User.Potential / 25))
 				..()
 		Light_Celestial_Blade_II
 			name = "Aurelius"
 			desc = "Forged for the dance of single combat; never a blow wasted."
 			icon = 'Lol_Sword_Red.dmi'
 			Class = "Light"
-			passives = list("Duelist" = 1)
+			spdAdd=1
+			strAdd=1
+			passives = list("Duelist" = 1, "LikeWater" = 1)
 			DamageEffectiveness = 1.025
 			AccuracyEffectiveness = 0.9
 			SpeedEffectiveness = 1.25
 			ObjectUse(mob/Players/User=usr)
-				src.passives = list("Duelist" = 1 + (User.Potential / 25))
+				src.passives = list("Duelist" = 1 + (User.Potential / 25), "LikeWater" = 1 + (User.Potential / 25))
 				..()
 
 		Light_Celestial_Blade_III
 			name = "Gemini Fang"
-			desc = "Twin strikes flow from its edge as naturally as breath."
+			desc = "Myriad strikes flow from its edge as naturally as breath."
 			icon = 'willKnifev2.dmi'
 			Class = "Light"
-			passives = list("DoubleStrike" = 1)
+			spdAdd=1
+			strAdd=1
+			passives = list("DoubleStrike" = 1, "TripleStrike" = 1)
 			DamageEffectiveness = 1.025
 			AccuracyEffectiveness = 0.9
 			SpeedEffectiveness = 1.25
 			ObjectUse(mob/Players/User=usr)
-				src.passives = list("DoubleStrike" = 1 + (User.Potential / 50))
+				src.passives = list("DoubleStrike" = 1 + (User.Potential / 50), "TripleStrike" = (User.Potential / 50))
 				..()
 
 // =============================================
@@ -193,36 +199,43 @@ obj/Skills/Utility/Recall_Celestial_Armaments
 			desc = "A blade as reliable as judgment from on high."
 			icon = 'Bone-Ish_Blade.dmi'
 			Class = "Medium"
-			passives = list("Half-Sword" = 1)
+			strAdd=1
+			offAdd=0.5
+			defAdd=0.5
+			passives = list("Half-Sword" = 1, "Zornhau" = 1)
 			DamageEffectiveness = 1.05
 			AccuracyEffectiveness = 0.875
 			SpeedEffectiveness = 1
 			ObjectUse(mob/Players/User=usr)
-				src.passives = list("Half-Sword" = 1 + (User.Potential / 50))
+				src.passives = list("Half-Sword" = 1 + (User.Potential / 50), "Zornhau" = 1 + (User.Potential / 50))
 				..()
 		Medium_Celestial_Blade_II
 			name = "Soulkeeper"
 			desc = "The spirit of its wielder flows through every strike."
 			icon = 'Aestus_Estus.dmi'
 			Class = "Medium"
-			passives = list("SpiritSword" = 1)
+			strAdd=1
+			forAdd=1
+			passives = list("SpiritSword" = 1, "HybridStrike" = 1)
 			DamageEffectiveness = 1.05
 			AccuracyEffectiveness = 0.875
 			SpeedEffectiveness = 1
 			ObjectUse(mob/Players/User=usr)
-				src.passives = list("SpiritSword" = (User.Potential / 50))
+				src.passives = list("SpiritSword" = (User.Potential / 50), "HybridStrike" = 1 + (User.Potential/50))
 				..()
 		Medium_Celestial_Blade_III
 			name = "Pillar of Dawn"
 			desc = "Unyielding as heaven's will, steady as the morning sun."
 			icon = 'Fanta-sword.dmi'
 			Class = "Medium"
-			passives = list("Steady" = 1)
+			strAdd=1
+			endAdd=1
+			passives = list("Steady" = 1, "Momentum" = 1)
 			DamageEffectiveness = 1.05
 			AccuracyEffectiveness = 0.875
 			SpeedEffectiveness = 1
 			ObjectUse(mob/Players/User=usr)
-				src.passives = list("Steady" = (User.Potential / 10))
+				src.passives = list("Steady" = (User.Potential / 10), "Momentum" = 1 + (User.Potential / 25))
 				..()
 
 // =============================================
@@ -234,33 +247,41 @@ obj/Skills/Utility/Recall_Celestial_Armaments
 			desc = "Its sweeping arc clears the field like the sun burns away shadow."
 			icon = 'MONADO.dmi'
 			Class = "Heavy"
-			passives = list("SweepingStrike" = 1)
+			passives = list("SweepingStrike" = 1, "GiantForm" = 1)
 			DamageEffectiveness = 1.1
 			AccuracyEffectiveness = 0.8
 			SpeedEffectiveness = 0.8
+			strAdd=1
+			endAdd=1
+			ObjectUse(mob/Players/User=usr)
+				src.passives = list("SweepingStrike" = 1, "GiantForm" = 1)
+				..()
 		Heavy_Celestial_Blade_II
 			name = "Longarm of Heaven"
 			desc = "Its reach extends Heaven's judgment."
 			icon = 'Vile Hammer Vortigern.dmi'
 			Class = "Heavy"
-			passives = list("Extend" = 1)
+			strAdd=1
+			endAdd=1
+			passives = list("Extend" = 1, "Gum Gum" = 1)
 			DamageEffectiveness = 1.1
 			AccuracyEffectiveness = 0.8
 			SpeedEffectiveness = 0.8
 			ObjectUse(mob/Players/User=usr)
-				src.passives = list("Extend" = 1 + (User.Potential / 50))
+				src.passives = list("Extend" = 1 + (User.Potential / 50), "Gum Gum" = 1 + (User.Potential / 50))
 				..()
 		Heavy_Celestial_Blade_III
 			name = "Wrath Incarnate"
 			desc = "Heaven's fury given an edge; mercy is not its purpose."
 			icon = 'Ragnarok Blade Forme.dmi'
 			Class = "Heavy"
-			passives = list("Brutalize" = 1)
+			strAdd = 2
+			passives = list("Brutalize" = 1, "KillerInstinct" = 0.1)
 			DamageEffectiveness = 1.1
 			AccuracyEffectiveness = 0.8
 			SpeedEffectiveness = 0.8
 			ObjectUse(mob/Players/User=usr)
-				src.passives = list("Brutalize" = 1 + (User.Potential / 25))
+				src.passives = list("Brutalize" = 1 + (User.Potential / 25), "KillerInstinct" = 0.1 + (User.Potential / 110))
 				..()
 
 // =============================================
@@ -305,36 +326,43 @@ obj/Skills/Utility/Recall_Celestial_Armaments
 			desc = "Spells leave it before the thought has finished forming."
 			icon = 'Slaughter Demon LH.dmi'
 			Class = "Wand"
-			passives = list("QuickCast" = 1)
+			forAdd = 1
+			spdAdd = 1
+			passives = list("QuickCast" = 1, "Speed Force" = 1)
 			DamageEffectiveness = 0.95
 			AccuracyEffectiveness = 1.2
 			SpeedEffectiveness = 1.2
 			ObjectUse(mob/Players/User=usr)
-				src.passives = list("QuickCast" = (User.Potential / 25))
+				src.passives = list("QuickCast" = (User.Potential / 25), "Speed Force" = (User.Potential / 50))
 				..()
 		Celestial_Wand_II
 			name = "Wellspring"
 			desc = "Draws deeply from the divine current that flows through all things."
 			icon = 'Playful Cloud.dmi'
 			Class = "Wand"
-			passives = list("ManaStats" = 1)
+			forAdd = 1
+			offAdd = 0.5
+			defAdd = 0.5
+			passives = list("ManaStats" = 1, "ManaCapMult" = 0.1)
 			DamageEffectiveness = 0.95
 			AccuracyEffectiveness = 1.2
 			SpeedEffectiveness = 1.2
 			ObjectUse(mob/Players/User=usr)
-				src.passives = list("ManaStats" = (User.Potential / 10))
+				src.passives = list("ManaStats" = (User.Potential / 10), "ManaCapMult" = (User.Potential / 10))
 				..()
 		Celestial_Wand_III
 			name = "Ember of Elysium"
 			desc = "Burns with a sacred flame that consumes the unworthy."
 			icon = 'Straw Doll - Hammer.dmi'
 			Class = "Wand"
-			passives = list("SoulFire" = 1)
+			passives = list("SoulFire" = 1, "DeathField" = 1)
+			forAdd = 1
+			endAdd = 1
 			DamageEffectiveness = 0.95
 			AccuracyEffectiveness = 1.2
 			SpeedEffectiveness = 1.2
 			ObjectUse(mob/Players/User=usr)
-				src.passives = list("SoulFire" = 1 + (User.Potential / 25))
+				src.passives = list("SoulFire" = 1 + (User.Potential / 25), "DeathField" = (User.Potential / 10))
 				..()
 
 
@@ -347,36 +375,43 @@ obj/Skills/Utility/Recall_Celestial_Armaments
 			desc = "Channels spiritual energies with effortless, flowing precision."
 			icon = 'Gae Bolg.dmi'
 			Class = "Rod"
-			passives = list("SpiritFlow" = 1)
+			forAdd = 1
+			endAdd = 0.5
+			spdAdd = 0.5
+			passives = list("SpiritFlow" = 1, "MovingCharge" = 1)
 			DamageEffectiveness = 1
 			AccuracyEffectiveness = 1
 			SpeedEffectiveness = 0.85
 			ObjectUse(mob/Players/User=usr)
-				src.passives = list("SpiritFlow" = 1 + (User.Potential / 25))
+				src.passives = list("SpiritFlow" = 1 + (User.Potential / 25), "MovingCharge" = 1)
 				..()
 		Celestial_Rod_II
 			name = "Siphon of Aethon"
 			desc = "Drinks the enemy's power and makes it your own."
 			icon = 'Gungir Type.dmi'
 			Class = "Rod"
-			passives = list("ManaSteal" = 5)
+			forAdd = 1
+			endAdd = 1
+			passives = list("ManaSteal" = 5, "Siphon" = 1)
 			DamageEffectiveness = 1
 			AccuracyEffectiveness = 1
 			SpeedEffectiveness = 0.85
 			ObjectUse(mob/Players/User=usr)
-				src.passives = list("ManaSteal" = 5 + (User.Potential / 4))
+				src.passives = list("ManaSteal" = 5 + (User.Potential / 2), "Siphon" = 1 + (User.Potential / 25))
 				..()
 		Celestial_Rod_III
 			name = "The Pale Axis"
 			desc = "Bends the space around it, forming a field of null energy."
 			icon = 'Murakumogiri .dmi'
 			Class = "Rod"
-			passives = list("VoidField" = 1)
+			forAdd = 1
+			endAdd = 1
+			passives = list("VoidField" = 1, "SoftStyle" = 1)
 			DamageEffectiveness = 1
 			AccuracyEffectiveness = 1
 			SpeedEffectiveness = 0.85
 			ObjectUse(mob/Players/User=usr)
-				src.passives = list("VoidField" = (User.Potential / 10))
+				src.passives = list("VoidField" = (User.Potential / 10), "SoftStyle" = 1 + (User.Potential / 25))
 				..()
 
 // =============================================
@@ -388,28 +423,43 @@ obj/Skills/Utility/Recall_Celestial_Armaments
 			desc = "Those struck by its power hear thunder long after the blow."
 			icon = 'Spirit Sword.dmi'
 			Class = "Staff"
-			passives = list("ThunderHerald" = 1)
+			passives = list("ThunderHerald" = 1, "CriticalChance" = 5, "CriticalDamage" = 0.05)
+			forAdd = 1
+			strAdd = 0.5
+			spdAdd = 0.5
 			DamageEffectiveness = 1.1
 			AccuracyEffectiveness = 0.85
 			SpeedEffectiveness = 0.65
+			ObjectUse(mob/Players/User=usr)
+				src.passives = list("ThunderHerald" = 1, "CriticalChance" = 5 + (User.Potential / 4), "CriticalDamage" = (User.Potential / 200))
+				..()
 		Celestial_Staff_II
 			name = "Rime Throne"
 			desc = "Carries the cold stillness of heaven's highest peaks."
 			icon = 'MHLS.dmi'
 			Class = "Staff"
-			passives = list("IceHerald" = 1)
+			forAdd = 2
+			passives = list("IceHerald" = 1, "Chilling" = 4, "IceAge" = 30)
 			DamageEffectiveness = 1.1
 			AccuracyEffectiveness = 0.85
 			SpeedEffectiveness = 0.65
+			ObjectUse(mob/Players/User=usr)
+				src.passives = list("IceHerald" = 1, "Chilling" = 1 + (User.Potential / 20), "IceAge" = 30 + (User.Potential / 5))
+				..()
 		Celestial_Staff_III
 			name = "Pact of the Exalted"
 			desc = "Forged where divine power meets the abyss; dangerous to all."
 			icon = 'Yoru.dmi'
 			Class = "Staff"
-			passives = list("DemonicInfusion" = 1)
+			forAdd = 1
+			strAdd = 1
+			passives = list("DemonicInfusion" = 1, "AbyssMod" = 1)
 			DamageEffectiveness = 1.1
 			AccuracyEffectiveness = 0.85
 			SpeedEffectiveness = 0.65
+			ObjectUse(mob/Players/User=usr)
+				src.passives = list("DemonicInfusion" = 1, "AbyssMod" = 1 + (User.Potential / 25))
+				..()
 
 // Master of Arms Warp Strike - Heavy Strike replacement that fires a homing weapon throw and teleports behind target on hit
 obj/Skills/Projectile
@@ -420,7 +470,7 @@ obj/Skills/Projectile
 		Variation = 4
 		Distance = 25
 		Deflectable = FALSE
-		DamageMult = 3
+		DamageMult = 6
 		WarpUser = 1
 		WarpUserBehind = 1
 		WarpUserFlashChange = 1

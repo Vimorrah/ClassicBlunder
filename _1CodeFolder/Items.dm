@@ -46,13 +46,38 @@ obj/Money
 obj/Items
 	Pickable=1
 	Stealable=1
-	// wow stat adds or something
+	// Flat additive stats while this item is equipped as a weapon
 	var/strAdd = 0
 	var/endAdd = 0
 	var/forAdd = 0
 	var/spdAdd = 0
 	var/offAdd = 0
 	var/defAdd = 0
+
+	proc/getItemStatAdd(stat as text)
+		if(Broken)
+			return 0
+		switch(stat)
+			if("Str")
+				return strAdd
+			if("End")
+				return endAdd
+			if("For")
+				return forAdd
+			if("Spd")
+				return spdAdd
+			if("Off")
+				return offAdd
+			if("Def")
+				return defAdd
+		return 0
+
+	Del()
+		if(ismob(loc))
+			var/mob/M = loc
+			if(M.equippedSword == src)
+				M.equippedSword = null
+		..()
 
 
 

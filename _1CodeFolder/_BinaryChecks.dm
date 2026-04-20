@@ -2788,7 +2788,24 @@ mob
 				return equippedArmor
 			return 0
 
+		SanitizeEquippedWeaponRefs()
+			if(!equippedSword)
+				return
+			var/obj/Items/Sword/S = equippedSword
+			if(!istype(S, /obj/Items/Sword))
+				equippedSword = null
+				return
+			if(S.loc != src)
+				equippedSword = null
+				return
+			if(!S.suffix || !findtext(S.suffix, "Equipped"))
+				equippedSword = null
+				return
+			if(S.Broken)
+				equippedSword = null
+
 		EquippedSword()
+			SanitizeEquippedWeaponRefs()
 			if(equippedSword)
 				return equippedSword
 			return 0
@@ -2797,6 +2814,8 @@ mob
 			var/obj/Items/Sword/sord
 			for(var/obj/Items/Sword/s in src)
 				if(s.suffix=="*Equipped (Second)*")
+					if(s.Broken || s.loc != src)
+						continue
 					sord=s
 					break
 			if(sord)
@@ -2806,6 +2825,8 @@ mob
 			var/obj/Items/Sword/sord
 			for(var/obj/Items/Sword/s in src)
 				if(s.suffix=="*Equipped (Third)*")
+					if(s.Broken || s.loc != src)
+						continue
 					sord=s
 					break
 			if(sord)
@@ -2843,6 +2864,8 @@ mob
 			var/obj/Items/Enchantment/Staff/staf
 			for(var/obj/Items/Enchantment/Staff/s in src)
 				if(s.suffix=="*Equipped*")
+					if(s.Broken || s.loc != src)
+						continue
 					staf=s
 					break
 			if(isRace(ANDROID)||src.HasMechanized())
@@ -2851,6 +2874,42 @@ mob
 				return staf
 			else
 				return null
+
+		GetEquippedWeaponStatAdd(stat as text)
+			var/total = 0
+			var/obj/Items/Sword/sord = EquippedSword()
+			if(sord && sord.loc == src)
+				total += sord.getItemStatAdd(stat)
+			sord = EquippedSecondSword()
+			if(sord && sord.loc == src)
+				total += sord.getItemStatAdd(stat)
+			sord = EquippedThirdSword()
+			if(sord && sord.loc == src)
+				total += sord.getItemStatAdd(stat)
+			var/obj/Items/Enchantment/Staff/staf = EquippedStaff()
+			if(staf && staf.loc == src)
+				total += staf.getItemStatAdd(stat)
+			for(var/obj/Items/Sword/S in src)
+				if(S.suffix == "*Equipped (Armory)*" && !S.Broken && S.loc == src)
+					total += S.getItemStatAdd(stat)
+			for(var/obj/Items/Enchantment/Staff/ST in src)
+				if(ST.suffix == "*Equipped (Armory)*" && !ST.Broken && ST.loc == src)
+					total += ST.getItemStatAdd(stat)
+			return total
+
+		GetEquippedWeaponStrAdd()
+			return GetEquippedWeaponStatAdd("Str")
+		GetEquippedWeaponEndAdd()
+			return GetEquippedWeaponStatAdd("End")
+		GetEquippedWeaponSpdAdd()
+			return GetEquippedWeaponStatAdd("Spd")
+		GetEquippedWeaponForAdd()
+			return GetEquippedWeaponStatAdd("For")
+		GetEquippedWeaponOffAdd()
+			return GetEquippedWeaponStatAdd("Off")
+		GetEquippedWeaponDefAdd()
+			return GetEquippedWeaponStatAdd("Def")
+
 		CanLoseVitalBP()
 			if(isRace(ANDROID))
 				return 0

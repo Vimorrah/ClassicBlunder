@@ -4736,7 +4736,6 @@ obj
 				Static_Stream
 					Dodgeable=0
 					BeamTime=5
-					Immediate=1
 					DamageMult=5
 					Distance=20
 					Paralyzing=2
