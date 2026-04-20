@@ -1212,6 +1212,8 @@ mob
 			if(passive_handler.Get("Compassion")&&Health>51)
 				if(Target.Health>Health)
 					Return += 3*clamp((proportionalHealth("Lower")/10),1,4)
+			if(DownToEarth>0)
+				Return*=1*((100-DownToEarth)/100)
 			return Return
 		Hustling()
 			if(passive_handler.Get("Hustle") || HasMythical() > 0.25 || (passive_handler["Rage"] && Health <= 25))
