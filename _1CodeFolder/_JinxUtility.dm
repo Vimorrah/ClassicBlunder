@@ -2081,7 +2081,7 @@ mob
 			if(src.StyleRating > 0)
 				Mod += 0.1 * src.StyleRating * src.getStyleBonusMult()
 			if(src.passive_handler.Get("Longing")&&src.Target)
-				if(Target.Anger>1&&Anger<=1&&!src.passive_handler.Get("LunarWrath"))
+				if(Target.Anger>1&&Anger<=1&&!src.passive_handler.Get("LunarWrath")&&!src.Target.passive_handler.Get("LunarWrath"))
 					End*=Target.Anger
 				else
 					End*=1
@@ -2467,7 +2467,7 @@ mob
 			Mod += getMazokuSinBonusMult()
 			var/DTM=GetDefTransMult()
 			if(src.passive_handler.Get("Longing")&&src.Target)
-				if(Target.Anger>1&&Anger<=1)
+				if(Target.Anger>1&&Anger<=1&&!src.Target.passive_handler.Get("LunarWrath"))
 					Def*=Target.Anger
 				else
 					Def*=1
