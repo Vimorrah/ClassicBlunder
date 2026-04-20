@@ -112,6 +112,9 @@ update
 				if(p.isRace(ANDROID))
 					if(p.AscensionsAcquired==1)
 						p.EnhanceChipsMax +=2
+			if(p.isRace(HUMAN))
+				if(p.Class=="Underdog")
+					p.AngerMax=2
 				
 					
 
