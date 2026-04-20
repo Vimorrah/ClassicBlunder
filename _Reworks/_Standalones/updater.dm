@@ -107,6 +107,8 @@ update
 				if(p.isRace(NOBODY))
 					p.passives["Longing"] = 1
 					p.passives["Emptiness"] = 1
+					if(p.Class=="Samurai")
+						p.passives["EmptyFlashStep"] = 1
 				if(p.isRace(ANDROID))
 					if(p.AscensionsAcquired==1)
 						p.EnhanceChipsMax +=2
