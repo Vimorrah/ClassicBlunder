@@ -3070,7 +3070,7 @@ obj/Skills/Utility
 					ModDesc="Attempts to repair a damaged android."
 
 			if(M.isRace(ANDROID))
-				Cost*=2
+				Cost/=2
 			if(M.Class=="Resourceful")
 				Cost/=2
 
