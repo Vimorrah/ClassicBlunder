@@ -3535,7 +3535,7 @@ mob
 							if(usingStyle("MysticStyle")) // this is a mystic style
 								return TRUE
 						if("Any")
-							if(StyleBuff)
+							if(StyleBuff || StanceBuff || ActiveBuff || SpecialBuff || (SlotlessBuffs && SlotlessBuffs.len))
 								return TRUE
 
 atom
