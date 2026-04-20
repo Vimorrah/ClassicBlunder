@@ -31,7 +31,7 @@
 	SpellSlot=1
 	Arachnae_Touch
 		DamageMult=4
-		Speed=2
+		Speed=6
 		Distance=12
 		ManaCost=5
 		Cooldown=40

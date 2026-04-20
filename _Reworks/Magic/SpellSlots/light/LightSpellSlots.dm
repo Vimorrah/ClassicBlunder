@@ -23,7 +23,6 @@
 	SpellSlot=1
 	Lightspeed
 		DamageMult=3
-		Speed=4
 		Distance=15
 		ManaCost=5
 		Cooldown=35

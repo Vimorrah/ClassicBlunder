@@ -28,6 +28,7 @@
 				if(p.isInnovative(FAE, "Any") && !isInnovationDisable(p))
 					DamageMult=4.5
 					Distance=7
+					ActiveMessage="invokes a powerful: <font size=+1>BREAKING TWISTER!</font size>"
 		verb/Breaking_Twister()
 			set category="Skills"
 			adjust(usr)
@@ -42,15 +43,16 @@
 		ManaCost=8
 		ManaDrain=0.01
 		SpdMult=1.15
-		Godspeed=1
-		passives=list("FluidForm" = 1, "Afterimages" = 1)
+		passives=list("FluidForm" = 1, "Godspeed" = 1)
 		ActiveMessage="wraps themselves in a veil of wind!"
 		OffMessage="lets the wind dissipate..."
 		adjust(mob/p)
 			if(!altered)
 				if(p.isInnovative(FAE, "Any") && !isInnovationDisable(p))
 					TimerLimit=30
-					Godspeed=1.5
+					SpdMult=1.25
+					Cooldown=75
+					ActiveMessage="wraps themselves in a aegis of wind!"
 		verb/Evading_Zephyr()
 			set category="Skills"
 			adjust(usr)
@@ -73,6 +75,8 @@
 				if(p.isInnovative(FAE, "Any") && !isInnovationDisable(p))
 					Speed=9
 					Distance=15
+					Radius=1
+					ActiveMessage="invokes a powerful: <font size=+1>MENTIS IMPERIUM!</font size>"
 		verb/Mentis_Imperium()
 			set category="Skills"
 			usr.UseProjectile(src)

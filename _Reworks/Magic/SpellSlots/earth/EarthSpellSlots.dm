@@ -27,6 +27,7 @@
 				if(p.isInnovative(FAE, "Any") && !isInnovationDisable(p))
 					DamageMult=7.5
 					Distance=6
+					ActiveMessage="invokes a powerful: <font size=+1>SEISMIC ENTRY!</font size>"
 		verb/Seismic_Entry()
 			set category="Skills"
 			adjust(usr)
@@ -49,7 +50,10 @@
 			if(!altered)
 				if(p.isInnovative(FAE, "Any") && !isInnovationDisable(p))
 					TimerLimit=40
+					Cooldown=70
+					EndMult=1.25
 					PureReduction=3
+					ActiveMessage="wraps themselves in a barrier of living stone!"
 		verb/Ward_of_Stone()
 			set category="Skills"
 			adjust(usr)
@@ -68,9 +72,11 @@
 		adjust(mob/p)
 			if(!altered)
 				if(p.isInnovative(FAE, "Any") && !isInnovationDisable(p))
-					src.TimerLimit=15
-					src.ShatterAffected=4
-					src.CrippleAffected=3
+					TimerLimit=15
+					Cooldown=55
+					ShatterAffected=4
+					CrippleAffected=3
+					ActiveMessage="hexes the earth beneath their target!"
 		verb/Prickly_Ballet()
 			set category="Skills"
 			adjust(usr)

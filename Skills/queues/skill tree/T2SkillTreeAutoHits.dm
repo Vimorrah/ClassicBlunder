@@ -72,6 +72,8 @@ obj
 			UnarmedOnly=1
 			Distance=15
 			WindUp=1
+			ComboMaster=1
+			Guardbreak=1
 			WindupMessage="relaxes their fist into a straight palm..."
 			DamageMult=5
 			StrOffense=1

@@ -28,6 +28,7 @@
 				if(p.isInnovative(FAE, "Any") && !isInnovationDisable(p))
 					DamageMult=6
 					Distance=7
+					ActiveMessage="invokes a powerful: <font size=+1>BLAZING WHIP!</font size>"
 		verb/Blazing_Whip()
 			set category="Skills"
 			adjust(usr)
@@ -51,7 +52,8 @@
 				if(p.isInnovative(FAE, "Any") && !isInnovationDisable(p))
 					Speed=9
 					Distance=15
-					Scorching=2
+					Radius=1
+					ActiveMessage="invokes a powerful: <font size=+1>DRAGON ARC!</font size>"
 		verb/Dragon_Arc()
 			set category="Skills"
 			usr.UseProjectile(src)
@@ -72,6 +74,7 @@
 				if(p.isInnovative(FAE, "Any") && !isInnovationDisable(p))
 					Scorching=3
 					Knockback=5
+					ActiveMessage="invokes a powerful: <font size=+1>FIREBALL!</font size>"
 		verb/Fireball()
 			set category="Skills"
 			usr.UseProjectile(src)
