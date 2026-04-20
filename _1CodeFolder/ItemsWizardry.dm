@@ -304,7 +304,7 @@ obj/Items/Enchantment
 							HerbDictionary["Refreshment Herb"] = 150;
 							HerbDictionary["Magic Herb"] = 150;
 							HerbDictionary["Toxic Herb"] = 500; // Legitimately the best effect ion by virtue of reducing potion CD for some dmg
-							HerbDictionary["Hallucinogen"] = 500;
+							HerbDictionary["Hallucinogen Herb"] = 500;
 							HerbDictionary["Philter Herb"] = 300;
 							HerbDictionary["Stimulant Herb"] = 500;
 							HerbDictionary["Relaxant Herb"] = 500;
@@ -442,7 +442,7 @@ obj/Items/Enchantment
 							HerbDictionary["Refreshment Herb"] = 150;
 							HerbDictionary["Magic Herb"] = 150;
 							HerbDictionary["Toxic Herb"] = 500; // Legitimately the best effect ion by virtue of reducing potion CD for some dmg
-							HerbDictionary["Hallucinogen"] = 500;
+							HerbDictionary["Hallucinogen Herb"] = 500;
 							HerbDictionary["Philter Herb"] = 300;
 							HerbDictionary["Stimulant Herb"] = 500;
 							HerbDictionary["Relaxant Herb"] = 500;
