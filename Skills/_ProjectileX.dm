@@ -3360,7 +3360,7 @@ obj
 						Distance = 20
 						Knockback = 4
 						DamageMult = 2 + (1 * p.SagaLevel)
-						MultiHit = 3 + (1.5*p.SagaLevel)
+						MultiHit = 5
 						DamageMult/=MultiHit
 						Radius = 1
 						IconSize = 1.25
