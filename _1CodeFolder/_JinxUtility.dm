@@ -1713,9 +1713,9 @@ mob
 				Mod += 0.5 * (min(Frenzy, glob.DEBUFF_STACK_MAX) / glob.DEBUFF_STACK_MAX)
 			if(src.passive_handler.Get("Longing")&&src.Target)
 				if(Target.GetPowerUpRatio()>=Target.Power_Multiplier)
-					Str*=Target.GetPowerUpRatio()
+					Str*=clamp(1+((Target.GetPowerUpRatio()-1)/glob.LONGING_DIVISOR),1, glob.LONGING_MAX_CLAMP)
 				else if(Target.Power_Multiplier>=Target.GetPowerUpRatio())
-					Str*=Target.Power_Multiplier
+					Str*=clamp(1+((Target.Power_Multiplier-1)/glob.LONGING_DIVISOR),1, glob.LONGING_MAX_CLAMP)
 				else
 					Str*=1
 			var/STM=GetStrTransMult()
@@ -1912,9 +1912,9 @@ mob
 				Mod += 0.1 * src.StyleRating * src.getStyleBonusMult()
 			if(src.passive_handler.Get("Longing")&&src.Target)
 				if(Target.GetPowerUpRatio()>=Target.Power_Multiplier)
-					For*=Target.GetPowerUpRatio()
+					For*=clamp(1+((Target.GetPowerUpRatio()-1)/glob.LONGING_DIVISOR),1, glob.LONGING_MAX_CLAMP)
 				else if(Target.Power_Multiplier>=Target.GetPowerUpRatio())
-					For*=Target.Power_Multiplier
+					For*=clamp(1+((Target.Power_Multiplier-1)/glob.LONGING_DIVISOR),1, glob.LONGING_MAX_CLAMP)
 				else
 					For*=1
 			var/FTM=GetForTransMult()
@@ -2094,7 +2094,7 @@ mob
 				Mod += 0.1 * src.StyleRating * src.getStyleBonusMult()
 			if(src.passive_handler.Get("Longing")&&src.Target)
 				if(Target.Anger>1&&Anger<=1&&!src.passive_handler.Get("LunarWrath")&&!src.Target.passive_handler.Get("LunarWrath"))
-					End*=Target.Anger
+					End*=1+((Target.Anger-1)/glob.LONGING_DIVISOR)
 				else
 					End*=1
 			var/ETM=GetEndTransMult()
@@ -2363,9 +2363,9 @@ mob
 			var/OTM=GetOffTransMult()
 			if(src.passive_handler.Get("Longing")&&src.Target)
 				if(Target.GetPowerUpRatio()>=Target.Power_Multiplier)
-					Off*=Target.GetPowerUpRatio()
+					Off*=clamp(1+((Target.GetPowerUpRatio()-1)/glob.LONGING_DIVISOR),1, glob.LONGING_MAX_CLAMP)
 				else if(Target.Power_Multiplier>=Target.GetPowerUpRatio())
-					Off*=Target.Power_Multiplier
+					Off*=clamp(1+((Target.Power_Multiplier-1)/glob.LONGING_DIVISOR),1, glob.LONGING_MAX_CLAMP)
 				else
 					Off*=1
 			Off*=OTM
@@ -2492,7 +2492,7 @@ mob
 			var/DTM=GetDefTransMult()
 			if(src.passive_handler.Get("Longing")&&src.Target)
 				if(Target.Anger>1&&Anger<=1&&!src.Target.passive_handler.Get("LunarWrath"))
-					Def*=Target.Anger
+					Def*=1+((Target.Anger-1)/glob.LONGING_DIVISOR)//clamp(1+((Target.Power_Multiplier-1)/glob.LONGING_DIVISOR),1, glob.LONGING_MAX_CLAMP)
 				else
 					Def*=1
 			Def*=DTM

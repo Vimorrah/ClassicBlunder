@@ -39,9 +39,9 @@ obj/Skills/Buffs/SlotlessBuffs/Spiral/InspiredEvoApply
 obj/Skills/Buffs/SlotlessBuffs/Spiral/ImposedEvoApply
 	PowerGlows=list(1,0.8,0.8, 0,1,0, 0.8,0.8,1, 0,0,0)
 	KenWave = 4
-	KenWaveIcon='SparkleGreen.dmi'
+	KenWaveIcon='SparkleRed.dmi'
 	HitSpark='Spiral_Hitspark.dmi'
-	TopOverlayLock = 'SpiralAura.dmi'
+	TopOverlayLock = 'SpiralNemesisAura.dmi'
 	TopOverlayX = -32
 	TimerLimit=20
 	ActiveMessage="screams: <b>DO YOU SERIOUSLY THINK WE'RE GONNA BE WIPED OUT BY THE LIKES OF YOU?!</b>"
@@ -87,24 +87,36 @@ obj/Skills/Buffs/SlotlessBuffs/Spiral/InspiredEvo
 				return
 			ActiveMessage="screams WHEN THERE'S A WALL IN OUR WAY, TEAM [User] DRILLS RIGHT THROUGH IT!"
 			var/obj/Skills/Buffs/SlotlessBuffs/Spiral/InspiredEvoApply/applyBuff = new
+			var/secretLevel = User.secretDatum.currentTier
+			var/SpiralPower=1
+			switch(secretLevel)
+				if(1 to 2)
+					SpiralPower=1
+				if(3)
+					SpiralPower=2
+				if(4)
+					SpiralPower=3
+				if(5)
+					SpiralPower=7
+			applyBuff.PowerMult=1+(0.05*secretLevel*secretLevel)
 			applyBuff.StrMult=1.25
 			applyBuff.ForMult=1.25
 			applyBuff.EndMult=1.25
 			applyBuff.TimerLimit = 20 * (m.AscensionsAcquired+2)
-			applyBuff.passives = list("SpiralPowerUnlocked" = 1 )
+			applyBuff.passives = list("SpiralPowerUnlocked" = SpiralPower)
 			applyBuff.Trigger(m, 1)
 		User.OMessage(1, null, "[User] inspires the evolution of [User.party.members.len == 1 ? "themselves" : "their party"]!")
 		src.Cooldown(1, null, User)
 obj/Skills/Buffs/SlotlessBuffs/Spiral/Impose_Evolution
 	EndYourself=1
-	Cooldown=600
+	Cooldown=360
 	KenWave=1
 	KenWaveIcon='SparkleGreen.dmi'
 	KenWaveSize=4
 	KenWaveX=105
 	KenWaveY=105
 	Range=20
-	ActiveMessage="says: There was someone who fought as you do,  unaware that their actions would doom humanity to extinction!"
+	ActiveMessage="says: <b>Why can't you see your own pathetic limitations?!</b>"
 	verb/Imposed_Evolution()
 		set category="Skills"
 		set name="Imposed Evolution"
@@ -131,11 +143,23 @@ obj/Skills/Buffs/SlotlessBuffs/Spiral/Impose_Evolution
 				return
 			ActiveMessage="says: <b>There was someone who fought as you do,  unaware that their actions would doom humanity to extinction!</b>"
 			var/obj/Skills/Buffs/SlotlessBuffs/Spiral/ImposedEvoApply/applyBuff = new
+			var/secretLevel = User.secretDatum.currentTier
+			var/SpiralPower=1
+			switch(secretLevel)
+				if(1 to 2)
+					SpiralPower=1
+				if(3)
+					SpiralPower=2
+				if(4)
+					SpiralPower=3
+				if(5)
+					SpiralPower=7
+			applyBuff.PowerMult=1+(0.05*secretLevel*secretLevel)
 			applyBuff.StrMult=1.25
 			applyBuff.ForMult=1.25
 			applyBuff.EndMult=1.25
-			applyBuff.TimerLimit = 20 * (m.AscensionsAcquired+2)
-			applyBuff.passives = list("SpiralPowerUnlocked" = 1 )
+			applyBuff.TimerLimit = 360
+			applyBuff.passives = list("SpiralPowerUnlocked" = SpiralPower)
 			applyBuff.Trigger(m, 1)
 		User.OMessage(1, null, "[User] imposes their Spiral Power on [User.Target], forcing their evolution!")
 		src.Cooldown(1, null, User)
@@ -148,4 +172,18 @@ obj/Skills/Buffs/SlotlessBuffs/Spiral/Impose_Evolution
 	Total=PullAscensionStats(CA, TA, Stat)
 	if(SL>=7)
 		Total*=3
+	if(isRace(SAIYAN)||isRace(HALFSAIYAN))
+		switch(transUnlocked)
+			if(0)
+				Total*=1.4
+			if(1)
+				Total*=1.2
+			if(2)
+				Total*=1.5
+			if(3)
+				Total*=2
+			if(4)
+				Total*=2
+			else
+				Total*=1
 	return Total
