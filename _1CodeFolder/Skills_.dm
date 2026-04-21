@@ -956,16 +956,30 @@ mob/proc/SkillX(var/Wut,var/obj/Skills/Z,var/bypass=0)
 								src.dir=get_dir(src,src.Target)
 								src.Melee1(1, 5, accmulti=1.2, SureKB=1, BreakAttackRate=1)
 							else
-								if(HasGiantForm())
-									var/Wave=2
-									for(var/wav=Wave, wav>0, wav--)
-										KenShockwave(src, icon='fevKiai.dmi', Size=Wave)
-										Wave/=2
+								var/denko = getDenkoSekka()
+								if(denko)
+									src.MovementCharges--
+									if(MovementCharges<0)
+										MovementCharges=0
+									lastZanzoUsage = world.time + 8
+									src.DenkoSekkaZanzoVisual(src.Target)
+									sleep(5)
+									src.Comboz(src.Target, FALSE, FALSE, passive_handler["Backstabber"])
+									src.dir=get_dir(src,src.Target)
+									src.DenkoSekkaCharged = denko
+									src.Melee1(1, 5, accmulti=1.1, SureKB=1, BreakAttackRate=1)
+									return
 								else
-									VanishImage(src)
-								src.Comboz(src.Target, FALSE, FALSE, passive_handler["Backstabber"])
-								src.dir=get_dir(src,src.Target)
-								src.Melee1(1, 5, accmulti=1.1, SureKB=1, BreakAttackRate=1)
+									if(HasGiantForm())
+										var/Wave=2
+										for(var/wav=Wave, wav>0, wav--)
+											KenShockwave(src, icon='fevKiai.dmi', Size=Wave)
+											Wave/=2
+									else
+										VanishImage(src)
+									src.Comboz(src.Target, FALSE, FALSE, passive_handler["Backstabber"])
+									src.dir=get_dir(src,src.Target)
+									src.Melee1(1, 5, accmulti=1.1, SureKB=1, BreakAttackRate=1)
 						src.MovementCharges--
 						if(MovementCharges<0)
 							MovementCharges=0

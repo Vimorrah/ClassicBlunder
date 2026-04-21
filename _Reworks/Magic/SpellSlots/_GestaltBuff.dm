@@ -144,7 +144,7 @@
 			ForMult = 1.4
 			SpdMult = 1.35
 			OffMult = 1.3
-			passives = list("Shocking" = 1, "Afterimages" = 1, "ThunderHerald" = 1, "BlurringStrikes" = 1, "AttackSpeed" = 2, "Godspeed" = 2)
+			passives = list("Shocking" = 1, "Afterimages" = 1, "ThunderHerald" = 1, "BlurringStrikes" = 1, "AttackSpeed" = 2, "Godspeed" = 2, "DenkoSekka" = 3)
 		else if(tier >= 2)
 			ForMult = 1.25
 			SpdMult = 1.15

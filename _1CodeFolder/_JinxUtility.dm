@@ -3608,6 +3608,7 @@ mob
 				amount = 5
 			if(passive_handler.Get("EmptyFlashStep"))
 				amount += GetSwordAscension()
+			amount += getDenkoSekka() * glob.DENKO_SEKKA_CHARGE_PER_LEVEL
 			return amount
 
 		transcend(var/val)

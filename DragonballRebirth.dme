@@ -494,6 +494,7 @@
 #include "_Reworks\Passives\ChillResist.dm"
 #include "_Reworks\Passives\ControlResist.dm"
 #include "_Reworks\Passives\CrippleResist.dm"
+#include "_Reworks\Passives\DenkoSekka.dm"
 #include "_Reworks\Passives\EarthHerald.dm"
 #include "_Reworks\Passives\Entropic.dm"
 #include "_Reworks\Passives\EvilResist.dm"
