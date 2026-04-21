@@ -3550,10 +3550,12 @@ mob
 				Mult*=clamp(1+(flick/glob.ZANZO_FLICKER_DIVISOR),glob.ZANZO_FLICKER_LOWEST_CLAMP, glob.ZANZO_FLICKER_HIGHEST_CLAMP)
 			if(src.AfterImageStrike)
 				return
-			var/add = (glob.ZANZO_FLICKER_BASE_GAIN-(max(0.01,MovementCharges)/3)/10)*Mult
+			var/max_charges = GetMaxMovementCharges()
+			var/taper_basis = max(max_charges, 3)
+			var/add = (glob.ZANZO_FLICKER_BASE_GAIN-(max(0.01,MovementCharges)/taper_basis)/10)*Mult
 			src.MovementCharges+=add
-			if(src.MovementCharges>GetMaxMovementCharges())
-				src.MovementCharges=GetMaxMovementCharges()
+			if(src.MovementCharges>max_charges)
+				src.MovementCharges=max_charges
 			if(client&&client.hud_ids["Zanzoken"])
 				var/alteration = -36 + (36 * (MovementCharges - round(MovementCharges)))
 			//	world<<add
