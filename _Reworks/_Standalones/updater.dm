@@ -122,7 +122,11 @@ update
 			. = ..()//left alone for difficult copy pasting
 			if(p.isRace(HALFSAIYAN))
 				p.stat_redo()
-				
+			if(p.isRace(HUMAN))
+				if(p.Class=="Underdog")
+					p.passive_handler.Increase("Motivation", 0.25)
+					if(p.AscensionsAcquired==1)
+						p.passive_handler.Increase("Motivation", 0.1)
 					
 
 /globalTracker/var/COOL_GAJA_PLAYERS = list("Thorgigamax", "Gemenilove" )
