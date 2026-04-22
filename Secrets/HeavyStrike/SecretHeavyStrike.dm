@@ -269,7 +269,6 @@
         adjust(mob/p)
             var/SecretInformation/BlackFlash/bf = p.secretDatum
             bf.BlackFlashChance = bf.BlackFlashBaseChance
-            admins << "Queue'd a Black Flash, reset the chance to [bf.BlackFlashChance]"
 
 //SPIRAL
 /obj/Skills/Queue/Secret_Heavy_Strike/
