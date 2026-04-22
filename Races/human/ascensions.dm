@@ -295,7 +295,6 @@ ascension
 							break
 					if(!already_has_sea)
 						owner.race.transformations += new /transformation/human/sacred_energy_aura()
-			..()
 			revertAscension(mob/owner)
 				if(owner.passive_handler && owner.race && owner.race.transformations)
 					for(var/transformation/T in owner.race.transformations.Copy())

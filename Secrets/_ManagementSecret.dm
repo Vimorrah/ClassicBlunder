@@ -311,6 +311,21 @@ SecretInformation
 
 	EldritchShrouded
 		name = "Eldritch (Shrouded)"
+		var/list/ShroudedPassives=list();
+		var/ShroudedOrigin;
+		var/ShroudedSubtype;
+		applySecret(mob/p)
+			p << "Your Shrouded origin bubbles to the surface; [currentTier] Steps towards the road to Assimilation have been taken..."
+			//1, 2, and 6 upgrade your "Origin" style enhancements
+			//I'm not being lazy, I'm being ~efficient~
+			if(currentTier==3)
+				p.findOrAddSkill(/obj/Skills/Utility/Tether)
+				p << "Your Shroud learns to link itself with another body for ease of existence! (Tether)"
+			if(currentTier==4)
+				p << "When you Fade into Shadow, your existence is further nullified (Upgrades to Fade into Shadow movement)"
+			if(currentTier==5)
+				p << "Your All Seeing Eyes can pierce any veils within this reality! (Restrictions on All Seeing Eyes removed)"
+
 	EldritchReflected
 		name = "Eldritch (Reflected)"
 		givenSkills = list("/obj/Skills/Utility/Offer_Pact", "/obj/Skills/Utility/Revoke_Pact");

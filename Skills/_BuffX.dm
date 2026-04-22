@@ -12503,6 +12503,9 @@ mob
 					src << "You channel the haziness of Shadow through your style!"
 				if(src.Secret=="Zombie")
 					src << "You channel the stillness of the Underworld through your style!"
+				if(hasSecret("Eldritch (Shrouded)"))
+					src << "You channel the Origin behind your Shroud through your style!"
+					setShroudedStyle();
 				src.AddStyleBuff()
 				B.current_passives = B.passives
 				passive_handler.increaseList(B.passives)
@@ -12657,6 +12660,9 @@ mob
 				OMsg(src, "[src] takes back what belongs to them, as they call upon [src.StyleBuff]!")
 			else
 				OMsg(src, "[src] takes up the [src.StyleBuff]!")
+			if(hasSecret("Eldritch (Shrouded)"))
+				var/SecretInformation/EldritchShrouded/es = secretDatum;
+				passive_handler.increaseList(es.ShroudedPassives);
 
 		RemoveStyleBuff()
 			if(src.StyleBuff.current_passives && src.StyleBuff.current_passives.len)
@@ -12670,6 +12676,9 @@ mob
 			src.OffMultTotal-=(src.StyleBuff.OffMult-1)
 			src.DefMultTotal-=(src.StyleBuff.DefMult-1)
 			src.RecovMultTotal-=(src.StyleBuff.RecovMult-1)
+			if(hasSecret("Eldritch (Shrouded)"))
+				var/SecretInformation/EldritchShrouded/es = secretDatum;
+				passive_handler.decreaseList(es.ShroudedPassives);
 			src.AllSkillsRemove(src.StyleBuff)
 			if(StyleBuff.BuffSelf)
 				var/obj/Skills/Buffs/s = FindSkill(StyleBuff.BuffSelf)

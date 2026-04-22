@@ -1656,8 +1656,8 @@ mob
 						Mod+=0.5*passive_handler.Get("BurningShot")
 					else
 						Mod+=0.75*passive_handler.Get("BurningShot")
-			if(src.Momentum)
-				Mod *= 1 + (src.Momentum * (glob.MOMENTUM_BASE_BOON * clamp(src.passive_handler.Get("Momentum"), 0.1, glob.MOMENTUM_MAX_BOON)))
+			if(Momentum)
+				Mod *= getMomentumMult();
 
 			if(src.CheckSlotless("Genesic Brave")||src.CheckSpecial("King of Braves")) //okay take two
 				if(glob.KOB_GETS_STATS_LOW_LIFE)

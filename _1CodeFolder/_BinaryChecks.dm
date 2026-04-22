@@ -696,6 +696,7 @@ mob
 				return 1
 			if(src.HasMaouKi())
 				return 1
+			if(scalingEldritchPower()) return 1
 		HasClarity()
 			if(passive_handler.Get("Omnipotent")) // so admins can fucking see
 				return 1
@@ -721,6 +722,7 @@ mob
 					return 1
 				if(src.HasSpiritPower()>=1)
 					return 1
+				if(scalingEldritchPower()) return 1
 			return 0
 		HasTransMimic()
 			return passive_handler.Get("TransMimic")
