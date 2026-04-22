@@ -48,7 +48,7 @@ obj/Skills/Utility/Mentor_System
 			src.Using = 0
 			return
 
-		if(Choice.Secret != "Ultra Instinct"&&Choice.hasEldritchPower())
+		if(Choice.Secret != "Ultra Instinct"&&!Choice.hasEldritchPower())
 			Choice.Secret = "Ultra Instinct"
 		if(Choice.hasEldritchPower())
 			Mentor << "Deep within your student, something terrible stirs..."
