@@ -77,6 +77,7 @@ ascension
 							endurance = 0.1
 							speed = 0.4
 			onAscension(mob/owner)
+				simulateChoiceMutation(owner)
 				applyDormantDemonPassives(owner)
 				..()
 		two
@@ -111,6 +112,7 @@ ascension
 							endurance = 0.1
 							speed = 0.4
 			onAscension(mob/owner)
+				simulateChoiceMutation(owner)
 				applyDormantDemonPassives(owner)
 				..()
 		three
@@ -154,6 +156,7 @@ ascension
 							endurance = 0.1
 							speed = 0.4
 			onAscension(mob/owner)
+				simulateChoiceMutation(owner)
 				applyDormantDemonPassives(owner)
 				..()
 			postAscension(mob/owner)
@@ -210,6 +213,7 @@ ascension
 							endurance = 0.1
 							speed = 0.4
 			onAscension(mob/owner)
+				simulateChoiceMutation(owner)
 				applyDormantDemonPassives(owner)
 				..()
 
