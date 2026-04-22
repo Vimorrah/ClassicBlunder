@@ -3,18 +3,18 @@
 		BuffName = "120% Potential"
 		Mastery=-1
 		UnrestrictedBuff=1
-		StrMult=1.25
-		ForMult=1.25
-		EndMult=1.25
-		SpdMult=1.25
-		DefMult=1.25
+		StrMult=1.20
+		ForMult=1.20
+		EndMult=1.20
+		SpdMult=1.20
+		DefMult=1.20
 		MakesArmor=0
 		TurfShift='WhiteTurfShift.dmi'
 		TurfShiftInstant=1
 		OffMult=1.25
 		IconLock='CE Divergent Fist.dmi'
 		TimerLimit=90
-		passives = list("TechniqueMastery" = 5, "BuffMastery" = 10, "MovementMastery" = 10) // this is temp i just grabbed that shit from x-antibody LOL
+		passives = list("TechniqueMastery" = 5, "BuffMastery" = 2, "MovementMastery" = 5)
 		DarkChange=1
 		ActiveMessage="...!"
 		OffMessage="cools down."
