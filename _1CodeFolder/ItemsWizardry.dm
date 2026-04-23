@@ -567,10 +567,10 @@ obj/Items/Enchantment
 				return
 			else
 				var/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Potion_Power/PP=new
-				var/CD=1800 // 3 min base cooldown
-				var/WEAK_EFFECT_CD = 100
-				var/MEDIUM_EFFECT_CD = 200
-				var/STRONG_EFFECT_CD = 300
+				var/CD= 360 // 6 min base cooldown
+				var/WEAK_EFFECT_CD = 0
+				var/MEDIUM_EFFECT_CD = 0
+				var/STRONG_EFFECT_CD = 0
 				if(src.Energy)
 					PP.InstantAffect=1
 					PP.EnergyHeal=src.Energy*10
