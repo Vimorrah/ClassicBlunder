@@ -574,7 +574,7 @@ obj/Items/Enchantment
 				if(src.Energy)
 					PP.InstantAffect=1
 					PP.EnergyHeal=src.Energy*10
-					CD+=(src.Energy*WEAK_EFFECT_CD) // 10
+					CD+=(src.Energy*WEAK_EFFECT_CD)
 				if(src.Mana)
 					PP.InstantAffect=1
 					PP.ManaHeal=src.Mana*10
@@ -597,7 +597,7 @@ obj/Items/Enchantment
 				if(src.Hallucinogen)
 					FoundHallucinogen=1
 					PP.AutoAnger=1
-					var/buff = 0.25 * src.Hallucinogen // 25%
+					var/buff = 0.25 * src.Hallucinogen
 					PP.AngerMult= 1 + buff
 					PP.DefMult = 1 - buff
 					PP.EndMult = 1 - buff
@@ -611,7 +611,7 @@ obj/Items/Enchantment
 				if(src.Sexy)
 					FoundSexy=1
 					PP.Infatuated=src.Sexy
-					CD+=(src.Sexy*90) // this doesn't do anything
+					CD+=(src.Sexy*90)
 				if(src.Transform)
 					switch(src.Transform)
 						if("Weak")
