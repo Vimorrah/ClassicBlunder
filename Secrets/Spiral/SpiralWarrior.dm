@@ -36,18 +36,62 @@ obj/Skills/Buffs/SlotlessBuffs/Spiral/InspiredEvoApply
 	OffMessage="limits themselves once again."
 	TextColor="green"
 	MagicNeeded=0
+	passives = list("SpiralPowerUnlocked" = 1)
 obj/Skills/Buffs/SlotlessBuffs/Spiral/ImposedEvoApply
 	PowerGlows=list(1,0.8,0.8, 0,1,0, 0.8,0.8,1, 0,0,0)
+	BuffName="Desperate Evolution"
 	KenWave = 4
 	KenWaveIcon='SparkleRed.dmi'
 	HitSpark='Spiral_Hitspark.dmi'
 	TopOverlayLock = 'SpiralNemesisAura.dmi'
 	TopOverlayX = -32
-	TimerLimit=20
+	TimerLimit=360
 	ActiveMessage="screams: <b>DO YOU SERIOUSLY THINK WE'RE GONNA BE WIPED OUT BY THE LIKES OF YOU?!</b>"
 	OffMessage="limits themselves once again."
 	TextColor="red"
 	MagicNeeded=0
+	passives = list("SpiralPowerUnlocked" = 1)
+	adjust(mob/p)
+		switch(p.Health)
+			if(1 to 10)
+				passives = list("SpiralPowerUnlocked" = 7)
+				HealthHeal=25
+				p.passive_handler.Set("SpiralSpark", 1)
+			if(11 to 30)
+				passives = list("SpiralPowerUnlocked" = 4)
+			if(31 to 50)
+				passives = list("SpiralPowerUnlocked" = 3)
+			if(51 to 70)
+				passives = list("SpiralPowerUnlocked" = 2)
+			if(71 to 100)
+				passives = list("SpiralPowerUnlocked" = 1)
+obj/Skills/Buffs/SlotlessBuffs/Spiral/Spiral_King
+	PowerGlows=list(1,0.8,0.8, 0,1,0, 0.8,0.8,1, 0,0,0)
+	BuffName="Spiral King"
+	KenWave = 4
+	KenWaveIcon='SparkleRed.dmi'
+	HitSpark='Spiral_Hitspark.dmi'
+	TopOverlayLock = 'SpiralNemesisAura.dmi'
+	TopOverlayX = -32
+	TimerLimit=360
+	ActiveMessage="screams: <b>Do you possess the same sheer fortitude as I?! DO YOU?! I SAY, NO, NO, NO, NO, NO, NO, NO, NO, NO, NO, NO, NO, NO, NO, NO, NO, NOT! AT! ALL</b>"
+	OffMessage="limits themselves once again."
+	TextColor="red"
+	MagicNeeded=0
+	passives = list("SpiralPowerUnlocked" = 1)
+	adjust(mob/p)
+		switch(p.Health)
+			if(1 to 10)
+				passives = list("SpiralPowerUnlocked" = 7)
+				HealthHeal=25
+			if(11 to 30)
+				passives = list("SpiralPowerUnlocked" = 4)
+			if(31 to 50)
+				passives = list("SpiralPowerUnlocked" = 3)
+			if(51 to 70)
+				passives = list("SpiralPowerUnlocked" = 2)
+			if(71 to 100)
+				passives = list("SpiralPowerUnlocked" = 1)
 
 obj/Skills/Buffs/SlotlessBuffs/Spiral/InspiredEvo
 	EndYourself=1
@@ -116,63 +160,52 @@ obj/Skills/Buffs/SlotlessBuffs/Spiral/Impose_Evolution
 	KenWaveSize=4
 	KenWaveX=105
 	KenWaveY=105
+	var/SpiralLevel=1
+	ActiveMessage="screams: <b>DO YOU SERIOUSLY THINK WE'RE GONNA BE WIPED OUT BY THE LIKES OF YOU?!</b>"
 	Range=200
-	ActiveMessage="says: <b>Why can't you see your own pathetic limitations?!</b>"
-	verb/Imposed_Evolution()
+	verb/Force_Evolution()
 		set category="Skills"
-		set name="Imposed Evolution"
+		set name="Force Evolution"
 		var/mob/User = usr
+		if(!User.party || !User.party.members || User.party.members.len == 0)
+			User << "You need to be in a party to apply Inspired Evolution."
+			return
 		if(src.cooldown_remaining > 0)
 			User << "[src] is on cooldown."
 			return
 		if(!altered)
 			adjust(User)
-		var/mob/InitialTarget=User.Target
-		var/mob/list/ImposeTarget=User
-		for(var/mob/m in InitialTarget.party.members)
-			ImposeTarget+=m
-		for(ImposeTarget)
-			if(!ImposeTarget || !ismob(ImposeTarget)) continue
-			if(ImposeTarget.race.type in INORGANIC_RACES && !ImposeTarget.passive_handler.Get("SpiralEngine"))
-				User << "[ImposeTarget] is synthetic and cannot evolve."
-				ImposeTarget << "[User] tried to force you to evolve, but it failed."
-				return
-			if(ImposeTarget.race.type in CURSED_RACES)
-				User << "[ImposeTarget]'s biology is warped by the supernatural, they cannot evolve as you do."
-				ImposeTarget <<"[User] tried to inspire you to evolve, but your supernatural gifts interferred."
-				return
-			if(ImposeTarget.race.type in STAGNANT_RACES)
-				User <<"[ImposeTarget] is a supernatural entity. They are incapable of change."
-				ImposeTarget <<"[User] tried to inspire you to evolve, but your nature prevents you from lowering yourself to their level."
-				return
-			ActiveMessage="says: <b>There was someone who fought as you do,  unaware that their actions would doom humanity to extinction!</b>"
+		for(var/mob/m in User.Target)
+			if(!m || !ismob(m)) continue
 			var/obj/Skills/Buffs/SlotlessBuffs/Spiral/ImposedEvoApply/applyBuff = new
-			var/secretLevel = User.secretDatum.currentTier
-			var/SpiralPower=1
-			switch(secretLevel)
-				if(1 to 2)
-					SpiralPower=1
-				if(3)
-					SpiralPower=2
-				if(4)
-					SpiralPower=3
-				if(5)
-					SpiralPower=7
-			if(!User)
-				applyBuff.PowerMult=1+(0.05*secretLevel*secretLevel)
-				applyBuff.passives = list("SpiralPowerUnlocked" = SpiralPower)
-				applyBuff.ActiveMessage="screams: <b>DO YOU SERIOUSLY THINK WE'RE GONNA BE WIPED OUT BY THE LIKES OF YOU?!</b>"
-				ImposeTarget.passive_handler.Set("SpiralSpark", 1)
-				
-			for(User)
-				applyBuff.ActiveMessage="screams: <b>Do you really possess the same sheer fortitude as I?! DO YOU?! NO, NO, NO, NO, NO, NO, NO, NO, NO, NO, NO, NO, NO, NO, NO, NO, NOT! AT! ALL!</b>"
+			m.passive_handler.Set("SpiralSpark", 1)
 			applyBuff.StrMult=1.25
 			applyBuff.ForMult=1.25
 			applyBuff.EndMult=1.25
-			applyBuff.TimerLimit = 360
-			applyBuff.Trigger(ImposeTarget, 1)
-		User.OMessage(1, null, "[User] imposes their Spiral Power on [User.Target], forcing their evolution!")
+			applyBuff.ActiveMessage="[ActiveMessage]"
+			applyBuff.passives = list("SpiralPowerUnlocked" = SpiralLevel)
+			applyBuff.Trigger(m, 1)
+	//	User.OMessage(1, null, "[User] inspires the evolution of [User.party.members.len == 1 ? "themselves" : "their party"]!")
 		src.Cooldown(1, null, User)
+obj/Skills/AutoHit/Spiral
+	Impose_Evolution
+		Cooldown=360
+		Area="Target"
+		Distance=15
+		DamageMult=30
+		HitSparkIcon='SparkleRed.dmi'
+		HitSparkTurns=1
+		HitSparkSize=5
+		HitSparkCount=10
+		HitSparkDispersion=1
+		AdaptRate=1
+		SpecialAttack=1
+		BuffAffected = "/obj/Skills/Buffs/SlotlessBuffs/Spiral/ImposedEvoApply"
+		BuffSelf = "/obj/Skills/Buffs/SlotlessBuffs/Spiral/Spiral_King"
+		verb/Impose_Evolution()
+			set category="Skills"
+			adjust(usr)
+			usr.Activate(src)
 /mob/proc/HandleSpiralUnlock(var/Stat, SL)
 	var/CA=AscensionsAcquired
 	var/TA=CA+SL
