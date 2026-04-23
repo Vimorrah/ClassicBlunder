@@ -160,12 +160,33 @@ obj/Skills/Buffs/SlotlessBuffs/Spiral/Impose_Evolution
 	KenWaveSize=4
 	KenWaveX=105
 	KenWaveY=105
+	var/SpiralLevel=1
+	ActiveMessage="screams: <b>DO YOU SERIOUSLY THINK WE'RE GONNA BE WIPED OUT BY THE LIKES OF YOU?!</b>"
 	Range=200
-	ActiveMessage="says: <b>Why can't you see your own pathetic limitations?!</b>"
-	verb/Imposed_Evolution()
+	verb/Force_Evolution()
 		set category="Skills"
-		set name="Imposed Evolution"
-		del src
+		set name="Force Evolution"
+		var/mob/User = usr
+		if(!User.party || !User.party.members || User.party.members.len == 0)
+			User << "You need to be in a party to apply Inspired Evolution."
+			return
+		if(src.cooldown_remaining > 0)
+			User << "[src] is on cooldown."
+			return
+		if(!altered)
+			adjust(User)
+		for(var/mob/m in User.Target)
+			if(!m || !ismob(m)) continue
+			var/obj/Skills/Buffs/SlotlessBuffs/Spiral/ImposedEvoApply/applyBuff = new
+			m.passive_handler.Set("SpiralSpark", 1)
+			applyBuff.StrMult=1.25
+			applyBuff.ForMult=1.25
+			applyBuff.EndMult=1.25
+			applyBuff.ActiveMessage="[ActiveMessage]"
+			applyBuff.passives = list("SpiralPowerUnlocked" = SpiralLevel)
+			applyBuff.Trigger(m, 1)
+	//	User.OMessage(1, null, "[User] inspires the evolution of [User.party.members.len == 1 ? "themselves" : "their party"]!")
+		src.Cooldown(1, null, User)
 obj/Skills/AutoHit/Spiral
 	Impose_Evolution
 		Cooldown=360
