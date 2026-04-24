@@ -19,7 +19,7 @@ majinAbsorb/proc/updateVariables(mob/p)
     var/isSuper = (p.Class == "Super")
     var/asc = p.AscensionsAcquired
     absorbLimit = MAJIN_BASE_ABSORB_LIMIT + asc + (isSuper ? MAJIN_SUPER_ABSORB_BONUS : 0)
-    skillsPerVictim = MAJIN_BASE_SKILLS_PER_VICTIM + (isSuper ? MAJIN_SUPER_SKILL_BONUS : 0)
+    skillsPerVictim = MAJIN_BASE_SKILLS_PER_VICTIM + (isSuper ? (MAJIN_SUPER_SKILL_BONUS + asc) : 0)
 
 majinAbsorb/proc/SumAbsorbedPeakPower(mob/absorber)
     . = 0
