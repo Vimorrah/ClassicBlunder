@@ -8379,6 +8379,9 @@ NEW VARIABLES
 
 			verb/Aria_Chant()
 				set category = "Skills"
+				if(usr.absorbedBy)
+					usr << "You cannot recite your aria while absorbed."
+					return
 				if(usr.AriaCount-2 == usr.SagaLevel && usr.UBWPath != "Feeble")
 					usr << "You try to speak more of your aria, but you don't know any more lines..."
 					return
@@ -12414,6 +12417,9 @@ mob
 						if(!src.passive_handler.Get("Scarlet-Overdriven"))
 							src.Death(null, "suicidal stupidity!", SuperDead=1)
 							return
+				if(src.absorbedBy && (B.WarpZone || B.Duel || istype(B, /obj/Skills/Buffs/SlotlessBuffs/Domain_Expansion)))
+					src << "You cannot invoke duel or domain techniques while absorbed."
+					return
 				if(B.WarpZone)
 					if(!B.WarpX||!B.WarpY||!B.WarpZ)
 						src << "Your duel location hasn't been set!"
