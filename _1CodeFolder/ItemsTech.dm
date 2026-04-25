@@ -3886,15 +3886,8 @@ obj/Items/Gear
 				usr<<"You are already a Demon!"
 				return
 
-			var/wasSaiyan = usr.isRace(SAIYAN)
-
-			if(!usr.ChangeRace(DEMON))
-				usr<<"Something went wrong; you remain unchanged."
-				return
-
-			if(wasSaiyan)
-				// Ex-Saiyan demons keep a demonic version of the Super Saiyan line and
-				// gain Hellborn Fury / Demonic Oozaru on top of the standard Demon kit.
+			var/isSaiyan = usr.isRace(SAIYAN)
+			if(isSaiyan)
 				usr.AddSkill(new /obj/Skills/Buffs/SlotlessBuffs/Autonomous/HellbornFury/Stage_One)
 				usr.AddSkill(new /obj/Skills/Buffs/SlotlessBuffs/Autonomous/HellbornFury/Stage_Two)
 				usr.AddSkill(new /obj/Skills/Buffs/SlotlessBuffs/Autonomous/HellbornFury/Stage_Three)
@@ -3904,9 +3897,16 @@ obj/Items/Gear
 				usr.passive_handler.Increase("Persistence", 2)
 				usr.passive_handler.Increase("MaimMastery", 1)
 				usr.oozaru_type = "Demonic"
+				for(var/transformation/saiyan/ssj in usr.race.transformations)
+					usr.race.transformations -=ssj
+					del ssj
 				usr.race.transformations += new /transformation/saiyan/hellspawn_super_saiyan()
 				usr.race.transformations += new /transformation/saiyan/hellspawn_super_saiyan_2()
 				usr.race.transformations += new /transformation/saiyan/hellspawn_super_full_power_saiyan_2_limit_breaker()
+				del src
+			if(!usr.ChangeRace(DEMON))
+				usr<<"Something went wrong; you remain unchanged."
+				return
 
 			usr.stat_redo()
 
