@@ -562,17 +562,12 @@ obj/Skills
 							src.ReturnZ=User.z
 							Destination=locate(glob.VOID_LOCATION[1], glob.VOID_LOCATION[2], glob.VOID_LOCATION[3])
 					if("Traverse Depths")
-						// The Depths live on z = 8 (locate(198, 221, 8) is the spawn).
-						// Block re-using the verb only when the user is actually there;
-						// the previous version returned unconditionally, which silently
-						// killed the first-use teleport for everyone.
-						if(User.z == 8)
-							User << "You're already in the Depths, this wipe, love."
-							return;
-						src.ReturnX=User.x
-						src.ReturnY=User.y
-						src.ReturnZ=User.z
-						Destination=locate(198, 221, 8)
+						// Intentionally fully gated for this wipe per cosmology setup.
+						// Do not restore the locate(198, 221, 8) destination here without
+						// confirming with the wipe lead - the deny is by design, not a
+						// missed early-return bug.
+						User << "You're already in the Depths, this wipe, love."
+						return;
 					if("Traverse Da'at")
 						src.ReturnX=User.x
 						src.ReturnY=User.y
