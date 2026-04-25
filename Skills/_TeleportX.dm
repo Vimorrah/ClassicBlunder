@@ -271,7 +271,25 @@ obj/Skills
 				var/obj/Arcane/ArcaneFocal/newFocal = new()
 				newFocal.loc = usr.loc;
 				newFocal.name = fName;
+				newFocal.creator_ckey = usr.ckey;
 				depthsFocals.Add(newFocal.name);
+			verb/Remove_Focal()
+				set category="Utility"
+				set name = "Remove Depths Focal"
+				if(!depthsFocals.len)
+					usr << "You have no marked focals to remove.";
+					return;
+				var/list/options = list("Cancel") + depthsFocals;
+				var/choice = input(usr, "Which of your focals should be removed?", "Remove Personal Focal Point") in options;
+				if(!choice || choice == "Cancel") return;
+				// Only delete a focal that this player actually owns - guards against
+				// stripping a same-named focal another system may have placed.
+				for(var/obj/Arcane/ArcaneFocal/f in world)
+					if(f.name == choice && f.creator_ckey == usr.ckey)
+						del(f)
+						break;
+				depthsFocals.Remove(choice);
+				usr << "Focal [choice] has been unmarked.";
 		Dive_To_Heart
 			desc="Dive into the station of the heart."
 			DiveWarp=1
@@ -544,8 +562,13 @@ obj/Skills
 							src.ReturnZ=User.z
 							Destination=locate(glob.VOID_LOCATION[1], glob.VOID_LOCATION[2], glob.VOID_LOCATION[3])
 					if("Traverse Depths")
-						User << "You're already in the Depths, this wipe, love."
-						return;
+						// The Depths live on z = 8 (locate(198, 221, 8) is the spawn).
+						// Block re-using the verb only when the user is actually there;
+						// the previous version returned unconditionally, which silently
+						// killed the first-use teleport for everyone.
+						if(User.z == 8)
+							User << "You're already in the Depths, this wipe, love."
+							return;
 						src.ReturnX=User.x
 						src.ReturnY=User.y
 						src.ReturnZ=User.z
