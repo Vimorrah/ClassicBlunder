@@ -3885,29 +3885,30 @@ obj/Items/Gear
 			if(usr.isRace(DEMON))
 				usr<<"You are already a Demon!"
 				return
-			if(usr.isRace(SAIYAN))
-				usr.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/Autonomous/HellbornFury/Stage_One)
-				usr.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/Autonomous/HellbornFury/Stage_Two)
-				usr.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/Autonomous/HellbornFury/Stage_Three)
-				usr.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/Autonomous/HellbornFury/Stage_Four)
+
+			var/wasSaiyan = usr.isRace(SAIYAN)
+
+			if(!usr.ChangeRace(DEMON))
+				usr<<"Something went wrong; you remain unchanged."
+				return
+
+			if(wasSaiyan)
+				// Ex-Saiyan demons keep a demonic version of the Super Saiyan line and
+				// gain Hellborn Fury / Demonic Oozaru on top of the standard Demon kit.
+				usr.AddSkill(new /obj/Skills/Buffs/SlotlessBuffs/Autonomous/HellbornFury/Stage_One)
+				usr.AddSkill(new /obj/Skills/Buffs/SlotlessBuffs/Autonomous/HellbornFury/Stage_Two)
+				usr.AddSkill(new /obj/Skills/Buffs/SlotlessBuffs/Autonomous/HellbornFury/Stage_Three)
+				usr.AddSkill(new /obj/Skills/Buffs/SlotlessBuffs/Autonomous/HellbornFury/Stage_Four)
+				usr.AddSkill(new /obj/Skills/False_Moon)
 				usr.passive_handler.Increase("HellPower", 0.1)
 				usr.passive_handler.Increase("Persistence", 2)
 				usr.passive_handler.Increase("MaimMastery", 1)
-				usr.AddSkill(new/obj/Skills/False_Moon)
-				usr.oozaru_type="Demonic"
-				for(var/transformation/saiyan/ssj in usr.race.transformations)
-					usr.race.transformations -=ssj
-					del ssj
+				usr.oozaru_type = "Demonic"
 				usr.race.transformations += new /transformation/saiyan/hellspawn_super_saiyan()
 				usr.race.transformations += new /transformation/saiyan/hellspawn_super_saiyan_2()
 				usr.race.transformations += new /transformation/saiyan/hellspawn_super_full_power_saiyan_2_limit_breaker()
-			//	del src
-			//	return
-		//	usr.passive_handler = null
-			usr.AscensionsAcquired=1
-			usr.setRace(DEMON,FALSE,TRUE)
+
 			usr.stat_redo()
-		//	del src
 
 	Spiral_Engine
 		TechType="MilitaryEngineering"
