@@ -7647,7 +7647,7 @@ NEW VARIABLES
 			SignatureTechnique=3
 			AutoAnger=1
 			AngerThreshold=2
-			IconLock='DarknessGlow.dmi'
+			IconLock='MajinAura.dmi'
 			LockX=0
 			LockY=0
 			FlashChange=1
