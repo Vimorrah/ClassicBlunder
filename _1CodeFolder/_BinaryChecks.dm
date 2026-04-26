@@ -2556,8 +2556,6 @@ mob
 			// 	Return+=(src.SagaLevel-4)*0.25
 			if(passive_handler.Get("MaimMastery"))
 				Return+=passive_handler.Get("MaimMastery")
-			if(passive_handler.Get("MaimMastery"))
-				Return = 0
 			return Return
 		CheckKeybladeStyle(var/Style)
 			if(src.StyleActive=="[Style]"&&src.CheckActive("Keyblade"))
