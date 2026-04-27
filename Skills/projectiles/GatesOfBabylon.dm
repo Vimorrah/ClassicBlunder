@@ -526,10 +526,10 @@ obj/Skills/AutoHit/Enuma_Elish
 	Shattering = 50
 	Paralyzing = 50
 	Toxic = 1
-	Icon = 'Hellnova.dmi'
-	IconX = -32
-	IconY = -32
+	Icon = ‘Hellnova.dmi’
 	Size = 1.2
+	IconX = -158
+	IconY = -169
 	NeedsSword = 1
 	ActiveMessage = "channels the Sword of Rupturing Heaven — Enuma Elish!"
 	var/tmp/enuma_shatter_fired = 0
