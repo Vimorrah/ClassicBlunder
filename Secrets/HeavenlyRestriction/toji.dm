@@ -133,7 +133,7 @@ var/list/heavenly_improvements = list("Dragon Clash", "Grab", "Reverse Dash", "L
 			   p.passive_handler.Increase("Calm Anger", 1)
 			   p.passive_handler.Increase("Wrathful Tenacity", 0.2)
 		   if("Power Control")
-			   p.passive_handler.Increase("Energy Generation", min(boon_value * 1.5, 4))
+			   p.passive_handler.Increase("Energy Generation", min(boon_value * 1.5, 10))
 			   p.passive_handler.Increase("Soft Style", min(boon_value * 0.5, 2))
 		   if("Power")
 			   p.passive_handler.Increase("Buff Mastery", min(boon_value, 4))
