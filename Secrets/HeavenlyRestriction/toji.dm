@@ -28,9 +28,9 @@ throw in stat mults at 2,4,5, depending on the path of restricting
 	ActiveMessage = ""
 	OffMessage = ""
 
-var/list/heavenly_restrictions = list("Staff" = 1, "Armor" = 2, "Sword" = 1, "Heavy Strike" = 2, "Armed Skills" = 2.5, "Unarmed Skills" = 2.5, "Magic" = 4, \
-"Science" = 4, "Queues" = 3, "Autohits" = 3, "Projectiles" = 3, "Grapples" = 2, "All Skills" = 10, "Force" = 3, "Defense" = 3, "Endurance" = 3, \
-"Cybernetics" = 2, "Strength" = 3, "Speed" = 3, "Offense" = 3, "Normal Attack" = 6, "Grab" = 2, "Zanzoken" = 3, "Senses" = 4, "Anger" = 4, "Power Control" = 3, "Special Slotter" = 4)
+var/list/heavenly_restrictions = list("Staff" = 2, "Armor" = 3, "Sword" = 2, "Heavy Strike" = 2, "Armed Skills" = 2.5, "Unarmed Skills" = 2.5, "Magic" = 5, \
+"Science" = 5, "Queues" = 3, "Autohits" = 3, "Projectiles" = 3, "Grapples" = 2, "All Skills" = 10, "Force" = 3, "Defense" = 3, "Endurance" = 3, \
+"Cybernetics" = 3, "Strength" = 3, "Speed" = 3, "Offense" = 3, "Normal Attack" = 6, "Grab" = 2, "Zanzoken" = 3, "Senses" = 4, "Anger" = 4, "Power Control" = 3, "Special Slotter" = 4)
 
 var/list/heavenly_improvements = list("Dragon Clash", "Grab", "Reverse Dash", "Launchers", "Stunners", "Heavy Strike", "Dragon Dash", "Senses", "Throw", "Strength", "Force", "Endurance", "Offense", "Defense", "Speed", "Anger", "Power Control", "Power")
 
