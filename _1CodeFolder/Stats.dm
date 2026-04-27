@@ -1032,8 +1032,10 @@ mob/proc/
 		if(Power > PeakPowerObserved)
 			PeakPowerObserved = Power
 
-		if(majinAbsorb && majinAbsorb.absorbed && majinAbsorb.absorbed.len)
-			Power += majinAbsorb.SumAbsorbedPeakPower(src)
+		if(majinAbsorb)
+			if(majinAbsorb.absorbed && majinAbsorb.absorbed.len)
+				Power += majinAbsorb.SumAbsorbedPeakPower(src)
+			Power += majinAbsorb.permanentAbsorbPower
 
 		if(src.Dead&&!src.KeepBody)
 			Ratio*=0.5
