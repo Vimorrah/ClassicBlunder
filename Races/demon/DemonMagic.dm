@@ -119,14 +119,20 @@
                             var/obj/Skills/Buffs/SlotlessBuffs/Chaos_Soldier/cs = locate(/obj/Skills/Buffs/SlotlessBuffs/Chaos_Soldier) in User
                             if(cs)
                                 cs.Trigger(User)
-                                User.cooldownAllChaosSkills()
+                                if(User.isRace(MAKAIOSHIN) && User.passive_handler && User.passive_handler.Get("Limited Rank-Up"))
+                                    User.cooldownChaosSkillSingle(cs)
+                                else
+                                    User.cooldownAllChaosSkills()
                             else
                                 User << "You lack the knowledge to complete this technique."
                         else if(initName == "Order" && curName == "HellFire")
                             var/obj/Skills/Buffs/SlotlessBuffs/Chaos_Control/cc = locate(/obj/Skills/Buffs/SlotlessBuffs/Chaos_Control) in User
                             if(cc)
                                 User.SkillX("Chaos Control", cc)
-                                User.cooldownAllChaosSkills()
+                                if(User.isRace(MAKAIOSHIN) && User.passive_handler && User.passive_handler.Get("Limited Rank-Up"))
+                                    User.cooldownChaosSkillSingle(cc)
+                                else
+                                    User.cooldownAllChaosSkills()
                             else
                                 User << "You lack the knowledge to complete this technique."
                     if(perfect)
