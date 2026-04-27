@@ -4,7 +4,7 @@
 // something pulls them out of the zone.
 //
 //  Innocent: regular absorb slots / skills; blob mechanic.
-//  Super:    +2 absorb slots, +2 stolen skills per victim.
+//  Super:    +2 absorb slots, +2 stolen skills per victim, digested stolen skills get 1.5x DamageMult.
 //  Unhinged: Power counts 2x in damage calcs
 
 // Pending ejection registry. When a Majin dies (or otherwise releases a
@@ -409,6 +409,19 @@ majinAbsorb/proc/CheckAllDigestion(mob/absorber)
     for(var/k in keys)
         CheckDigestion(absorber, k)
 
+majinAbsorb/proc/ApplySuperDigestStolenSkillDamageMult(mob/absorber, obj/Skills/s)
+    if(!absorber || !s) return
+    if(absorber.Class != "Super") return
+    if(istype(s, /obj/Skills/Queue))
+        var/obj/Skills/Queue/q = s
+        q.DamageMult *= MAJIN_SUPER_DIGESTED_SKILL_DMG_MULT
+    else if(istype(s, /obj/Skills/Projectile))
+        var/obj/Skills/Projectile/pj = s
+        pj.DamageMult *= MAJIN_SUPER_DIGESTED_SKILL_DMG_MULT
+    else if(istype(s, /obj/Skills/AutoHit))
+        var/obj/Skills/AutoHit/ah = s
+        ah.DamageMult *= MAJIN_SUPER_DIGESTED_SKILL_DMG_MULT
+
 majinAbsorb/proc/DigestVictim(mob/absorber, theCkey, alreadyReleased = FALSE)
     if(!absorber || !theCkey) return
     if(!absorbed) return
@@ -420,7 +433,9 @@ majinAbsorb/proc/DigestVictim(mob/absorber, theCkey, alreadyReleased = FALSE)
 
     if(islist(entry["skill_refs"]))
         for(var/obj/Skills/s in entry["skill_refs"])
-            if(s) permanentSkillRefs += s
+            if(s)
+                ApplySuperDigestStolenSkillDamageMult(absorber, s)
+                permanentSkillRefs += s
 
     // Mark this ckey as permanently digested by this Majin.
     if(!digestedVictims) digestedVictims = list()

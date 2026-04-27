@@ -15,6 +15,7 @@
 #define MAJIN_BASE_SKILLS_PER_VICTIM 2
 #define MAJIN_SUPER_ABSORB_BONUS 2 // Extra absorb slots for the Super class.
 #define MAJIN_SUPER_SKILL_BONUS 2 // Extra skill-per-victim slots for the Super class.
+#define MAJIN_SUPER_DIGESTED_SKILL_DMG_MULT 1.5
 
 // Digestion: 4 rolls at 24h intervals, each at 25/50/75/100% respectively.
 #define MAJIN_DIGEST_INTERVAL_HOURS 24
