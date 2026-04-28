@@ -13588,7 +13588,9 @@ mob
 				B.OldIcon=src.icon
 				B.OldX=src.pixel_x
 				B.OldY=src.pixel_y
-				src.icon=image(icon=B.icon, pixel_x=B.pixel_x, pixel_y=B.pixel_y)
+				src.icon=B.icon
+				src.pixel_x=B.pixel_x
+				src.pixel_y=B.pixel_y
 			IgnoreReplace
 
 			if(B.IconLock)
