@@ -189,15 +189,14 @@ obj
 				HitSparkY=-32
 				MissMessage = "is too exhausted to flip anymore...(Crescent_Cartwheel Max Hit)"
 				adjust(mob/p)
-					// find blade dance
 					var/obj/Skills/Queue/Crescent_Cartwheel/bd = p.FindSkill(/obj/Skills/Queue/Crescent_Cartwheel)
 					bd.current_hits++
 					if(bd.current_hits < 15)
 						DamageMult = 1 + (0.25 * bd.current_hits)
-						Warp = round(min(1, bd.current_hits/2))
+						Warp = round(max(1, bd.current_hits/2))
 						EnergyCost = 0.5 + bd.current_hits/2
-						SpeedStrike = round(min(1, bd.current_hits/2))
-						Duration = 4 + round(min(1, bd.current_hits/3))
+						SpeedStrike = round(max(1, bd.current_hits/2))
+						Duration = 4 + round(max(1, bd.current_hits/3))
 						AccuracyMult = 2.5 - (0.1 * bd.current_hits)
 					else
 						DamageMult = 0
@@ -243,15 +242,14 @@ obj
 				HitSparkY=-32
 				MissMessage = "is too exhausted to swing anymore...(Blade Dance Max Hit)"
 				adjust(mob/p)
-					// find blade dance
 					var/obj/Skills/Queue/Blade_Dance/bd = p.FindSkill(/obj/Skills/Queue/Blade_Dance)
 					bd.current_hits++
 					if(bd.current_hits < 10)
 						DamageMult = 1 + (0.25 * bd.current_hits)
-						Warp = round(min(1, bd.current_hits/2))
+						Warp = round(max(1, bd.current_hits/2))
 						EnergyCost = 0.5 + bd.current_hits/2
-						SpeedStrike = round(min(1, bd.current_hits/2))
-						Duration = 4 + round(min(1, bd.current_hits/3))
+						SpeedStrike = round(max(1, bd.current_hits/2))
+						Duration = 4 + round(max(1, bd.current_hits/3))
 						AccuracyMult = 1.5 - (0.1 * bd.current_hits)
 					else
 						DamageMult = 0
