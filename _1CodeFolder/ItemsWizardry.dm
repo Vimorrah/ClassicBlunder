@@ -351,7 +351,7 @@ obj/Items/Enchantment
 										p.TransformIcon=input(usr, "What icon will the polymorphed being use?", "Polymorph") as icon
 										p.name="Mutagen"
 								usr.TakeMineral(Cost)
-								if(!(Effect in list("Wild Herb")))
+								if(!(Effect in list("Wild Herb", "Toxic Herb")))
 									p.Slots--
 								usr << "You've created \an [p]!"
 								var/Custom=alert(usr, "Do you want to give [p] a custom name and drink message?", "Custom Potion", "No", "Yes")
@@ -414,7 +414,7 @@ obj/Items/Enchantment
 							HerbDictionary["Healing Herb"] = 300;
 							HerbDictionary["Refreshment Herb"] = 150;
 							HerbDictionary["Magic Herb"] = 150;
-							HerbDictionary["Toxic Herb"] = 500; // Legitimately the best effect ion by virtue of reducing potion CD for some dmg
+							HerbDictionary["Toxic Herb"] = 750; // Legitimately the best effect ion by virtue of reducing potion CD for some dmg
 							HerbDictionary["Hallucinogen Herb"] = 500;
 							HerbDictionary["Philter Herb"] = 300;
 							HerbDictionary["Stimulant Herb"] = 500;
@@ -489,7 +489,7 @@ obj/Items/Enchantment
 										Choice.name="Polymorphic [Choice.name]"
 								usr.TakeMineral(Cost)
 								usr << "You've modified your potion into \an [Choice]!"
-								if(!(Effect in list("Wild Herb")))
+								if(!(Effect in list("Wild Herb", "Toxic Herb")))
 									Choice.Slots--
 									if(Choice.Slots<=0)
 										usr << "[Choice] has been fully enchanted!"
