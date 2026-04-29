@@ -23,7 +23,7 @@
 	SpellElement="Light"
 	SpellSlot=1
 	Lightspeed
-		ElementalOffense="Light"
+		ElementalClass="Light"
 		DamageMult=3
 		Speed=0.1
 		Distance=15
@@ -36,7 +36,7 @@
 			usr.UseProjectile(src)
 
 	Solar_Burst
-		ElementalOffense="Light"
+		ElementalClass="Light"
 		DamageMult=5
 		Speed=1
 		Homing=1

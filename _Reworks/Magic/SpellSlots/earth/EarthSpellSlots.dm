@@ -4,7 +4,7 @@
 	SpellSlot=1
 	MagicNeeded=1
 	Seismic_Entry
-		ElementalOffense="Earth"
+		ElementalClass="Earth"
 		Area="Circle"
 		Distance=4
 		DamageMult=5

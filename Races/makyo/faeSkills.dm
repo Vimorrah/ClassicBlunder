@@ -18,7 +18,7 @@
 		OffMessage="shrivels up as the power of the star leaves them."
 		adjust(mob/p)
 			var/TaxSub
-			TaxSub=P.AscensionsAcquired*0.1
+			TaxSub=p.AscensionsAcquired*0.1
 			if(TaxSub>0.35)
 				TaxSub=0.35
 			StrTax=0.45-TaxSub

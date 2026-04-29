@@ -4,7 +4,7 @@
 	SpellSlot=1
 	MagicNeeded=1
 	Blazing_Whip
-		ElementalOffense="Fire"
+		ElementalClass="Fire"
 		Area="Wave"
 		Distance=5
 		DamageMult=4
@@ -40,7 +40,7 @@
 	SpellElement="Fire"
 	SpellSlot=1
 	Dragon_Arc
-		ElementalOffense="Fire"
+		ElementalClass="Fire"
 		DamageMult=3
 		Radius=1;
 		Scorching=1
@@ -66,7 +66,7 @@
 			usr.UseProjectile(src)
 
 	Fireball
-		ElementalOffense="Fire"
+		ElementalClass="Fire"
 		DamageMult=5
 		Scorching=2
 		Homing=1

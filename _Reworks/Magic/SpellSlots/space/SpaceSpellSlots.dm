@@ -4,7 +4,7 @@
 	SpellSlot=1
 	MagicNeeded=1
 	Flux
-		ElementalOffense="Space"
+		ElementalClass="Space"
 		Area="Circle"
 		Distance=5
 		DamageMult=4
@@ -30,7 +30,7 @@
 			usr.Activate(src)
 
 	Flow
-		ElementalOffense="Space"
+		ElementalClass="Space"
 		Area="Target"
 		Distance=6
 		DamageMult=5
