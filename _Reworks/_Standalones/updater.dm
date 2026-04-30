@@ -17,7 +17,7 @@ proc/generateVersionDatum()
 		glob.currentUpdate = updateversion
 
 globalTracker
-	var/UPDATE_VERSION = 8
+	var/UPDATE_VERSION = 9
 	var/tmp/update/currentUpdate
 
 	proc/updatePlayer(mob/p)
@@ -165,6 +165,27 @@ update
 					p.passive_handler.Decrease("Brutalize", 2)
 					p.passive_handler.Increase("Flow", 1)
 					p.passive_handler.Increase("Instinct", 1)
+	version9
+		version = 9;
+		updateMob(mob/p)
+			. = ..()
+			if(p.absorbedBy)
+				var/absorberCkey = p.absorbedBy
+				var/mob/Players/M = GetMajinByCkey(absorberCkey)
+				if(M && M.majinAbsorb && M.majinAbsorb.absorbed && M.majinAbsorb.absorbed["[p.ckey]"])
+					M.majinAbsorb.DigestVictim(M, "[p.ckey]")
+				else
+					if(!MAJIN_PENDING_DIGEST_CREDITS["[absorberCkey]"])
+						MAJIN_PENDING_DIGEST_CREDITS["[absorberCkey]"] = list()
+					if(!("[p.ckey]" in MAJIN_PENDING_DIGEST_CREDITS["[absorberCkey]"]))
+						MAJIN_PENDING_DIGEST_CREDITS["[absorberCkey]"] += "[p.ckey]"
+				p.absorbedBy = null
+				p.majinRoomIndex = 0
+				p.absorbedAtTimestamp = 0
+				p.RevokeObserveMajinVerb()
+				MoveToSpawn(p)
+				p.KO = 0
+				p << "<font color='purple'>You've been digested and sent back to spawn.</font>"
 /globalTracker/var/COOL_GAJA_PLAYERS = list("Thorgigamax", "Gemenilove" )
 /globalTracker/var/GAJA_PER_ASC_CONVERSION = 0.25
 /globalTracker/var/GAJA_MAX_EXCHANGE = 1
