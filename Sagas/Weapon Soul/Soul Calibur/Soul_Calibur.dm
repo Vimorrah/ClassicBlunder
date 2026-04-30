@@ -73,8 +73,8 @@ obj/Skills/Buffs/SpecialBuffs/Heavenly_Regalia/Soul_Calibur
 		StyleDef=1.25
 		Finisher="/obj/Skills/Queue/Finisher/Geist_Destroyer"
 		adjust(mob/p)
-	        StyleEnd = 1.05 + (0.05 * p.SagaLevel)
-	        StyleDef = 1.05 + (0.05 * p.SagaLevel)
+			StyleEnd = 1.05 + (0.05 * p.SagaLevel)
+			StyleDef = 1.05 + (0.05 * p.SagaLevel)
 			passives["LifeSteal"] = 5 + (5*p.SagaLevel)
 			passives["Flow"] = 2 + (p.SagaLevel/2)
 		verb/Soul_Conviction()
