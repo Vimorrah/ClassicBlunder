@@ -57,6 +57,7 @@ mob/Players
 	Login()
 		winset(usr, null, "browser-options=find")
 		client.perspective=MOB_PERSPECTIVE
+		ForceClearHeldChargeState()
 		players += usr
 		OverwatchNotifyLogin(usr, "logged in")
 		// StyleRating decay runs in spawn(); the loop dies on disconnect and
@@ -478,6 +479,7 @@ mob/Players
 		MajinAbsorbOnLogin()
 		return
 	Logout()
+		ForceClearHeldChargeState()
 		MajinAbsorbOnLogout()
 		DevilSummonerLogout()
 		OverwatchNotifyLogin(src, "logged out")

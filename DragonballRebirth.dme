@@ -237,6 +237,7 @@
 #define FILE_DIR "Icons/Turfs/Plains Floor"
 #define FILE_DIR "Icons/Turfs/Stone Floor"
 #define FILE_DIR "Icons/Turfs/Wood Floor"
+#define FILE_DIR "Icons/UI"
 #define FILE_DIR "Icons/Uniforms"
 #define FILE_DIR "Icons/Uniforms/School"
 #define FILE_DIR "Icons/Weather"
