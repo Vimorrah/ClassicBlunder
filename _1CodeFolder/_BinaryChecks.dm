@@ -2348,7 +2348,7 @@ globalTracker/var/
 	SLAYER_DAMAGE_MIN = -10;
 	SLAYER_DAMAGE_MAX = 10;
 	SLAYER_SPEC_MULT = 1.5;
-#define VALID_FAVORED_PREY list("All", "Mortal", "Depths", "Beyond", "Secret", "Saga")
+#define VALID_FAVORED_PREY list("All", "Mortal", "Depths", "Beyond", "Secret", "Saga","Transformations", "ckey","Gender")
 #define DEPTHS_RACES list(ELDRITCH, DEMON)
 #define BEYOND_RACES DEPTHS_RACES+list(MAKAIOSHIN, ANGEL, POPO)
 #define INHERENT_SECRET list(ELDRITCH, ANGEL)
@@ -2369,6 +2369,8 @@ mob
 			switch(preyType)//no check for "All" because it will always be valid if there is an enemy
 				if("Secret") if(!enemy.Secret || (enemy.race.type in INHERENT_SECRET)) invalid++;
 				if("Saga") if(!enemy.Saga) invalid++;
+				if("Transformations") if(!enemy.transActive) invalid++
+				if("Gender") if(enemy.Gender=="Male"||enemy.Gender=="Political") invalid++
 				if("Mortal") if((enemy.race.type in DEPTHS_RACES) || (enemy.race.type in BEYOND_RACES)) invalid++;
 				if("Depths") if(!(enemy.race.type in DEPTHS_RACES)) invalid++;
 				if("Beyond") if(!(enemy.race.type in BEYOND_RACES)) invalid++;
@@ -2389,6 +2391,15 @@ mob
 			if (. > 0)
 				if(enemy.UsingMuken()) . *= (-1);
 			if(forced) . = forced;
+			if(passive_handler.Get("FavoredPrey") == "Transformations")
+				if(. < 2)
+					. = 2
+			if(passive_handler.Get("FavoredPrey") == "ckey")
+				if(enemy.ckey==passive_handler.Get("That One Grudge From Ten Years Ago You Can't Let Go Like Come On Dude Move On With Your Fucking Life"))
+					if(. < 5000)
+						. = 5000
+			if(passive_handler.Get("FavoredPrey") == "Gender")
+				. = 0 //All of your violence is structural. You have no power outside of the system that gives it to you.
 			. = clamp(., glob.SLAYER_DAMAGE_MIN, glob.SLAYER_DAMAGE_MAX);
 //----------------------------------------------------------------------
 

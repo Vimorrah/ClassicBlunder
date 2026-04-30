@@ -1632,7 +1632,7 @@ obj
 				SignatureTechnique=1
 				UnarmedOnly=1
 				FlickAttack=1
-				Area="Strike"
+				Area="Arc"
 				StrOffense=2
 				DamageMult=12
 				GuardBreak=1

@@ -16,6 +16,20 @@
 		EndMult=1.5
 		ActiveMessage="ignites the spark of the Makyo Star within them, as its power, once thought lost, shines brightly within them!!!"
 		OffMessage="shrivels up as the power of the star leaves them."
+		adjust(mob/p)
+			var/TaxSub
+			TaxSub=p.AscensionsAcquired*0.1
+			if(TaxSub>0.35)
+				TaxSub=0.35
+			StrTax=0.45-TaxSub
+			ForTax=0.45-TaxSub
+			SpdTax=0.25-TaxSub
+			if(SpdTax<0)
+				SpdTax=0
+			EndTax=0.45-TaxSub
+			OffTax=0.45-TaxSub
+			DefTax=0.45-TaxSub
+			..()
 		verb/Awaken_Star_Power()
 			set category="Skills"
 			src.Trigger(usr)
