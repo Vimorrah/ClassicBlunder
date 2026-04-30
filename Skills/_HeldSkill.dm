@@ -29,6 +29,7 @@
 	var/tmp/held_charge_start             = 0
 	var/tmp/image/held_charge_overlay_ref = null
 	var/tmp/held_skill_macro_key          = null
+	var/tmp/held_skill_last_release       = 0
 
 
 /proc/_normalizeHeldName(s)
@@ -61,13 +62,39 @@
 	var/client/C = client
 	if(!C) return
 
+	// re-entry guard
+	// BeginHeldSkill call that lands within ~0.5s of a release so the
+	// stray fire can't start a second charge or trip findHeldSkillKey.
+	if(held_skill_last_release && world.time - held_skill_last_release < 5)
+		return
+
+	// Cooldown / in-use check, the held effect must not start if the
+	// underlying skill itself isn't allowed to fire.
+	if(Z.Using || Z.cooldown_remaining)
+		src << "<font color='red'>[Z.name] is on cooldown.</font>"
+		return
+
+	// Close the re-entry window immediately so a second verb fire
+	// during the slow winget/winset calls below can't spawn a second charge.
 	held_skill        = Z
 	held_charge_start = world.time
 	Z.ChargeBenefit   = 0
 
+	// Visual feedback placement, needs a little bit of tweaking, not quite where I want it
+	// the player should see the charge the instant the key is pressed.
+	if(Z.ChargeOverlay && !held_charge_overlay_ref)
+		var/image/I = image(Z.ChargeOverlay)
+		I.layer = MOB_LAYER + 0.1
+		held_charge_overlay_ref = I
+		overlays += I
+	KenShockwave(src, icon=Z.ChargeWaveIcon, Size=0.5, Blend=Z.ChargeWaveBlend, Time=8)
+
 	// Find which key the player has bound this skill to
 	var/key = findHeldSkillKey(C, Z)
 	if(!key)
+		if(held_charge_overlay_ref)
+			overlays -= held_charge_overlay_ref
+			held_charge_overlay_ref = null
 		held_skill        = null
 		held_charge_start = 0
 		src << "<font color='red'>Bind [Z.name] to a key first.</font>"
@@ -76,12 +103,6 @@
 	// Install the KEY+UP release macro for the duration of the charge
 	installHeldReleaseMacro(C, key)
 	held_skill_macro_key = key
-
-	if(Z.ChargeOverlay && !held_charge_overlay_ref)
-		var/image/I = image(Z.ChargeOverlay)
-		I.layer = MOB_LAYER + 0.1
-		held_charge_overlay_ref = I
-		overlays += I
 
 	spawn() ChargeLoop(Z)
 
@@ -118,8 +139,6 @@
 // ChargeLoop runs for the duration of the hold
 
 /mob/proc/ChargeLoop(var/obj/Skills/Z)
-	var/last_wave_time = world.time
-
 	while(held_skill == Z)
 		sleep(2)
 		if(held_skill != Z) return
@@ -135,10 +154,8 @@
 			FizzleHeldSkill(Z)
 			return
 
-		// Periodic shockwave
-		if(world.time >= last_wave_time + 10)
-			last_wave_time = world.time
-			KenShockwave(src, icon=Z.ChargeWaveIcon, Size=0.5, Blend=Z.ChargeWaveBlend, Time=8)
+		// Continuous shockwaves for the duration of the hold
+		KenShockwave(src, icon=Z.ChargeWaveIcon, Size=0.5, Blend=Z.ChargeWaveBlend, Time=8)
 
 // ReleaseHeldSkill is called by the Release_Held_Skill verb (KEY+UP macro)
 
@@ -162,6 +179,7 @@
 
 	Z.ChargeBenefit = benefit
 	ClearHeldChargeState()
+	held_skill_last_release = world.time
 	Z.OnHeldRelease(src, benefit)
 
 // FizzleHeldSkill for skill being overheld, interrupted, or cancelled
@@ -169,6 +187,7 @@
 /mob/proc/FizzleHeldSkill(var/obj/Skills/Z)
 	if(held_skill != Z) return
 	ClearHeldChargeState()
+	held_skill_last_release = world.time
 	Z.Cooldown(1, null, src)
 	src << "<font color='red'>Your technique fizzled!</font>"
 
@@ -182,6 +201,15 @@
 		held_charge_overlay_ref = null
 	held_skill        = null
 	held_charge_start = 0
+
+// HeldSkillBlocksAction returns TRUE if a held skill is currently
+// charging and the requested skill would conflict.
+
+/mob/proc/HeldSkillBlocksAction(obj/Skills/Z)
+	if(held_skill && held_skill != Z)
+		src << "<font color='red'>You can't do that while charging [held_skill.name].</font>"
+		return TRUE
+	return FALSE
 
 // Internal verb fired by the temporary KEY+UP macro the system installs.
 

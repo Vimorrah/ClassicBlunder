@@ -4807,6 +4807,7 @@ mob
 	proc
 		UseProjectile(var/obj/Skills/Projectile/Z)
 			. = TRUE
+			if(HeldSkillBlocksAction(Z)) return FALSE
 			if(src.passive_handler.Get("Silenced"))
 				src << "You can't use [Z] you are silenced!"
 				return FALSE

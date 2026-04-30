@@ -5051,6 +5051,7 @@ mob
 		Activate(var/obj/Skills/AutoHit/Z, ignoreCuck = FALSE)
 			set waitfor = FALSE
 			. = TRUE
+			if(HeldSkillBlocksAction(Z)) return FALSE
 			if(glob.CUCK_MACROSTRINGS && !ignoreCuck)
 				if(last_autohit + glob.MACROCHECKTIME > world.time)
 					return FALSE
