@@ -13283,6 +13283,12 @@ mob
 						s.pixel_x=B.ArmorX
 					if(B.ArmorY)
 						s.pixel_y=B.ArmorY
+					s.UnderlayIcon=B.ArmorIconUnder
+					s.UnderlayX=B.ArmorXUnder
+					s.UnderlayY=B.ArmorYUnder
+					if(istype(B, /obj/Skills/Buffs/SlotlessBuffs/Devil_Arm2))
+						var/obj/Skills/Buffs/SlotlessBuffs/Devil_Arm2/da=B
+						s.UnderlayStack=da.ArmorUnderlayStack
 				if(B.ArmorName)
 					s.name=B.ArmorName
 				if(B.ArmorAscension)
@@ -13324,6 +13330,12 @@ mob
 						s.pixel_x=B.StaffX
 					if(B.StaffY)
 						s.pixel_y=B.StaffY
+					s.UnderlayIcon=B.StaffIconUnder
+					s.UnderlayX=B.StaffXUnder
+					s.UnderlayY=B.StaffYUnder
+					if(istype(B, /obj/Skills/Buffs/SlotlessBuffs/Devil_Arm2))
+						var/obj/Skills/Buffs/SlotlessBuffs/Devil_Arm2/da=B
+						s.UnderlayStack=da.StaffUnderlayStack
 				if(B.StaffName)
 					s.name=B.StaffName
 				if(B.StaffAscension)
@@ -13368,6 +13380,9 @@ mob
 					s.UnderlayIcon=B.SwordIconUnder
 					s.UnderlayX=B.SwordXUnder
 					s.UnderlayY=B.SwordYUnder
+					if(istype(B, /obj/Skills/Buffs/SlotlessBuffs/Devil_Arm2))
+						var/obj/Skills/Buffs/SlotlessBuffs/Devil_Arm2/da=B
+						s.UnderlayStack=da.SwordUnderlayStack
 				if(B.SwordName)
 					s.name=B.SwordName
 				if(B.SwordUnbreakable)
@@ -13689,6 +13704,9 @@ mob
 					s.UnderlayIcon=B.SwordIconUnder
 					s.UnderlayX=B.SwordXUnder
 					s.UnderlayY=B.SwordYUnder
+					if(istype(B, /obj/Skills/Buffs/SlotlessBuffs/Devil_Arm2))
+						var/obj/Skills/Buffs/SlotlessBuffs/Devil_Arm2/da=B
+						s.UnderlayStack=da.SwordUnderlayStack
 				if(B.SwordName)
 					s.name=B.SwordName
 				src.contents+=s

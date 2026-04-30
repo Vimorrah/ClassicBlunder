@@ -145,6 +145,8 @@ mob/proc/AppearanceOn()
 					im2.transform *= 3
 					im2.appearance_flags += 512
 					overlays -= im2
+			if(weapon.UnderlayIcon)
+				overlays -= image(icon=weapon.UnderlayIcon, pixel_x=weapon.UnderlayX, pixel_y=weapon.UnderlayY, layer=weapon:UnderlayDisplayLayer())
 
 
 	src.Hairz("Add")

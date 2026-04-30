@@ -41,6 +41,23 @@
     var/ArmorIconUnderDT
     var/ArmorXUnderDT = 0
     var/ArmorYUnderDT = 0
+    var/SwordUnderlayStack = 0
+    var/StaffUnderlayStack = 0
+    var/ArmorUnderlayStack = 0
+    var/SwordUnderlayStackDT = 0
+    var/StaffUnderlayStackDT = 0
+    var/ArmorUnderlayStackDT = 0
+    proc/Input_Underlay_Stack(mob/m)
+        var/num/n = input(m, "Enter the underlay layer number. Higher values draw the underlay further behind. Use decimals for fine tuning.", "Underlay layer") as num|null
+        if(isnull(n))
+            return 0
+        if(n < 0)
+            m << "Layer cannot be negative."
+            n = 0
+        else if(n > 5)
+            m << "Layer cannot go over 5."
+            n = 5
+        return n
     verb/Examine_Devil_Arm()
         set src in usr
         var/devilArmDetail = "<html><head><title>Devil Arm Detail ([src.name])</title></head>"
@@ -84,33 +101,40 @@
                     if(newUnder)
                         var/newUnderX = input(usr, "Underlay pixel X offset?") as num
                         var/newUnderY = input(usr, "Underlay pixel Y offset?") as num
+                        var/stackTier = Input_Underlay_Stack(usr)
                         switch(armPick)
                             if("Sword")
                                 SwordIconUnder = newUnder
                                 SwordXUnder = newUnderX
                                 SwordYUnder = newUnderY
+                                SwordUnderlayStack = stackTier
                             if("Staff")
                                 StaffIconUnder = newUnder
                                 StaffXUnder = newUnderX
                                 StaffYUnder = newUnderY
+                                StaffUnderlayStack = stackTier
                             if("Armor")
                                 ArmorIconUnder = newUnder
                                 ArmorXUnder = newUnderX
                                 ArmorYUnder = newUnderY
+                                ArmorUnderlayStack = stackTier
                 else if(underAction == "Clear")
                     switch(armPick)
                         if("Sword")
                             SwordIconUnder = null
                             SwordXUnder = 0
                             SwordYUnder = 0
+                            SwordUnderlayStack = 0
                         if("Staff")
                             StaffIconUnder = null
                             StaffXUnder = 0
                             StaffYUnder = 0
+                            StaffUnderlayStack = 0
                         if("Armor")
                             ArmorIconUnder = null
                             ArmorXUnder = 0
                             ArmorYUnder = 0
+                            ArmorUnderlayStack = 0
         else if(thing == "Name")
             var/armPick = input(usr, "Sword, Staff, or Armor Name?") in list("Sword","Armor","Staff")
             var/newName = input(usr, "Change to what?") as text
@@ -162,22 +186,26 @@
                 if(newDtUnder)
                     var/newDtUnderX = input(usr, "Under icon pixel X offset?") as num
                     var/newDtUnderY = input(usr, "Under icon pixel Y offset?") as num
+                    var/dtStackTier = Input_Underlay_Stack(usr)
                     switch(pick)
                         if("Sword")
                             SwordUseUnderDT = 1
                             SwordIconUnderDT = newDtUnder
                             SwordXUnderDT = newDtUnderX
                             SwordYUnderDT = newDtUnderY
+                            SwordUnderlayStackDT = dtStackTier
                         if("Staff")
                             StaffUseUnderDT = 1
                             StaffIconUnderDT = newDtUnder
                             StaffXUnderDT = newDtUnderX
                             StaffYUnderDT = newDtUnderY
+                            StaffUnderlayStackDT = dtStackTier
                         if("Armor")
                             ArmorUseUnderDT = 1
                             ArmorIconUnderDT = newDtUnder
                             ArmorXUnderDT = newDtUnderX
                             ArmorYUnderDT = newDtUnderY
+                            ArmorUnderlayStackDT = dtStackTier
             else if(setUnder == "Clear")
                 switch(pick)
                     if("Sword")
@@ -185,18 +213,21 @@
                         SwordIconUnderDT = null
                         SwordXUnderDT = 0
                         SwordYUnderDT = 0
+                        SwordUnderlayStackDT = 0
                     if("Staff")
                         StaffUseUnderDT = 0
                         StaffIconUnderDT = null
                         StaffXUnderDT = 0
                         StaffYUnderDT = 0
+                        StaffUnderlayStackDT = 0
                     if("Armor")
                         ArmorUseUnderDT = 0
                         ArmorIconUnderDT = null
                         ArmorXUnderDT = 0
                         ArmorYUnderDT = 0
+                        ArmorUnderlayStackDT = 0
 
-    proc/swapItemIcon(mob/user, obj/Items/s, newIcon, newX, newY, useUnderOverride = FALSE, newUnderIcon = null, newUnderX = 0, newUnderY = 0)
+    proc/swapItemIcon(mob/user, obj/Items/s, newIcon, newX, newY, useUnderOverride = FALSE, newUnderIcon = null, newUnderX = 0, newUnderY = 0, newUnderStack = 0)
         if(!s || !s.suffix || s.loc != user) return
         // Set the underlying equipped item data and let AppearanceOn rebuild overlays.
         s.icon = newIcon
@@ -208,23 +239,24 @@
             s.UnderlayIcon = newUnderIcon
             s.UnderlayX = newUnderX
             s.UnderlayY = newUnderY
+            s.UnderlayStack = newUnderStack
 
     proc/applyDTIcons(mob/user)
         var/changed = FALSE
         if(SwordIconDT)
             var/obj/Items/Sword/s = user.EquippedSword()
             if(s && s.Conjured)
-                swapItemIcon(user, s, SwordIconDT, SwordXDT, SwordYDT, SwordUseUnderDT, SwordIconUnderDT, SwordXUnderDT, SwordYUnderDT)
+                swapItemIcon(user, s, SwordIconDT, SwordXDT, SwordYDT, SwordUseUnderDT, SwordIconUnderDT, SwordXUnderDT, SwordYUnderDT, SwordUnderlayStackDT)
                 changed = TRUE
         if(StaffIconDT)
             var/obj/Items/Enchantment/Staff/s = user.EquippedStaff()
             if(s && s.Conjured)
-                swapItemIcon(user, s, StaffIconDT, StaffXDT, StaffYDT, StaffUseUnderDT, StaffIconUnderDT, StaffXUnderDT, StaffYUnderDT)
+                swapItemIcon(user, s, StaffIconDT, StaffXDT, StaffYDT, StaffUseUnderDT, StaffIconUnderDT, StaffXUnderDT, StaffYUnderDT, StaffUnderlayStackDT)
                 changed = TRUE
         if(ArmorIconDT)
             var/obj/Items/Armor/s = user.EquippedArmor()
             if(s && s.Conjured)
-                swapItemIcon(user, s, ArmorIconDT, ArmorXDT, ArmorYDT, ArmorUseUnderDT, ArmorIconUnderDT, ArmorXUnderDT, ArmorYUnderDT)
+                swapItemIcon(user, s, ArmorIconDT, ArmorXDT, ArmorYDT, ArmorUseUnderDT, ArmorIconUnderDT, ArmorXUnderDT, ArmorYUnderDT, ArmorUnderlayStackDT)
                 changed = TRUE
         if(changed)
             user.AppearanceOff()
@@ -235,17 +267,17 @@
         if(SwordIconDT)
             var/obj/Items/Sword/s = user.EquippedSword()
             if(s && s.Conjured)
-                swapItemIcon(user, s, SwordIcon, SwordX, SwordY, TRUE, SwordIconUnder, SwordXUnder, SwordYUnder)
+                swapItemIcon(user, s, SwordIcon, SwordX, SwordY, TRUE, SwordIconUnder, SwordXUnder, SwordYUnder, SwordUnderlayStack)
                 changed = TRUE
         if(StaffIconDT)
             var/obj/Items/Enchantment/Staff/s = user.EquippedStaff()
             if(s && s.Conjured)
-                swapItemIcon(user, s, StaffIcon, StaffX, StaffY, TRUE, StaffIconUnder, StaffXUnder, StaffYUnder)
+                swapItemIcon(user, s, StaffIcon, StaffX, StaffY, TRUE, StaffIconUnder, StaffXUnder, StaffYUnder, StaffUnderlayStack)
                 changed = TRUE
         if(ArmorIconDT)
             var/obj/Items/Armor/s = user.EquippedArmor()
             if(s && s.Conjured)
-                swapItemIcon(user, s, ArmorIcon, ArmorX, ArmorY, TRUE, ArmorIconUnder, ArmorXUnder, ArmorYUnder)
+                swapItemIcon(user, s, ArmorIcon, ArmorX, ArmorY, TRUE, ArmorIconUnder, ArmorXUnder, ArmorYUnder, ArmorUnderlayStack)
                 changed = TRUE
         if(changed)
             user.AppearanceOff()

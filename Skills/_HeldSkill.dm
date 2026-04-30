@@ -1,9 +1,7 @@
 // AutoHits and Projectiles apply this by setting HeldSkill = TRUE
 // The skill's verb should call usr.BeginHeldSkill(src) instead of
-// usr.Activate(src). The system installs a temporary KEY+UP macro
-// on whichever key the player has the skill bound to, so they only
-// need to bind the skill itself - no second macro required.
-// Override OnHeldRelease(mob/p, benefit) to execute the skill.
+// usr.Activate(src). Override OnHeldRelease(mob/p, benefit) to
+// execute the skill.
 
 // ChargeBenefit is 0-1 (progress through ChargePeriod)
 // During the SweetSpot window it is multiplied by SweetSpotBenefit,
@@ -30,14 +28,30 @@
 	var/tmp/obj/Skills/held_skill         = null
 	var/tmp/held_charge_start             = 0
 	var/tmp/image/held_charge_overlay_ref = null
-	var/tmp/held_skill_macro_active       = FALSE
+	var/tmp/held_skill_macro_key          = null
 
-// normalizes a name for case/underscore-tolerant comparison
 
 /proc/_normalizeHeldName(s)
 	if(!s) return ""
 	s = replacetext(s, "_", " ")
+	s = replacetext(s, "-", " ")
 	return lowertext(s)
+
+// Candidate keys to probe when finding which key the player has the
+// skill bound to.
+
+/proc/_heldSkillCandidateKeys()
+	return list(
+		"A","B","C","D","E","F","G","H","I","J","K","L","M",
+		"N","O","P","Q","R","S","T","U","V","W","X","Y","Z",
+		"0","1","2","3","4","5","6","7","8","9",
+		"F1","F2","F3","F4","F5","F6","F7","F8","F9","F10","F11","F12",
+		"Numpad0","Numpad1","Numpad2","Numpad3","Numpad4",
+		"Numpad5","Numpad6","Numpad7","Numpad8","Numpad9",
+		"NumpadPlus","NumpadMinus","NumpadStar","NumpadSlash",
+		"Space","Tab","Return","Backspace",
+		"Insert","Home","Delete","End","PageUp","PageDown"
+	)
 
 // BeginHeldSkill is called by the skill's verb instead of Activate
 
@@ -47,20 +61,23 @@
 	var/client/C = client
 	if(!C) return
 
-	// Find which key the player has bound this skill to
-	var/key = findHeldSkillKey(C, Z)
-	if(!key)
-		src << "<font color='red'>Bind [Z.name] to a key first.</font>"
-		return
-
-	// Install a temporary KEY+UP macro pointing at Release_Held_Skill
-	installHeldReleaseMacro(C, key)
-
 	held_skill        = Z
 	held_charge_start = world.time
 	Z.ChargeBenefit   = 0
 
-	if(Z.ChargeOverlay)
+	// Find which key the player has bound this skill to
+	var/key = findHeldSkillKey(C, Z)
+	if(!key)
+		held_skill        = null
+		held_charge_start = 0
+		src << "<font color='red'>Bind [Z.name] to a key first.</font>"
+		return
+
+	// Install the KEY+UP release macro for the duration of the charge
+	installHeldReleaseMacro(C, key)
+	held_skill_macro_key = key
+
+	if(Z.ChargeOverlay && !held_charge_overlay_ref)
 		var/image/I = image(Z.ChargeOverlay)
 		I.layer = MOB_LAYER + 0.1
 		held_charge_overlay_ref = I
@@ -68,58 +85,35 @@
 
 	spawn() ChargeLoop(Z)
 
-// findHeldSkillKey searches every macro set the player has for a
-// macro whose command matches this skill's verb, and returns the key.
 
 /mob/proc/findHeldSkillKey(client/C, obj/Skills/Z)
 	var/raw_search = Z.HeldVerbName ? Z.HeldVerbName : Z.name
 	if(!raw_search) return null
 	var/search = _normalizeHeldName(raw_search)
 
-	var/list/sets = params2list(winget(C, null, "macro"))
-	for(var/set_name in sets)
-		var/macros_str = winget(C, set_name, "macros")
-		if(!macros_str) continue
-
-		var/list/macro_ids = splittext(macros_str, ";")
-		if(macro_ids.len <= 1)
-			macro_ids = splittext(macros_str, ",")
-
-		for(var/raw_id in macro_ids)
-			var/macro_id = "[raw_id]"
-			if(!macro_id) continue
-
-			var/qualified = "[set_name].[macro_id]"
-			var/cmd = winget(C, qualified, "command")
-			if(!cmd) cmd = winget(C, macro_id, "command")
-			if(!cmd) continue
-
-			if(findtext(_normalizeHeldName(cmd), search))
-				var/key = winget(C, qualified, "name")
-				if(!key) key = winget(C, macro_id, "name")
-				// Skip release-form macros
-				if(key && !findtext(key, "+UP"))
-					return key
+	for(var/k in _heldSkillCandidateKeys())
+		var/cmd = winget(C, k, "command")
+		if(!cmd) continue
+		if(findtext(_normalizeHeldName(cmd), search))
+			return k
 
 	return null
 
-// installHeldReleaseMacro installs a KEY+UP macro in every macro set,
-// pointing to the Release Held Skill verb.
+// installHeldReleaseMacro installs a KEY+UP macro in every macro
+// container, pointing to the Release Held Skill verb. Uses a unique
+// id so it doesn't collide with any existing player macro.
 
 /mob/proc/installHeldReleaseMacro(client/C, key)
 	var/list/sets = params2list(winget(C, null, "macro"))
 	for(var/set_name in sets)
-		winset(C, "heldskill_release_[set_name]", "parent=[set_name];name=[key]+UP;command=Release Held Skill")
-	held_skill_macro_active = TRUE
+		winset(C, "heldskill_release_[set_name]", "parent=[set_name];name=[key]+UP;command=Release-Held-Skill")
 
-// clearHeldReleaseMacro removes the temporary release macro from all sets
 
 /mob/proc/clearHeldReleaseMacro()
-	if(!held_skill_macro_active || !client) return
+	if(!client) return
 	var/list/sets = params2list(winget(client, null, "macro"))
 	for(var/set_name in sets)
 		winset(client, "heldskill_release_[set_name]", "name=")
-	held_skill_macro_active = FALSE
 
 // ChargeLoop runs for the duration of the hold
 
@@ -182,6 +176,7 @@
 
 /mob/proc/ClearHeldChargeState()
 	clearHeldReleaseMacro()
+	held_skill_macro_key = null
 	if(held_charge_overlay_ref)
 		overlays -= held_charge_overlay_ref
 		held_charge_overlay_ref = null
@@ -196,3 +191,56 @@
 	set instant = 1
 	if(usr.held_skill)
 		usr.ReleaseHeldSkill()
+
+// Exampleskill
+
+/obj/Skills/AutoHit/Charged_Lightning_Kicks
+	Area = "Arc"
+	StrOffense = 1
+	DamageMult = 2.75  
+	Rush = 5
+	ControlledRush = 1
+	Rounds = 3    
+	ComboMaster = 1
+	RoundMovement = 0
+	NoAttackLock = 1
+	NoLock = 1
+	Cooldown = 60
+	Distance = 2
+	EnergyCost = 5
+	Launcher = 2
+	Instinct = 1
+	Icon = 'Nest Slash.dmi'
+	IconX = -16
+	IconY = -16
+	Size = 2
+	TurfStrike = 1
+	TurfShift = 'Dirt1.dmi'
+	TurfShiftDuration = 3
+	ActiveMessage = "channels lightning through their legs and delivers a torrent of kicks!"
+
+	// Held skill config
+	HeldSkill = TRUE
+	ChargePeriod = 3
+	SweetSpot = 1.5   
+	SweetSpotBenefit = 3.0    
+	ChargeOverlay = 'DarkShock.dmi'   
+	ChargeWaveIcon = 'Icons/Effects/KenShockwave.dmi'  
+	ChargeWaveBlend = 2      
+
+	adjust(mob/p)
+
+	OnHeldRelease(mob/p, var/benefit)
+		DamageMult = 2.75 + (2.0 * benefit)  // placeholder scaling
+
+		// Add a fourth round at 70%+ charge
+		if(benefit >= 0.7)  // placeholder threshold
+			Rounds = 4
+		else
+			Rounds = 3
+
+		p.Activate(src)
+
+	verb/Charged_Lightning_Kicks()
+		set category = "Skills"
+		usr.BeginHeldSkill(src)
