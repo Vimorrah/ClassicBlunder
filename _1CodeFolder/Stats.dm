@@ -329,6 +329,9 @@ mob/Players/Stat()
 			for(var/obj/Money/M in usr)
 				M.name="[Commas(round(M.Level))] [glob.progress.MoneyName]"
 				stat(M)
+			for(var/obj/Stars/S in usr)
+				S.name="[Commas(round(S.Level))] Stars"
+				stat(S)
 			for(var/obj/Items/A in usr)
 				if(!(A.PermEquip&&A.suffix&&!A.Stealable))
 					if(istype(A, /obj/Items/Armor) || istype(A, /obj/Items/Sword))
