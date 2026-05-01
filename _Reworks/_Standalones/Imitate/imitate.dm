@@ -20,6 +20,7 @@ imitation_info
     var/hairunder_y
     var/offset_x
     var/offset_y
+    var/origin
 
     New(mob/user, mob/target)
         if(target)
@@ -40,6 +41,7 @@ imitation_info
             hairunder_y = target.HairUnderlayY
             offset_x = target.pixel_x 
             offset_y = target.pixel_y
+            origin = target.SpawnDisplay
             if(target == user)
                 selfInfo = TRUE
                 for(var/obj/Items/Wearables/c in user)
@@ -78,6 +80,7 @@ imitation_info
         user.HairUnderlayY = hairunder_y 
         user.pixel_x = offset_x
         user.pixel_y = offset_y
+        user.SpawnDisplay = origin
         if(!selfInfo)
             for(var/obj/Items/Wearables/oldClothes in user)
                 if(oldClothes.suffix == "*Equipped*")
@@ -134,6 +137,9 @@ imitation_info
                 usr << "You cannot imitate while disguised. Drop your disguise first."
                 return
             var/mob/Target = usr.Target
+            if(!isplayer(Target))
+                usr << "You can't imitate anything that isn't a player!" 
+                return
             if(Target && get_dist(usr, Target) < 20)
                 if(!Target.client) return
                 Target <<"<i>[pick(RANDOM_ALERT)]</i>"
