@@ -120,7 +120,7 @@ mob/proc/GetAssess()
 	<tr><td>Potential:</td><td>[PotentialDisplay]/150</td></tr>
 	<tr><td>Transformation Potential:</td><td>[src.potential_trans]/100</td></tr>
 	<tr><td>Average Stats: [StatAverage]</td></tr>
-	<tr><td>Magic Level: [getTotalMagicLevel()]</td></tr>
+	<tr><td>Magic Level: [src.getTotalMagicLevel()]</td></tr>
 	<tr><td>Stat Enhancement Chips Installed(Max): [src.EnhanceChips]([src.EnhanceChipsMax])</td></tr>
 			</table></html>"}
 /*	<tr><td>True Tier:</td><td>[POWER_TIERS[potential_power_tier]]</td></tr>
@@ -330,6 +330,9 @@ mob/Players/Stat()
 			for(var/obj/Money/M in usr)
 				M.name="[Commas(round(M.Level))] [glob.progress.MoneyName]"
 				stat(M)
+			for(var/obj/Stars/S in usr)
+				S.name="[Commas(round(S.Level))] Stars"
+				stat(S)
 			for(var/obj/Items/A in usr)
 				if(!(A.PermEquip&&A.suffix&&!A.Stealable))
 					if(istype(A, /obj/Items/Armor) || istype(A, /obj/Items/Sword))
@@ -442,10 +445,12 @@ mob/Players/Stat()
 	if(Target.BioArmor > 10 && Target.BioArmor < 99) return "??"
 	if(Target.BioArmor < 10) return "?"
 
+/mob/var/SpawnDisplay;
+
 /mob/proc/outputVitals()
 	var/vaiHealth = hasClearSight()&&Target.VaizardHealth ? " ([Target.VaizardHealth])" : ""
 	var/healthDisplay = "[Target.Health][vaiHealth]%"
-	var/SpawnDisplay="[Target.SpawnArea]"
+	SpawnDisplay="[Target.SpawnArea]"
 	if(src.Target.passive_handler.Get("Obfuscated Origin"))
 		SpawnDisplay = "<font color='red'><b>Unknowable</b></font color>"
 	if(Target.BioArmor) healthDisplay = getBioArmorDisplay()
@@ -1458,6 +1463,11 @@ mob/proc/Get_Sense_Reading(mob/A)
 		. +=" (Fading)"
 
 mob/proc/Get_Scouter_Reading(mob/B)
+	if(B.Imitating)
+		for(var/obj/Skills/Utility/Imitate/i in B.Skills)
+			if(i.imitating_info) 
+				return i.imitating_info.powerToCopy
+
 	var/Ratio=B.EnergyUniqueness
 
 	var/EPM=B.Power_Multiplier//effective power multiplier

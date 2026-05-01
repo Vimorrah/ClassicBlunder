@@ -19,8 +19,10 @@
 	var/HeldVerbName     = null   // Optional override for macro detection;
 	                              // defaults to Z.name if null
 
-/obj/Skills/proc/OnHeldRelease(mob/p, var/benefit)
+/obj/Skills/proc/OnHeldRelease(mob/p, var/benefit, var/sweet_spot_hit = FALSE)
 	// Override in individual skills to execute the charged attack.
+
+/client/var/tmp/SweetSpotHeldSkillDebug = FALSE
 
 // Charge state
 
@@ -28,6 +30,9 @@
 	var/tmp/obj/Skills/held_skill         = null
 	var/tmp/held_charge_start             = 0
 	var/tmp/image/held_charge_overlay_ref = null
+	var/tmp/image/held_charge_bar_bg_ref  = null
+	var/tmp/image/held_charge_bar_sweet_ref = null
+	var/tmp/list/held_charge_bar_fill_refs = null
 	var/tmp/held_skill_macro_key          = null
 	var/tmp/held_skill_last_release       = 0
 
@@ -54,6 +59,20 @@
 		"Insert","Home","Delete","End","PageUp","PageDown"
 	)
 
+/proc/_getIconWidth(icon_file, icon_state_name)
+	if(!icon_file) return 32
+	var/icon/I = icon(icon_file, icon_state_name)
+	var/w = I.Width()
+	if(!isnum(w) || w <= 0) return 32
+	return w
+
+/proc/_getIconHeight(icon_file, icon_state_name)
+	if(!icon_file) return 32
+	var/icon/I = icon(icon_file, icon_state_name)
+	var/h = I.Height()
+	if(!isnum(h) || h <= 0) return 32
+	return h
+
 // BeginHeldSkill is called by the skill's verb instead of Activate
 
 /mob/proc/BeginHeldSkill(var/obj/Skills/Z)
@@ -74,6 +93,12 @@
 		src << "<font color='red'>[Z.name] is on cooldown.</font>"
 		return
 
+	if(Z.NeedsSword)
+		var/obj/Items/Sword/s = EquippedSword()
+		if(!s && !HasBladeFisting() && !UsingBattleMage())
+			src << "<font color='red'>You need a sword equipped to use [Z.name]!</font>"
+			return
+
 	// Close the re-entry window immediately so a second verb fire
 	// during the slow winget/winset calls below can't spawn a second charge.
 	held_skill        = Z
@@ -87,16 +112,13 @@
 		I.layer = MOB_LAYER + 0.1
 		held_charge_overlay_ref = I
 		overlays += I
+	ShowHeldChargeBar(Z)
 	KenShockwave(src, icon=Z.ChargeWaveIcon, Size=0.5, Blend=Z.ChargeWaveBlend, Time=8)
 
 	// Find which key the player has bound this skill to
 	var/key = findHeldSkillKey(C, Z)
 	if(!key)
-		if(held_charge_overlay_ref)
-			overlays -= held_charge_overlay_ref
-			held_charge_overlay_ref = null
-		held_skill        = null
-		held_charge_start = 0
+		ClearHeldChargeState()
 		src << "<font color='red'>Bind [Z.name] to a key first.</font>"
 		return
 
@@ -136,13 +158,123 @@
 	for(var/set_name in sets)
 		winset(client, "heldskill_release_[set_name]", "name=")
 
+/mob/proc/ShowHeldChargeBar(var/obj/Skills/Z)
+	var/client/C = client
+	if(!C) return
+	if(held_charge_bar_bg_ref || held_charge_bar_fill_refs) return
+
+	var/icon_file = 'Icons/UI/ChargeBar.dmi'
+	var/mob_w = _getIconWidth(icon, icon_state)
+	var/bar_w = _getIconWidth(icon_file, "Bar")
+	var/bar_h = _getIconHeight(icon_file, "Bar")
+	var/fill_step = 1
+	var/fill_left_inset_x = 0
+	var/fill_right_inset_x = 3
+	var/fill_marker_w = 3
+
+	var/start_x = round((mob_w - bar_w) / 2)
+	var/start_y = -(bar_h + 5)
+
+	var/image/bg = image(icon_file, src, "Bar")
+	bg.layer = MOB_LAYER + 10
+	bg.pixel_x = start_x
+	bg.pixel_y = start_y
+	bg.alpha = 0
+
+	C.images += bg
+	held_charge_bar_bg_ref = bg
+	held_charge_bar_fill_refs = list()
+
+	var/fill_region_w = max(1, bar_w - fill_left_inset_x - fill_right_inset_x)
+	var/segment_count = max(1, fill_region_w - fill_marker_w)
+	for(var/i = 0, i < segment_count, i++)
+		var/image/fill = image(icon_file, src, "Progress")
+		fill.layer = bg.layer + 0.3
+		fill.pixel_x = start_x + fill_left_inset_x + (i * fill_step)
+		fill.pixel_y = start_y
+		fill.alpha = 0
+		held_charge_bar_fill_refs.Add(fill)
+		C.images += fill
+
+	if(Z && Z.SweetSpot > 0 && Z.ChargePeriod > 0)
+		var/sweet_ratio = clamp(Z.SweetSpot / Z.ChargePeriod, 0, 1)
+		var/sweet_x = start_x + fill_left_inset_x + round((segment_count - 1) * sweet_ratio)
+		var/image/sweet = image(icon_file, src, "SweetSpot")
+		sweet.layer = bg.layer + 0.2
+		sweet.pixel_x = sweet_x
+		sweet.pixel_y = start_y
+		sweet.alpha = 0
+		held_charge_bar_sweet_ref = sweet
+		C.images += sweet
+
+	animate(bg, alpha = 255, time = 2)
+	if(held_charge_bar_sweet_ref)
+		animate(held_charge_bar_sweet_ref, alpha = 255, time = 2)
+
+/mob/proc/UpdateHeldChargeBar(var/ratio)
+	if(!held_charge_bar_bg_ref || !held_charge_bar_fill_refs) return
+	ratio = clamp(ratio, 0, 1)
+
+	var/segment_count = held_charge_bar_fill_refs.len
+	var/filled_segments = floor(segment_count * ratio)
+	if(ratio >= 1) filled_segments = segment_count
+	var/i = 0
+	for(var/image/fill in held_charge_bar_fill_refs)
+		i++
+		if(!fill) continue
+		fill.alpha = i <= filled_segments ? 255 : 0
+
+/mob/proc/HideHeldChargeBar()
+	var/client/C = client
+	if(!C) return
+
+	var/image/bg = held_charge_bar_bg_ref
+	var/image/sweet = held_charge_bar_sweet_ref
+	var/list/fills = held_charge_bar_fill_refs
+	held_charge_bar_bg_ref = null
+	held_charge_bar_sweet_ref = null
+	held_charge_bar_fill_refs = null
+
+	if(bg) animate(bg, alpha = 0, time = 3)
+	if(sweet) animate(sweet, alpha = 0, time = 3)
+	if(fills)
+		for(var/image/fill in fills)
+			if(fill) animate(fill, alpha = 0, time = 3)
+	sleep(3)
+	if(bg) C.images -= bg
+	if(sweet) C.images -= sweet
+	if(fills)
+		for(var/image/fill in fills)
+			if(fill) C.images -= fill
+
+/mob/proc/ForceClearHeldChargeState()
+	held_skill = null
+	held_charge_start = 0
+	held_skill_macro_key = null
+
+	if(held_charge_overlay_ref)
+		overlays -= held_charge_overlay_ref
+		held_charge_overlay_ref = null
+
+	var/client/C = client
+	if(C)
+		if(held_charge_bar_bg_ref)
+			C.images -= held_charge_bar_bg_ref
+		if(held_charge_bar_sweet_ref)
+			C.images -= held_charge_bar_sweet_ref
+		if(held_charge_bar_fill_refs)
+			for(var/image/fill in held_charge_bar_fill_refs)
+				if(fill) C.images -= fill
+		clearHeldReleaseMacro()
+
+	held_charge_bar_bg_ref = null
+	held_charge_bar_sweet_ref = null
+	held_charge_bar_fill_refs = null
+
 // ChargeLoop runs for the duration of the hold
 
 /mob/proc/ChargeLoop(var/obj/Skills/Z)
 	while(held_skill == Z)
-		sleep(2)
-		if(held_skill != Z) return
-
 		// Interrupt conditions
 		var/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Debuff/Charmed/charm_skill = locate(/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Debuff/Charmed) in src
 		if(Stunned || Launched || Stasis > 0 || (charm_skill && BuffOn(charm_skill)))
@@ -154,8 +286,13 @@
 			FizzleHeldSkill(Z)
 			return
 
-		// Continuous shockwaves for the duration of the hold
+		// closing the visual gap after BeginHeldSkill's initial pulse.
 		KenShockwave(src, icon=Z.ChargeWaveIcon, Size=0.5, Blend=Z.ChargeWaveBlend, Time=8)
+		var/hold_ticks = world.time - held_charge_start
+		var/progress = clamp(hold_ticks / (Z.ChargePeriod * 10), 0, 1)
+		UpdateHeldChargeBar(progress)
+
+		sleep(2)
 
 // ReleaseHeldSkill is called by the Release_Held_Skill verb (KEY+UP macro)
 
@@ -164,6 +301,7 @@
 	if(!Z) return
 
 	var/hold_ticks = world.time - held_charge_start
+	UpdateHeldChargeBar(clamp(hold_ticks / (Z.ChargePeriod * 10), 0, 1))
 
 	// Overheld
 	if(hold_ticks > Z.ChargePeriod * 10)
@@ -172,15 +310,21 @@
 
 	// ChargeBenefit is 0-1 based on progress through ChargePeriod
 	var/benefit = clamp(hold_ticks / (Z.ChargePeriod * 10), 0.0, 1.0)
+	var/sweet_spot_hit = FALSE
 
 	// Sweet spot window is SweetSpot to SweetSpot + 0.25s
 	if(Z.SweetSpot && hold_ticks >= Z.SweetSpot * 10 && hold_ticks <= Z.SweetSpot * 10 + 3)
 		benefit *= Z.SweetSpotBenefit
+		sweet_spot_hit = TRUE
 
 	Z.ChargeBenefit = benefit
 	ClearHeldChargeState()
 	held_skill_last_release = world.time
-	Z.OnHeldRelease(src, benefit)
+	if(sweet_spot_hit)
+		for(var/mob/m in admins)
+			if(m && m.client && m.Admin && m.client.SweetSpotHeldSkillDebug)
+				m << "<font color='#66ff99'>(SweetSpot Debug) [src] hit [Z.name]'s sweet spot at [round(hold_ticks / 10, 0.1)]s.</font>"
+	Z.OnHeldRelease(src, benefit, sweet_spot_hit)
 
 // FizzleHeldSkill for skill being overheld, interrupted, or cancelled
 
@@ -194,13 +338,14 @@
 // Cleanup
 
 /mob/proc/ClearHeldChargeState()
-	clearHeldReleaseMacro()
+	held_skill        = null
+	held_charge_start = 0
 	held_skill_macro_key = null
 	if(held_charge_overlay_ref)
 		overlays -= held_charge_overlay_ref
 		held_charge_overlay_ref = null
-	held_skill        = null
-	held_charge_start = 0
+	spawn() HideHeldChargeBar()
+	clearHeldReleaseMacro()
 
 // HeldSkillBlocksAction returns TRUE if a held skill is currently
 // charging and the requested skill would conflict.
@@ -220,15 +365,22 @@
 	if(usr.held_skill)
 		usr.ReleaseHeldSkill()
 
+/mob/Admin2/verb/Toggle_SweetSpot_Held_Skill_Debug()
+	set category = "Admin"
+	set name = "Toggle SweetSpot Held Skill Debug"
+	if(!client) return
+	client.SweetSpotHeldSkillDebug = !client.SweetSpotHeldSkillDebug
+	src << "<font color='#888888'>SweetSpot held skill debug: [client.SweetSpotHeldSkillDebug ? "ON" : "OFF"]</font>"
+
 // Exampleskill
 
 /obj/Skills/AutoHit/Charged_Lightning_Kicks
 	Area = "Arc"
 	StrOffense = 1
-	DamageMult = 2.75  
+	DamageMult = 2.75
 	Rush = 5
 	ControlledRush = 1
-	Rounds = 3    
+	Rounds = 3
 	ComboMaster = 1
 	RoundMovement = 0
 	NoAttackLock = 1
@@ -250,11 +402,11 @@
 	// Held skill config
 	HeldSkill = TRUE
 	ChargePeriod = 3
-	SweetSpot = 1.5   
-	SweetSpotBenefit = 3.0    
-	ChargeOverlay = 'DarkShock.dmi'   
-	ChargeWaveIcon = 'Icons/Effects/KenShockwave.dmi'  
-	ChargeWaveBlend = 2      
+	SweetSpot = 1.5
+	SweetSpotBenefit = 3.0
+	ChargeOverlay = 'DarkShock.dmi'
+	ChargeWaveIcon = 'Icons/Effects/KenShockwave.dmi'
+	ChargeWaveBlend = 2
 
 	adjust(mob/p)
 

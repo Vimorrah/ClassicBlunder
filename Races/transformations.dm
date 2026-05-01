@@ -202,7 +202,8 @@ transformation
 				if(user.transUnlocked < user.transActive+1)
 					if(!(user.bypassTransAutomation >= user.transActive+1) && glob.lockTransAutomation && (type in glob.transLocked)) return
 					if(unlock_potential >= user.Potential) return
-
+			if(glob.racials.AUTO_SSJ_MASTERY)
+				gainMastery()
 			mastery_boons(user)
 			class_boons(user)
 
@@ -375,8 +376,7 @@ transformation
 
 			if(drain>0)
 				user.LoseEnergy(drain)
-				if(glob.racials.AUTO_SSJ_MASTERY)
-					gainMastery()
+
 				if(user.Energy < cut_off &&!user.HasNoRevert()&&!user.Dead&&!user.HasMystic())
 					user.Revert()
 					user.LoseEnergy(30)
@@ -385,7 +385,7 @@ transformation
 		gainMastery(mob/user)
 			if(mastery >= 100) return
 			if(user.isRace(SAIYAN)||user.isRace(HALFSAIYAN))
-				if(user.transActive==1)
+				if(user.transActive==1&&user.oozaru_type!="Demonic")
 					if(user.Potential>=22&&mastery<25)
 						mastery=25
 					if(user.Potential>=27&&mastery<50)
@@ -394,7 +394,7 @@ transformation
 						mastery=75
 					if(user.Potential>=35&&mastery<75)
 						mastery=100
-				if(user.transActive==2)
+				if(user.transActive==2||user.transActive==1&&user.oozaru_type=="Demonic")
 					if(user.Potential>=37&&mastery<25)
 						mastery=25
 					if(user.Potential>=39&&mastery<50)
@@ -403,6 +403,5 @@ transformation
 						mastery=75
 					if(user.Potential>=43&&mastery<100)
 						mastery=100
-			mastery += randValue(glob.racials.SSJ_MIN_MASTERY_GAIN,glob.racials.SSJ_MAX_MASTERY_GAIN)
 			if(mastery > 100)
 				mastery=100
