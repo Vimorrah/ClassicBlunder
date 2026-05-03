@@ -571,6 +571,8 @@ mob
 				if(Health<=14)
 					if(passive_handler.Get("TrueZenkaiPower")<3)
 						passive_handler.Increase("TrueZenkaiPower", 0.05)
+			if(passive_handler.Get("Full Manifestation"))
+				src.HandleEldritchTax()
 			if(passive_handler.Get("TrueZenkaiPower")&&src.icon_state=="Meditate")
 				passive_handler.Set("TrueZenkaiPower", 0)
 			if(passive_handler["LegendarySaiyan"]&&src.transActive==src.transUnlocked||src.passive_handler["LegendarySaiyan"]&&src.passive_handler["MovementMastery"]||src.passive_handler["LegendarySaiyan"]&&src.passive_handler["GodKi"]||src.passive_handler["LegendarySaiyan"]&&src.passive_handler["SSJ4"])

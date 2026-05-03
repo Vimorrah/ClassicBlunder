@@ -20,6 +20,7 @@
 		ForMult=1.5+AscBonus
 		SpdMult=1.5+AscBonus
 		OffMult=1.5+AscBonus
+		passives = list("Unrelenting Wrath" = 1, "Godspeed" = 2, "Skimming" = 2,"ManaLeak"=1-AscBonus)
 
 /obj/Skills/Buffs/SlotlessBuffs/Racial
 	Void_Blade
