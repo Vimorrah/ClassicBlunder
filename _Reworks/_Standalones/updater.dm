@@ -204,8 +204,8 @@ update
 					p.NewAnger(p.AngerMax+0.1)
 			if(p.isRace(BEASTKIN))
 				if(p.Class=="Feather Cowl"&&p.AscensionsAcquired>=1)
-					if(p.StrAscension<1)
-						p.StrAscension=1
+					if(p.StrAscension<0)
+						p.StrAscension=0
 /globalTracker/var/COOL_GAJA_PLAYERS = list("Thorgigamax", "Gemenilove" )
 /globalTracker/var/GAJA_PER_ASC_CONVERSION = 0.25
 /globalTracker/var/GAJA_MAX_EXCHANGE = 1

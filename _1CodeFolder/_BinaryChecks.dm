@@ -2407,6 +2407,8 @@ mob
 						. = 5000
 			if(passive_handler.Get("FavoredPrey") == "Gender")
 				. = 0 //All of your violence is structural. You have no power outside of the system that gives it to you.
+			if(passive_handler.Get("FavoredPrey") == "Secret" && Secret)
+				. /= 4
 			. = clamp(., glob.SLAYER_DAMAGE_MIN, glob.SLAYER_DAMAGE_MAX);
 //----------------------------------------------------------------------
 
