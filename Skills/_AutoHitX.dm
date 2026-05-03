@@ -3279,7 +3279,7 @@ obj
 					SignatureName="Holy Magic"
 					Area="Target"
 					Distance=7
-					HolyMod=10
+					HolyMod=5
 					Purity=1
 					DamageMult=18
 					WindUp=1
@@ -3549,7 +3549,7 @@ obj
 				Area="Around Target"
 				AdaptRate=1.5
 				DamageMult=0.5
-				HolyMod=10
+				HolyMod=5
 				Distance=5
 				DistanceAround=3
 				EnergyCost=10
@@ -3580,7 +3580,7 @@ obj
 				Area="Around Target"
 				AdaptRate=1.5
 				DamageMult=0.5
-				AbyssMod=10
+				AbyssMod=5
 				Distance=5
 				DistanceAround=3
 				EnergyCost=10
@@ -4069,7 +4069,7 @@ obj
 				Area="Circle"
 				GuardBreak=1
 				DamageMult=11
-				HolyMod=20
+				HolyMod=5
 				Distance=6
 				Knockback=10
 				DelayTime=5
@@ -4619,7 +4619,7 @@ obj
 				SpecialAttack=1
 				StrOffense=1
 				DamageMult=7.5
-				HolyMod=10
+				HolyMod=5
 				Distance=5
 				Rush=5
 				RushDelay=2
@@ -4733,7 +4733,7 @@ obj
 				TurfShift='IceGround.dmi'
 				TurfShiftDuration=500
 				DamageMult=10
-				HolyMod=10
+				HolyMod=5
 				Purity=1
 				StrOffense=1
 				ActiveMessage="encases their target in a tomb of soul-infused crystal!  They are forced into perfect stasis!"
