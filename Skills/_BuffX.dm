@@ -4128,7 +4128,7 @@ NEW VARIABLES
 					for(var/obj/Skills/Buffs/SlotlessBuffs/Autonomous/Symbiote_Infection/s in usr)
 						s.NeedsHealth=50
 						s.NeedsVary=0
-						s.TooMuchHealth=0
+						s.TooMuchHealth=99
 						s.VaizardShatter=0
 						s.Curse=0
 				else
@@ -4136,7 +4136,7 @@ NEW VARIABLES
 						s.NeedsHealth=50
 						s.NeedsVary=0
 						s.TooMuchHealth=99
-						s.VaizardShatter=1
+						s.VaizardShatter=0
 						if(usr.AscensionsAcquired>=2)
 							s.Curse=1
 
