@@ -4117,7 +4117,7 @@ NEW VARIABLES
 			EnergyMult=1.5
 			RegenMult=1.25
 			RecovMult=1.25
-			passives = list("Flow" = 2, "Unstoppable" = 1, "Harden" = 1 + (0.5 * asc), "LifeSteal" = 1.5*asc, "Godspeed" = 1+(asc), "SweepingStrike" = 1)
+			passives = list("Flow" = 2)
 			BuffTechniques = list("/obj/Skills/Buffs/SlotlessBuffs/Regeneration")
 			ActiveMessage="forces their symbiote out!"
 			OffMessage="restrains their symbiotic companion..."
@@ -11319,7 +11319,6 @@ NEW VARIABLES
 				HitTurn=1
 				Cooldown=-1
 				ActiveMessage="is coated by a frenzied symbiotic organism!!"
-				OffMessage="the symbiotic infection wears off..."
 				adjust(mob/p)
 					if(altered) return
 					var/asc = p.AscensionsAcquired
