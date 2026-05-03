@@ -535,6 +535,8 @@ mob
 				src.Revert()
 			if(passive_handler.Get("LunarWrath")&&PowerControl>100&&!passive_handler.Get("Unrelenting Wrath"))
 				var/ManaRando=rand(6,15)
+				if(src.Health<50)
+					ManaRando*=2
 				src.ManaAmount+=0.5*(ManaRando/10)
 			if(passive_handler.Get("LunarAnger")&&!passive_handler.Get("Unrelenting Wrath"))
 				if(ManaAmount>50)
@@ -547,7 +549,7 @@ mob
 			if(passive_handler.Get("Unrelenting Wrath"))
 				src.Anger=src.AngerMax
 				src.AngerMax=5
-			if(passive_handler["TensionPowered"] && !src.isMazokuHuman())
+			if(passive_handler["TensionPowered"] && !src.isMazokuPathHuman())
 				if(src.canHTM())
 					src.race.transformations[2].transform(src, TRUE)
 			if(src.transActive==1&&src.isRace(NAMEKIAN))
@@ -569,6 +571,8 @@ mob
 				if(Health<=14)
 					if(passive_handler.Get("TrueZenkaiPower")<3)
 						passive_handler.Increase("TrueZenkaiPower", 0.05)
+			if(passive_handler.Get("Full Manifestation"))
+				src.HandleEldritchTax()
 			if(passive_handler.Get("TrueZenkaiPower")&&src.icon_state=="Meditate")
 				passive_handler.Set("TrueZenkaiPower", 0)
 			if(passive_handler["LegendarySaiyan"]&&src.transActive==src.transUnlocked||src.passive_handler["LegendarySaiyan"]&&src.passive_handler["MovementMastery"]||src.passive_handler["LegendarySaiyan"]&&src.passive_handler["GodKi"]||src.passive_handler["LegendarySaiyan"]&&src.passive_handler["SSJ4"])
@@ -583,7 +587,7 @@ mob
 						src.DoDamage(src, (rand(1,5)/30))
 			if(passive_handler["Grit"])
 				AdjustGrit("sub", glob.racials.GRITSUBTRACT)
-			if((isRace(HUMAN)||isRace(CELESTIAL)&&CelestialAscension=="Angel") && !isMazokuHuman())
+			if((isRace(HUMAN)||isRace(CELESTIAL)&&CelestialAscension=="Angel") && !isMazokuPathHuman())
 				if(Health<=30)
 					if(transActive==4&&transUnlocked>=5&&DoubleHelix>=4)
 						src.race.transformations[5].transform(src, TRUE)
