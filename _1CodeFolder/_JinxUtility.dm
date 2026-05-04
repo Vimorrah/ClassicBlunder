@@ -1613,6 +1613,8 @@ mob
 			if(passive_handler.Get("SpiralPowerUnlocked"))
 				var/SP=passive_handler.Get("SpiralPowerUnlocked")
 				EffectiveAsc+=src.HandleSpiralUnlock("Str", SP)
+			if(isRace(POPO))
+				EffectiveAsc*=GetPowerUpRatio()
 
 			Str+=EffectiveAsc
 			//stat ascensions gained through racial or saga improvements
@@ -1811,7 +1813,8 @@ mob
 			if(passive_handler.Get("SpiralPowerUnlocked"))
 				var/SP=passive_handler.Get("SpiralPowerUnlocked")
 				EffectiveAsc+=src.HandleSpiralUnlock("For", SP)
-
+			if(isRace(POPO))
+				EffectiveAsc*=GetPowerUpRatio()
 			For+=EffectiveAsc
 			var/enhanced = getEnhanced("Force")
 			For+=src.EnhancedForce ? enhanced : 0
@@ -2005,7 +2008,8 @@ mob
 			if(passive_handler.Get("SpiralPowerUnlocked"))
 				var/SP=passive_handler.Get("SpiralPowerUnlocked")
 				EffectiveAsc+=src.HandleSpiralUnlock("End", SP)
-
+			if(isRace(POPO))
+				EffectiveAsc*=GetPowerUpRatio()
 			End+=EffectiveAsc
 			var/enhanced = getEnhanced("Endurance")
 			End+=EnhancedEndurance ? enhanced : 0
@@ -2172,7 +2176,8 @@ mob
 			if(passive_handler.Get("SpiralPowerUnlocked"))
 				var/SP=passive_handler.Get("SpiralPowerUnlocked")
 				EffectiveAsc+=src.HandleSpiralUnlock("Spd", SP)
-
+			if(isRace(POPO))
+				EffectiveAsc*=GetPowerUpRatio()
 			Spd+=EffectiveAsc
 			var/enhanced = getEnhanced("Speed")
 			Spd+=EnhancedSpeed ? enhanced : 0
@@ -2319,7 +2324,8 @@ mob
 			if(passive_handler.Get("SpiralPowerUnlocked"))
 				var/SP=passive_handler.Get("SpiralPowerUnlocked")
 				EffectiveAsc+=src.HandleSpiralUnlock("Off", SP)
-
+			if(isRace(POPO))
+				EffectiveAsc*=GetPowerUpRatio()
 			Off+=EffectiveAsc
 			var/enhanced = getEnhanced("Aggression")
 			Off+=EnhancedAggression ? enhanced : 0
@@ -2437,7 +2443,8 @@ mob
 			if(passive_handler.Get("SpiralPowerUnlocked"))
 				var/SP=passive_handler.Get("SpiralPowerUnlocked")
 				EffectiveAsc+=src.HandleSpiralUnlock("Def", SP)
-
+			if(isRace(POPO))
+				EffectiveAsc*=GetPowerUpRatio()
 			Def+=EffectiveAsc
 			var/enhanced = getEnhanced("Reflexes")
 			Def+=EnhancedReflexes ? enhanced : 0

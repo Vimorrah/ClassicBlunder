@@ -9809,8 +9809,6 @@ NEW VARIABLES
 								secretLevel += 4
 						if(secretLevel>7)
 							secretLevel=7
-						if(Tyrant&&secretLevel>5)
-							secretLevel=5
 						PowerMult=1+(0.02*secretLevel*secretLevel)
 						var/SpiralPower=1
 						var/SpiralPotential=1
@@ -9829,7 +9827,7 @@ NEW VARIABLES
 								SpiralPower=7
 						SpiralPotential=SpiralPower
 						if(Tyrant)
-							SpiralPotential=1
+							SpiralPotential=2
 						StrMult=1.25 + (0.03*secretLevel*secretLevel)
 						ForMult=1.25 + (0.03*secretLevel*secretLevel)
 						EndMult=1.25 + (0.035*secretLevel*secretLevel)
