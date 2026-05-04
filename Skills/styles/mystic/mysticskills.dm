@@ -137,7 +137,7 @@
 	HitSparkSize=1
 	HitSparkDispersion=1
 	TurfStrike=1
-	TurfShift='Stars.dmi'
+	TurfShift='StarPixel.dmi'
 	TurfShiftDuration=3
 	SpecialAttack=1
 	CanBeDodged=0

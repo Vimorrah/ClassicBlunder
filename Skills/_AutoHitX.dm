@@ -6047,6 +6047,7 @@ obj
 			FrenzyDebuff
 			CriticalChance
 			Combustion
+			Doom
 
 			grabNerf = 0
 			BuffAffected = 0
