@@ -845,7 +845,7 @@ mob
 					src << "Your buster technique is fully charged!"
 
 
-			if(src.Beaming)
+			if(src.Beaming || src.HasMovingCharge())
 				for(var/obj/Skills/Projectile/Beams/Z in Skills)
 					if(Z.Charging&&Z.ChargeRate)
 						var/beamChargeCap = Z.ChargeRate * BEAM_CHARGE_CAP_MULT

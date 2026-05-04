@@ -94,7 +94,7 @@
 
 			if(consumed && istype(center, /mob/Players))
 				var/mob/Players/P = center
-				if(P.isInDemonDevilTrigger() && P.passive_handler && P.passive_handler.Get("GluttonyFactor"))
+				if(P.demonDevilTriggerSinMastery() && P.passive_handler && P.passive_handler.Get("GluttonyFactor"))
 					if(!P.DevilTriggerSinDamageBonus)
 						P.DevilTriggerSinDamageBonus = 0
 					P.DevilTriggerSinDamageBonus += (0.25 * consumed) * P.passive_handler.Get("GluttonyFactor")

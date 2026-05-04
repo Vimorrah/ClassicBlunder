@@ -949,7 +949,7 @@ mob/proc/
 						if(src.DefianceCounter)
 							a+=src.DefianceCounter*0.05
 						// WrathFactor
-						if(src.passive_handler.Get("WrathFactor") && src.isInDemonDevilTrigger())
+						if(src.passive_handler.Get("WrathFactor") && src.demonDevilTriggerSinMastery())
 							var/missing = max(0, 100 - Health)
 							var/steps = round(missing / 10)
 							if(steps > 0)
@@ -1002,7 +1002,7 @@ mob/proc/
 			if(passive_handler.Get("SSJRose"))
 				Ratio*=1.60 //this will be Different but i'm leaving it like this now
 
-			if(src.Target && ismob(src.Target) && passive_handler.Get("Limited Rank-Up") && passive_handler.Get("EnvyFactor") && src.HasMirrorStats() && src.Target != src && !src.Target.HasMirrorStats() && istype(src.Target, /mob/Players) && !src.Target.passive_handler.Get("To Govern Strength"))
+			if(src.Target && ismob(src.Target) && passive_handler.Get("Limited Rank-Up") && passive_handler.Get("EnvyFactor") && src.demonDevilTriggerSinMastery() && src.HasMirrorStats() && src.Target != src && !src.Target.HasMirrorStats() && istype(src.Target, /mob/Players) && !src.Target.passive_handler.Get("To Govern Strength"))
 				Ratio = src.Target.Power / src.Target.GetPowerUpRatio()
 
 		if(passive_handler["Rebel Heart"])

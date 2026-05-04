@@ -1355,6 +1355,12 @@ mob
 			if(!istype(current, /transformation/demon/devil_trigger)) return FALSE
 			return TRUE
 
+		// now require 50+ mastery
+		demonDevilTriggerSinMastery()
+			if(!isInDemonDevilTrigger()) return FALSE
+			var/transformation/current = race.transformations[transActive]
+			return current.mastery >= 50
+
 		// Used by the Devil Arm icon-swap path. Demon-only sins / disguise stay
 		// gated by isInDemonDevilTrigger; this one also covers makaioshin forms.
 		isInDevilTriggerLikeForm()
@@ -1382,6 +1388,9 @@ mob
 
 		getDevilTriggerSinBonusMult()
 			if(!isInDemonDevilTrigger())
+				resetDevilTriggerSinBonuses()
+				return 0
+			if(!demonDevilTriggerSinMastery())
 				resetDevilTriggerSinBonuses()
 				return 0
 
@@ -1460,7 +1469,7 @@ mob
 		// adist/Masochist effects
 		applySinBonusFromDealtDamage(var/amount)
 			if(amount <= 0) return
-			if(!isInDemonDevilTrigger()) return
+			if(!demonDevilTriggerSinMastery()) return
 
 			var/rate = 0.01
 
@@ -1477,7 +1486,7 @@ mob
 
 		applySinBonusFromTakenDamage(var/amount)
 			if(amount <= 0) return
-			if(!isInDemonDevilTrigger()) return
+			if(!demonDevilTriggerSinMastery()) return
 
 			var/rate = 0.01
 
@@ -1502,7 +1511,7 @@ mob
 				sf.Trigger(src, TRUE)
 
 		updateSlothSinBonus()
-			if(!isInDemonDevilTrigger()) return
+			if(!demonDevilTriggerSinMastery()) return
 			if(!passive_handler || !passive_handler.Get("SlothFactor")) return
 			if(PureRPMode)
 				LastSlothTick = world.time
