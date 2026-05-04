@@ -6208,6 +6208,7 @@ obj
 			src.Stunner=Z.Stunner
 			src.Destructive=Z.Destructive
 			src.Shearing = Z.Shearing
+			src.Doom = Z.Doom
 			src.Bang=Z.Bang
 			src.Bolt=Z.Bolt
 			src.BoltOffset=Z.BoltOffset
@@ -6674,6 +6675,8 @@ obj
 					m.AddCrippling(Crippling, Owner)
 				if(Shearing)
 					m.AddShearing(Shearing, Owner)
+				if(Doom)
+					m.AddDoom(Doom, Owner)
 				if(FrenzyDebuff)
 					m.AddFrenzy(FrenzyDebuff, Owner)
 
