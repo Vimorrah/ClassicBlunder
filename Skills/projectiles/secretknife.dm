@@ -260,7 +260,7 @@
 	UltimaLaser
 		AdaptRate=1
 		Blasts=4
-		DamageMult=1
+		DamageMult=2
 		AccMult=1.5
 		AttackReplace=1
 		ZoneAttack=1
@@ -274,12 +274,12 @@
 		ZoneAttackY=8
 		FireFromEnemy=0
 		FireFromSelf=1
-		Hover=6
+		Hover=3
 		IconLock='UltimaLaser.dmi'
 		Explode=1
 		Variation=8
 		FlickBlast=0
-		Cooldown=8
+		Cooldown=4
 		adjust(mob/p)
 
 	Murder_Music
