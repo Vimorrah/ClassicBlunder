@@ -68,6 +68,8 @@ mob/proc/GetMangStats() //This proc is ued in _JinxUtility.dm specifically for a
 mob/proc/GetMangLevel() //This proc gets how many Mang you have active is used in _BinaryChecks.dm, BlurringStrikes.dm, and Brutalize.dm
     if(hasSecret("Shin"))
         var/SecretInformation/Shin/ShinSecret = secretDatum
+        if(!CheckSlotless("Mang Resonance"))
+            ShinSecret.Mang = 0 // If not in mang stop asking for this you fucking moron
         return ShinSecret.Mang
     return 0
 
