@@ -11547,7 +11547,7 @@ NEW VARIABLES
 					if(!altered)
 						if(player.passive_handler.Get("Two Become One"))
 							src.passives = list("ActiveBuffLock" = 1,"SpecialBuffLock" = 1,"Godspeed" = 1, "MartialMagic" = 1, "BladeFisting" = 1, "Godspeed" = 2, "ManaLeak" = 1, "TechniqueMastery" = 5,\
-							"Pursuer" = 1, "DoubleStrike" = 4, "TripleStrike" = 4)
+							"Pursuer" = 1, "DoubleStrike" = 4, "TripleStrike" = 4, "BlurringStrikes" = 4, "ManaGeneration" = 2)
 							src.VaizardHealth = 45
 							src.PowerMult=2
 							src.ActiveMessage="is overwhelmed by their inner darkness... but keeps a semblance of who they are!"

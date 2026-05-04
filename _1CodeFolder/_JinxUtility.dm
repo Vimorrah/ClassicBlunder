@@ -1301,7 +1301,7 @@ mob
 		// forgive the sin below, im not replacing basestat() in all the codebase
 		getEnhanced(statName)
 			var/enhance = vars["Enhanced[statName]"] * 0.3
-			if(isRace(ANDROID)||CyberneticMainframe)
+			if(isRace(ANDROID)||CyberneticMainframe&&src.Class=="Resourceful")
 				enhance = vars["Enhanced[statName]"] * 0.6
 			if(Target && ismob(Target))
 				// Rusting: when target carries the Rusting passive (mystic/hybrid styles)

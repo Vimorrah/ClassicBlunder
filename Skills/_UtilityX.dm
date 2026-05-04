@@ -3621,7 +3621,8 @@ obj/Skills/Utility
 						OMsg(usr, "[usr] tried to install a [ModChoice] into [M]...but they already have a Cybernetic Mainframe.")
 						src.Using=0
 						return
-					M.CyberneticMainframe=1
+					if(!M.isRace(ANDROID))
+						M.CyberneticMainframe=1
 					if(M.isRace(ANDROID))
 						M.SuperAndroid=1
 						M.transUnlocked=1
