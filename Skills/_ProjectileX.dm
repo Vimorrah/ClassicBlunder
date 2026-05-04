@@ -3361,13 +3361,11 @@ obj
 						Knockback = 4
 						DamageMult = 2 + (1 * p.SagaLevel)
 						MultiHit = 5
-						DamageMult/=MultiHit
 						Radius = 1
 						IconSize = 1.25
 						if(p.AnsatsukenPath == "Hadoken")
 							Charge = 1
 							DamageMult = 3 + (1.5 * p.SagaLevel)
-							DamageMult/=MultiHit
 							Radius = 2
 							IconSize = 2
 							Distance = 25

@@ -28,7 +28,7 @@ race
 				user.AddSkill(new /obj/Skills/AutoHit/Desperation/FatalEnding)
 				user.NobodyOrigin()
 			if(user.Class=="Sorcerer")
-				passives = list("MovingCharge" = 1, "QuickCast" = 1, "Superglide" = 1, "FullyEffecient" = 1, "Tossing" = 1, "Extra Secret Knives" = "UltimaLaser")
+				passives = list("MovingCharge" = 1, "QuickCast" = 1, "Superglide" = 1, "FullyEffecient" = 1, "Tossing" = 1, "Extra Secret Knives" = "UltimaLaser", "SpiritFlow" = 4)
 				user.AddSkill(new /obj/Skills/Projectile/Zone_Attacks/Desperation/UltimaLasers)
 				user.NobodyOrigin()
 			if(user.Class=="Berserker")
