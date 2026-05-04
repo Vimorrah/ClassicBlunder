@@ -850,7 +850,7 @@ mob
 					if(Z.Charging&&Z.ChargeRate)
 						var/beamChargeCap = Z.ChargeRate * BEAM_CHARGE_CAP_MULT
 						if(src.BeamCharging>=0.5&&src.BeamCharging<=beamChargeCap)
-							src.BeamCharging+=src.GetRecov(0.2)
+							src.BeamCharging+=src.GetRecov(0.2)*src.GetBeamChargeSpeedMult()
 							if(src.BeamCharging>beamChargeCap)
 								src.BeamCharging=beamChargeCap
 

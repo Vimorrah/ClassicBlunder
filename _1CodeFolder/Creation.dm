@@ -114,6 +114,8 @@ mob/Players
 			if(!(/mob/proc/CraftMagatama in src.verbs))
 				src.verbs += /mob/proc/CraftMagatama
 
+		EvictFiendsIfUnauthorized()
+
 		addMissingSkills()
 		if(glob.TESTER_MODE)
 			giveTesterVerbs(src)

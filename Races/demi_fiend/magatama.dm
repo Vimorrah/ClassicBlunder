@@ -1,5 +1,6 @@
 #define MAGATAMA_SWAP_COOLDOWN 36000 // 1 hour in deciseconds
 #define MAGATAMA_COST_ESCALATION 0.25 // +25% base cost per magatama crafted
+#define MAGATAMA_IMPRINT_FRACTION 0.25 // True Demon, fraction of base_passives that imprint at 100% mastery
 
 mob/var
 	magatama_last_swap = 0
@@ -8,6 +9,10 @@ mob/var
 	magatama_cooldown_until = 0
 	list/magatama_allowed_set = list()
 	list/magatama_equip_times = list()
+	list/magatama_imprinted = list() // True Demon snapshot of imprinted base_passives
+
+mob/proc/HasTrueDemonPath()
+	return passive_handler?.Get("TrueDemon")
 
 mob/proc/getMagatamaEquippedTypes()
 	var/list/types = list()
@@ -61,6 +66,14 @@ obj/Items/Magatama
 				var/mob/user = loc
 				if(user)
 					user << "<font color='#FFD700'><b>You have achieved full Mastery over [name]. New possibilities await...</b></font>"
+					if(user.HasTrueDemonPath())
+						user.imprintMagatama(src)
+
+		getImprintPassives(mob/user)
+			var/list/result = list()
+			for(var/p in base_passives)
+				result[p] = base_passives[p] * MAGATAMA_IMPRINT_FRACTION
+			return result
 
 		getMasteryProgress()
 			return mastery
@@ -224,6 +237,31 @@ mob/proc/refreshMagatama()
 	for(var/obj/Items/Magatama/M in src)
 		if(M.suffix == "*Equipped*")
 			M.refreshPassives(src)
+
+mob/proc/imprintMagatama(obj/Items/Magatama/mag)
+	if(!mag) return
+	if(!HasTrueDemonPath()) return
+	if(!magatama_imprinted) magatama_imprinted = list()
+	if(magatama_imprinted[mag.type]) return // already imprinted; idempotent
+	var/list/snapshot = mag.getImprintPassives(src)
+	if(!snapshot || !snapshot.len) return
+	magatama_imprinted[mag.type] = snapshot
+	passive_handler?.increaseList(snapshot)
+	src << "<font color='#FFD700'>The essence of [mag.name] imprints upon your soul, never to fade...</font>"
+
+mob/proc/onTrueDemonAscended()
+	// Retroactive imprint sweep
+	for(var/obj/Items/Magatama/M in src)
+		if(M.mastery >= 100)
+			imprintMagatama(M)
+
+mob/proc/revertTrueDemonImprints()
+	if(!magatama_imprinted) return
+	for(var/T in magatama_imprinted)
+		var/list/snapshot = magatama_imprinted[T]
+		if(snapshot && snapshot.len)
+			passive_handler?.decreaseList(snapshot)
+	magatama_imprinted = list()
 
 mob/proc/CraftMagatama()
 	set name = "Craft Magatama"

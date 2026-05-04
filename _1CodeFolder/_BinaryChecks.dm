@@ -1508,6 +1508,11 @@ mob
 			return 0
 		GetQuickCast()
 			return passive_handler.Get("QuickCast")
+		GetBeamChargeSpeedMult()
+			var/mult = (1+(src.GetKiControlMastery()*0.1))
+			if(src.HasQuickCast())
+				mult *= src.GetQuickCast()
+			return mult
 		HasDualCast()
 			if(passive_handler.Get("DualCast"))
 				return 1

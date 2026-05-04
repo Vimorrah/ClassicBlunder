@@ -39,6 +39,13 @@
 	var/r = dd.demon_race
 	return (r == "Erthys" || r == "Aeros" || r == "Aquans" || r == "Flaemis")
 
+/mob/proc/IsTrueDemonOnly(demon_name)
+	if(!demon_name) return FALSE
+	if(demon_name in DEMON_TRUE_DEMON_LOCKED) return TRUE
+	var/datum/demon_data/dd = DEMON_DB[demon_name]
+	if(dd && dd.demon_race == "True Fiend") return TRUE
+	return FALSE
+
 /mob/proc/DemonEligibleForPick(dname)
 	var/datum/demon_data/dd = DEMON_DB[dname]
 	if(!dd) return FALSE
@@ -46,6 +53,12 @@
 	if(DemonIsFusionLocked(dname)) return FALSE
 	if(DemonIsElemental(dname)) return FALSE
 	if(dd.demon_lvl > DemonPotentialLevel()) return FALSE
+	if(IsTrueDemonOnly(dname) && !HasTrueDemonPath()) return FALSE
+	return TRUE
+
+/mob/proc/IsFusionResultAllowed(demon_name)
+	if(!demon_name) return TRUE
+	if(IsTrueDemonOnly(demon_name) && !HasTrueDemonPath()) return FALSE
 	return TRUE
 
 /mob/proc/DevilSummonerRestoreVerbs()
@@ -466,6 +479,10 @@
 		src << "<font color='#ff6666'>Special fusion requires <b>Tier 7</b>.</font>"
 		return
 
+	if(!IsFusionResultAllowed(result_name))
+		src << "<font color='#ff6666'>Only those who walk the True Demon path may pact with True Fiends.</font>"
+		return
+
 	if(DemonTooHighLevel(result_name))
 		src << "<font color='#ff6666'>You are not yet strong enough to command that demon.</font>"
 		return
@@ -627,6 +644,10 @@
 		src << "No valid Element fusion result found."
 		return
 
+	if(!IsFusionResultAllowed(result_name))
+		src << "<font color='#ff6666'>Only those who walk the True Demon path may pact with True Fiends.</font>"
+		return
+
 	if(DemonTooHighLevel(result_name))
 		src << "<font color='#ff6666'>You are not yet strong enough to command that demon. (Requires a higher Potential Level. You have [DemonPotentialLevel()].)</font>"
 		return
@@ -692,6 +713,10 @@
 	var/datum/compendium_demon/cd = demon_compendium[demon_name]
 	var/datum/demon_data/dd = DEMON_DB[demon_name]
 	if(!dd) return
+
+	if(IsTrueDemonOnly(demon_name) && !HasTrueDemonPath())
+		src << "<font color='#ff6666'>Only those who walk the True Demon path may pact with this demon.</font>"
+		return
 
 	// Duplicate check
 	if(DemonInParty(demon_name))
@@ -1138,3 +1163,31 @@
 		d.RemoveDemonPassives()
 		d.ApplyDemonPassives()
 	ShowDemonSkillManagerUI(pd)
+
+/mob/proc/EvictFiendsIfUnauthorized()
+	if(HasTrueDemonPath()) return
+
+	var/evicted_any = FALSE
+
+	if(demon_active && demon_active_name && IsTrueDemonOnly(demon_active_name))
+		DemonUnsummon()
+		evicted_any = TRUE
+
+	if(demon_party && demon_party.len)
+		var/plen = length(demon_party)
+		for(var/i = plen, i >= 1, i--)
+			var/datum/party_demon/pd = demon_party[i]
+			if(!pd) continue
+			if(IsTrueDemonOnly(pd.demon_name))
+				demon_party.Remove(pd)
+				del(pd)
+				evicted_any = TRUE
+
+	if(demon_compendium && demon_compendium.len)
+		for(var/dname in demon_compendium.Copy())
+			if(IsTrueDemonOnly(dname))
+				demon_compendium -= dname
+				evicted_any = TRUE
+
+	if(evicted_any)
+		src << "<font color='#c8a8ff'>Your bonds with the True Fiends have severed. Only those who walk the True Demon path may command them.</font>"

@@ -5126,9 +5126,9 @@ mob
 					if(!Z.ChargeIcon)
 						src.Chargez("Add")
 						if(src.HasQuickCast())
-							sleep(10*Z.Charge/src.GetQuickCast()*(1+(src.GetKiControlMastery()*0.1)))
+							sleep(10*Z.Charge/(src.GetQuickCast()*(1+(src.GetKiControlMastery()*0.1))))
 						else
-							sleep(10*Z.Charge*(1+(src.GetKiControlMastery()*0.1)))
+							sleep(10*Z.Charge/(1+(src.GetKiControlMastery()*0.1)))
 						src.Chargez("Remove")
 					else
 						if(Z.ChargeIcon!=1)
@@ -5137,9 +5137,9 @@ mob
 							else
 								src.Chargez("Add", image(icon=Z.ChargeIcon, pixel_x=Z.ChargeIconX, pixel_y=Z.ChargeIconY), 0)
 							if(src.HasQuickCast())
-								sleep(10*Z.Charge/src.GetQuickCast()*(1+(src.GetKiControlMastery()*0.1)))
+								sleep(10*Z.Charge/(src.GetQuickCast()*(1+(src.GetKiControlMastery()*0.1))))
 							else
-								sleep(10*Z.Charge*(1+(src.GetKiControlMastery()*0.1)))
+								sleep(10*Z.Charge/(1+(src.GetKiControlMastery()*0.1)))
 							src.Chargez("Remove", image(icon=Z.ChargeIcon, pixel_x=Z.ChargeIconX, pixel_y=Z.ChargeIconY))
 						else
 							if(!src.AuraLocked&&!src.HasKiControl())
@@ -5147,9 +5147,9 @@ mob
 							else
 								KenShockwave(src,icon='KenShockwaveFocus.dmi',Size=0.3, Blend=2, Time=2)
 							if(src.HasQuickCast())
-								sleep(10*Z.Charge/src.GetQuickCast()*(1+(src.GetKiControlMastery()*0.1)))
+								sleep(10*Z.Charge/(src.GetQuickCast()*(1+(src.GetKiControlMastery()*0.1))))
 							else
-								sleep(10*Z.Charge*(1+(src.GetKiControlMastery()*0.1)))
+								sleep(10*Z.Charge/(1+(src.GetKiControlMastery()*0.1)))
 
 							if(!src.AuraLocked&&!src.HasKiControl())
 								src.Auraz("Remove")
@@ -5718,9 +5718,9 @@ obj
 						src.Owner.Beaming=0.5
 						var/T
 						if(src.Owner.HasQuickCast())
-							T=10*Z.Charge/src.Owner.GetQuickCast()*(1/(src.Owner.GetRecov()**(1/2)))
+							T=10*Z.Charge/(src.Owner.GetQuickCast()*(1+(src.Owner.GetKiControlMastery()*0.1)))*(1/(src.Owner.GetRecov()**(1/2)))
 						else
-							T=10*Z.Charge*(1/(src.Owner.GetRecov()**(1/2)))
+							T=10*Z.Charge/(1+(src.Owner.GetKiControlMastery()*0.1))*(1/(src.Owner.GetRecov()**(1/2)))
 						if(src.CustomCharge)
 							OMsg(src.Owner, "[src.CustomCharge]")
 						else
