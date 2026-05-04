@@ -1556,6 +1556,29 @@ NEW VARIABLES
 				src.HairLock=usr.Hair_SSJ2
 				adjust(usr)
 				src.Trigger(usr)
+		SuperSaiyanTypeX
+			SignatureTechnique=3
+			SagaSignature=1
+			UnrestrictedBuff=1
+			NeedsSSJ=1
+			EnergyExpenditure=1.5
+			passives = list("CursedWounds" = 1, "BleedHit" = 0.15, "MagnifiedStr" = 0.2, "MagnifiedEnd" = 0.2,"MagnifiedFor" = 0.2, "MagnifiedSSJ1" = 0.2, "EnergyLeak" = 1, "PureDamage" = 1, "PureReduction" = 1)
+			AuraLock=1
+			FlashChange=1
+			KenWave=3
+			KenWaveSize=0.5
+			KenWaveIcon='KenShockwaveGold.dmi'
+			ActiveMessage="bulks up greatly and erupts with power!"
+			OffMessage="tires out..."
+			adjust(mob/p)
+			verb/Super_Saiyan_Type_X()
+				set category="Skills"
+				if(usr.ExpandBase)
+					IconReplace=1
+					icon=usr.ExpandBase
+				src.HairLock=usr.Hair_SSJ2
+				adjust(usr)
+				src.Trigger(usr)
 		SuperSaiyanGrade3
 			SignatureTechnique=3
 			SagaSignature=1
@@ -1574,6 +1597,31 @@ NEW VARIABLES
 			OffMessage="loses steam..."
 			adjust(mob/p)
 			verb/Super_Saiyan_Grade3()
+				set category="Skills"
+				if(usr.ExpandBase)
+					IconReplace=1
+					icon=usr.ExpandBase
+				src.HairLock=usr.Hair_SSJ3
+				adjust(usr)
+				src.Trigger(usr)
+		SuperSaiyanTypeY
+			SignatureTechnique=3
+			SagaSignature=1
+			UnrestrictedBuff=1
+			NeedsSSJ=1
+			IconLock='SS2Sparks.dmi'
+			AuraLock=1
+			FlashChange=1
+			passives = list("CursedWounds" = 1, "BleedHit" = 0.15, "MagnifiedStr" = 0.4, "MagnifiedEnd" = 0.4,"MagnifiedFor" = 0.4, "MagnifiedSpd" = -0.4, "MagnifiedOff" = -0.4, "MagnifiedDef" = -0.4, "MagnifiedSSJ1" = 0.4, "EnergyLeak" = 2, "PowerStressed"=1, "PureDamage" = 1, "PureReduction" = 1)
+			EnergyExpenditure=1.5
+			ProportionShift=matrix(1.2, 0, 0, 0, 1, 0)
+			KenWave=5
+			KenWaveSize=0.5
+			KenWaveIcon='KenShockwaveGold.dmi'
+			ActiveMessage="bulks up enormously and explodes with power!"
+			OffMessage="loses steam..."
+			adjust(mob/p)
+			verb/Super_Saiyan_Type_Y()
 				set category="Skills"
 				if(usr.ExpandBase)
 					IconReplace=1
@@ -1623,6 +1671,21 @@ NEW VARIABLES
 			OffMessage="contains their excitement."
 			passives = list("MovementMastery" = 2, "TechniqueMastery" = 2)
 			verb/Saiyan_Fervor()
+				src.Trigger(usr)
+		SaiyanCarnage
+			SignatureTechnique=3
+			Mastery=1
+			UnrestrictedBuff=1
+			StrMult=1.3
+			ForMult=1.3
+			OffMult=1.25
+			KenWave=5
+			KenWaveSize=0.5
+			KenWaveIcon='KenShockwaveBloodlust.dmi'
+			passives = list("CursedWounds" = 1, "BleedHit" = 0.25, "EnergyGeneration" = 3, "LifeSteal" = 30)
+			ActiveMessage="erupts with the violent Saiyan Power they keep within!"
+			OffMessage="contains their superiority."
+			verb/Saiyan_Carnage()
 				src.Trigger(usr)
 		SuperSaiyanPerfected
 			SignatureTechnique=3
