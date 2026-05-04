@@ -5063,6 +5063,10 @@ mob
 				Z.while_warping = FALSE
 			if(Z.Using)//Skill is on cooldown.
 				return FALSE
+			if(istype(Z, /obj/Skills/AutoHit/I_Want_To_Be_Like_You))
+				if(!src.demonDevilTriggerSinMastery())
+					src << "You cannot access this power yet."
+					return FALSE
 			if(!Z.heavenlyRestrictionIgnore && Secret=="Heavenly Restriction" && secretDatum?:hasRestriction("Autohits"))
 				return FALSE
 			if(!Z.heavenlyRestrictionIgnore && Secret=="Heavenly Restriction" && secretDatum?:hasRestriction("All Skills"))
