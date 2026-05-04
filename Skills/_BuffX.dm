@@ -1535,10 +1535,11 @@ NEW VARIABLES
 
 		SuperSaiyanGrade2
 			SignatureTechnique=3
+			SagaSignature=1
 			UnrestrictedBuff=1
 			NeedsSSJ=1
 			EnergyExpenditure=1.5
-			passives = list("MagnifiedStr" = 0.2, "MagnifiedEnd" = 0.2,"MagnifiedFor" = 0.2, "MagnifiedSSJ1" = 0.2, "EnergyLeak" = 1)
+			passives = list("MagnifiedStr" = 0.2, "MagnifiedEnd" = 0.2,"MagnifiedFor" = 0.2, "MagnifiedSSJ1" = 0.2, "EnergyLeak" = 1, "PureDamage" = 1, "PureReduction" = 1)
 			AuraLock=1
 			FlashChange=1
 			KenWave=3
@@ -1557,12 +1558,13 @@ NEW VARIABLES
 				src.Trigger(usr)
 		SuperSaiyanGrade3
 			SignatureTechnique=3
+			SagaSignature=1
 			UnrestrictedBuff=1
 			NeedsSSJ=1
 			IconLock='SS2Sparks.dmi'
 			AuraLock=1
 			FlashChange=1
-			passives = list("MagnifiedStr" = 0.4, "MagnifiedEnd" = 0.4,"MagnifiedFor" = 0.4, "MagnifiedSpd" = -0.4, "MagnifiedOff" = -0.4, "MagnifiedDef" = -0.4, "MagnifiedSSJ1" = 0.4, "EnergyLeak" = 2, "PowerStressed"=1)
+			passives = list("MagnifiedStr" = 0.4, "MagnifiedEnd" = 0.4,"MagnifiedFor" = 0.4, "MagnifiedSpd" = -0.4, "MagnifiedOff" = -0.4, "MagnifiedDef" = -0.4, "MagnifiedSSJ1" = 0.4, "EnergyLeak" = 2, "PowerStressed"=1, "PureDamage" = 1, "PureReduction" = 1)
 			EnergyExpenditure=1.5
 			ProportionShift=matrix(1.2, 0, 0, 0, 1, 0)
 			KenWave=5
@@ -1593,7 +1595,7 @@ NEW VARIABLES
 			KenWaveIcon='KenShockwaveGold.dmi'
 			ActiveMessage="lets loose a furious Saiyan roar!"
 			OffMessage="loses steam..."
-			passives = list("UnderDog" = 5, "Perseverance" = 2, "CallousedHands" = 0.3)
+			passives = list("UnderDog" = 5, "Perseverance" = 2, "CallousedHands" = 0.15)
 			verb/Saiyan_Roar()
 				src.Trigger(usr)
 		RoyalLineage
@@ -9776,18 +9778,13 @@ NEW VARIABLES
 				Cooldown= 61
 				HealthThreshold=0.1
 				adjust(mob/p)
-					var/healthDiff
+					var/SpiralPower=1
+					var/healthDiff = 0
 					var/Tyrant
-					var/TyrantBonus
+					var/TyrantBonus=1
 					var/SpiralPotential
 					if(!altered)
 						var/secretLevel = p.secretDatum.currentTier
-						if(p.Health<50)
-							secretLevel+=1
-						if(p.Health<25)
-							secretLevel+=2
-						if(secretLevel>7)
-							secretLevel=7
 						if(p.Target && ismob(p.Target))
 							healthDiff = p.Target.Health-p.Health
 						switch(healthDiff)
@@ -9802,15 +9799,14 @@ NEW VARIABLES
 							if(16 to 25)
 								secretLevel += 1
 							if(26 to 50)
-								secretLevel += 2
-							if(51 to 75)
 								secretLevel += 3
+							if(51 to 75)
+								secretLevel += 5
 							if(76 to 100)
-								secretLevel += 4
+								secretLevel += 7
 						if(secretLevel>7)
 							secretLevel=7
 						PowerMult=1+(0.02*secretLevel*secretLevel)
-						var/SpiralPower=1
 						switch(secretLevel)
 							if(1 to 2)
 								SpiralPower=1
@@ -9827,11 +9823,13 @@ NEW VARIABLES
 						SpiralPotential=SpiralPower
 						if(Tyrant)
 							SpiralPotential=2
+						if(SpiralPotential>=7)
+							OMsg(p, "<b>In response to impossible odds, [p] shatters their limits, evolving beyond their absolute potential!</b>")
 						StrMult=1.25 + (0.03*secretLevel*secretLevel)
 						ForMult=1.25 + (0.03*secretLevel*secretLevel)
 						EndMult=1.25 + (0.035*secretLevel*secretLevel)
-						passives = list("SpiralPowerUnlocked" = SpiralPower, "PureDamage" = SpiralPower, "PureReduction" = SpiralPower)
-						TimerLimit= (10 * (p.transUnlocked ? p.transUnlocked : p.AscensionsAcquired)*secretLevel)
+						passives = list("SpiralPowerUnlocked" = SpiralPotential, "PureDamage" = SpiralPower, "PureReduction" = SpiralPower)
+						TimerLimit= (10 * (p.transUnlocked ? p.transUnlocked : p.AscensionsAcquired)*secretLevel) * TyrantBonus
 						Cooldown = 61 - ((5 * p.AscensionsAcquired) + (5 * secretLevel))
 				KenWave = 2
 				KenWaveIcon='SparkleGreen.dmi'
