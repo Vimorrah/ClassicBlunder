@@ -711,6 +711,8 @@
 									enemy.AddShearing(AttackQueue.Shearing,src)
 								if(AttackQueue.Crippling)
 									enemy.AddCrippling(AttackQueue.Crippling, src)
+								if(AttackQueue.Doom)
+									enemy.AddDoom(AttackQueue.Doom, src)
 
 								if(AttackQueue.Dunker)
 									if(enemy.Launched)

@@ -736,7 +736,6 @@ mob
 				Return+=stp
 			if(src.isLunaticMode())
 				Return += (10 / 100 * get_potential())
-			Return += GetMangLevel()
 			return Return
 		HasPursuer()
 			var/Return=0
@@ -782,7 +781,7 @@ mob
 			if(src.passive_handler.Get("Determination(Yellow)")||src.passive_handler.Get("Determination(White)"))
 				Return += round(ManaAmount/25, 1)
 			Return += scalingEldritchPower();
-			Return += GetMangLevel()
+			Return += GetMangLevel()*1.5
 			Return=round(Return)
 			Return=min(8,Return)
 			return Return
@@ -1205,7 +1204,7 @@ mob
 				Return += h
 			if(src.isLunaticMode())
 				Return += (5 / 100 * src.get_potential())
-			Return += GetMangLevel()
+			Return += GetMangLevel()*1.25
 			if(passive_handler.Get("Compassion")&&Health<=50)
 				if(Target.Health>Health)
 					Return += 5*clamp((proportionalHealth("Lower")/10),1,4)
@@ -1508,6 +1507,11 @@ mob
 			return 0
 		GetQuickCast()
 			return passive_handler.Get("QuickCast")
+		GetBeamChargeSpeedMult()
+			var/mult = (1+(src.GetKiControlMastery()*0.1))
+			if(src.HasQuickCast())
+				mult *= src.GetQuickCast()
+			return mult
 		HasDualCast()
 			if(passive_handler.Get("DualCast"))
 				return 1
@@ -1737,7 +1741,9 @@ mob
 				return 1
 			return 0
 		GetLifeGeneration()
-			return passive_handler.Get("LifeGeneration")
+			var/LifeGen=passive_handler.Get("LifeGeneration")
+			var/LifeGenValue=0.75+(LifeGen-(LifeGen*0.75))
+			return LifeGenValue
 		HasEnergyGeneration()
 			if(passive_handler.Get("EnergyGeneration"))
 				return 1

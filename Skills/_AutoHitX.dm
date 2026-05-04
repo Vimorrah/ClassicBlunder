@@ -5063,6 +5063,10 @@ mob
 				Z.while_warping = FALSE
 			if(Z.Using)//Skill is on cooldown.
 				return FALSE
+			if(istype(Z, /obj/Skills/AutoHit/I_Want_To_Be_Like_You))
+				if(!src.demonDevilTriggerSinMastery())
+					src << "You cannot access this power yet."
+					return FALSE
 			if(!Z.heavenlyRestrictionIgnore && Secret=="Heavenly Restriction" && secretDatum?:hasRestriction("Autohits"))
 				return FALSE
 			if(!Z.heavenlyRestrictionIgnore && Secret=="Heavenly Restriction" && secretDatum?:hasRestriction("All Skills"))
@@ -6043,6 +6047,7 @@ obj
 			FrenzyDebuff
 			CriticalChance
 			Combustion
+			Doom
 
 			grabNerf = 0
 			BuffAffected = 0
@@ -6208,6 +6213,7 @@ obj
 			src.Stunner=Z.Stunner
 			src.Destructive=Z.Destructive
 			src.Shearing = Z.Shearing
+			src.Doom = Z.Doom
 			src.Bang=Z.Bang
 			src.Bolt=Z.Bolt
 			src.BoltOffset=Z.BoltOffset
@@ -6674,6 +6680,8 @@ obj
 					m.AddCrippling(Crippling, Owner)
 				if(Shearing)
 					m.AddShearing(Shearing, Owner)
+				if(Doom)
+					m.AddDoom(Doom, Owner)
 				if(FrenzyDebuff)
 					m.AddFrenzy(FrenzyDebuff, Owner)
 
@@ -6841,7 +6849,7 @@ obj
 					if(FromSkill.HolyMod) specDmgTypes["Holy"] = FromSkill.HolyMod
 					if(FromSkill.AbyssMod) specDmgTypes["Abyss"] = FromSkill.AbyssMod
 					if(FromSkill.SlayerMod) specDmgTypes["Slayer"] = FromSkill.SlayerMod
-					if(specDmgTypes.len) FinalDmg *= Owner.attackModifiers(m, specDmgTypes)
+					if(specDmgTypes.len) FinalDmg *= 1 + Owner.attackModifiers(m, specDmgTypes)
 				if(src.AngelMagicCompatible && m.passive_handler.Get("Judged"))
 					FinalDmg *= 1.25
 				var/reversalChance = m.GetAutoReversal()
@@ -6878,7 +6886,7 @@ obj
 				else if(src.FixedDamage)
 					var/fixedAmt = src.FixedDamage
 					if(specDmgTypes.len)
-						fixedAmt *= Owner.attackModifiers(m, specDmgTypes)
+						fixedAmt *= 1 + Owner.attackModifiers(m, specDmgTypes)
 					m.LoseHealth(fixedAmt)
 					damageDealt = fixedAmt
 					if(m.Health <= 0 && !m.KO)
