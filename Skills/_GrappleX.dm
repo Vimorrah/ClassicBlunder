@@ -7,6 +7,7 @@ obj/Skills/Grapple
 		DamageMult=1
 		MultiHit=1//hit multiple times durr
 		EnergyDamage=0//do damage to energy+fatigue and heal self mana
+		GrabMaster=1
 
 		StrRate=1
 		ForRate=0
