@@ -736,7 +736,6 @@ mob
 				Return+=stp
 			if(src.isLunaticMode())
 				Return += (10 / 100 * get_potential())
-			Return += GetMangLevel()
 			return Return
 		HasPursuer()
 			var/Return=0
