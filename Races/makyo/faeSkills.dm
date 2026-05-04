@@ -143,15 +143,17 @@
 		ExpandLevel = input(p, "Choose Expand level (max [maxLevel]):", "Expand") in levelList
 
 		var/N = ExpandLevel
+		var/mastered = (N < p.AscensionsAcquired)
 		passives = list(
 			"PureDamage"    =  N,
 			"PureReduction" =  N,
 			"Steady"        =  2 * N,
-			"Inevitable"    =  N,
-			"Flow"          = -N,
-			"Instinct"      = -N,
-			"FluidForm"     = -0.5 * N
+			"Inevitable"    =  N
 		)
+		if(!mastered)
+			passives["Flow"]      = -N
+			passives["Instinct"]  = -N
+			passives["FluidForm"] = -0.5 * N
 		if(N >= 3)
 			passives["GiantForm"]     = 1
 		if(N >= 4)
@@ -160,7 +162,8 @@
 			passives["FatigueImmune"]  = 1
 			passives["DebuffReversal"] = 1
 			passives["Brutalize"]      = 6
-			passives["NoDodge"]        = 1
+			if(!mastered)
+				passives["NoDodge"] = 1
 
 	Trigger(mob/user)
 		. = ..()

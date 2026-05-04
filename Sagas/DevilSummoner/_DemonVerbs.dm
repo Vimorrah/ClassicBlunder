@@ -840,6 +840,8 @@
 				src << "<b>Your demons have been restored.</b>"
 			demon_meditate_healed = TRUE
 			DemonScanLearnable()
+			if(HasTrueDemonPath())
+				onTrueDemonAscended()
 	else
 		demon_meditate_start   = 0
 		demon_meditate_healed  = FALSE
