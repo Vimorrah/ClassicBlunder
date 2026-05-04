@@ -513,7 +513,7 @@ mob/proc/GetPowerUpRatio()
 	if(Secret == "Heavenly Restriction" && secretDatum?:hasImprovement("Power Control"))
 		PowerUp += secretDatum?:getBoon(src, "Power Control")/12
 	if(src.CheckSpecial("Overdrive"))
-		PowerUp+=1
+		PowerUp+=2
 /*	if(src.CyberCancel)
 		if(!isRace(ANDROID))
 			PowerUp-=PowerUp*src.CyberCancel*/
