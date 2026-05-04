@@ -592,13 +592,13 @@ mob
 					if(transActive==4&&transUnlocked>=5&&DoubleHelix>=4)
 						src.race.transformations[5].transform(src, TRUE)
 			if(isMazokuHuman() && src.icon_state != "Meditate")
+				var/ht_trigger_threshold = isMazokuAscension6() ? 40 : 25
 				// ≤75% HP from base form → activate Devil Trigger (slot 6)
 				if(transActive == 0 && Health <= 75 * (1 - HealthCut))
 					if(race && race.transformations && race.transformations.len >= 6)
 						transActive = 5
 						race.transformations[6].transform(src, TRUE)
-				// DT to HT threshold: 40% for Ascension 6, 25% otherwise
-				var/ht_trigger_threshold = isMazokuAscension6() ? 40 : 25
+				// DT to HT drop below threshold
 				if(isInMazokuDT() && Health <= ht_trigger_threshold * (1 - HealthCut))
 					race.transformations[transActive].revert(src)
 					mazokuActivateHighestHT()
@@ -608,6 +608,19 @@ mob
 						mazokuRevertAllHT()
 						transActive = 6
 						race.transformations[7].transform(src, TRUE)
+				// HP rising SEA to HT (Ascension 6 only)
+				if(isMazokuAscension6() && isInMazokuSEA() && Health > 25 * (1 - HealthCut))
+					race.transformations[transActive].revert(src)
+					mazokuActivateHighestHT()
+				// HP rising HT to DT (revert all HT, re-enter Devil Trigger)
+				if(transActive >= 1 && transActive <= 5 && Health > ht_trigger_threshold * (1 - HealthCut))
+					mazokuRevertAllHT()
+					if(race && race.transformations && race.transformations.len >= 6)
+						transActive = 5
+						race.transformations[6].transform(src, TRUE)
+				// HP rising DT to base form
+				if(isInMazokuDT() && Health > 75 * (1 - HealthCut))
+					race.transformations[transActive].revert(src)
 			if((isRace(SAIYAN) || isRace(HALFSAIYAN))&&transActive>0)
 				if(HellspawnBerserk)
 					HellspawnTimer-=1
