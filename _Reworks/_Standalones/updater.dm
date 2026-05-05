@@ -214,7 +214,14 @@ update
 				p.passive_handler.Increase("Fishman", 1);
 				p << "You have been blessed by the space squids of old."
 				p << "Which is to say, you have the Fishman passive now."
-
+	version12
+		version = 12;
+		updateMob(mob/p)
+			. = ..()
+			if(p.isRace(CELESTIAL) && p.CelestialAscension == "Demon")
+				p.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/RoyalGuard)
+				p.AddSkill(new/obj/Skills/AutoHit/RoyalRelease)
+				p << "Things are getting even crazier- You've been granted Royal Guard & Release!"
 
 
 /globalTracker/var/COOL_GAJA_PLAYERS = list("Thorgigamax", "Gemenilove" )

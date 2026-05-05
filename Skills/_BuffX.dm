@@ -589,6 +589,8 @@ NEW VARIABLES
 	var/characterInformation/FakeInformation
 	var/FakeInformationEnabled
 	var/OurFuture
+	var/RoyalMeter
+	var/SuccessfulParry
 	skillDescription()
 		..()
 		if(passives.len>0)
@@ -14235,6 +14237,16 @@ mob
 
 			if(B.FlashChange)
 				animate(src, color = list(1,0,0, 0,1,0, 0,0,1, 1,1,1))
+			if(B.SuccessfulParry)
+				if(B.SuccessfulParry == 2)
+					src << "Guard ended with a successful parry, setting CD to 5."
+					B.Cooldown = 5
+					B.SuccessfulParry = 0
+				else
+					src << "Parry failure, Cooldown set to 60."
+					B.Cooldown = 60
+					B.SuccessfulParry = 0
+
 
 			if(B.StrReplace)
 				src.StrReplace=0

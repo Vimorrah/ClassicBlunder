@@ -128,7 +128,13 @@ mob
 				if(!found)//If you don't find what you're supposed to hunt
 					DEBUGMSG("[src] is attacking a pure target and so value is set to 0")
 					val = 0;
-
+			if(defender && defender.passive_handler["RoyalGuarding"])
+				var/obj/Skills/Buffs/SlotlessBuffs/RoyalGuard/RG = locate(/obj/Skills/Buffs/SlotlessBuffs/RoyalGuard) in defender.contents
+				if(RG)
+					RG.SuccessfulParry = 2
+					RG.RoyalMeter = min(RG.RoyalMeter + (val * glob.ROYAL_GUARD_CHARGE_MULT), 100)
+					val = 0
+					defender.client.updateRGMeter()
 			if(val==0)
 				DEBUGMSG("val is 0 so we're ending dodamage now")
 				return 0;
