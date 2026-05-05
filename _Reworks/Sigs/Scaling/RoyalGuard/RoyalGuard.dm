@@ -18,13 +18,13 @@
 			src.Trigger(usr)
 /obj/Skills/AutoHit
 	RoyalRelease
-		Distance=15
-		WindUp=0.5
+		Distance=12
+		WindUp=0.75
 		WindupMessage="gathers all the stored power into a brutal strike..."
 		DamageMult=1
 		StrOffense=1
 		ActiveMessage="releases all gathered might into a single blow!"
-		Area="Target"
+		Area="Circle"
 		GuardBreak=1
 		HitSparkX=-14
 		HitSparkY=-12
