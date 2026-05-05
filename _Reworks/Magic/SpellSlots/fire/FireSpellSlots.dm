@@ -5,7 +5,7 @@
 	MagicNeeded=1
 	Blazing_Whip
 		ElementalOffense="Fire"
-		Area="Wave"
+		Area="Arc"
 		Distance=5
 		DamageMult=4
 		Scorching=2
@@ -46,6 +46,7 @@
 		Scorching=1
 		Knockback=2
 		Speed=0
+		Piercing=1
 		Stream=2
 		AccMult=1.1
 		MultiTrail = 1
