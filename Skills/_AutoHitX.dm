@@ -5047,7 +5047,7 @@ obj
 
 mob
 	proc
-		Activate(var/obj/Skills/AutoHit/Z, ignoreCuck = FALSE)
+		Activate(var/obj/Skills/AutoHit/Z, ignoreCuck = FALSE, ignoreAttackLock = FALSE)
 			set waitfor = FALSE
 			. = TRUE
 			if(HeldSkillBlocksAction(Z)) return FALSE
@@ -5075,7 +5075,7 @@ mob
 				return FALSE
 			if(!Z.heavenlyRestrictionIgnore && Z.UnarmedOnly && Secret=="Heavenly Restriction" && secretDatum?:hasRestriction("Unarmed Skills"))
 				return FALSE
-			if(!src.CanAttack(1.5)&&!Z.NoAttackLock)
+			if(!ignoreAttackLock && !src.CanAttack(1.5)&&!Z.NoAttackLock)
 				return FALSE
 			if(Flying)
 				var/obj/Items/check = EquippedFlyingDevice()
