@@ -75,6 +75,7 @@ obj
 				ChargeTime//How much time it takes to move.
 				ChargeFlight//superman tackle
 				WindUp//Charge for this number of seconds.
+				IgnoreWindUpReduction=0// keeps WindUp fixed and ignores reduction effects
 				Slow//Makes it so that there is a pause in the movement of autohitters (The technique does not instantly hit all of its related tiles)
 				ApplySlow = 0
 				Icon//Displays icon when used.
@@ -354,8 +355,8 @@ obj
 				NoAttackLock=1
 				StrOffense=1
 				DamageMult = T2_DMG_MULT / 2 / 10;
-				AbyssMod=3
-				HolyMod=3
+				AbyssMod=5
+				HolyMod=5
 				Distance=5
 				DistanceAround=4
 				Rounds=10
@@ -1016,14 +1017,13 @@ obj
 
 			Symbiote_Tendril_Wave
 				Distance=10
-				Knockback=1
-				Slow=1
+				Knockback=5
+				Slow=5
 				Area="Wave"
 				ActiveMessage="bursts out with tendrils of symbiotic matter!"
-				StrOffense = 0.5
-				ForOffense = 0.5
+				StrOffense = 1
 				Cooldown = 60
-				DamageMult= 4
+				DamageMult= 5
 				GuardBreak=1
 				TurfStrike=3
 				HitSparkIcon='Slash - Vampire.dmi'
@@ -1632,7 +1632,7 @@ obj
 				SignatureTechnique=1
 				UnarmedOnly=1
 				FlickAttack=1
-				Area="Strike"
+				Area="Arc"
 				StrOffense=2
 				DamageMult=12
 				GuardBreak=1
@@ -2706,7 +2706,7 @@ obj
 				CanBeDodged=1
 				Distance=20
 				DistanceAround=15
-				DamageMult=0.5
+				DamageMult=2
 				WindUp=2
 				DelayTime=70
 				Rounds=40
@@ -3280,7 +3280,7 @@ obj
 					SignatureName="Holy Magic"
 					Area="Target"
 					Distance=7
-					HolyMod=20
+					HolyMod=5
 					Purity=1
 					DamageMult=18
 					WindUp=1
@@ -3550,7 +3550,7 @@ obj
 				Area="Around Target"
 				AdaptRate=1.5
 				DamageMult=0.5
-				HolyMod=2.5
+				HolyMod=5
 				Distance=5
 				DistanceAround=3
 				EnergyCost=10
@@ -3581,7 +3581,7 @@ obj
 				Area="Around Target"
 				AdaptRate=1.5
 				DamageMult=0.5
-				AbyssMod=2.5
+				AbyssMod=5
 				Distance=5
 				DistanceAround=3
 				EnergyCost=10
@@ -4070,7 +4070,7 @@ obj
 				Area="Circle"
 				GuardBreak=1
 				DamageMult=11
-				HolyMod=20
+				HolyMod=5
 				Distance=6
 				Knockback=10
 				DelayTime=5
@@ -4620,7 +4620,7 @@ obj
 				SpecialAttack=1
 				StrOffense=1
 				DamageMult=7.5
-				HolyMod=10
+				HolyMod=5
 				Distance=5
 				Rush=5
 				RushDelay=2
@@ -4734,7 +4734,7 @@ obj
 				TurfShift='IceGround.dmi'
 				TurfShiftDuration=500
 				DamageMult=10
-				HolyMod=10
+				HolyMod=5
 				Purity=1
 				StrOffense=1
 				ActiveMessage="encases their target in a tomb of soul-infused crystal!  They are forced into perfect stasis!"
@@ -5048,9 +5048,10 @@ obj
 
 mob
 	proc
-		Activate(var/obj/Skills/AutoHit/Z, ignoreCuck = FALSE)
+		Activate(var/obj/Skills/AutoHit/Z, ignoreCuck = FALSE, ignoreAttackLock = FALSE)
 			set waitfor = FALSE
 			. = TRUE
+			if(HeldSkillBlocksAction(Z)) return FALSE
 			if(glob.CUCK_MACROSTRINGS && !ignoreCuck)
 				if(last_autohit + glob.MACROCHECKTIME > world.time)
 					return FALSE
@@ -5063,6 +5064,10 @@ mob
 				Z.while_warping = FALSE
 			if(Z.Using)//Skill is on cooldown.
 				return FALSE
+			if(istype(Z, /obj/Skills/AutoHit/I_Want_To_Be_Like_You))
+				if(!src.demonDevilTriggerSinMastery())
+					src << "You cannot access this power yet."
+					return FALSE
 			if(!Z.heavenlyRestrictionIgnore && Secret=="Heavenly Restriction" && secretDatum?:hasRestriction("Autohits"))
 				return FALSE
 			if(!Z.heavenlyRestrictionIgnore && Secret=="Heavenly Restriction" && secretDatum?:hasRestriction("All Skills"))
@@ -5071,7 +5076,7 @@ mob
 				return FALSE
 			if(!Z.heavenlyRestrictionIgnore && Z.UnarmedOnly && Secret=="Heavenly Restriction" && secretDatum?:hasRestriction("Unarmed Skills"))
 				return FALSE
-			if(!src.CanAttack(1.5)&&!Z.NoAttackLock)
+			if(!ignoreAttackLock && !src.CanAttack(1.5)&&!Z.NoAttackLock)
 				return FALSE
 			if(Flying)
 				var/obj/Items/check = EquippedFlyingDevice()
@@ -5474,7 +5479,7 @@ mob
 									i.loc = null
 									del i
 								src.Frozen=0
-				if(src.HasQuickCast())
+				if(src.HasQuickCast() && !Z.IgnoreWindUpReduction)
 					if(Z.PreQuake)
 						spawn()
 							src.Quake(Second(Z.WindUp/src.GetQuickCast()))
@@ -6043,6 +6048,7 @@ obj
 			FrenzyDebuff
 			CriticalChance
 			Combustion
+			Doom
 
 			grabNerf = 0
 			BuffAffected = 0
@@ -6208,6 +6214,7 @@ obj
 			src.Stunner=Z.Stunner
 			src.Destructive=Z.Destructive
 			src.Shearing = Z.Shearing
+			src.Doom = Z.Doom
 			src.Bang=Z.Bang
 			src.Bolt=Z.Bolt
 			src.BoltOffset=Z.BoltOffset
@@ -6602,30 +6609,6 @@ obj
 
 				if(WearingArmor)//Reduced delay and accuracy
 					Precision*=src.Owner.GetArmorAccuracy(WearingArmor)
-				var/reversalChance = m.GetAutoReversal()
-				if(prob(reversalChance * 100) && currentRounds == 1)
-					if(m.HasAutoReversal())
-						if(!src.SpecialAttack||m.passive_handler.Get("TotalReversal"))
-							if(Accuracy_Formula(src.Owner, m, AccMult=Precision, BaseChance=glob.WorldDefaultAcc, IgnoreNoDodge=1) == (HIT || WHIFF))
-								if(m.hasMagmicShield())
-									Stun(Owner, 3, FALSE);
-									m.MagmicShieldOff();
-								if(src.Damage>0.1)
-									KenShockwave(m, icon='KenShockwave.dmi', Size=dmgRoll, Time=3)
-									m.Knockback(src.Knockback+(reversalChance*2.5) , src.Owner, Direction=get_dir(m, src.Owner))
-								m.DoDamage(src.Owner, (FinalDmg/5), UnarmedAttack=src.UnarmedTech, SwordAttack=src.SwordTech, SpiritAttack=src.SpecialAttack, Autohit = TRUE)
-								if(src.Bang)
-									Bang(src.Owner.loc, src.Bang)
-								if(src.Scratch)
-									Scratch(src.Owner)
-								if(src.Bolt)
-									LightningBolt(src.Owner, src.Bolt, src.BoltOffset)
-								if(src.Punt)
-									Hit_Effect(src.Owner, Size=src.Punt)
-								src.Owner.HitEffect(src.Owner, src.UnarmedTech, src.SwordTech)
-								OMsg(m, "[m] redirected the force of the attack back at [src.Owner]!")
-								m << "You redirected the force of the attack back at [src.Owner]!"
-								return
 
 				if(src.CanBeBlocked||m.passive_handler.Get("YataNoKagami")||m.passive_handler.Get("The Crownless King"))
 					if(Accuracy_Formula(src.Owner, m, AccMult=Precision, BaseChance=glob.WorldDefaultAcc, IgnoreNoDodge=0) == WHIFF)
@@ -6698,6 +6681,8 @@ obj
 					m.AddCrippling(Crippling, Owner)
 				if(Shearing)
 					m.AddShearing(Shearing, Owner)
+				if(Doom)
+					m.AddDoom(Doom, Owner)
 				if(FrenzyDebuff)
 					m.AddFrenzy(FrenzyDebuff, Owner)
 
@@ -6844,14 +6829,67 @@ obj
 					spawn()
 						LaunchEnd(m)
 				DEBUGMSG("FINAL TOTAL DAMAGE DEALT before do damage! [FinalDmg]")
+				var/skipPureDamage = 0
+				if(Owner && FromSkill)
+					if(Owner.HasPurity()||FromSkill.Purity)
+						var/found=0
+						if(Owner.HasBeyondPurity()||FromSkill.BeyondPurity)
+							if(Owner.HasHolyMod()||FromSkill.HolyMod)
+								if(m.IsGood())
+									found=1
+							if(found)
+								skipPureDamage = 1
+						else
+							if(Owner.HasHolyMod()||FromSkill.HolyMod)
+								if(m.IsEvil())
+									found=1
+							if(!found)
+								skipPureDamage = 1
+				var/list/specDmgTypes = list()
+				if(!skipPureDamage && Owner && FromSkill)
+					if(FromSkill.HolyMod) specDmgTypes["Holy"] = FromSkill.HolyMod
+					if(FromSkill.AbyssMod) specDmgTypes["Abyss"] = FromSkill.AbyssMod
+					if(FromSkill.SlayerMod) specDmgTypes["Slayer"] = FromSkill.SlayerMod
+					if(specDmgTypes.len) FinalDmg *= 1 + Owner.attackModifiers(m, specDmgTypes)
 				if(src.AngelMagicCompatible && m.passive_handler.Get("Judged"))
 					FinalDmg *= 1.25
+				var/reversalChance = m.GetAutoReversal()
+				if(prob(min(reversalChance * 100, 100)))
+					if(m.HasAutoReversal())
+						if(!src.SpecialAttack||m.passive_handler.Get("TotalReversal"))
+							var/reversalAcc = Accuracy_Formula(src.Owner, m, AccMult=Precision, BaseChance=glob.WorldDefaultAcc, IgnoreNoDodge=1)
+							if(reversalAcc == HIT || reversalAcc == WHIFF)
+								if(m.hasMagmicShield())
+									Stun(Owner, 3, FALSE);
+									m.MagmicShieldOff();
+								if(src.Damage>0.1)
+									KenShockwave(m, icon='KenShockwave.dmi', Size=dmgRoll, Time=3)
+									m.Knockback(src.Knockback+(reversalChance*2.5) , src.Owner, Direction=get_dir(m, src.Owner))
+								var/reversalDmg = FinalDmg * glob.AUTOHIT_REVERSAL_DAMAGE_FRAC / max(1, src.parentRounds)
+								m.DoDamage(src.Owner, reversalDmg, UnarmedAttack=src.UnarmedTech, SwordAttack=src.SwordTech, SpiritAttack=src.SpecialAttack, Autohit = TRUE)
+								if(src.Bang)
+									Bang(src.Owner.loc, src.Bang)
+								if(src.Scratch)
+									Scratch(src.Owner)
+								if(src.Bolt)
+									LightningBolt(src.Owner, src.Bolt, src.BoltOffset)
+								if(src.Punt)
+									Hit_Effect(src.Owner, Size=src.Punt)
+								src.Owner.HitEffect(src.Owner, src.UnarmedTech, src.SwordTech)
+								OMsg(m, "[m] redirected the force of the attack back at [src.Owner]!")
+								m << "You redirected the force of the attack back at [src.Owner]!"
+								return
 				if(src.DirectWounds)
 					src.Owner.DealWounds(m, src.DirectWounds);
 				var/damageDealt
-				if(src.FixedDamage)
-					m.LoseHealth(src.FixedDamage)
-					damageDealt = src.FixedDamage
+				if(skipPureDamage)
+					damageDealt = 0
+				else if(src.FixedDamage)
+					var/fixedAmt = src.FixedDamage
+					if(specDmgTypes.len)
+						fixedAmt *= 1 + Owner.attackModifiers(m, specDmgTypes)
+					m.LoseHealth(fixedAmt)
+					damageDealt = fixedAmt
 					if(m.Health <= 0 && !m.KO)
 						m.Unconscious(src.Owner)
 				else
@@ -6879,7 +6917,7 @@ obj
 					m.LoseMana(ManaDrain)
 					src.Owner.HealMana(ManaDrain)
 
-				if(CorruptionGain)
+				if(CorruptionGain && !skipPureDamage)
 					Owner.gainCorruption((FinalDmg * 2) * glob.CORRUPTION_GAIN)
 				if(src.ApplyJudged)
 					m.applyJudged(120)
@@ -6917,7 +6955,7 @@ obj
 							src.Owner.Knockback(src.Knockback, m, Direction=src.Owner.dir, Forced=1, override_speed=delay)
 					else
 						if(src.UnarmedTech)
-							KenShockwave(m, Size=min((src.Knockback+src.Owner.Intimidation/50)*max(2*(!src.Owner.HasNullTarget() ? src.Owner.GetGodKi() : 0),1)*GoCrand(0.04,0.4),0.2),PixelX=pick(-12,-8,8,12),PixelY=pick(-12,-8,8,12))
+							KenShockwave(m, Size=min(src.Knockback*max(2*(!src.Owner.HasNullTarget() ? src.Owner.GetGodKi() : 0),1)*GoCrand(0.04,0.4),0.2),PixelX=pick(-12,-8,8,12),PixelY=pick(-12,-8,8,12))
 						if(m!=src.Owner.Grab)
 							src.Owner.Knockback(src.Knockback+extraKnock, m, get_dir(src.Owner, m), extraKnock)
 

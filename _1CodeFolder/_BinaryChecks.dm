@@ -736,7 +736,6 @@ mob
 				Return+=stp
 			if(src.isLunaticMode())
 				Return += (10 / 100 * get_potential())
-			Return += GetMangLevel()
 			return Return
 		HasPursuer()
 			var/Return=0
@@ -782,7 +781,7 @@ mob
 			if(src.passive_handler.Get("Determination(Yellow)")||src.passive_handler.Get("Determination(White)"))
 				Return += round(ManaAmount/25, 1)
 			Return += scalingEldritchPower();
-			Return += GetMangLevel()
+			Return += GetMangLevel()*1.5
 			Return=round(Return)
 			Return=min(8,Return)
 			return Return
@@ -888,7 +887,9 @@ mob
 			if(Target) if(Target.HasNull() && !HasMaouKi()) return 1;
 			return 0;
 		HasBleedHit()
-			if(passive_handler.Get("Full Manifestation"))
+			if(passive_handler.Get("Half Manifestation")&&AscensionsAcquired<3)
+				return 1
+			if(passive_handler.Get("Full Manifestation")&&AscensionsAcquired<5)
 				return 1
 			if(passive_handler.Get("BleedHit"))
 				return 1
@@ -908,8 +909,10 @@ mob
 			var/Return=0
 			var/kkmast=0
 			Return+=passive_handler.Get("BleedHit")
-			if(passive_handler.Get("Full Manifestation")&&AscensionsAcquired<4)
-				Return += (5-AscensionsAcquired)*0.2
+			if(passive_handler.Get("Half Manifestation")&&AscensionsAcquired<3)
+				Return += (4-AscensionsAcquired)*0.1
+			if(passive_handler.Get("Full Manifestation")&&AscensionsAcquired<5)
+				Return += (6-AscensionsAcquired)*0.3
 			if(src.Kaioken)
 				for(var/obj/Skills/Buffs/SpecialBuffs/Kaioken/kk in src.Buffs)
 					kkmast=kk.Mastery
@@ -958,6 +961,8 @@ mob
 					return 1
 			if(src.DoubleHelix>=1)
 				return 1
+			if(passive_handler.Get("Half Manifestation")&&AscensionsAcquired<3)
+				return 1
 			if(passive_handler.Get("Full Manifestation")&&AscensionsAcquired<5)
 				return 1
 			return 0
@@ -986,6 +991,8 @@ mob
 				Total = 0
 			if(src.DoubleHelix<1&&passive_handler.Get("DoubleHelix"))
 				Total = 0
+			if(passive_handler.Get("Half Manifestation")&&AscensionsAcquired<3)
+				Total += (3-AscensionsAcquired)*0.15
 			if(passive_handler.Get("Full Manifestation")&&AscensionsAcquired<5)
 				Total += (5-AscensionsAcquired)*0.5
 			return Total
@@ -997,6 +1004,8 @@ mob
 			if(src.GatesActive && src.GatesActive < 8)
 				return 1
 			if(src.DoubleHelix>=1)
+				return 1
+			if(passive_handler.Get("Half Manifestation")&&AscensionsAcquired<3)
 				return 1
 			if(passive_handler.Get("Full Manifestation")&&AscensionsAcquired<5)
 				return 1
@@ -1021,8 +1030,10 @@ mob
 				Total*=PrideDrain
 			if(src.DoubleHelix<1&&passive_handler.Get("DoubleHelix"))
 				Total = 0
+			if(passive_handler.Get("Half Manifestation")&&AscensionsAcquired<3)
+				Total += (3-AscensionsAcquired)*0.1
 			if(passive_handler.Get("Full Manifestation")&&AscensionsAcquired<5)
-				Total += (5-AscensionsAcquired)*0.2
+				Total += (5-AscensionsAcquired)*0.3
 			return Total
 		HasSoftStyle()
 			if(passive_handler.Get("SoftStyle"))
@@ -1193,7 +1204,7 @@ mob
 				Return += h
 			if(src.isLunaticMode())
 				Return += (5 / 100 * src.get_potential())
-			Return += GetMangLevel()
+			Return += GetMangLevel()*1.25
 			if(passive_handler.Get("Compassion")&&Health<=50)
 				if(Target.Health>Health)
 					Return += 5*clamp((proportionalHealth("Lower")/10),1,4)
@@ -1496,6 +1507,11 @@ mob
 			return 0
 		GetQuickCast()
 			return passive_handler.Get("QuickCast")
+		GetBeamChargeSpeedMult()
+			var/mult = (1+(src.GetKiControlMastery()*0.1))
+			if(src.HasQuickCast())
+				mult *= src.GetQuickCast()
+			return mult
 		HasDualCast()
 			if(passive_handler.Get("DualCast"))
 				return 1
@@ -1725,7 +1741,9 @@ mob
 				return 1
 			return 0
 		GetLifeGeneration()
-			return passive_handler.Get("LifeGeneration")
+			var/LifeGen=passive_handler.Get("LifeGeneration")
+			var/LifeGenValue=0.75+(LifeGen-(LifeGen*0.75))
+			return LifeGenValue
 		HasEnergyGeneration()
 			if(passive_handler.Get("EnergyGeneration"))
 				return 1
@@ -2059,7 +2077,10 @@ mob
 						if(Target.GetGodKi() > Total)
 							Total=Target.GetGodKi()*src.GodKiCopyValue()
 						else
-							Total+=(Potential/100)*src.GodKiCopyValue()
+							if(src.passive_handler.Get("AbsoluteDespair"))
+								Total+=0.1
+							else
+								Total+=(Potential/100)*src.GodKiCopyValue()
 					else
 						Total+=(Potential/100)*src.GodKiCopyValue()
 			if(passive_handler.Get("GodCloth"))
@@ -2080,6 +2101,8 @@ mob
 				Total+=3
 			return Total
 		HasGodKiCopy()
+			if(passive_handler.Get("AbsoluteDespair"))
+				return 1
 			if(passive_handler.Get("CreateTheHeavens")&&isRace(HUMAN))
 				return 1
 			if(passive_handler.Get("Hidden Potential")||passive_handler.Get("Orange Namekian"))
@@ -2090,6 +2113,8 @@ mob
 			return 0
 		GodKiCopyValue()//multiplicative
 			var/Total=0
+			if(passive_handler.Get("AbsoluteDespair"))
+				Total=1.1
 			if(passive_handler.Get("CreateTheHeavens")&& !HasGodKiBuff()&&isRace(HUMAN))
 				Total=1
 			if(passive_handler.Get("Hidden Potential"))
@@ -2336,7 +2361,7 @@ globalTracker/var/
 	SLAYER_DAMAGE_MIN = -10;
 	SLAYER_DAMAGE_MAX = 10;
 	SLAYER_SPEC_MULT = 1.5;
-#define VALID_FAVORED_PREY list("All", "Mortal", "Depths", "Beyond", "Secret", "Saga")
+#define VALID_FAVORED_PREY list("All", "Mortal", "Depths", "Beyond", "Secret", "Saga","Transformations", "ckey","Gender")
 #define DEPTHS_RACES list(ELDRITCH, DEMON)
 #define BEYOND_RACES DEPTHS_RACES+list(MAKAIOSHIN, ANGEL, POPO)
 #define INHERENT_SECRET list(ELDRITCH, ANGEL)
@@ -2357,6 +2382,8 @@ mob
 			switch(preyType)//no check for "All" because it will always be valid if there is an enemy
 				if("Secret") if(!enemy.Secret || (enemy.race.type in INHERENT_SECRET)) invalid++;
 				if("Saga") if(!enemy.Saga) invalid++;
+				if("Transformations") if(!enemy.transActive) invalid++
+				if("Gender") if(enemy.Gender=="Male"||enemy.Gender=="Political") invalid++
 				if("Mortal") if((enemy.race.type in DEPTHS_RACES) || (enemy.race.type in BEYOND_RACES)) invalid++;
 				if("Depths") if(!(enemy.race.type in DEPTHS_RACES)) invalid++;
 				if("Beyond") if(!(enemy.race.type in BEYOND_RACES)) invalid++;
@@ -2365,6 +2392,9 @@ mob
 			var/slayer = passive_handler.Get("SlayerMod");
 			var/prey = passive_handler.Get("FavoredPrey");
 			if(!enemy) return 0;
+			// value applies even without passive SlayerMod.
+			if(forced && !slayer)
+				return clamp(forced, glob.SLAYER_DAMAGE_MIN, glob.SLAYER_DAMAGE_MAX);
 			if(!slayer) return 0;
 			if(!prey)
 				liveDebugMsg("[src]([src.key]) has SlayerMod marked with no FavoredPrey.");
@@ -2377,6 +2407,17 @@ mob
 			if (. > 0)
 				if(enemy.UsingMuken()) . *= (-1);
 			if(forced) . = forced;
+			if(passive_handler.Get("FavoredPrey") == "Transformations")
+				if(. < 2)
+					. = 2
+			if(passive_handler.Get("FavoredPrey") == "ckey")
+				if(enemy.ckey==passive_handler.Get("That One Grudge From Ten Years Ago You Can't Let Go Like Come On Dude Move On With Your Fucking Life"))
+					if(. < 5000)
+						. = 5000
+			if(passive_handler.Get("FavoredPrey") == "Gender")
+				. = 0 //All of your violence is structural. You have no power outside of the system that gives it to you.
+			if(passive_handler.Get("FavoredPrey") == "Secret" && Secret)
+				. /= 4
 			. = clamp(., glob.SLAYER_DAMAGE_MIN, glob.SLAYER_DAMAGE_MAX);
 //----------------------------------------------------------------------
 
@@ -2443,7 +2484,7 @@ mob
 		GetErosion()
 			return passive_handler.Get("Erosion")
 		HasMirrorStats()
-			if(passive_handler.Get("MirrorStats"))
+			if(passive_handler.Get("MirrorStats")||passive_handler.Get("Absolute Despair"))
 				return 1
 			return 0
 		HasManaPU()

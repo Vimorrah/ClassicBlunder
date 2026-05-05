@@ -262,7 +262,7 @@ mob/proc/Unconscious(mob/P,var/text)
 				P.Health+=HealthRecovery/2
 				src.HealthAnnounce10+=1
 				return
-	if(src.race in list(HUMAN, CELESTIAL) && !src.isMazokuHuman())
+	if(src.race in list(HUMAN, CELESTIAL) && !src.isMazokuPathHuman())
 		if(src.transActive==1&&src.transUnlocked>=2)
 			src.KO=0
 			src.OMessage(15, "...<b>but [src] evolves one final time, pushing out every last bit of their potential!!!!</b>", "<font color=red>[src]([src.key]) activates Unlimited High Tension!!!")
@@ -318,6 +318,7 @@ mob/proc/Unconscious(mob/P,var/text)
 	src.Health=1
 	src.Energy=1
 	src.PowerControl=100
+	src.ClearFrenzyOnKO()
 	src.Burn=0
 	src.AfterImageStrike=0
 	src.VaizardHealth=0
@@ -325,6 +326,11 @@ mob/proc/Unconscious(mob/P,var/text)
 	src.ForceCancelBuster()
 	if(src.passive_handler.Get("Triple Helix"))
 		src.passive_handler.Set("Triple Helix", 0)
+	var/obj/Skills/Buffs/SlotlessBuffs/RoyalGuard/RG = locate(/obj/Skills/Buffs/SlotlessBuffs/RoyalGuard) in src.contents
+	if(RG && RG.RoyalMeter > 0)
+		RG.RoyalMeter = 0
+		src << "Your Royal Meter went back to 0."
+		src.client.updateRGMeter()
 
 	if(Secret == "Zombie")
 		if(HealthCut + 0.1 < 1 && zombieGetUps + 1 <= AscensionsAcquired)
@@ -683,6 +689,7 @@ mob/proc/Death(mob/P,var/text,var/SuperDead=0, var/NoRemains=0, var/Zombie, extr
 		if(src.NoDeath)
 			if(src.HealthCut<0.5&&!SuperDead)
 				src.KO=1
+				src.ClearFrenzyOnKO()
 				src.Stasis=2000
 				src.icon_state="KO"
 				if(passive_handler.Get("VenomBlood"))
@@ -1660,6 +1667,12 @@ proc/Accuracy_Formula(mob/Offender,mob/Defender,AccMult=1,BaseChance=glob.WorldD
 			GodKiDif = 1 + Offender.GetGodKi()
 		if(Defender.GetGodKi() && !Defender.HasNullTarget())
 			GodKiDif /= (1 + Defender.GetGodKi())
+		if(Defender.passive_handler.Get("Justice"))
+			if(Offender.GetGodKi()>Defender.GetGodKi())
+				GodKiDif=1
+		if(Offender.passive_handler.Get("Justice"))
+			if(Defender.GetGodKi()>Offender.GetGodKi())
+				GodKiDif=1
 		AccMult *= GodKiDif
 
 		// START OF REAL FUNCTION
@@ -1677,6 +1690,14 @@ proc/Accuracy_Formula(mob/Offender,mob/Defender,AccMult=1,BaseChance=glob.WorldD
 				OffenseAdvantage = clamp(OffenseAdvantage,glob.MIN_POWER_DIFF, glob.MAX_POWER_DIFF)
 			if(!Defender.ignoresPowerClamp())
 				DefenseAdvantage = clamp(DefenseAdvantage,glob.MIN_POWER_DIFF, glob.MAX_POWER_DIFF)
+		if(Offender.passive_handler.Get("Justice"))
+			if(DefenseAdvantage>OffenseAdvantage)
+				DefenseAdvantage=1
+				OffenseAdvantage=1
+		if(Defender.passive_handler.Get("Justice"))
+			if(OffenseAdvantage>DefenseAdvantage)
+				DefenseAdvantage=1
+				OffenseAdvantage=1
 
 		if(glob.JORDAN_ACCURACY)
 			// trying to make it less complex for the very roughly same result
@@ -1888,7 +1909,7 @@ mob/proc/SpeedDelay(var/Modifier=1)
 	var/Spd=src.GetSpd()**glob.ATTACK_DELAY_EXPONENT
 	var/Delay=glob.ATTACK_DELAY_DIVISOR/Spd
 	if(passive_handler["Speed Force"])
-		Delay = glob.ATTACK_DELAY_DIVISOR/(GetSpd()**2)
+		Delay = glob.ATTACK_DELAY_DIVISOR/(GetSpd()*2)
 	// Inevitable (Makyo)
 	Delay += passive_handler.Get("Inevitable")
 	if(Delay>=glob.ATTACK_DELAY_MAX)
@@ -2139,7 +2160,6 @@ mob/proc/Grab_Mob(var/mob/P, var/Forced=0)
 	if(HasGiantForm()) return 0;
 	if(HasMythical()>=1) return 0;
 	if(passive_handler.Get("Fishman")) return 0;
-	if(hasEldritchRacial()) return 0;
 	return 1;
 
 

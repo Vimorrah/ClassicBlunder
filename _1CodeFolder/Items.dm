@@ -96,6 +96,7 @@ obj/Items
 	var/UnderlayIcon
 	var/UnderlayX
 	var/UnderlayY
+	var/UnderlayStack=0
 
 	var/InternalTimer
 
@@ -241,6 +242,16 @@ obj/Items
 				src.LayerPriority=0
 		if(Equipped)
 			src.ObjectUse(usr)
+
+	proc/ItemUnderlayMobImage()
+		if(!UnderlayIcon) return null
+		var/ul = UnderlayStack
+		if(ul < 0) ul = 0
+		if(ul > 1000) ul = 1000
+		var/ly = 0.99 - 0.98 * (ul / 1000)
+		if(ly < 0.01) ly = 0.01
+		. = image(icon=UnderlayIcon, pixel_x=UnderlayX, pixel_y=UnderlayY, layer=ly)
+		return
 
 	proc/Drop()
 		if(src.PermEquip)
@@ -1382,8 +1393,8 @@ obj/Items/proc/UnEquip(mob/A)
 			A.overlays-=im2
 		A.overlays-=im
 	if(src.UnderlayIcon)
-		var/image/im=image(icon=src.UnderlayIcon, pixel_x=src.UnderlayX, pixel_y=src.UnderlayY)
-		A.underlays-=im
+		var/image/im = src.ItemUnderlayMobImage()
+		if(im) A.underlays -= im
 
 
 obj/Items/proc/Equip(mob/A)
@@ -1484,8 +1495,8 @@ obj/Items/proc/Equip(mob/A)
 				im.appearance_flags += 512
 		A.overlays+=im
 	if(src.UnderlayIcon)
-		var/image/im=image(icon=src.UnderlayIcon, pixel_x=src.UnderlayX, pixel_y=src.UnderlayY)
-		A.underlays+=im
+		var/image/im = src.ItemUnderlayMobImage()
+		if(im) A.underlays += im
 	return 1
 
 
@@ -2084,9 +2095,6 @@ obj/Items/proc/ObjectUse(var/mob/Players/User=usr)
 							GearCount++
 					if(GearCount>=1)
 						User << "You can't have any weapons equipped while inside a Mobile Suit!"
-						return
-					if(User.InfinityModule)
-						User << "The radiation of your core unit disrupts the electronics of the Suit!"
 						return
 				if(src.Password)
 					var/Unlocked=0

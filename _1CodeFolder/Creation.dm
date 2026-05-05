@@ -57,8 +57,16 @@ mob/Players
 	Login()
 		winset(usr, null, "browser-options=find")
 		client.perspective=MOB_PERSPECTIVE
+		ForceClearHeldChargeState()
 		players += usr
 		OverwatchNotifyLogin(usr, "logged in")
+		// StyleRating decay runs in spawn(); the loop dies on disconnect and
+		// leaves the persistent StyleRating var stuck above zero on the next
+		// login, with Stylish multipliers locked in and no decay timer to
+		// retire them. Wipe any leftover rating now so reconnects start clean.
+		if(StyleRating > 0)
+			resetStyleRating()
+		StyleRatingDecaying = FALSE
 		usr.density=1
 		usr.client.view=8
 		if(in_tmp_map)
@@ -105,6 +113,8 @@ mob/Players
 		if(src.isRace(/race/demi_fiend))
 			if(!(/mob/proc/CraftMagatama in src.verbs))
 				src.verbs += /mob/proc/CraftMagatama
+
+		EvictFiendsIfUnauthorized()
 
 		addMissingSkills()
 		if(glob.TESTER_MODE)
@@ -365,6 +375,7 @@ mob/Players
 			src.client.view=ScreenSize
 
 		client.fps=src.ChosenFPS
+		client.updateRGMeter()
 		if(usr.SenseRobbed>=5)
 			animate(usr.client, color = list(-1,0,0, 0,-1,0, 0,0,-1, 1,1,1))
 
@@ -471,6 +482,7 @@ mob/Players
 		MajinAbsorbOnLogin()
 		return
 	Logout()
+		ForceClearHeldChargeState()
 		MajinAbsorbOnLogout()
 		DevilSummonerLogout()
 		OverwatchNotifyLogin(src, "logged out")
@@ -992,7 +1004,7 @@ client
 				mob.gajaConversionCheck()
 				switch(mob.Secret)
 					if("Vampire")
-						mob.vampireBlood = new(mob, 6,70)
+						mob.vampireBlood = new(mob, 6, 184)
 				if(mob:assigningStats)
 					mob.Redo_Stats()
 				if(mob.updateVersion && mob.updateVersion.version != glob.UPDATE_VERSION)

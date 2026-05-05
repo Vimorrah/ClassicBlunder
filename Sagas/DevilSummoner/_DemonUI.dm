@@ -129,31 +129,39 @@
 					too_high = TRUE
 					valid = FALSE
 
+			var/td_locked = FALSE
+			if(result && !is_element && !IsFusionResultAllowed(result))
+				td_locked = TRUE
+				valid = FALSE
+
 			var/in_party = FALSE
 			if(result && !is_element && DemonInParty(result))
 				in_party = TRUE
 				valid = FALSE
 
 			pairs += list(list(
-				"a"        = pd_a.demon_name,
-				"b"        = pd_b.demon_name,
-				"result"   = result,
-				"valid"    = valid,
-				"element"  = is_element,
-				"too_high" = too_high,
-				"in_party" = in_party
+				"a"            = pd_a.demon_name,
+				"b"            = pd_b.demon_name,
+				"result"       = result,
+				"valid"        = valid,
+				"element"      = is_element,
+				"too_high"     = too_high,
+				"td_locked" = td_locked,
+				"in_party"     = in_party
 			))
 
 	var/list/valid_pairs    = list()
 	var/list/high_pairs     = list()
+	var/list/td_pairs       = list()
 	var/list/inparty_pairs  = list()
 	var/list/invalid_pairs  = list()
 	for(var/entry in pairs)
-		if(entry["valid"])         valid_pairs   += list(entry)
-		else if(entry["too_high"]) high_pairs    += list(entry)
-		else if(entry["in_party"]) inparty_pairs += list(entry)
-		else                       invalid_pairs += list(entry)
-	pairs = valid_pairs + high_pairs + inparty_pairs + invalid_pairs
+		if(entry["valid"])             valid_pairs   += list(entry)
+		else if(entry["too_high"])     high_pairs    += list(entry)
+		else if(entry["td_locked"])    td_pairs      += list(entry)
+		else if(entry["in_party"])     inparty_pairs += list(entry)
+		else                           invalid_pairs += list(entry)
+	pairs = valid_pairs + high_pairs + td_pairs + inparty_pairs + invalid_pairs
 
 	demon_fusion_page = max(1, min(demon_fusion_page, ceil(pairs.len / 5)))
 
@@ -191,13 +199,14 @@
 
 	for(var/i = page_start, i <= page_end, i++)
 		var/list/pair = pairs[i]
-		var/name_a   = pair["a"]
-		var/name_b   = pair["b"]
-		var/result   = pair["result"]
-		var/valid    = pair["valid"]
-		var/element  = pair["element"]
-		var/too_high = pair["too_high"]
-		var/in_party = pair["in_party"]
+		var/name_a       = pair["a"]
+		var/name_b       = pair["b"]
+		var/result       = pair["result"]
+		var/valid        = pair["valid"]
+		var/element      = pair["element"]
+		var/too_high     = pair["too_high"]
+		var/td_locked = pair["td_locked"]
+		var/in_party     = pair["in_party"]
 
 		var/datum/demon_data/da = DEMON_DB[name_a]
 		var/datum/demon_data/db = DEMON_DB[name_b]
@@ -245,6 +254,14 @@
 			if(dr) html += "<span style='color:#444444;'>[dr.demon_race] Lv[dr.demon_lvl]</span>"
 			html += "</div></div>"
 			html += "<a class='fuseBtn' style='background:#1a0a0a;color:#884444;border:1px solid #663333;' href='byond://?src=\ref[world];demon_fuse_a=[name_a];demon_fuse_b=[name_b]'>FUSE</a>"
+		else if(td_locked && result)
+			var/datum/demon_data/dr = DEMON_DB[result]
+			html += "<div>"
+			html += SilhouettePortraitHTML(dr, 32)
+			html += "<div class='dname' style='color:#5a3030;' title='Requires the True Demon path'>???<br>"
+			if(dr) html += "<span style='color:#7a4040;'>[dr.demon_race]</span>"
+			html += "</div></div>"
+			html += "<div class='fuseBtn' style='background:#1a0a0a;color:#a04040;border:1px solid #663333;cursor:default;' title='Requires the True Demon path'>True Demon</div>"
 		else if(in_party && result)
 			// Result demon is already in the party -- can't have duplicates.
 			var/datum/demon_data/dr = DEMON_DB[result]

@@ -30,7 +30,7 @@
 	SpellElement="Water"
 	SpellSlot=1
 	Riptide
-		ElementalOffense="Water"
+		ElementalClass="Water"
 		Area="Target"
 		Distance=5
 		DamageMult=5
@@ -63,7 +63,7 @@
 	SpellElement="Water"
 	SpellSlot=1
 	Frost_Shamshir
-		ElementalOffense="Water"
+		ElementalClass="Water"
 		DamageMult=4
 		AccMult=1.1
 		Freezing=2

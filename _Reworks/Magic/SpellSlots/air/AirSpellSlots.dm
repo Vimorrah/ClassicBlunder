@@ -4,7 +4,7 @@
 	SpellSlot=1
 	MagicNeeded=1
 	Breaking_Twister
-		ElementalOffense="Wind"
+		ElementalClass="Wind"
 		Area="Circle"
 		Distance=5
 		DamageMult=3
@@ -64,7 +64,7 @@
 	SpellElement="Air"
 	SpellSlot=1
 	Mentis_Imperium
-		ElementalOffense="Wind"
+		ElementalClass="Wind"
 		DamageMult=4
 		Paralyzing=4
 		Speed=0.5

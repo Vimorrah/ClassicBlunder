@@ -591,6 +591,9 @@ obj/Skills
 				if(src.FocalSummon)
 					OMsg(User, "[User] [src.TeleportMessage]")
 				else
+					if(src.NoPassengers && User.Grab)
+						User << "You can't use [src] while having someone grabbed!"
+						return
 					OMsg(User, "[User] [src.TeleportMessage]")
 					if(!src.NoPassengers)
 						for(var/mob/Player/m in view(1, User))

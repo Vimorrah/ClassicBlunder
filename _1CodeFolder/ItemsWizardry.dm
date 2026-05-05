@@ -421,9 +421,10 @@ obj/Items/Enchantment
 							HerbDictionary["Relaxant Herb"] = 500;
 							HerbDictionary["Numbing Herb"] = 500;
 							HerbDictionary["Mutagenic Herb"] = 150;
-							var/Cost = HerbDictionary[Effect]
+							var/Cost
 							while(Confirm!="Yes")
 								Effect=input(usr, "What effect do you want to add to your potion?", "Add Effect") in Effects
+								Cost = HerbDictionary[Effect]
 								switch(Effect)
 									if("Cancel")
 										src.Using=0

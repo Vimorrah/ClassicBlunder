@@ -17,7 +17,7 @@ proc/generateVersionDatum()
 		glob.currentUpdate = updateversion
 
 globalTracker
-	var/UPDATE_VERSION = 7
+	var/UPDATE_VERSION = 13
 	var/tmp/update/currentUpdate
 
 	proc/updatePlayer(mob/p)
@@ -151,6 +151,99 @@ update
 				if(!locate(/obj/Skills/Utility/Enchant_Equipment, p))
 					p.AddSkill(new/obj/Skills/Utility/Enchant_Equipment)
 					p << "Your knowledge of Soul Infusion grants you the Enchant Equipment skill."
+	version8
+		version = 8;
+		updateMob(mob/p)
+			. = ..()//left alone for mildly challenging copy pasting
+			if(p.Saga=="Hiten Mitsurugi-Ryuu")
+				if(p.SagaLevel>=2)
+					p.passive_handler.Decrease("SlayerMod", 1)
+					p.passive_handler.Increase("Flow", 1)
+					p.passive_handler.Increase("Instinct", 1)
+				if(p.SagaLevel>=3)
+					p.passive_handler.Decrease("SlayerMod", 1)
+					p.passive_handler.Decrease("Brutalize", 2)
+					p.passive_handler.Increase("Flow", 1)
+					p.passive_handler.Increase("Instinct", 1)
+	version9
+		version = 9;
+		updateMob(mob/p)
+			. = ..()
+			if(!p.absorbedBy)
+				return
+			var/absorberCkey = p.absorbedBy
+			var/mob/Players/M = GetMajinByCkey(absorberCkey)
+			if(M && M.majinAbsorb && M.majinAbsorb.absorbed && M.majinAbsorb.absorbed["[p.ckey]"])
+				var/list/entry = M.majinAbsorb.absorbed["[p.ckey]"]
+				if(islist(entry) && !entry["absorbedAt"])
+					entry["mob"] = p
+					M.majinAbsorb.DigestVictim(M, "[p.ckey]")
+					return
+				return
+			if(p.absorbedAtTimestamp)
+				return
+			if(!MAJIN_PENDING_DIGEST_CREDITS["[absorberCkey]"])
+				MAJIN_PENDING_DIGEST_CREDITS["[absorberCkey]"] = list()
+			if(!("[p.ckey]" in MAJIN_PENDING_DIGEST_CREDITS["[absorberCkey]"]))
+				MAJIN_PENDING_DIGEST_CREDITS["[absorberCkey]"] += "[p.ckey]"
+			p.absorbedBy = null
+			p.majinRoomIndex = 0
+			p.absorbedAtTimestamp = 0
+			p.RevokeObserveMajinVerb()
+			MoveToSpawn(p)
+			p.KO = 0
+			p << "<font color='purple'>You've been digested and sent back to spawn.</font>"
+	version10
+		version = 10;
+		updateMob(mob/p)
+			. = ..()//slightly altered for inconvenient copypasting
+			if(p.isRace(MAKYO))
+				if(p.AscensionsAcquired>=1)
+					p.NewAnger(p.AngerMax+0.1)
+				if(p.AscensionsAcquired>=2)
+					p.NewAnger(p.AngerMax+0.1)
+			if(p.isRace(BEASTKIN))
+				if(p.Class=="Feather Cowl"&&p.AscensionsAcquired>=1)
+					if(p.StrAscension<0)
+						p.StrAscension=0
+	version11
+		version = 11;
+		updateMob(mob/p)
+			. = ..()
+			if(p.isRace(ELDRITCH))
+				p.passive_handler.Increase("Fishman", 1);
+				p << "You have been blessed by the space squids of old."
+				p << "Which is to say, you have the Fishman passive now."
+	version12
+		version = 12;
+		updateMob(mob/p)
+			. = ..()
+			if(p.isRace(CELESTIAL) && p.CelestialAscension == "Demon")
+				p.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/RoyalGuard)
+				p.AddSkill(new/obj/Skills/AutoHit/RoyalRelease)
+				p << "Things are getting even crazier- You've been granted Royal Guard & Release!"
+	version13
+		version = 13;
+		updateMob(mob/p)
+			. = ..()
+			if(p.isRace(MAKYO))
+				if(p.AscensionsAcquired >= 1)
+					// Asc 1 stat buffs: Str 0.5->1, End 0->1, Off 0->0.25, Anger 0.1->0.15
+					p.StrAscension += 0.5
+					p.EndAscension += 1
+					p.OffAscension += 0.25
+					p.NewAnger(p.AngerMax + 0.05)
+					// Asc 1 new passive: Adrenaline 1
+					p.passive_handler.Increase("Adrenaline", 1)
+				if(p.AscensionsAcquired >= 2)
+					// Asc 2 stat buffs: Str 0->1.25, End 0.25->1.25, For 0->0.5, Anger 0.1->0.15
+					p.StrAscension += 1.25
+					p.EndAscension += 1
+					p.ForAscension += 0.5
+					p.NewAnger(p.AngerMax + 0.05)
+					// Asc 2 new passive: Adrenaline 2
+					p.passive_handler.Increase("Adrenaline", 2)
+
 
 /globalTracker/var/COOL_GAJA_PLAYERS = list("Thorgigamax", "Gemenilove" )
 /globalTracker/var/GAJA_PER_ASC_CONVERSION = 0.25

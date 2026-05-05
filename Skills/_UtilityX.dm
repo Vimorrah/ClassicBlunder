@@ -687,6 +687,8 @@ obj/Skills/Utility
 					who.Remove(W)
 				if(W.invisibility)
 					who.Remove(W)
+				if(W.isRace(ELDRITCH)||W.isRace(NOBODY))
+					who.Remove(W)
 				if(usr.Dead&&!usr.HasEnlightenment()&&(W.z!=usr.z))
 					who.Remove(W)
 			var/mob/Players/selector=input("Who do you want to observe?","Observe")in who||null
@@ -734,6 +736,7 @@ obj/Skills/Utility
 				Consent=alert(Choice, "Do you want to accept [usr]'s Jagan Eye?", "Jagan Grant", "No", "Yes")
 				if(Consent=="Yes")
 					usr.Maimed++
+					usr.recordMaim(usr, "Jagan Eye Grant")
 					for(var/obj/Skills/Buffs/SlotlessBuffs/Regeneration/r in usr)
 						if(r.RegenerateLimbs)
 							r.RegenerateLimbs=0
@@ -1463,6 +1466,7 @@ obj/Skills/Utility
 					OMsg(usr, "[usr] loses control of their forbidden spell and has a core part of their being claimed by the transmutation!")
 					OMsg(usr, "The magic chaotically lashes out and sends [Choice] hurtling into the void!")
 					usr.Maimed++
+					usr.recordMaim(usr, "Philosopher Stone Backfire")
 					var/obj/Items/Enchantment/PhilosopherStone/Fake/f = new
 					f.SoulStrength = round(Choice.Potential/20,1)
 					f.SoulIdentity = Choice?:UniqueID
@@ -2781,6 +2785,43 @@ obj/Skills/Utility
 		var/Detecting=0
 		var/Range=1
 		desc="A internal communicator. Broadcasts on Scouter frequencies. It can also monitor a frequency you are not actively broadcasting on."
+
+		New()
+			..()
+			registerInternalCommunicator()
+
+		Del()
+			unregisterInternalCommunicator()
+			..()
+
+		proc/registerInternalCommunicator()
+			if(ICFrequency)
+				addToGlobalListenerOnFreq(src, ICFrequency)
+			if(MonitoringFrequency && MonitoringFrequency != ICFrequency)
+				addToGlobalListenerOnFreq(src, MonitoringFrequency)
+
+		proc/unregisterInternalCommunicator()
+			if(ICFrequency)
+				removeFromGlobalListenerOnFreq(src, ICFrequency)
+			if(MonitoringFrequency && MonitoringFrequency != ICFrequency)
+				removeFromGlobalListenerOnFreq(src, MonitoringFrequency)
+
+		recieveBroadcast(msg, freq)
+			if(!ismob(loc)) return
+			var/mob/owner = loc
+			if(!owner.client) return
+			var/label
+			if(freq == ICFrequency)
+				label = "Freq: [ICFrequency]"
+			else if(freq == MonitoringFrequency)
+				label = "Monitor Freq: [MonitoringFrequency]"
+			else
+				return
+			var/formatted = "<font color=green><b>(Internal Comms ([label])):</b>[msg]"
+			owner.client.outputToChat(formatted, IC_OUTPUT)
+			Log(owner.ChatLog(), formatted)
+			Log(owner.sanitizedChatLog(), formatted)
+
 		verb/Toggle_Internal_Scouter()
 			set category="Utility"
 			if(usr.InternalScouter)
@@ -2817,7 +2858,7 @@ obj/Skills/Utility
 						M<<"<font color=green><b>(Internal Comms (Freq: [src.ICFrequency])):</b> [usr.name]: [html_encode(A)]"
 						Log(M.ChatLog(),"<font color=green>(Internal Comms (Freq: [src.ICFrequency]))[usr]([usr.key]): [html_encode(A)]")
 					if(B.MonitoringFrequency==src.ICFrequency)
-						M<<"<font color=green><b>(Internal Comms (Monitor Freq: [src.MonitoringFrequency])):</b> [usr.name]: [html_encode(A)]"
+						M<<"<font color=green><b>(Internal Comms (Monitor Freq: [B.MonitoringFrequency])):</b> [usr.name]: [html_encode(A)]"
 			for(var/obj/Items/Tech/Speaker/X in world)
 				if(X.Frequency==src.ICFrequency&&X.Active==1)
 					for(var/mob/Y in hearers(X.AudioRange,X))
@@ -2848,12 +2889,26 @@ obj/Skills/Utility
 			set category="Utility"
 			set name="Communicator Frequency"
 			set src in usr
-			src.ICFrequency=input(usr,"Change your Internal Communicator frequency to what?","Frequency")as num
+			var/previousFreq = src.ICFrequency
+			var/newFreq = input(usr,"Change your Internal Communicator frequency to what?","Frequency",src.ICFrequency) as num
+			if(previousFreq == newFreq) return
+			if(previousFreq && previousFreq != src.MonitoringFrequency)
+				removeFromGlobalListenerOnFreq(src, previousFreq)
+			src.ICFrequency = newFreq
+			if(newFreq && newFreq != src.MonitoringFrequency)
+				addToGlobalListenerOnFreq(src, newFreq)
 		verb/MonitorFrequency()
 			set category="Utility"
 			set name="Monitoring Frequency"
 			set src in usr
-			src.MonitoringFrequency=input(usr,"Change your Internal Communicator Monitoring frequency to what?","Monitoring Frequency")as num
+			var/previousFreq = src.MonitoringFrequency
+			var/newFreq = input(usr,"Change your Internal Communicator Monitoring frequency to what?","Monitoring Frequency",src.MonitoringFrequency) as num
+			if(previousFreq == newFreq) return
+			if(previousFreq && previousFreq != src.ICFrequency)
+				removeFromGlobalListenerOnFreq(src, previousFreq)
+			src.MonitoringFrequency = newFreq
+			if(newFreq && newFreq != src.ICFrequency)
+				addToGlobalListenerOnFreq(src, newFreq)
 
 		verb/Scan()
 			set src in usr
@@ -3199,7 +3254,7 @@ obj/Skills/Utility
 					ModChoices.Add("Biological Cybernetics")
 			if(M.BioAndroid||M.SuperAndroid)
 				ModChoices.Remove("Biological Cybernetics")
-			if(M.CyberneticMainframe||M.isRace(ANDROID)&&M.Potential<30)
+			if(M.CyberneticMainframe||M.isRace(ANDROID)&&M.Potential<25)
 				ModChoices.Remove("Cybernetic Mainframe")
 
 			ModChoice=input(usr, "What modification would you like to install?", "Cybernetic Augmentation") in ModChoices
@@ -3313,7 +3368,7 @@ obj/Skills/Utility
 					ModDesc="Overdrive allows the augmented to overclock every cybernetically enhanced aspect in exchange for battery life."
 				if("Cybernetic Mainframe")
 					Cost=glob.progress.EconomyCost*300
-					ModDesc="A cybernetic mainframe allows someone to become a complete cyborg, forsaking most of their natural abilities in exchange for opening up more avenues of cybernetic customization."
+					ModDesc="A cybernetic mainframe allows someone to become a complete cyborg, forsaking most of their natural abilities (such as signature skills) in exchange for opening up more avenues of cybernetic customization. For regular Androids, it unlocks a powerful new transformation based on your cybernetic enhancements."
 				if("Biological Cybernetics")
 					Cost=glob.progress.EconomyCost*1000
 					ModDesc="Converts an Android or someone with an enhanced cybernetic mainframe into a Biological Android."
@@ -3566,11 +3621,15 @@ obj/Skills/Utility
 						OMsg(usr, "[usr] tried to install a [ModChoice] into [M]...but they already have a Cybernetic Mainframe.")
 						src.Using=0
 						return
-					M.CyberneticMainframe=1
+					if(!M.isRace(ANDROID))
+						M.CyberneticMainframe=1
 					if(M.isRace(ANDROID))
 						M.SuperAndroid=1
 						M.transUnlocked=1
-						M.race.transformations += new /transformation/android/super_android()
+						if(!M.race.transformations)
+							M.race.transformations = list()
+						if(!(locate(/transformation/android/super_android) in M.race.transformations))
+							M.race.transformations += new /transformation/android/super_android()
 					M.AddSkill(new/obj/Skills/Utility/Cyborg_Integration)
 				if("Repair")
 					M.Maimed=0

@@ -40,7 +40,7 @@
 	SpellElement="Fire"
 	SpellSlot=1
 	Dragon_Arc
-		ElementalOffense="Fire"
+		ElementalClass="Fire"
 		DamageMult=3
 		Radius=1;
 		Scorching=1
@@ -68,7 +68,7 @@
 			usr.UseProjectile(src)
 
 	Fireball
-		ElementalOffense="Fire"
+		ElementalClass="Fire"
 		DamageMult=5
 		Scorching=2
 		Homing=1

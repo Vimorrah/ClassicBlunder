@@ -127,6 +127,16 @@ mob/proc/AppearanceOn()
 			I.suffix = null
 			I.AlignEquip(src)
 
+	if(Imitating)
+		for(var/obj/Skills/Utility/Imitate/Imitation in Skills)
+			if(Imitation.imitating_info && Imitation.imitating_info.clothes.len > 0)
+				for(var/obj/Items/Wearables/clothing in Imitation.imitating_info.clothes)
+					if(clothing)
+						src.contents += clothing
+						clothing.Equip(src)
+						src.contents -= clothing
+						clothing.suffix = null
+
 	if(WarpStrikeHidingWeapon)
 		var/obj/Items/Sword/sword = EquippedSword()
 		var/obj/Items/Enchantment/Staff/staff = EquippedStaff()
@@ -145,6 +155,9 @@ mob/proc/AppearanceOn()
 					im2.transform *= 3
 					im2.appearance_flags += 512
 					overlays -= im2
+			if(weapon.UnderlayIcon)
+				var/image/und = weapon.ItemUnderlayMobImage()
+				if(und) underlays -= und
 
 
 	src.Hairz("Add")

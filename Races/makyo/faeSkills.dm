@@ -16,6 +16,20 @@
 		EndMult=1.5
 		ActiveMessage="ignites the spark of the Makyo Star within them, as its power, once thought lost, shines brightly within them!!!"
 		OffMessage="shrivels up as the power of the star leaves them."
+		adjust(mob/p)
+			var/TaxSub
+			TaxSub=p.AscensionsAcquired*0.1
+			if(TaxSub>0.35)
+				TaxSub=0.35
+			StrTax=0.45-TaxSub
+			ForTax=0.45-TaxSub
+			SpdTax=0.25-TaxSub
+			if(SpdTax<0)
+				SpdTax=0
+			EndTax=0.45-TaxSub
+			OffTax=0.45-TaxSub
+			DefTax=0.45-TaxSub
+			..()
 		verb/Awaken_Star_Power()
 			set category="Skills"
 			src.Trigger(usr)
@@ -38,9 +52,9 @@
 					passives["Pursuer"] = 2 * p.AscensionsAcquired
 				else
 					if(p.AscensionsAcquired)
-						AngerPoint = 5 * p.AscensionsAcquired
+						AngerPoint = 50+ (5 * p.AscensionsAcquired)
 						passives["Pursuer"] = 0.5 * p.AscensionsAcquired
-					AngerMult = round(2/(8-p.AscensionsAcquired), 0.01)
+					AngerMult=1
 			..()
 /obj/Skills/Buffs/SlotlessBuffs/Makyo/Sword_of_Sunlight
 	MakesSword=1
@@ -129,15 +143,17 @@
 		ExpandLevel = input(p, "Choose Expand level (max [maxLevel]):", "Expand") in levelList
 
 		var/N = ExpandLevel
+		var/mastered = (N < p.AscensionsAcquired)
 		passives = list(
 			"PureDamage"    =  N,
 			"PureReduction" =  N,
 			"Steady"        =  2 * N,
-			"Inevitable"    =  N,
-			"Flow"          = -N,
-			"Instinct"      = -N,
-			"FluidForm"     = -0.5 * N
+			"Inevitable"    =  N
 		)
+		if(!mastered)
+			passives["Flow"]      = -N
+			passives["Instinct"]  = -N
+			passives["FluidForm"] = -0.5 * N
 		if(N >= 3)
 			passives["GiantForm"]     = 1
 		if(N >= 4)
@@ -146,7 +162,8 @@
 			passives["FatigueImmune"]  = 1
 			passives["DebuffReversal"] = 1
 			passives["Brutalize"]      = 6
-			passives["NoDodge"]        = 1
+			if(!mastered)
+				passives["NoDodge"] = 1
 
 	Trigger(mob/user)
 		. = ..()

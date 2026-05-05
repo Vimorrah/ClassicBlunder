@@ -3,9 +3,11 @@ globalTracker/var/list/IGNORE_POWER_CLAMP_PASSIVES = list("Wrathful", "LimitBrok
 
 
 /mob/proc/ignoresPowerClamp(mob/defender)
+    if(!defender) return
+    if(defender.passive_handler && defender.passive_handler.Get("Justice"))
+        return FALSE
     if(isRace(MAJIN))
         return TRUE
-    if(!defender) return
     if(istype(src, /mob/Player/AI) || istype(defender, /mob/Player/AI))
         return TRUE
     if(!src.passive_handler || !defender.passive_handler)
@@ -15,7 +17,7 @@ globalTracker/var/list/IGNORE_POWER_CLAMP_PASSIVES = list("Wrathful", "LimitBrok
     for(var/passive in glob.IGNORE_POWER_CLAMP_PASSIVES)
         if(passive_handler|=passive)
             return TRUE
-    if(passive_handler.Get("WrathFactor") && Health <= 50 && isInDemonDevilTrigger())
+    if(passive_handler.Get("WrathFactor") && Health <= 50 && demonDevilTriggerSinMastery())
         return TRUE
     if(passive_handler.Get("Kaioken") && Health<=20||passive_handler.Get("Kaioken") && Kaioken>=5)
         return TRUE

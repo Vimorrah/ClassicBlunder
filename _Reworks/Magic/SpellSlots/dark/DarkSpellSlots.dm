@@ -4,7 +4,7 @@
 	SpellSlot=1
 	MagicNeeded=1
 	Shadow_Cleave
-		ElementalOffense="Dark"
+		ElementalClass="Dark"
 		Area="Arc"
 		Distance=3
 		DamageMult=6
@@ -32,7 +32,7 @@
 	SpellElement="Dark"
 	SpellSlot=1
 	Arachnae_Touch
-		ElementalOffense="Dark"
+		ElementalClass="Dark"
 		DamageMult=4
 		Speed=0.5
 		AccMult=1.2
@@ -46,7 +46,7 @@
 			usr.UseProjectile(src)
 
 	Void_Blast
-		ElementalOffense="Dark"
+		ElementalClass="Dark"
 		DamageMult=5
 		Speed=1
 		Homing=1

@@ -4731,20 +4731,30 @@ obj
 
 
 ////Racials
-				Static_Stream
-					Dodgeable=0
-					BeamTime=5
-					DamageMult=5
-					Distance=20
-					Paralyzing=2
-					Cooldown=90
-					StrRate=0.5
-					EndRate=1
-					ForRate=0.5
-					IconLock='LightningWave.dmi'
-					verb/Static_Stream()
-						set category="Skills"
-						usr.UseProjectile(src)
+			Static_Stream
+				Dodgeable=0
+				DamageMult=5
+				BeamTime=5
+				Distance=20
+				Paralyzing=2
+				Cooldown=90
+				StrRate=0.5
+				EndRate=1
+				ForRate=0.5
+				Delay=1
+				Blasts=1
+				Stream=1
+				IconLock='LightningWave.dmi'
+				verb/Static_Stream()
+					set category="Skills"
+					if(!altered)
+						DamageMult = 5 + (usr.AscensionsAcquired * 3)
+						Radius = clamp(usr.AscensionsAcquired, 1, 5)
+						Paralyzing = 2 + clamp(usr.AscensionsAcquired*2, 0.5, 2.5)
+						Cooldown = 60 - ( 5 * usr.AscensionsAcquired)
+						BeamTime = 5 + (usr.AscensionsAcquired * 5)
+					usr.UseProjectile(src)
+
 				Ice_Dragon
 					Dodgeable=0
 					BeamTime=5
@@ -4805,6 +4815,7 @@ mob
 	proc
 		UseProjectile(var/obj/Skills/Projectile/Z)
 			. = TRUE
+			if(HeldSkillBlocksAction(Z)) return FALSE
 			if(src.passive_handler.Get("Silenced"))
 				src << "You can't use [Z] you are silenced!"
 				return FALSE
@@ -5113,9 +5124,9 @@ mob
 					if(!Z.ChargeIcon)
 						src.Chargez("Add")
 						if(src.HasQuickCast())
-							sleep(10*Z.Charge/src.GetQuickCast()*(1+(src.GetKiControlMastery()*0.1)))
+							sleep(10*Z.Charge/(src.GetQuickCast()*(1+(src.GetKiControlMastery()*0.1))))
 						else
-							sleep(10*Z.Charge*(1+(src.GetKiControlMastery()*0.1)))
+							sleep(10*Z.Charge/(1+(src.GetKiControlMastery()*0.1)))
 						src.Chargez("Remove")
 					else
 						if(Z.ChargeIcon!=1)
@@ -5124,9 +5135,9 @@ mob
 							else
 								src.Chargez("Add", image(icon=Z.ChargeIcon, pixel_x=Z.ChargeIconX, pixel_y=Z.ChargeIconY), 0)
 							if(src.HasQuickCast())
-								sleep(10*Z.Charge/src.GetQuickCast()*(1+(src.GetKiControlMastery()*0.1)))
+								sleep(10*Z.Charge/(src.GetQuickCast()*(1+(src.GetKiControlMastery()*0.1))))
 							else
-								sleep(10*Z.Charge*(1+(src.GetKiControlMastery()*0.1)))
+								sleep(10*Z.Charge/(1+(src.GetKiControlMastery()*0.1)))
 							src.Chargez("Remove", image(icon=Z.ChargeIcon, pixel_x=Z.ChargeIconX, pixel_y=Z.ChargeIconY))
 						else
 							if(!src.AuraLocked&&!src.HasKiControl())
@@ -5134,9 +5145,9 @@ mob
 							else
 								KenShockwave(src,icon='KenShockwaveFocus.dmi',Size=0.3, Blend=2, Time=2)
 							if(src.HasQuickCast())
-								sleep(10*Z.Charge/src.GetQuickCast()*(1+(src.GetKiControlMastery()*0.1)))
+								sleep(10*Z.Charge/(src.GetQuickCast()*(1+(src.GetKiControlMastery()*0.1))))
 							else
-								sleep(10*Z.Charge*(1+(src.GetKiControlMastery()*0.1)))
+								sleep(10*Z.Charge/(1+(src.GetKiControlMastery()*0.1)))
 
 							if(!src.AuraLocked&&!src.HasKiControl())
 								src.Auraz("Remove")
@@ -5407,6 +5418,7 @@ mob
 						src.LoseCapacity(Z.CapacityCost/Drain)
 					if(Z.MaimCost)
 						src.Maimed+=Z.MaimCost
+						src.recordMaim(src, "Skill Cost: [Z]")
 						src << "You have been maimed by using the overwhelming power of [Z]!"
 					if(Z.AssociatedGear)
 						if(!Z.AssociatedGear.InfiniteUses)
@@ -5445,6 +5457,7 @@ mob
 							src.LoseCapacity(Z.CapacityCost/Drain)
 						if(Z.MaimCost)
 							src.Maimed+=Z.MaimCost
+							src.recordMaim(src, "Skill Cost: [Z]")
 							src << "You have been maimed by using the overwhelming power of [Z]!"
 						if(Z.AssociatedGear)
 							if(!Z.AssociatedGear.InfiniteUses)
@@ -5703,9 +5716,9 @@ obj
 						src.Owner.Beaming=0.5
 						var/T
 						if(src.Owner.HasQuickCast())
-							T=10*Z.Charge/src.Owner.GetQuickCast()*(1/(src.Owner.GetRecov()**(1/2)))
+							T=10*Z.Charge/(src.Owner.GetQuickCast()*(1+(src.Owner.GetKiControlMastery()*0.1)))*(1/(src.Owner.GetRecov()**(1/2)))
 						else
-							T=10*Z.Charge*(1/(src.Owner.GetRecov()**(1/2)))
+							T=10*Z.Charge/(1+(src.Owner.GetKiControlMastery()*0.1))*(1/(src.Owner.GetRecov()**(1/2)))
 						if(src.CustomCharge)
 							OMsg(src.Owner, "[src.CustomCharge]")
 						else
@@ -6247,7 +6260,7 @@ obj
 						if(HolyMod) specDmgTypes["Holy"] = HolyMod;
 						if(AbyssMod) specDmgTypes["Abyss"] = AbyssMod;
 						if(SlayerMod) specDmgTypes["Slayer"] = SlayerMod;
-						if(specDmgTypes.len) EffectiveDamage *= Owner.attackModifiers(m, specDmgTypes);
+						if(specDmgTypes.len) EffectiveDamage *= 1 + Owner.attackModifiers(m, specDmgTypes);
 						//Technically these are going to get doubletapped for projectiles
 						//because attackModifiers is called here as well as in dodamage
 						//which will be run further below
@@ -6401,7 +6414,7 @@ obj
 						if(src.Striking)
 							src.Owner.HitEffect(a)
 							if(src.DamageMult>=0.4)
-								KenShockwave(a, Size=max((src.DamageMult+src.Knockback+src.Owner.Intimidation/50)*max(2*(!src.Owner.HasNullTarget() ? src.Owner.GetGodKi() : 0),1)*GoCrand(0.04,0.4),0.2),PixelX=src.VariationX,PixelY=src.VariationY)
+								KenShockwave(a, Size=max((src.DamageMult+src.Knockback)*max(2*(!src.Owner.HasNullTarget() ? src.Owner.GetGodKi() : 0),1)*GoCrand(0.04,0.4),0.2),PixelX=src.VariationX,PixelY=src.VariationY)
 						if(src.Slashing)
 							Slash(a, src.Owner.EquippedSword())
 
