@@ -75,6 +75,7 @@ obj
 				ChargeTime//How much time it takes to move.
 				ChargeFlight//superman tackle
 				WindUp//Charge for this number of seconds.
+				IgnoreWindUpReduction=0// keeps WindUp fixed and ignores reduction effects
 				Slow//Makes it so that there is a pause in the movement of autohitters (The technique does not instantly hit all of its related tiles)
 				ApplySlow = 0
 				Icon//Displays icon when used.
@@ -4469,14 +4470,14 @@ obj
 				StyleNeeded="Ansatsuken"
 				proc/alter(mob/player)
 					ManaCost = 0
-					var/damage = clamp(0.6 + 0.3 * (player.SagaLevel/2), 0.3, 3)
+					var/damage = 1 + (0.5 * sagaLevel)
 					var/path = player.AnsatsukenPath == "Tatsumaki" ? 1 : 0
 					var/rounds = 3
 					var/cooldown = 40
 					var/launch = 0
 					if(path)
 						cooldown = 30
-						damage = clamp(0.6 + 0.5 * (player.SagaLevel/2), 0.3, 5)
+						damage = 2 + (1.5 * sagaLevel)
 						rounds = 3
 					DamageMult = damage
 					Cooldown = cooldown
@@ -4512,12 +4513,12 @@ obj
 					if(p.AnsatsukenPath == "Tatsumaki")
 						Launcher = 3
 						Rounds = 8
-						DamageMult = 1 + (0.2 *p.SagaLevel)
+						DamageMult = 3 + (1.5 * p.SagaLevel)
 						Cooldown = 150 - (15 * p.SagaLevel)
 					else
 						Launcher = 0
 						Rounds = 6
-						DamageMult = 0.7 + (0.15 *p.SagaLevel)
+						DamageMult = 2 + (1 * p.SagaLevel)
 						Cooldown = 150 - (15 * p.SagaLevel)
 
 
@@ -5047,7 +5048,7 @@ obj
 
 mob
 	proc
-		Activate(var/obj/Skills/AutoHit/Z, ignoreCuck = FALSE)
+		Activate(var/obj/Skills/AutoHit/Z, ignoreCuck = FALSE, ignoreAttackLock = FALSE)
 			set waitfor = FALSE
 			. = TRUE
 			if(HeldSkillBlocksAction(Z)) return FALSE
@@ -5075,7 +5076,7 @@ mob
 				return FALSE
 			if(!Z.heavenlyRestrictionIgnore && Z.UnarmedOnly && Secret=="Heavenly Restriction" && secretDatum?:hasRestriction("Unarmed Skills"))
 				return FALSE
-			if(!src.CanAttack(1.5)&&!Z.NoAttackLock)
+			if(!ignoreAttackLock && !src.CanAttack(1.5)&&!Z.NoAttackLock)
 				return FALSE
 			if(Flying)
 				var/obj/Items/check = EquippedFlyingDevice()
@@ -5478,7 +5479,7 @@ mob
 									i.loc = null
 									del i
 								src.Frozen=0
-				if(src.HasQuickCast())
+				if(src.HasQuickCast() && !Z.IgnoreWindUpReduction)
 					if(Z.PreQuake)
 						spawn()
 							src.Quake(Second(Z.WindUp/src.GetQuickCast()))
@@ -6954,7 +6955,7 @@ obj
 							src.Owner.Knockback(src.Knockback, m, Direction=src.Owner.dir, Forced=1, override_speed=delay)
 					else
 						if(src.UnarmedTech)
-							KenShockwave(m, Size=min((src.Knockback+src.Owner.Intimidation/50)*max(2*(!src.Owner.HasNullTarget() ? src.Owner.GetGodKi() : 0),1)*GoCrand(0.04,0.4),0.2),PixelX=pick(-12,-8,8,12),PixelY=pick(-12,-8,8,12))
+							KenShockwave(m, Size=min(src.Knockback*max(2*(!src.Owner.HasNullTarget() ? src.Owner.GetGodKi() : 0),1)*GoCrand(0.04,0.4),0.2),PixelX=pick(-12,-8,8,12),PixelY=pick(-12,-8,8,12))
 						if(m!=src.Owner.Grab)
 							src.Owner.Knockback(src.Knockback+extraKnock, m, get_dir(src.Owner, m), extraKnock)
 

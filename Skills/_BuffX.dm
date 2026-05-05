@@ -589,6 +589,8 @@ NEW VARIABLES
 	var/characterInformation/FakeInformation
 	var/FakeInformationEnabled
 	var/OurFuture
+	var/RoyalMeter
+	var/SuccessfulParry
 	skillDescription()
 		..()
 		if(passives.len>0)
@@ -3162,9 +3164,9 @@ NEW VARIABLES
 					adjustments(mob/player)
 						..()
 						if(!altered)
-							passives = list("MovementMastery" =  player.SagaLevel * 1.25, "ArmorAscension" = 1, "Tenacity" = 1, "Persistence" = 1, "UnderDog" = 1, "Godspeed" = 1)
-							StrMult = 1 + (player.SagaLevel * 0.1)
-							SpdMult = 1 + (player.SagaLevel * 0.1)
+							passives = list("MovementMastery" =  player.SagaLevel * 2, "ArmorAscension" = 1, "Tenacity" = 1, "Persistence" = 1, "UnderDog" = 1, "Godspeed" = 1)
+							StrMult = 1 + (player.SagaLevel * 0.2)
+							SpdMult = 1 + (player.SagaLevel * 0.2)
 					verb/Don_Cloth()
 						set category="Skills"
 						adjustments(usr)
@@ -3182,10 +3184,10 @@ NEW VARIABLES
 					adjustments(mob/player)
 						..()
 						if(!altered)
-							StrMult = 1 + (player.SagaLevel * 0.1)
-							EndMult = 1.1 + (player.SagaLevel * 0.1)
-							DefMult = 1 + (player.SagaLevel * 0.1)
-							passives = list("MovementMastery" =  player.SagaLevel * 1.25, "ArmorAscension" = 1, "Reversal" = player.SagaLevel * 0.1, "CriticalBlock" = player.SagaLevel / 6, "BlockChance" = 5 + (player.SagaLevel * 1.5))
+							StrMult = 1 + (player.SagaLevel * 0.2)
+							EndMult = 1.1 + (player.SagaLevel * 0.2)
+							DefMult = 1 + (player.SagaLevel * 0.2)
+							passives = list("MovementMastery" =  player.SagaLevel * 2, "ArmorAscension" = 1, "Reversal" = player.SagaLevel * 0.1, "CriticalBlock" = player.SagaLevel / 6, "BlockChance" = 5 + (player.SagaLevel * 1.5))
 					verb/Don_Cloth()
 						set category="Skills"
 						adjustments(usr)
@@ -3205,11 +3207,11 @@ NEW VARIABLES
 					adjustments(mob/player)
 						..()
 						if(!altered)
-							ForMult = 1.2 + (player.SagaLevel * 0.1)
-							OffMult = 1 + (player.SagaLevel * 0.1)
-							DefMult = 1 + (player.SagaLevel * 0.1)
-							EndMult = 0.9 + (player.SagaLevel * 0.1)
-							passives = list("MovementMastery" =  player.SagaLevel * 1.25, "SpiritStrike" = 1,  "ArmorAscension" = 1, "Chilling" = 1 + round(player.SagaLevel / 2,0.5), "VenomImmune" = 2 + (player.SagaLevel / 6), \
+							ForMult = 1.2 + (player.SagaLevel * 0.2)
+							OffMult = 1 + (player.SagaLevel * 0.2)
+							DefMult = 1 + (player.SagaLevel * 0.2)
+							EndMult = 0.9 + (player.SagaLevel * 0.2)
+							passives = list("MovementMastery" =  player.SagaLevel * 2, "SpiritStrike" = 1,  "ArmorAscension" = 1, "Chilling" = 1 + round(player.SagaLevel / 2,0.5), "VenomImmune" = 2 + (player.SagaLevel / 6), \
 							 "WalkThroughHell" = 1)
 					verb/Don_Cloth()
 						set category="Skills"
@@ -3231,11 +3233,11 @@ NEW VARIABLES
 					OffMessage="discards the Cloth..."
 					adjustments(mob/player)
 						..()
-						EndMult = 1 + (player.SagaLevel * 0.1)
-						SpdMult = 1 + (player.SagaLevel * 0.1)
-						OffMult = 1 + (player.SagaLevel * 0.1)
-						DefMult = 1.1 + (player.SagaLevel * 0.1)
-						passives = list("MovementMastery" =  player.SagaLevel * 1.25, "ArmorAscension" = 1, "BladeFisting" = 1)
+						EndMult = 1 + (player.SagaLevel * 0.2)
+						SpdMult = 1 + (player.SagaLevel * 0.2)
+						OffMult = 1 + (player.SagaLevel * 0.2)
+						DefMult = 1.1 + (player.SagaLevel * 0.2)
+						passives = list("MovementMastery" =  player.SagaLevel * 2, "ArmorAscension" = 1, "BladeFisting" = 1)
 					verb/Don_Cloth()
 						set category="Skills"
 						adjustments(usr)
@@ -3250,9 +3252,9 @@ NEW VARIABLES
 					OffMessage="discards the Cloth..."
 					adjustments(mob/player)
 						..()
-						passives = list("MovementMastery" =  player.SagaLevel * 1.5, "ArmorAscension" = 2, "SpiritHand" = player.SagaLevel)
-						StrMult = 1.1 + (player.SagaLevel * 0.1)
-						ForMult = 1.1 + (player.SagaLevel * 0.1)
+						passives = list("MovementMastery" =  player.SagaLevel * 2, "ArmorAscension" = 2, "SpiritHand" = 2+(player.SagaLevel/2))
+						StrMult = 1.1 + (player.SagaLevel * 0.2)
+						ForMult = 1.1 + (player.SagaLevel * 0.2)
 						OffMult = 1 + (player.SagaLevel * 0.1)
 
 					verb/Don_Cloth()
@@ -3269,10 +3271,10 @@ NEW VARIABLES
 					ActiveMessage="dons the Cloth of the Unicorn, embracing its brilliant speed!"
 					adjustments(mob/player)
 						..()
-						passives = list("MovementMastery" =  player.SagaLevel * 1.25, "ArmorAscension" = 2, "Pursuer" = 1.2 + (player.SagaLevel*0.2), "Flicker" = max(1,player.SagaLevel*0.5))
-						SpdMult = 1.2 + (player.SagaLevel * 0.1)
-						OffMult = 1 + (player.SagaLevel * 0.1)
-						DefMult = 1.1 + (player.SagaLevel * 0.1)
+						passives = list("MovementMastery" =  player.SagaLevel * 2, "ArmorAscension" = 2, "Pursuer" = 1.2 + (player.SagaLevel*0.2), "Flicker" = max(1,player.SagaLevel*0.5))
+						SpdMult = 1.2 + (player.SagaLevel * 0.2)
+						OffMult = 1 + (player.SagaLevel * 0.2)
+						DefMult = 1.1 + (player.SagaLevel * 0.2)
 
 					verb/Don_Cloth()
 						set category="Skills"
@@ -3303,8 +3305,8 @@ NEW VARIABLES
 						var/newLevel = clamp(player.SagaLevel - 2, 1,4)
 						passives = list("MovementMastery" = player.SagaLevel * 2, "ArmorAscension" = 2, "Tenacity" = (player.SagaLevel * 1.5), "Persistence" = (player.SagaLevel * 1.5), \
 									 "UnderDog" = (player.SagaLevel * 2), "Godspeed" = (player.SagaLevel*0.5), "BlurringStrikes" = (player.SagaLevel/2))
-						StrMult = 1.3 + (newLevel * 0.1)
-						SpdMult = 1.3 + (newLevel * 0.1)
+						StrMult = 1.3 + (newLevel * 0.2)
+						SpdMult = 1.3 + (newLevel * 0.2)
 						Godspeed = 1 + (player.SagaLevel * 0.2)
 					verb/Don_Cloth()
 						set category="Skills"
@@ -3322,9 +3324,9 @@ NEW VARIABLES
 					adjustments(mob/player)
 						..()
 						var/newLevel = clamp(player.SagaLevel - 2, 1,4)
-						StrMult = 1.3 + (newLevel * 0.1)
-						EndMult = 1.5 + (newLevel * 0.1)
-						DefMult = 1.3 + (newLevel * 0.1)
+						StrMult = 1.3 + (newLevel * 0.2)
+						EndMult = 1.5 + (newLevel * 0.2)
+						DefMult = 1.3 + (newLevel * 0.2)
 						passives = list("MovementMastery" = player.SagaLevel * 2, "ArmorAscension" = 2, "Reversal" = player.SagaLevel * 0.1,\
 						"CriticalBlock" = player.SagaLevel / 6, "BlockChance" = 10 + (player.SagaLevel * 1.5))
 					verb/Don_Cloth()
@@ -3350,10 +3352,10 @@ NEW VARIABLES
 						..()
 						var/newLevel = clamp(player.SagaLevel - 2, 1,4)
 						if(!altered)
-							ForMult = 1.5 + (newLevel * 0.1)
-							OffMult = 1.3 + (newLevel * 0.1)
-							DefMult = 1.3 + (newLevel * 0.1)
-							EndMult = 1.2 + (newLevel * 0.1)
+							ForMult = 1.5 + (newLevel * 0.2)
+							OffMult = 1.3 + (newLevel * 0.2)
+							DefMult = 1.3 + (newLevel * 0.2)
+							EndMult = 1.2 + (newLevel * 0.2)
 							passives = list("MovementMastery" =  player.SagaLevel * 2, "SpiritStrike" = 1, "ArmorAscension" = 2, "Freezing" = 1 + player.SagaLevel, "VenomImmune" = 1, \
 							 "WalkThroughHell" = 1, "Erosion" = 0.05 * newLevel)
 					verb/Don_Cloth()
@@ -3377,11 +3379,11 @@ NEW VARIABLES
 						..()
 						var/newLevel = clamp(player.SagaLevel - 2, 1,4)
 						passives = list("MovementMastery" = player.SagaLevel * 2, "ArmorAscension" = 2, "BladeFisting" = 1)
-						SpdMult = 1.2 + (newLevel * 0.1)
-						EndMult = 1.1 + (newLevel * 0.1)
-						StrMult = 1.1 + (newLevel * 0.1)
-						OffMult = 1.2 + (newLevel * 0.1)
-						DefMult = 1.3 + (newLevel * 0.1)
+						SpdMult = 1.2 + (newLevel * 0.2)
+						EndMult = 1.1 + (newLevel * 0.2)
+						StrMult = 1.1 + (newLevel * 0.2)
+						OffMult = 1.2 + (newLevel * 0.2)
+						DefMult = 1.3 + (newLevel * 0.2)
 
 					verb/Don_Cloth()
 						set category="Skills"
@@ -3403,9 +3405,9 @@ NEW VARIABLES
 						..()
 						var/newLevel = clamp(player.SagaLevel - 2, 1,4)
 						passives = list("MovementMastery" = player.SagaLevel * 2.25, "ArmorAscension" = 2, "SpiritHand" = player.SagaLevel*1.5)
-						StrMult = 1.4 + (newLevel * 0.1)
-						ForMult = 1.4 + (newLevel * 0.1)
-						OffMult = 1.3 + (newLevel * 0.1)
+						StrMult = 1.4 + (newLevel * 0.2)
+						ForMult = 1.4 + (newLevel * 0.2)
+						OffMult = 1.3 + (newLevel * 0.2)
 					verb/Don_Cloth()
 						set category="Skills"
 						adjustments(usr)
@@ -3422,9 +3424,9 @@ NEW VARIABLES
 					adjustments(mob/player)
 						..()
 						passives = list("MovementMastery" =  player.SagaLevel * 2, "ArmorAscension" = 2, "Pursuer" = 1 + (player.SagaLevel * 0.3), "Flicker" = max(1,player.SagaLevel))
-						SpdMult = 1.3 + (player.SagaLevel * 0.1)
-						OffMult = 1.1 + (player.SagaLevel * 0.1)
-						DefMult = 1.2 + (player.SagaLevel * 0.1)
+						SpdMult = 1.3 + (player.SagaLevel * 0.2)
+						OffMult = 1.1 + (player.SagaLevel * 0.2)
+						DefMult = 1.2 + (player.SagaLevel * 0.2)
 					verb/Don_Cloth()
 						set category="Skills"
 						adjustments(usr)
@@ -3502,9 +3504,9 @@ NEW VARIABLES
 					OffMessage="discards the Cloth..."
 					adjustments(mob/player)
 						..()
-						ForMult = 1.4 + ((player.SagaLevel-2) * 0.1)
-						EndMult = 1.4 + ((player.SagaLevel-2) * 0.1)
-						DefMult = 1.5 + ((player.SagaLevel-2) * 0.1)
+						ForMult = 1.4 + ((player.SagaLevel-2) * 0.2)
+						EndMult = 1.4 + ((player.SagaLevel-2) * 0.2)
+						DefMult = 1.5 + ((player.SagaLevel-2) * 0.2)
 						passives = list("DebuffResistance" = 1, "SpaceWalk" =1, "StaticWalk" = 1,"MovementMastery" = 10+player.SagaLevel, "ArmorAscension" = 3, "Godspeed" = 1+(player.SagaLevel*0.25), "SpiritFlow" = player.SagaLevel*1.5, "SpiritHand" = player.SagaLevel*1.5, "TechniqueMastery" = 3 + (player.SagaLevel/1.5))
 
 					verb/Don_Cloth()
@@ -3528,11 +3530,11 @@ NEW VARIABLES
 					OffMessage="discards the Cloth..."
 					adjustments(mob/player)
 						..()
-						StrMult = 1.2 + ((player.SagaLevel-3) * 0.1)
-						ForMult = 1.2 + ((player.SagaLevel-3) * 0.1)
-						EndMult = 1.2 + ((player.SagaLevel-3) * 0.1)
-						OffMult = 1.2 + ((player.SagaLevel-3) * 0.1)
-						DefMult = 1.1 + ((player.SagaLevel-3) * 0.1)
+						StrMult = 1.2 + ((player.SagaLevel-3) * 0.2)
+						ForMult = 1.2 + ((player.SagaLevel-3) * 0.2)
+						EndMult = 1.2 + ((player.SagaLevel-3) * 0.2)
+						OffMult = 1.2 + ((player.SagaLevel-3) * 0.2)
+						DefMult = 1.1 + ((player.SagaLevel-3) * 0.2)
 						passives = list("DebuffResistance" = 1, "SpaceWalk" =1, "StaticWalk" = 1,"MovementMastery" = 8+player.SagaLevel, "ArmorAscension" = 3, "Godspeed" = 1+(player.SagaLevel*0.25), "HolyMod" = 2 + player.SagaLevel, "AbyssMod" = 2 + player.SagaLevel, "HellPower" =0.25 * (player.SagaLevel+2), "BuffMastery" = 1 + player.SagaLevel, "SpiritPower" = player.SagaLevel*0.25)
 					verb/Don_Cloth()
 						set category="Skills"
@@ -3551,9 +3553,9 @@ NEW VARIABLES
 					OffMessage="discards the Cloth..."
 					adjustments(mob/player)
 						..()
-						ForMult = 1.3 + ((player.SagaLevel-3) * 0.1)
-						OffMult = 1.3 + ((player.SagaLevel-3) * 0.1)
-						DefMult = 1.2 + ((player.SagaLevel-3) * 0.1)
+						ForMult = 1.3 + ((player.SagaLevel-3) * 0.2)
+						OffMult = 1.3 + ((player.SagaLevel-3) * 0.2)
+						DefMult = 1.2 + ((player.SagaLevel-3) * 0.2)
 						passives = list("DebuffResistance" = 1, "SpaceWalk" =1, "StaticWalk" = 1,"MovementMastery" = 8+player.SagaLevel, "ArmorAscension" = 3, \
 						"Godspeed" = 1+(player.SagaLevel*0.25), "MartialMagic" = 1, "AbyssMod" = player.SagaLevel*2, "SlayerMod" = 3+(player.SagaLevel/2), "FavoredPrey" = "Mortal", "SpiritPower" = player.SagaLevel*0.25)
 
@@ -3575,9 +3577,9 @@ NEW VARIABLES
 					OffMessage="discards the Cloth..."
 					adjustments(mob/player)
 						..()
-						StrMult = 1.3 + ((player.SagaLevel-3) * 0.1)
-						ForMult = 1.3 + ((player.SagaLevel-3) * 0.1)
-						SpdMult = 1.5 + ((player.SagaLevel-3) * 0.1)
+						StrMult = 1.3 + ((player.SagaLevel-3) * 0.2)
+						ForMult = 1.3 + ((player.SagaLevel-3) * 0.2)
+						SpdMult = 1.5 + ((player.SagaLevel-3) * 0.2)
 						passives = list("DebuffResistance" = 1, "SpaceWalk" =1, "StaticWalk" = 1,"MovementMastery" = 10+player.SagaLevel, "ArmorAscension" = 3, "Godspeed" = 1+(player.SagaLevel*0.75), "DoubleStrike" = 1 +(player.SagaLevel/2), "TripleStrike" = 1 + (player.SagaLevel/3))
 						Intimidation = (player.SagaLevel * 0.25)
 					verb/Don_Cloth()
@@ -3596,9 +3598,9 @@ NEW VARIABLES
 					OffMessage="discards the Cloth..."
 					adjustments(mob/player)
 						..()
-						ForMult = 1.4 + ((player.SagaLevel-3) * 0.1)
-						OffMult = 1.2 + ((player.SagaLevel-3) * 0.1)
-						DefMult = 1.4 + ((player.SagaLevel-3) * 0.1)
+						ForMult = 1.4 + ((player.SagaLevel-3) * 0.2)
+						OffMult = 1.2 + ((player.SagaLevel-3) * 0.2)
+						DefMult = 1.4 + ((player.SagaLevel-3) * 0.2)
 						passives = list("DebuffResistance" = 1, "SpaceWalk" =1, "StaticWalk" = 1,"MovementMastery" = 8+player.SagaLevel, "ArmorAscension" = 3, "Godspeed" = 1+(player.SagaLevel*0.25), "FluidForm" = 1 + (player.SagaLevel*0.25), "HolyMod" = player.SagaLevel * 4, "HybridStrike" = player.SagaLevel*0.5)
 
 					verb/Don_Cloth()
@@ -3618,9 +3620,9 @@ NEW VARIABLES
 					OffMessage="discards the Cloth..."
 					adjustments(mob/player)
 						..()
-						OffMult = 1.3 + ((player.SagaLevel-3) * 0.1)
-						DefMult = 1.3 + ((player.SagaLevel-3) * 0.1)
-						SpdMult = 1.4 + ((player.SagaLevel-3) * 0.1)
+						OffMult = 1.3 + ((player.SagaLevel-3) * 0.2)
+						DefMult = 1.3 + ((player.SagaLevel-3) * 0.2)
+						SpdMult = 1.4 + ((player.SagaLevel-3) * 0.2)
 						passives = list("DebuffResistance" = 1, "SpaceWalk" =1, "StaticWalk" = 1, "MovementMastery" = 8+player.SagaLevel, "ArmorAscension" = 3, "Godspeed" = 1+(player.SagaLevel*0.25), "BlockChance" = 20 + (player.SagaLevel*5), "CriticalBlock" = 1 + (player.SagaLevel/3), "Deflection" = 2+(player.SagaLevel/3))
 
 					verb/Don_Cloth()
@@ -3644,9 +3646,9 @@ NEW VARIABLES
 					adjustments(mob/player)
 						..()
 						passives = list("DebuffResistance" = 1, "SpaceWalk" =1, "StaticWalk" = 1,"MovementMastery" = 8+player.SagaLevel, "ArmorAscension" = 3, "Godspeed" = 1+(player.SagaLevel*0.25), "HardStyle" = 1 + player.SagaLevel, "Curse" = 1, "Shearing" = 1 + player.SagaLevel)
-						ForMult = 1.4 + ((player.SagaLevel-3) * 0.1)
-						SpdMult = 1.2 + ((player.SagaLevel-3) * 0.1)
-						OffMult = 1.3 + ((player.SagaLevel-3) * 0.1)
+						ForMult = 1.4 + ((player.SagaLevel-3) * 0.2)
+						SpdMult = 1.2 + ((player.SagaLevel-3) * 0.2)
+						OffMult = 1.3 + ((player.SagaLevel-3) * 0.2)
 					verb/Don_Cloth()
 						set category="Skills"
 						src.NoTopOverlay=0
@@ -3670,9 +3672,9 @@ NEW VARIABLES
 						..()
 						passives = list("DebuffResistance" = 1, "SpaceWalk" =1, "StaticWalk" = 1, "MovementMastery" = 10+player.SagaLevel, "ArmorAscension" = 3, \
 						"Godspeed" = 1+(player.SagaLevel*0.25), "SwordAscension" = player.SagaLevel, "BladeFisting" = 1)
-						StrMult = 1.3 + ((player.SagaLevel-2) * 0.1)
-						ForMult = 1.3 + ((player.SagaLevel-2) * 0.1)
-						OffMult = 1.3 + ((player.SagaLevel-2) * 0.1)
+						StrMult = 1.3 + ((player.SagaLevel-2) * 0.2)
+						ForMult = 1.3 + ((player.SagaLevel-2) * 0.2)
+						OffMult = 1.3 + ((player.SagaLevel-2) * 0.2)
 					verb/Don_Cloth()
 						set category="Skills"
 						src.NoTopOverlay=0
@@ -3690,9 +3692,9 @@ NEW VARIABLES
 					OffMessage="discards the Cloth..."
 					adjustments(mob/player)
 						..()
-						DefMult = 1.1 + ((player.SagaLevel-3) * 0.1)
-						ForMult = 1.5 + ((player.SagaLevel-3) * 0.1)
-						OffMult = 1.1 + ((player.SagaLevel-3) * 0.1)
+						DefMult = 1.1 + ((player.SagaLevel-3) * 0.2)
+						ForMult = 1.5 + ((player.SagaLevel-3) * 0.2)
+						OffMult = 1.1 + ((player.SagaLevel-3) * 0.2)
 						passives = list("DebuffResistance" = 1, "SpaceWalk" =1, "StaticWalk" = 1, "SpiritStrike" = 1, "MovementMastery" = 8+player.SagaLevel, \
 						 "ArmorAscension" = 3, "Godspeed" = 1+(player.SagaLevel*0.25),"SoftStyle" = 1 + player.SagaLevel, "AbsoluteZero"= 1, "Freezing" = 1, "Erosion" = clamp(0.2 * (player.SagaLevel-3), 0.2, 0.75))
 					verb/Don_Cloth()
@@ -3714,9 +3716,9 @@ NEW VARIABLES
 						..()
 						passives = list("DebuffResistance" = 1, "SpaceWalk" =1, "StaticWalk" = 1,"MovementMastery" = 8+player.SagaLevel, "ArmorAscension" = 3, \
 						"Godspeed" = 1+(player.SagaLevel*0.25), "Toxic" = 1, "DeathField" = 5 + player.SagaLevel, "VoidField" = 5 + player.SagaLevel)
-						DefMult = 1.4 + ((player.SagaLevel-3) * 0.1)
-						ForMult = 1.1 + ((player.SagaLevel-3) * 0.1)
-						OffMult = 1.1 + ((player.SagaLevel-3) * 0.1)
+						DefMult = 1.4 + ((player.SagaLevel-3) * 0.2)
+						ForMult = 1.1 + ((player.SagaLevel-3) * 0.2)
+						OffMult = 1.1 + ((player.SagaLevel-3) * 0.2)
 					verb/Don_Cloth()
 						set category="Skills"
 						src.NoTopOverlay=0
@@ -3735,9 +3737,9 @@ NEW VARIABLES
 						..()
 						passives = list("DebuffResistance" = 1, "SpaceWalk" = 1, "StaticWalk" = 1, "MovementMastery" = 8 + player.SagaLevel, "ArmorAscension" = 3, "MovingCharge" = 1, \
 						"Godspeed" = 1 + (player.SagaLevel*0.5), "BlurringStrikes" = player.SagaLevel*0.5, "Flow" = player.SagaLevel-3, "Skimming" = 1, "SpiritFlow" = player.SagaLevel-2)
-						SpdMult = 1.4 + ((player.SagaLevel-3) * 0.1)
-						StrMult = 1.1 + ((player.SagaLevel-3) * 0.1)
-						OffMult = 1.1 + ((player.SagaLevel-3) * 0.1)
+						SpdMult = 1.4 + ((player.SagaLevel-3) * 0.2)
+						StrMult = 1.1 + ((player.SagaLevel-3) * 0.2)
+						OffMult = 1.1 + ((player.SagaLevel-3) * 0.2)
 					verb/Don_Cloth()
 						set category="Skills"
 						src.NoTopOverlay=0
@@ -14240,6 +14242,16 @@ mob
 
 			if(B.FlashChange)
 				animate(src, color = list(1,0,0, 0,1,0, 0,0,1, 1,1,1))
+			if(B.SuccessfulParry)
+				if(B.SuccessfulParry == 2)
+					src << "Guard ended with a successful parry, setting CD to 5."
+					B.Cooldown = 5
+					B.SuccessfulParry = 0
+				else
+					src << "Parry failure, Cooldown set to 60."
+					B.Cooldown = 60
+					B.SuccessfulParry = 0
+
 
 			if(B.StrReplace)
 				src.StrReplace=0

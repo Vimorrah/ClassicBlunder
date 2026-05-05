@@ -375,6 +375,7 @@ mob/Players
 			src.client.view=ScreenSize
 
 		client.fps=src.ChosenFPS
+		client.updateRGMeter()
 		if(usr.SenseRobbed>=5)
 			animate(usr.client, color = list(-1,0,0, 0,-1,0, 0,0,-1, 1,1,1))
 

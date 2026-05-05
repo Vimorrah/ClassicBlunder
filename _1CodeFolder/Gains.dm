@@ -223,6 +223,11 @@ var/game_loop/mainLoop = new(0, "newGainLoop")
 				src << "Your Black Flash chance has been reset."
 		if(src.passive_handler.Get("Triple Helix"))
 			src.passive_handler.Set("Triple Helix", 0)
+		var/obj/Skills/Buffs/SlotlessBuffs/RoyalGuard/RG = locate(/obj/Skills/Buffs/SlotlessBuffs/RoyalGuard) in src.contents
+		if(RG && RG.RoyalMeter > 0)
+			RG.RoyalMeter = 0
+			src << "Your Royal Meter went back to 0."
+			src.client.updateRGMeter()
 
 		if(calmcounter<=0)
 			calmcounter=5
