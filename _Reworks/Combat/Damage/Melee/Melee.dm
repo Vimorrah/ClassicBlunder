@@ -635,7 +635,10 @@
 						if(!dodged)
 					// 				HIT					//
 
+							var/damageSnapshot = damage
 							STRIKE
+							if(AttackQueue?.InstantStrikesPerformed)
+								damage = damageSnapshot
 							if(UsingSpellWeaver())
 								if(prob(50))
 									var/obj/Skills/Projectile/DancingBlast/db = locate(/obj/Skills/Projectile/DancingBlast, src)
