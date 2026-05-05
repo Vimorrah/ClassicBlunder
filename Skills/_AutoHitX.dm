@@ -75,6 +75,7 @@ obj
 				ChargeTime//How much time it takes to move.
 				ChargeFlight//superman tackle
 				WindUp//Charge for this number of seconds.
+				IgnoreWindUpReduction=0// keeps WindUp fixed and ignores reduction effects
 				Slow//Makes it so that there is a pause in the movement of autohitters (The technique does not instantly hit all of its related tiles)
 				ApplySlow = 0
 				Icon//Displays icon when used.
@@ -5478,7 +5479,7 @@ mob
 									i.loc = null
 									del i
 								src.Frozen=0
-				if(src.HasQuickCast())
+				if(src.HasQuickCast() && !Z.IgnoreWindUpReduction)
 					if(Z.PreQuake)
 						spawn()
 							src.Quake(Second(Z.WindUp/src.GetQuickCast()))

@@ -20,6 +20,7 @@
 	RoyalRelease
 		Distance=12
 		WindUp=0.75
+		IgnoreWindUpReduction=1
 		WindupMessage="gathers all the stored power into a brutal strike..."
 		DamageMult=1
 		StrOffense=1
