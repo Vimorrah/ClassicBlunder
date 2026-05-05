@@ -17,7 +17,7 @@ proc/generateVersionDatum()
 		glob.currentUpdate = updateversion
 
 globalTracker
-	var/UPDATE_VERSION = 11
+	var/UPDATE_VERSION = 13
 	var/tmp/update/currentUpdate
 
 	proc/updatePlayer(mob/p)
@@ -222,6 +222,27 @@ update
 				p.AddSkill(new/obj/Skills/Buffs/SlotlessBuffs/RoyalGuard)
 				p.AddSkill(new/obj/Skills/AutoHit/RoyalRelease)
 				p << "Things are getting even crazier- You've been granted Royal Guard & Release!"
+	version13
+		version = 13;
+		updateMob(mob/p)
+			. = ..()
+			if(p.isRace(MAKYO))
+				if(p.AscensionsAcquired >= 1)
+					// Asc 1 stat buffs: Str 0.5->1, End 0->1, Off 0->0.25, Anger 0.1->0.15
+					p.StrAscension += 0.5
+					p.EndAscension += 1
+					p.OffAscension += 0.25
+					p.NewAnger(p.AngerMax + 0.05)
+					// Asc 1 new passive: Adrenaline 1
+					p.passive_handler.Increase("Adrenaline", 1)
+				if(p.AscensionsAcquired >= 2)
+					// Asc 2 stat buffs: Str 0->1.25, End 0.25->1.25, For 0->0.5, Anger 0.1->0.15
+					p.StrAscension += 1.25
+					p.EndAscension += 1
+					p.ForAscension += 0.5
+					p.NewAnger(p.AngerMax + 0.05)
+					// Asc 2 new passive: Adrenaline 2
+					p.passive_handler.Increase("Adrenaline", 2)
 
 
 /globalTracker/var/COOL_GAJA_PLAYERS = list("Thorgigamax", "Gemenilove" )
