@@ -874,7 +874,7 @@
 							if(GetAttracting())
 								enemy.AddAttracting(GetAttracting(), src)
 								// 		OTHER DMG START 		//
-							var/otherDmg = (damage+(GetIntimidation()/100)*(1+(2*(HasNullTarget() ? GetGodKi() : 0))))
+							var/otherDmg = damage
 
 							if(UsingKendo()&&HasSword()&&CountStyles(2))
 								if(s.Class == "Wooden")
@@ -924,7 +924,7 @@
 							enemy.dir=get_dir(enemy,src)
 							flick("Attack", enemy)
 							if(!lightAtk)
-								KenShockwave(enemy,icon='KenShockwave.dmi',Size=(src.GetIntimidation()+enemy.GetIntimidation())*0.4,PixelX=((enemy.x-src.x)*(-16)+pick(-12,-8,8,12)),PixelY=((enemy.y-src.y)*(-16)+pick(-12,-8,8,12)), Time=6)
+								KenShockwave(enemy,icon='KenShockwave.dmi',Size=0.4,PixelX=((enemy.x-src.x)*(-16)+pick(-12,-8,8,12)),PixelY=((enemy.y-src.y)*(-16)+pick(-12,-8,8,12)), Time=6)
 							if(AttackQueue&&AttackQueue.DrawIn)
 								enemy.AddAttracting((AttackQueue.DrawIn*QueuedDamage(enemy)), src)
 						else

@@ -3461,12 +3461,16 @@ mob
 		CountSigs(var/Tier=0)
 			var/Count=0
 			var/list/combo_check=list()
+			var/is_demon_celestial = (src.isRace(CELESTIAL) && src.CelestialAscension == "Demon")
 			if(!Tier)
 				Log("Admin", "[ExtractInfo(src)] tried to count signatures without specifying a tier.")
 				return
 			for(var/obj/Skills/s in src.Skills)
 				if(istype(s, /obj/Skills/Buffs/NuStyle))
 					continue
+				if(Tier == 2 && is_demon_celestial)
+					if(istype(s, /obj/Skills/Buffs/SlotlessBuffs/RoyalGuard))
+						continue
 				if(s.SignatureTechnique==Tier)
 					if("[s.type]" in combo_check)
 						continue
