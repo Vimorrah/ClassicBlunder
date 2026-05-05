@@ -1811,8 +1811,13 @@ NEW VARIABLES
 			IconTransform = 'mist.dmi'
 			verb/Fade_Into_Shadows()
 				set category="Roleplay"
-				if(usr.secretDatum.currentTier >= 4) usr.Incorporeal = !usr.BuffOn(src);
 				src.Trigger(usr)
+				if(usr.secretDatum.currentTier >= 4)
+					usr.Incorporeal=0;
+					usr.density=1;
+					if(usr.passive_handler.Get("Nightmare"))
+						usr.Incorporeal=1;
+						usr.density=0;
 			verb/All_Seeing_Eyes()
 				set category="Roleplay"
 				var/list/who=list("Cancel")
